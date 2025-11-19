@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, Redirect } from "wouter";
+import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useAuth } from "@/hooks/useAuth";
 import { BottomNav } from "@/components/BottomNav";
+import Landing from "@/pages/landing";
 import Onboarding from "@/pages/onboarding";
 import Home from "@/pages/home";
 import Track from "@/pages/track";
@@ -13,25 +15,28 @@ import Progress from "@/pages/progress";
 import NotFound from "@/pages/not-found";
 
 function Router() {
-  const [onboardingCompleted, setOnboardingCompleted] = useState<boolean | null>(null);
+  const { isAuthenticated, isLoading, user } = useAuth();
 
-  useEffect(() => {
-    const completed = localStorage.getItem("lighter_onboarding_completed");
-    setOnboardingCompleted(completed === "true");
-  }, []);
-
-  if (onboardingCompleted === null) {
+  // Show loading spinner while checking auth
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-chart-2/10">
-        <div className="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+        <div className="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin" data-testid="spinner-loading" />
       </div>
     );
   }
 
-  if (!onboardingCompleted) {
+  // Show landing page if not authenticated
+  if (!isAuthenticated) {
+    return <Landing />;
+  }
+
+  // Show onboarding if user hasn't completed it
+  if (!user?.onboardingCompleted) {
     return <Onboarding />;
   }
 
+  // Show main app with bottom navigation
   return (
     <div className="min-h-screen">
       <Switch>

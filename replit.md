@@ -10,6 +10,15 @@ The application emphasizes a warm, encouraging design approach inspired by welln
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (November 19, 2025)
+
+**Major Update: Multi-User Database Migration**
+- Migrated from localStorage to PostgreSQL database with Replit Auth
+- Implemented user authentication system (login/logout)
+- Added user accounts with cross-device data sync
+- Created comprehensive API routes for CRUD operations
+- Database tables now include userId foreign keys for data isolation
+
 ## System Architecture
 
 ### Frontend Architecture
@@ -18,10 +27,12 @@ Preferred communication style: Simple, everyday language.
 
 **Routing**: Client-side routing implemented with Wouter (lightweight alternative to React Router).
 
+**Authentication**: Replit Auth (OpenID Connect) with auto-login redirects.
+
 **State Management**: 
-- Local storage for data persistence (user profile, daily logs, active experiments)
+- PostgreSQL database for persistent data storage
 - React hooks for component-level state
-- TanStack Query for future API integration (queryClient configured but not actively used)
+- TanStack Query for server state management and API integration
 
 **UI Component Library**: Shadcn/ui with Radix UI primitives
 - Customized with "new-york" style variant
@@ -39,26 +50,39 @@ Preferred communication style: Simple, everyday language.
 ### Backend Architecture
 
 **Server Framework**: Express.js with TypeScript
-- Minimal server setup currently in place
-- Routes registered but not yet implemented
+- Full authentication middleware with session management
+- Protected API routes with user isolation
+- RESTful API endpoints with Zod validation
 - Middleware for JSON parsing and request logging
 - Development server with Vite integration for HMR
 
+**Authentication System**:
+- Replit Auth via OpenID Connect (passport.js)
+- PostgreSQL session storage (connect-pg-simple)
+- Token refresh handling for long-lived sessions
+- Automatic user upsert on login
+
 **Data Storage**:
-- Currently using in-memory storage (MemStorage class)
-- Interface-based storage design (IStorage) allowing easy swap to database
-- Drizzle ORM configured for PostgreSQL (ready but not actively used)
-- Database schema defined in shared/schema.ts
+- PostgreSQL database (Neon) with DatabaseStorage class
+- Drizzle ORM for type-safe database operations
+- Database schema defined in shared/schema.ts with full TypeScript types
 
 **Database Schema** (PostgreSQL via Drizzle):
-- `users` table: User profiles with onboarding completion status and metabolic symptoms
-- `dailyLogs` table: Daily tracking data (temperature, pulse, energy, sleep, digestion, notes)
-- `activeExperiments` table: User's running experiments with progress tracking
-- `experimentNotes` table: Daily observations for each active experiment
+- `sessions` table: Express session storage (required for auth)
+- `users` table: User profiles with Replit Auth fields (email, name, profile image) + app-specific fields (onboarding status, metabolic symptoms)
+- `dailyLogs` table: Daily tracking data with userId foreign key (temperature, pulse, energy, sleep, digestion, notes)
+- `activeExperiments` table: User's running experiments with userId foreign key (progress tracking, completion status, daily checklists)
 
-**API Design**: RESTful endpoints (planned, routes defined but not implemented)
-- All routes prefixed with /api
-- CRUD operations abstracted through storage interface
+**API Endpoints** (all protected with `isAuthenticated` middleware):
+- `GET /api/auth/user` - Get current user profile
+- `POST /api/user/onboarding` - Complete onboarding (set name and symptoms)
+- `GET /api/logs` - Get all daily logs for user
+- `GET /api/logs/:date` - Get specific daily log
+- `POST /api/logs` - Create new daily log
+- `GET /api/experiments` - Get all active experiments for user
+- `POST /api/experiments` - Create new active experiment
+- `PATCH /api/experiments/:id` - Update active experiment
+- `DELETE /api/experiments/:id` - Delete active experiment
 
 ### Data Visualization
 
@@ -72,22 +96,25 @@ Preferred communication style: Simple, everyday language.
 - Average calculations for key metrics
 - Visual progress bars for active experiments
 
-### Local Storage Strategy
+### Data Persistence Strategy
 
-The application currently relies entirely on browser localStorage for data persistence:
-- `lighter_onboarding_completed`: Boolean flag for onboarding state
-- `lighter_user`: User profile object (name, symptoms)
-- `lighter_daily_logs`: Array of all daily log entries
-- `lighter_active_experiments`: Array of currently running experiments
-
-This approach allows for rapid prototyping and offline functionality, with the architecture ready to migrate to API-based persistence when needed.
+The application uses PostgreSQL database for all persistent data:
+- User accounts with authentication via Replit Auth
+- Daily logs stored per-user with date indexing
+- Active experiments tracked per-user with progress state
+- All data accessible across devices after login
+- Data isolation ensures users only see their own data
 
 ### Page Structure
 
-- `/` - Home dashboard with today's vitals, active experiments, and smart recommendations
+- `/` (unauthenticated) - Landing page with feature highlights and login button
+- `/` (authenticated, onboarding incomplete) - Onboarding flow (3 steps: welcome, name entry, symptom assessment)
+- `/` (authenticated, onboarding complete) - Home dashboard with today's vitals, active experiments, and smart recommendations
 - `/track` - Daily logging form for temperature, pulse, energy, sleep, and digestion
 - `/experiments` - Library of experiment templates and active experiment management
 - `/progress` - Charts and trends visualization with 30-day history
+- `/api/login` - Initiates Replit Auth login flow
+- `/api/logout` - Logs out and redirects to landing page
 
 ### Mobile-First Navigation
 

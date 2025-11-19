@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
 import { Sparkles, ThermometerSun, Heart, Zap } from "lucide-react";
 
 const SYMPTOMS = [
@@ -21,7 +23,7 @@ const SYMPTOMS = [
 ];
 
 export default function Onboarding() {
-  const [, setLocation] = useLocation();
+  const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [symptoms, setSymptoms] = useState<string[]>([]);
@@ -34,18 +36,35 @@ export default function Onboarding() {
     );
   };
 
+  const completeOnboarding = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("/api/user/onboarding", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          symptoms: symptoms,
+        }),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+      window.location.href = "/";
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to complete onboarding",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleComplete = () => {
     if (!name.trim()) {
       return;
     }
-    const userData = {
-      name: name.trim(),
-      onboardingCompleted: true,
-      metabolicSymptoms: symptoms.length > 0 ? symptoms : [],
-    };
-    localStorage.setItem("lighter_user", JSON.stringify(userData));
-    localStorage.setItem("lighter_onboarding_completed", "true");
-    setLocation("/");
+    completeOnboarding.mutate();
   };
 
   if (step === 1) {
