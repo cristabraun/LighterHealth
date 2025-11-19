@@ -1,0 +1,98 @@
+Build a React app called "Lighter" - a pro-metabolic health tracking and experiment app for women.
+
+CORE PURPOSE:
+Help women heal their metabolism by tracking vitals, running personalized experiments, and seeing what makes THEIR body feel lighter (emotionally, energetically, physically).
+
+KEY FEATURES:
+
+1. ONBOARDING:
+- Welcome screen with messaging: "Become Lighter - Emotionally, Energetically, Physically"
+- Brief intro: This is NOT a diet app. We track energy first, weight loss is a side effect.
+- Ask for name
+- Quick metabolic assessment (current symptoms)
+
+2. DAILY TRACKING:
+- Morning temperature (°F) - required
+- Resting pulse (bpm) - required  
+- Energy level (1-10 slider)
+- Sleep quality (1-10 slider)
+- Digestion (Good/Okay/Poor buttons)
+- Optional notes field
+- Shows trend charts over time
+
+3. EXPERIMENT LIBRARY:
+Create 7 detailed experiment cards:
+- 7-Day Carrot Salad (for gut/estrogen)
+- Daily Orange Juice Protocol (for glucose/energy)
+- Add Carbs at Dinner (for sleep/thyroid)
+- Reduce Cardio Intensity (for cortisol)
+- Morning Salt + OJ (for adrenals)
+- Sleep Optimization (for recovery)
+- Magnesium Glycinate (for sleep/stress)
+
+Each experiment card needs:
+- Title
+- Duration (7, 14, or 21 days)
+- Category badge (Energy/Sleep/Digestion/Recovery)
+- WHY section (science explanation)
+- HOW section (exact instructions)
+- WHEN section (timing)
+- WHAT TO EXPECT (timeline of changes)
+- "Start Experiment" button
+
+4. ACTIVE EXPERIMENTS:
+- Shows currently running experiments
+- Progress bar (Day X of Y)
+- Daily checklist for each experiment
+- Notes section for observations
+- "Complete" or "Stop Early" buttons
+
+5. SMART RECOMMENDATIONS:
+Based on tracked data patterns, suggest experiments:
+- IF avg temp < 97.5°F → Suggest OJ Protocol + Add Carbs
+- IF avg pulse > 90 + low temp → Suggest Reduce Cardio + Stress protocols  
+- IF poor sleep → Suggest Magnesium + Carbs at Dinner
+- IF low energy → Suggest OJ Protocol + Reduce Cardio
+- Show these as personalized cards on home dashboard
+
+6. DASHBOARD/HOME:
+- Greeting: "Hey [name]!"
+- Quick stats (latest temp, pulse, energy)
+- Personalized recommendations based on their data
+- Active experiments section
+- Quick action buttons (Track Today, Browse Experiments)
+
+7. PROGRESS VIEW:
+- Temperature trend chart (last 30 days)
+- Pulse trend chart
+- Energy levels chart
+- Correlation view (show when experiments started vs. metric changes)
+- Averages displayed
+
+8. NAVIGATION:
+Bottom tab bar with 4 tabs:
+- Home (dashboard)
+- Track (daily input form)
+- Experiments (library + active)
+- Progress (charts)
+
+DESIGN REQUIREMENTS:
+- Modern, clean, feminine aesthetic
+- Warm color palette: coral/orange gradients (metabolic warmth)
+- Smooth animations and transitions
+- Mobile-first responsive design
+- Use icons from lucide-react
+- Charts using recharts library
+- Celebrate wins (confetti when temp rises above 98°F, streaks, etc.)
+
+DATA STORAGE:
+- Use localStorage for now (no backend yet)
+- Store: user profile, daily logs, active experiments, experiment history
+
+UI TONE:
+- Encouraging, warm, supportive
+- Anti-diet language: "nourish" not "restrict", "energy" not "calories"
+- Empowering: "Your body knows what it needs, we help you discover it"
+- Phrases like: "You're glowing!", "Progress!", "Your temp is rising!"
+
+Make it beautiful, functional, and encouraging. This app should make women feel LIGHTER and excited to track their progress.
