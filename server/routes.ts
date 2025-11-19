@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
-import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema } from "@shared/schema";
+import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -214,6 +214,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating message:", error);
       res.status(500).json({ message: "Failed to update message" });
+    }
+  });
+
+  // Food log routes
+  app.post('/api/food-logs', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const validatedData = insertFoodLogSchema.parse(req.body);
+      const foodLog = await storage.createFoodLog(userId, validatedData);
+      res.json(foodLog);
+    } catch (error) {
+      if (error instanceof Error && error.name === 'ZodError') {
+        const validationError = fromZodError(error as any);
+        return res.status(400).json({ message: validationError.message });
+      }
+      console.error("Error creating food log:", error);
+      res.status(500).json({ message: "Failed to create food log" });
+    }
+  });
+
+  app.get('/api/food-logs', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const date = req.query.date as string | undefined;
+      const foodLogs = await storage.getFoodLogs(userId, date);
+      res.json(foodLogs);
+    } catch (error) {
+      console.error("Error fetching food logs:", error);
+      res.status(500).json({ message: "Failed to fetch food logs" });
+    }
+  });
+
+  app.delete('/api/food-logs/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { id } = req.params;
+      await storage.deleteFoodLog(userId, id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting food log:", error);
+      res.status(500).json({ message: "Failed to delete food log" });
     }
   });
 
