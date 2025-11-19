@@ -194,7 +194,7 @@ export default function Landing() {
       </div>
 
       {/* CTA Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16 pb-24 text-center" data-testid="section-cta">
+      <div className="max-w-4xl mx-auto px-6 py-16 text-center" data-testid="section-cta">
         <h2 className="text-3xl font-bold mb-6" data-testid="heading-cta">Ready to Feel Lighter?</h2>
         <Button 
           onClick={() => window.location.href = '/api/login'}
@@ -204,6 +204,13 @@ export default function Landing() {
           Start Your Journey
         </Button>
       </div>
+
+      {/* Footer */}
+      <footer className="max-w-4xl mx-auto px-6 py-8 pb-12 text-center" data-testid="footer">
+        <p className="text-sm text-muted-foreground" data-testid="text-disclaimer">
+          Lighter provides wellness and lifestyle guidance and does not provide medical advice.
+        </p>
+      </footer>
     </div>
   );
 }
