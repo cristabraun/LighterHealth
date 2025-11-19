@@ -9,8 +9,9 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Thermometer, Heart, Zap, Moon, Apple } from "lucide-react";
-import type { InsertDailyLog, DailyLog } from "@shared/schema";
+import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { InsertDailyLog, DailyLog, InsertFoodLog, FoodLog } from "@shared/schema";
 import confetti from "canvas-confetti";
 
 export default function Track() {
@@ -23,11 +24,29 @@ export default function Track() {
   const [digestion, setDigestion] = useState<"good" | "okay" | "poor">("good");
   const [notes, setNotes] = useState("");
 
+  // Food log state
+  const [showFoodForm, setShowFoodForm] = useState(false);
+  const [meal, setMeal] = useState<"breakfast" | "lunch" | "dinner" | "snack">("breakfast");
+  const [foodItem, setFoodItem] = useState("");
+  const [foodNotes, setFoodNotes] = useState("");
+
   const today = new Date().toISOString().split('T')[0];
 
   // Fetch today's log
   const { data: todaysLog } = useQuery<DailyLog>({
     queryKey: ["/api/logs", today],
+  });
+
+  // Fetch today's food logs
+  const { data: foodLogs = [] } = useQuery<FoodLog[]>({
+    queryKey: ["/api/food-logs"],
+    queryFn: async () => {
+      const res = await fetch(`/api/food-logs?date=${today}`, {
+        credentials: 'include',
+      });
+      if (!res.ok) throw new Error('Failed to fetch food logs');
+      return res.json();
+    },
   });
 
   // Pre-fill form with existing data
@@ -85,6 +104,51 @@ export default function Track() {
     },
   });
 
+  const addFoodMutation = useMutation({
+    mutationFn: async (foodData: InsertFoodLog) => {
+      const res = await apiRequest("POST", "/api/food-logs", foodData);
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/food-logs"] });
+      setFoodItem("");
+      setFoodNotes("");
+      setShowFoodForm(false);
+      toast({
+        title: "Food Logged!",
+        description: "Your meal has been recorded",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to log food",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteFoodMutation = useMutation({
+    mutationFn: async (foodLogId: string) => {
+      const res = await apiRequest("DELETE", `/api/food-logs/${foodLogId}`, {});
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/food-logs"] });
+      toast({
+        title: "Deleted",
+        description: "Food log removed",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -129,6 +193,28 @@ export default function Track() {
     };
 
     saveMutation.mutate(logData);
+  };
+
+  const handleAddFood = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!foodItem.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter what you ate",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const foodData: InsertFoodLog = {
+      date: today,
+      meal,
+      foodItem: foodItem.trim(),
+      notes: foodNotes.trim() || undefined,
+    };
+
+    addFoodMutation.mutate(foodData);
   };
 
   return (
@@ -321,6 +407,134 @@ export default function Track() {
             {saveMutation.isPending ? "Saving..." : "Save Today's Data"}
           </Button>
         </form>
+
+        <Card className="p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Utensils className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-lg font-semibold">Food Log</h2>
+            </div>
+            {!showFoodForm && (
+              <Button
+                size="sm"
+                onClick={() => setShowFoodForm(true)}
+                data-testid="button-add-food"
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                Add Food
+              </Button>
+            )}
+          </div>
+
+          {showFoodForm && (
+            <form onSubmit={handleAddFood} className="space-y-4 p-4 bg-muted/30 rounded-lg">
+              <div className="space-y-2">
+                <Label htmlFor="meal">Meal</Label>
+                <Select value={meal} onValueChange={(value: any) => setMeal(value)}>
+                  <SelectTrigger id="meal" data-testid="select-meal">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="breakfast">Breakfast</SelectItem>
+                    <SelectItem value="lunch">Lunch</SelectItem>
+                    <SelectItem value="dinner">Dinner</SelectItem>
+                    <SelectItem value="snack">Snack</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="foodItem">What did you eat? <span className="text-destructive">*</span></Label>
+                <Input
+                  id="foodItem"
+                  placeholder="e.g., Orange juice, scrambled eggs, carrot salad"
+                  value={foodItem}
+                  onChange={(e) => setFoodItem(e.target.value)}
+                  data-testid="input-food-item"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="foodNotes">Notes (Optional)</Label>
+                <Textarea
+                  id="foodNotes"
+                  placeholder="How did you feel after? Any reactions?"
+                  value={foodNotes}
+                  onChange={(e) => setFoodNotes(e.target.value)}
+                  rows={2}
+                  className="resize-none"
+                  data-testid="textarea-food-notes"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  type="submit"
+                  disabled={addFoodMutation.isPending}
+                  data-testid="button-save-food"
+                  className="flex-1"
+                >
+                  {addFoodMutation.isPending ? "Adding..." : "Add"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setShowFoodForm(false);
+                    setFoodItem("");
+                    setFoodNotes("");
+                  }}
+                  data-testid="button-cancel-food"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          )}
+
+          {foodLogs.length > 0 ? (
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Today's meals:</p>
+              {foodLogs.map((log) => (
+                <div
+                  key={log.id}
+                  className="flex items-start justify-between p-3 bg-muted/30 rounded-lg"
+                  data-testid={`food-log-${log.id}`}
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-primary capitalize">
+                        {log.meal}
+                      </span>
+                      <span className="text-sm font-medium">{log.foodItem}</span>
+                    </div>
+                    {log.notes && (
+                      <p className="text-xs text-muted-foreground mt-1">{log.notes}</p>
+                    )}
+                  </div>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => deleteFoodMutation.mutate(log.id)}
+                    disabled={deleteFoodMutation.isPending}
+                    data-testid={`button-delete-food-${log.id}`}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            !showFoodForm && (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                No food logged yet today. Track what you eat to see how it affects your energy and vitals.
+              </p>
+            )
+          )}
+        </Card>
       </div>
     </div>
   );
