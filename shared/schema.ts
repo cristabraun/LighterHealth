@@ -130,6 +130,33 @@ export const insertMessageSchema = createInsertSchema(messages).omit({
 export type InsertMessage = z.infer<typeof insertMessageSchema>;
 export type Message = typeof messages.$inferSelect;
 
+// Food Logs
+export const foodLogs = pgTable("food_logs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id, { onDelete: 'cascade' }),
+  date: text("date").notNull(), // YYYY-MM-DD format
+  meal: text("meal").notNull(), // 'breakfast' | 'lunch' | 'dinner' | 'snack'
+  foodItem: text("food_item").notNull(), // What they ate
+  notes: text("notes"), // Optional additional details
+  createdAt: timestamp("created_at").defaultNow(),
+}, (table) => {
+  return {
+    userDateIdx: index("food_logs_user_date_idx").on(table.userId, table.date),
+  };
+});
+
+export const insertFoodLogSchema = createInsertSchema(foodLogs).omit({ 
+  id: true, 
+  createdAt: true,
+  userId: true // Will be set from authenticated user
+}).extend({
+  meal: z.enum(['breakfast', 'lunch', 'dinner', 'snack']),
+  foodItem: z.string().min(1, "Food item is required"),
+});
+
+export type InsertFoodLog = z.infer<typeof insertFoodLogSchema>;
+export type FoodLog = typeof foodLogs.$inferSelect;
+
 // Experiment Template Type (not stored in DB, just TypeScript)
 export type ExperimentTemplate = {
   id: string;
