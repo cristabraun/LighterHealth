@@ -38,13 +38,17 @@ export default function Landing() {
               Track your metabolism, run personalized experiments, and discover what makes YOU feel lighter. This is not a diet app.
             </p>
 
-            <div className="pt-4">
+            <div className="pt-6 space-y-4">
+              <div className="flex items-center justify-center gap-2" data-testid="section-pricing">
+                <span className="text-3xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
+                <span className="text-muted-foreground">— Your metabolic health coach</span>
+              </div>
               <Button 
                 onClick={() => window.location.href = '/api/login'}
                 className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
                 data-testid="button-get-started"
               >
-                Get Started Free
+                Start Your Journey
               </Button>
             </div>
           </div>
@@ -84,6 +88,94 @@ export default function Landing() {
             </p>
           </Card>
         </div>
+      </div>
+
+      {/* Value Proposition Section */}
+      <div className="max-w-4xl mx-auto px-6 py-16" data-testid="section-value">
+        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5">
+          <h2 className="text-3xl font-bold text-center" data-testid="heading-value">Your Coach in Your Pocket</h2>
+          <div className="space-y-6">
+            <p className="text-xl text-center text-muted-foreground leading-relaxed" data-testid="text-value-intro">
+              For the price of a streaming subscription, get personalized metabolic health coaching every single day.
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-6 text-muted-foreground" data-testid="section-comparisons">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between py-2 border-b border-border/50">
+                  <span>Netflix Premium</span>
+                  <span className="font-semibold">$23/mo</span>
+                </div>
+                <div className="flex items-center justify-between py-2 border-b border-border/50">
+                  <span>YouTube Premium</span>
+                  <span className="font-semibold">$18/mo</span>
+                </div>
+                <div className="flex items-center justify-between py-2 border-b border-border/50">
+                  <span>Spotify Premium</span>
+                  <span className="font-semibold">$12/mo</span>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-center justify-between py-2 border-b border-border/50">
+                  <span>One health coaching session</span>
+                  <span className="font-semibold">$100+</span>
+                </div>
+                <div className="flex items-center justify-between py-2 border-b border-border/50">
+                  <span>Nutritionist consultation</span>
+                  <span className="font-semibold">$150+</span>
+                </div>
+                <div className="flex items-center justify-between py-2 border-b border-primary/50 bg-primary/5">
+                  <span className="font-semibold text-foreground">Lighter (unlimited coaching)</span>
+                  <span className="font-bold text-primary">$19/mo</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 space-y-4">
+              <p className="text-center text-lg font-medium" data-testid="text-value-what-you-get">
+                What you get with Lighter:
+              </p>
+              <div className="grid md:grid-cols-2 gap-4 text-muted-foreground">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span>Daily vital tracking with smart insights</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span>Personalized experiment recommendations</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span>Science-backed metabolic protocols</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span>Direct messaging for questions</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span>Beautiful progress charts and trends</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span>Educational library on metabolic health</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
 
       {/* Philosophy Section */}

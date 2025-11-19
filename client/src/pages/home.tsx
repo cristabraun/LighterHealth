@@ -14,7 +14,8 @@ import {
   TrendingDown, 
   Sparkles,
   Clock,
-  AlertCircle
+  AlertCircle,
+  MessageCircle
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -136,6 +137,23 @@ export default function Home() {
             </Link>
           </Card>
         )}
+
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-questions">
+          <div className="flex items-center gap-3">
+            <MessageCircle className="w-6 h-6 text-primary" data-testid="icon-message" />
+            <div>
+              <h3 className="font-semibold" data-testid="heading-questions">Have a Question?</h3>
+              <p className="text-sm text-muted-foreground" data-testid="text-questions-description">
+                Get personalized guidance from your metabolic health coach
+              </p>
+            </div>
+          </div>
+          <Link href="/messages">
+            <Button variant="outline" className="w-full" data-testid="button-ask-question">
+              Ask a Question
+            </Button>
+          </Link>
+        </Card>
 
         {recommendations.length > 0 && (
           <div className="space-y-4" data-testid="section-recommendations">

@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
-import { insertDailyLogSchema, insertActiveExperimentSchema } from "@shared/schema";
+import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -139,6 +139,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting experiment:", error);
       res.status(500).json({ message: "Failed to delete experiment" });
+    }
+  });
+
+  // Message routes
+  app.post('/api/messages', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const validatedData = insertMessageSchema.parse(req.body);
+      const message = await storage.createMessage(userId, validatedData);
+      res.json(message);
+    } catch (error: any) {
+      if (error.name === 'ZodError') {
+        const validationError = fromZodError(error);
+        return res.status(400).json({ message: validationError.message });
+      }
+      console.error("Error creating message:", error);
+      res.status(500).json({ message: "Failed to send message" });
+    }
+  });
+
+  app.get('/api/messages', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const messages = await storage.getUserMessages(userId);
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      res.status(500).json({ message: "Failed to fetch messages" });
+    }
+  });
+
+  app.get('/api/admin/messages', isAuthenticated, async (req: any, res) => {
+    try {
+      const messages = await storage.getAllMessages();
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching all messages:", error);
+      res.status(500).json({ message: "Failed to fetch messages" });
+    }
+  });
+
+  app.patch('/api/admin/messages/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const { id } = req.params;
+      const { response } = req.body;
+      
+      if (!response || typeof response !== 'string') {
+        return res.status(400).json({ message: "Response is required" });
+      }
+
+      const message = await storage.updateMessage(id, response);
+      res.json(message);
+    } catch (error) {
+      console.error("Error updating message:", error);
+      res.status(500).json({ message: "Failed to update message" });
     }
   });
 

@@ -2,12 +2,15 @@ import {
   users,
   dailyLogs,
   activeExperiments,
+  messages,
   type User,
   type UpsertUser,
   type InsertDailyLog,
   type DailyLog,
   type InsertActiveExperiment,
   type ActiveExperiment,
+  type InsertMessage,
+  type Message,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
@@ -30,6 +33,12 @@ export interface IStorage {
   getActiveExperiment(userId: string, experimentId: string): Promise<ActiveExperiment | undefined>;
   updateActiveExperiment(userId: string, experimentId: string, updates: Partial<InsertActiveExperiment>): Promise<ActiveExperiment>;
   deleteActiveExperiment(userId: string, experimentId: string): Promise<void>;
+  
+  // Message operations
+  createMessage(userId: string, message: InsertMessage): Promise<Message>;
+  getUserMessages(userId: string): Promise<Message[]>;
+  getAllMessages(): Promise<Message[]>;
+  updateMessage(messageId: string, response: string): Promise<Message>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -168,6 +177,46 @@ export class DatabaseStorage implements IStorage {
           eq(activeExperiments.id, experimentId)
         )
       );
+  }
+
+  // Message operations
+  async createMessage(userId: string, message: InsertMessage): Promise<Message> {
+    const [created] = await db
+      .insert(messages)
+      .values({
+        ...message,
+        userId,
+      })
+      .returning();
+    return created;
+  }
+
+  async getUserMessages(userId: string): Promise<Message[]> {
+    return await db
+      .select()
+      .from(messages)
+      .where(eq(messages.userId, userId))
+      .orderBy(desc(messages.createdAt));
+  }
+
+  async getAllMessages(): Promise<Message[]> {
+    return await db
+      .select()
+      .from(messages)
+      .orderBy(desc(messages.createdAt));
+  }
+
+  async updateMessage(messageId: string, response: string): Promise<Message> {
+    const [updated] = await db
+      .update(messages)
+      .set({
+        response,
+        status: 'answered',
+        respondedAt: new Date(),
+      })
+      .where(eq(messages.id, messageId))
+      .returning();
+    return updated;
   }
 }
 

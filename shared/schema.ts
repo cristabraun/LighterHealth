@@ -101,6 +101,35 @@ export const insertActiveExperimentSchema = createInsertSchema(activeExperiments
 export type InsertActiveExperiment = z.infer<typeof insertActiveExperimentSchema>;
 export type ActiveExperiment = typeof activeExperiments.$inferSelect;
 
+// User Messages (for direct Q&A with coach)
+export const messages = pgTable("messages", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id, { onDelete: 'cascade' }),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  response: text("response"),
+  status: text("status").notNull().default('pending'), // 'pending' | 'answered'
+  createdAt: timestamp("created_at").defaultNow(),
+  respondedAt: timestamp("responded_at"),
+}, (table) => {
+  return {
+    userIdx: index("messages_user_idx").on(table.userId),
+    statusIdx: index("messages_status_idx").on(table.status),
+  };
+});
+
+export const insertMessageSchema = createInsertSchema(messages).omit({ 
+  id: true, 
+  createdAt: true,
+  userId: true,
+  response: true,
+  respondedAt: true,
+  status: true
+});
+
+export type InsertMessage = z.infer<typeof insertMessageSchema>;
+export type Message = typeof messages.$inferSelect;
+
 // Experiment Template Type (not stored in DB, just TypeScript)
 export type ExperimentTemplate = {
   id: string;

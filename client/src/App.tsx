@@ -13,6 +13,8 @@ import Learn from "@/pages/learn";
 import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
 import Progress from "@/pages/progress";
+import Messages from "@/pages/messages";
+import AdminMessages from "@/pages/admin-messages";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -46,6 +48,8 @@ function Router() {
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
         <Route path="/progress" component={Progress} />
+        <Route path="/messages" component={Messages} />
+        <Route path="/admin/messages" component={AdminMessages} />
         <Route component={NotFound} />
       </Switch>
       <BottomNav />
