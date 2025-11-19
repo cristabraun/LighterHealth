@@ -1,0 +1,56 @@
+import { Link, useLocation } from "wouter";
+import { Home, ClipboardList, Beaker, TrendingUp } from "lucide-react";
+
+export function BottomNav() {
+  const [location] = useLocation();
+
+  const tabs = [
+    { path: "/", icon: Home, label: "Home" },
+    { path: "/track", icon: ClipboardList, label: "Track" },
+    { path: "/experiments", icon: Beaker, label: "Experiments" },
+    { path: "/progress", icon: TrendingUp, label: "Progress" },
+  ];
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-sm border-t border-card-border z-50">
+      <div className="max-w-md mx-auto px-2">
+        <div className="flex items-center justify-around h-16">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = location === tab.path;
+            
+            return (
+              <Link
+                key={tab.path}
+                href={tab.path}
+                data-testid={`link-nav-${tab.label.toLowerCase()}`}
+              >
+                <div 
+                  className="flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-xl min-h-12 hover-elevate active-elevate-2 transition-colors relative"
+                  data-testid={`button-nav-${tab.label.toLowerCase()}`}
+                >
+                  <Icon 
+                    className={`w-5 h-5 transition-colors ${
+                      isActive ? "text-primary" : "text-muted-foreground"
+                    }`}
+                    data-testid={`icon-nav-${tab.label.toLowerCase()}`}
+                  />
+                  <span className={`text-xs font-medium transition-colors ${
+                    isActive ? "text-primary" : "text-muted-foreground"
+                  }`}
+                    data-testid={`text-nav-${tab.label.toLowerCase()}`}
+                  >
+                    {tab.label}
+                  </span>
+                  {isActive && (
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-primary to-chart-2 rounded-full" data-testid={`indicator-nav-active-${tab.label.toLowerCase()}`} />
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </nav>
+  );
+}
