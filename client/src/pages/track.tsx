@@ -39,14 +39,7 @@ export default function Track() {
 
   // Fetch today's food logs
   const { data: foodLogs = [] } = useQuery<FoodLog[]>({
-    queryKey: ["/api/food-logs"],
-    queryFn: async () => {
-      const res = await fetch(`/api/food-logs?date=${today}`, {
-        credentials: 'include',
-      });
-      if (!res.ok) throw new Error('Failed to fetch food logs');
-      return res.json();
-    },
+    queryKey: [`/api/food-logs?date=${today}`],
   });
 
   // Pre-fill form with existing data
@@ -110,7 +103,7 @@ export default function Track() {
       return await res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/food-logs"] });
+      queryClient.invalidateQueries({ queryKey: [`/api/food-logs?date=${today}`] });
       setFoodItem("");
       setFoodNotes("");
       setShowFoodForm(false);
@@ -134,7 +127,7 @@ export default function Track() {
       return await res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/food-logs"] });
+      queryClient.invalidateQueries({ queryKey: [`/api/food-logs?date=${today}`] });
       toast({
         title: "Deleted",
         description: "Food log removed",

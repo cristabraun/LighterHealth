@@ -43,14 +43,7 @@ export default function Home() {
 
   // Fetch today's food logs
   const { data: foodLogs = [] } = useQuery<FoodLog[]>({
-    queryKey: ["/api/food-logs"],
-    queryFn: async () => {
-      const res = await fetch(`/api/food-logs?date=${today}`, {
-        credentials: 'include',
-      });
-      if (!res.ok) throw new Error('Failed to fetch food logs');
-      return res.json();
-    },
+    queryKey: [`/api/food-logs?date=${today}`],
   });
 
   // Generate recommendations
