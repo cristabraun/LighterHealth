@@ -44,11 +44,8 @@ export default function Track() {
 
   const saveMutation = useMutation({
     mutationFn: async (logData: InsertDailyLog) => {
-      return await apiRequest("/api/logs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(logData),
-      });
+      const res = await apiRequest("POST", "/api/logs", logData);
+      return await res.json();
     },
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["/api/logs"] });

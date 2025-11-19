@@ -38,14 +38,11 @@ export default function Onboarding() {
 
   const completeOnboarding = useMutation({
     mutationFn: async () => {
-      return await apiRequest("/api/user/onboarding", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          symptoms: symptoms,
-        }),
+      const res = await apiRequest("POST", "/api/user/onboarding", {
+        name: name.trim(),
+        symptoms: symptoms,
       });
+      return await res.json();
     },
     onSuccess: async () => {
       // Invalidate and refetch user data
