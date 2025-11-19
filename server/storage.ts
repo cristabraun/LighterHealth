@@ -3,6 +3,7 @@ import {
   dailyLogs,
   activeExperiments,
   messages,
+  foodLogs,
   type User,
   type UpsertUser,
   type InsertDailyLog,
@@ -11,6 +12,8 @@ import {
   type ActiveExperiment,
   type InsertMessage,
   type Message,
+  type InsertFoodLog,
+  type FoodLog,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
@@ -39,6 +42,11 @@ export interface IStorage {
   getUserMessages(userId: string): Promise<Message[]>;
   getAllMessages(): Promise<Message[]>;
   updateMessage(messageId: string, response: string): Promise<Message>;
+  
+  // Food log operations
+  createFoodLog(userId: string, foodLog: InsertFoodLog): Promise<FoodLog>;
+  getFoodLogs(userId: string, date?: string): Promise<FoodLog[]>;
+  deleteFoodLog(userId: string, foodLogId: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -217,6 +225,44 @@ export class DatabaseStorage implements IStorage {
       .where(eq(messages.id, messageId))
       .returning();
     return updated;
+  }
+
+  // Food log operations
+  async createFoodLog(userId: string, foodLog: InsertFoodLog): Promise<FoodLog> {
+    const [created] = await db
+      .insert(foodLogs)
+      .values({
+        ...foodLog,
+        userId,
+      })
+      .returning();
+    return created;
+  }
+
+  async getFoodLogs(userId: string, date?: string): Promise<FoodLog[]> {
+    if (date) {
+      return await db
+        .select()
+        .from(foodLogs)
+        .where(and(eq(foodLogs.userId, userId), eq(foodLogs.date, date)))
+        .orderBy(desc(foodLogs.createdAt));
+    }
+    return await db
+      .select()
+      .from(foodLogs)
+      .where(eq(foodLogs.userId, userId))
+      .orderBy(desc(foodLogs.date), desc(foodLogs.createdAt));
+  }
+
+  async deleteFoodLog(userId: string, foodLogId: string): Promise<void> {
+    await db
+      .delete(foodLogs)
+      .where(
+        and(
+          eq(foodLogs.userId, userId),
+          eq(foodLogs.id, foodLogId)
+        )
+      );
   }
 }
 
