@@ -315,10 +315,10 @@ export default function Track() {
             type="submit"
             className="w-full bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
             size="lg"
-            disabled={loading}
+            disabled={saveMutation.isPending}
             data-testid="button-save-data"
           >
-            {loading ? "Saving..." : "Save Today's Data"}
+            {saveMutation.isPending ? "Saving..." : "Save Today's Data"}
           </Button>
         </form>
       </div>

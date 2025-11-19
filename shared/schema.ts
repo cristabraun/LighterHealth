@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, real, date, timestamp, boolean, index, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, real, date, timestamp, boolean, index, uniqueIndex, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -59,9 +59,12 @@ export const dailyLogs = pgTable("daily_logs", {
   digestion: text("digestion").notNull(), // 'good' | 'okay' | 'poor'
   notes: text("notes"),
   createdAt: text("created_at").notNull(), // ISO string
-}, (table) => ({
-  userDateIdx: index("daily_logs_user_date_idx").on(table.userId, table.date),
-}));
+}, (table) => {
+  return {
+    userDateIdx: index("daily_logs_user_date_idx").on(table.userId, table.date),
+    userDateUnique: uniqueIndex("daily_logs_user_date_unique").on(table.userId, table.date),
+  };
+});
 
 export const insertDailyLogSchema = createInsertSchema(dailyLogs).omit({ 
   id: true, 
