@@ -142,6 +142,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin middleware - check if user email is in admin list
+  const isAdmin = (req: any, res: any, next: any) => {
+    const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
+    const userEmail = req.user?.claims?.email;
+    
+    if (!userEmail || !adminEmails.includes(userEmail)) {
+      return res.status(403).json({ message: "Forbidden: Admin access required" });
+    }
+    
+    next();
+  };
+
+  // Check if current user is admin
+  app.get('/api/auth/is-admin', isAuthenticated, async (req: any, res) => {
+    const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
+    const userEmail = req.user?.claims?.email;
+    const isUserAdmin = userEmail && adminEmails.includes(userEmail);
+    res.json({ isAdmin: isUserAdmin });
+  });
+
   // Message routes
   app.post('/api/messages', isAuthenticated, async (req: any, res) => {
     try {
@@ -170,7 +190,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/messages', isAuthenticated, async (req: any, res) => {
+  app.get('/api/admin/messages', isAuthenticated, isAdmin, async (req: any, res) => {
     try {
       const messages = await storage.getAllMessages();
       res.json(messages);
@@ -180,7 +200,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch('/api/admin/messages/:id', isAuthenticated, async (req: any, res) => {
+  app.patch('/api/admin/messages/:id', isAuthenticated, isAdmin, async (req: any, res) => {
     try {
       const { id } = req.params;
       const { response } = req.body;
