@@ -12,7 +12,14 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 19, 2025)
 
-**Latest Updates: Premium Pricing & Direct Messaging**
+**Latest Updates: Food Logging Feature**
+- Added complete food logging system with database schema (foodLogs table)
+- Integrated food logging UI into Track page (breakfast/lunch/dinner/snack selection)
+- Added "Today's Food" preview card on Home page showing recent meals
+- Implemented add/delete functionality with optimistic UI updates
+- Fixed data-fetching strategy using consistent query keys for efficient caching
+
+**Premium Pricing & Direct Messaging**
 - Updated landing page to $19/month premium positioning
 - Added value comparison section (streaming services vs health coaching)
 - Implemented direct messaging feature for user questions
@@ -86,6 +93,7 @@ Preferred communication style: Simple, everyday language.
 - `dailyLogs` table: Daily tracking data with userId foreign key (temperature, pulse, energy, sleep, digestion, notes) + unique index on (user_id, date) for upsert
 - `activeExperiments` table: User's running experiments with userId foreign key (progress tracking, completion status, daily checklists)
 - `messages` table: User questions/messages with userId foreign key (subject, message, response, status, timestamps)
+- `foodLogs` table: Food tracking data with userId foreign key (date, meal type, food item, notes, timestamps) + index on (user_id, date)
 
 **API Endpoints** (all protected with `isAuthenticated` middleware):
 - `GET /api/auth/user` - Get current user profile
@@ -102,6 +110,9 @@ Preferred communication style: Simple, everyday language.
 - `GET /api/messages` - Get user's messages
 - `GET /api/admin/messages` - Get all messages (admin only)
 - `PATCH /api/admin/messages/:id` - Respond to message (admin only)
+- `GET /api/food-logs?date=YYYY-MM-DD` - Get food logs for specific date (optional filter)
+- `POST /api/food-logs` - Create new food log entry
+- `DELETE /api/food-logs/:id` - Delete food log entry
 
 ### Data Visualization
 
@@ -128,9 +139,9 @@ The application uses PostgreSQL database for all persistent data:
 
 - `/` (unauthenticated) - Landing page with $19/month pricing, value comparisons, and feature highlights
 - `/` (authenticated, onboarding incomplete) - Onboarding flow (3 steps: welcome, name entry, symptom assessment)
-- `/` (authenticated, onboarding complete) - Home dashboard with today's vitals, active experiments, recommendations, and "Ask a Question" card
+- `/` (authenticated, onboarding complete) - Home dashboard with today's vitals, active experiments, recommendations, "Today's Food" preview, and "Ask a Question" card
 - `/learn` - Educational library page explaining metabolic health concepts (temperature, pulse, energy, nutrition, stress, experiments)
-- `/track` - Daily logging form for temperature, pulse, energy, sleep, and digestion
+- `/track` - Daily logging form for temperature, pulse, energy, sleep, digestion, and food intake
 - `/experiments` - Library of experiment templates and active experiment management
 - `/progress` - Charts and trends visualization with 30-day history
 - `/messages` - User messaging interface to ask questions and view responses
