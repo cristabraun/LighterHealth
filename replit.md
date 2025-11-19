@@ -12,6 +12,12 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 19, 2025)
 
+**Latest Updates: Learn Page & Track Page Fixes**
+- Added new Learn/Library page with comprehensive metabolic health education
+- Fixed track page error (undefined loading variable)
+- Added unique constraint to dailyLogs table for proper upsert functionality
+- Updated bottom navigation to include Learn tab (now 5 tabs total)
+
 **Major Update: Multi-User Database Migration**
 - Migrated from localStorage to PostgreSQL database with Replit Auth
 - Implemented user authentication system (login/logout)
@@ -70,7 +76,7 @@ Preferred communication style: Simple, everyday language.
 **Database Schema** (PostgreSQL via Drizzle):
 - `sessions` table: Express session storage (required for auth)
 - `users` table: User profiles with Replit Auth fields (email, name, profile image) + app-specific fields (onboarding status, metabolic symptoms)
-- `dailyLogs` table: Daily tracking data with userId foreign key (temperature, pulse, energy, sleep, digestion, notes)
+- `dailyLogs` table: Daily tracking data with userId foreign key (temperature, pulse, energy, sleep, digestion, notes) + unique index on (user_id, date) for upsert
 - `activeExperiments` table: User's running experiments with userId foreign key (progress tracking, completion status, daily checklists)
 
 **API Endpoints** (all protected with `isAuthenticated` middleware):
@@ -110,6 +116,7 @@ The application uses PostgreSQL database for all persistent data:
 - `/` (unauthenticated) - Landing page with feature highlights and login button
 - `/` (authenticated, onboarding incomplete) - Onboarding flow (3 steps: welcome, name entry, symptom assessment)
 - `/` (authenticated, onboarding complete) - Home dashboard with today's vitals, active experiments, and smart recommendations
+- `/learn` - Educational library page explaining metabolic health concepts (temperature, pulse, energy, nutrition, stress, experiments)
 - `/track` - Daily logging form for temperature, pulse, energy, sleep, and digestion
 - `/experiments` - Library of experiment templates and active experiment management
 - `/progress` - Charts and trends visualization with 30-day history
@@ -118,7 +125,7 @@ The application uses PostgreSQL database for all persistent data:
 
 ### Mobile-First Navigation
 
-Bottom tab bar navigation with 4 primary sections (Home, Track, Experiments, Progress), fixed to viewport bottom with backdrop blur effect.
+Bottom tab bar navigation with 5 primary sections (Home, Learn, Track, Experiments, Progress), fixed to viewport bottom with backdrop blur effect. The Learn tab was added to provide users with educational context about metabolic health before they begin tracking.
 
 ## External Dependencies
 
