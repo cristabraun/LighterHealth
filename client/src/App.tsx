@@ -9,6 +9,7 @@ import { BottomNav } from "@/components/BottomNav";
 import Landing from "@/pages/landing";
 import Onboarding from "@/pages/onboarding";
 import Home from "@/pages/home";
+import Learn from "@/pages/learn";
 import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
 import Progress from "@/pages/progress";
@@ -41,6 +42,7 @@ function Router() {
     <div className="min-h-screen">
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/learn" component={Learn} />
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
         <Route path="/progress" component={Progress} />

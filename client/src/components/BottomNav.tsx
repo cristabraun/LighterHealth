@@ -1,11 +1,12 @@
 import { Link, useLocation } from "wouter";
-import { Home, ClipboardList, Beaker, TrendingUp } from "lucide-react";
+import { Home, BookOpen, ClipboardList, Beaker, TrendingUp } from "lucide-react";
 
 export function BottomNav() {
   const [location] = useLocation();
 
   const tabs = [
     { path: "/", icon: Home, label: "Home" },
+    { path: "/learn", icon: BookOpen, label: "Learn" },
     { path: "/track", icon: ClipboardList, label: "Track" },
     { path: "/experiments", icon: Beaker, label: "Experiments" },
     { path: "/progress", icon: TrendingUp, label: "Progress" },
