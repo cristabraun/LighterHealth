@@ -15,9 +15,10 @@ import {
   Sparkles,
   Clock,
   AlertCircle,
-  MessageCircle
+  MessageCircle,
+  Utensils
 } from "lucide-react";
-import type { DailyLog, ActiveExperiment } from "@shared/schema";
+import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import confetti from "canvas-confetti";
 
@@ -39,6 +40,18 @@ export default function Home() {
   const today = new Date().toISOString().split('T')[0];
   const todayLog = logs.find(log => log.date === today);
   const recentLogs = logs.slice(0, 7);
+
+  // Fetch today's food logs
+  const { data: foodLogs = [] } = useQuery<FoodLog[]>({
+    queryKey: ["/api/food-logs"],
+    queryFn: async () => {
+      const res = await fetch(`/api/food-logs?date=${today}`, {
+        credentials: 'include',
+      });
+      if (!res.ok) throw new Error('Failed to fetch food logs');
+      return res.json();
+    },
+  });
 
   // Generate recommendations
   useEffect(() => {
@@ -135,6 +148,42 @@ export default function Home() {
                 Track Now
               </Button>
             </Link>
+          </Card>
+        )}
+
+        {foodLogs.length > 0 && (
+          <Card className="p-6 space-y-4" data-testid="card-food-log">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Utensils className="w-5 h-5 text-primary" data-testid="icon-food" />
+                <h2 className="text-lg font-semibold" data-testid="heading-food-log">Today's Food</h2>
+              </div>
+              <Link href="/track">
+                <Button size="sm" variant="ghost" data-testid="button-add-more-food">
+                  Add More
+                </Button>
+              </Link>
+            </div>
+            <div className="space-y-2">
+              {foodLogs.slice(0, 4).map((log) => (
+                <div
+                  key={log.id}
+                  className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg"
+                  data-testid={`home-food-${log.id}`}
+                >
+                  <span className="text-xs font-medium text-primary capitalize min-w-fit">
+                    {log.meal}
+                  </span>
+                  <span className="text-sm text-muted-foreground">•</span>
+                  <span className="text-sm truncate">{log.foodItem}</span>
+                </div>
+              ))}
+              {foodLogs.length > 4 && (
+                <p className="text-xs text-muted-foreground text-center pt-2">
+                  +{foodLogs.length - 4} more items
+                </p>
+              )}
+            </div>
           </Card>
         )}
 
