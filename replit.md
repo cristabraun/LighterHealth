@@ -12,7 +12,14 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 19, 2025)
 
-**Latest Updates: Learn Page & Track Page Fixes**
+**Latest Updates: Premium Pricing & Direct Messaging**
+- Updated landing page to $19/month premium positioning
+- Added value comparison section (streaming services vs health coaching)
+- Implemented direct messaging feature for user questions
+- Built admin dashboard for responding to messages
+- Added admin authorization with ADMIN_EMAILS environment variable
+
+**Learn Page & Track Page Fixes**
 - Added new Learn/Library page with comprehensive metabolic health education
 - Fixed track page error (undefined loading variable)
 - Added unique constraint to dailyLogs table for proper upsert functionality
@@ -78,9 +85,11 @@ Preferred communication style: Simple, everyday language.
 - `users` table: User profiles with Replit Auth fields (email, name, profile image) + app-specific fields (onboarding status, metabolic symptoms)
 - `dailyLogs` table: Daily tracking data with userId foreign key (temperature, pulse, energy, sleep, digestion, notes) + unique index on (user_id, date) for upsert
 - `activeExperiments` table: User's running experiments with userId foreign key (progress tracking, completion status, daily checklists)
+- `messages` table: User questions/messages with userId foreign key (subject, message, response, status, timestamps)
 
 **API Endpoints** (all protected with `isAuthenticated` middleware):
 - `GET /api/auth/user` - Get current user profile
+- `GET /api/auth/is-admin` - Check if current user has admin access
 - `POST /api/user/onboarding` - Complete onboarding (set name and symptoms)
 - `GET /api/logs` - Get all daily logs for user
 - `GET /api/logs/:date` - Get specific daily log
@@ -89,6 +98,10 @@ Preferred communication style: Simple, everyday language.
 - `POST /api/experiments` - Create new active experiment
 - `PATCH /api/experiments/:id` - Update active experiment
 - `DELETE /api/experiments/:id` - Delete active experiment
+- `POST /api/messages` - User sends a question
+- `GET /api/messages` - Get user's messages
+- `GET /api/admin/messages` - Get all messages (admin only)
+- `PATCH /api/admin/messages/:id` - Respond to message (admin only)
 
 ### Data Visualization
 
@@ -113,19 +126,21 @@ The application uses PostgreSQL database for all persistent data:
 
 ### Page Structure
 
-- `/` (unauthenticated) - Landing page with feature highlights and login button
+- `/` (unauthenticated) - Landing page with $19/month pricing, value comparisons, and feature highlights
 - `/` (authenticated, onboarding incomplete) - Onboarding flow (3 steps: welcome, name entry, symptom assessment)
-- `/` (authenticated, onboarding complete) - Home dashboard with today's vitals, active experiments, and smart recommendations
+- `/` (authenticated, onboarding complete) - Home dashboard with today's vitals, active experiments, recommendations, and "Ask a Question" card
 - `/learn` - Educational library page explaining metabolic health concepts (temperature, pulse, energy, nutrition, stress, experiments)
 - `/track` - Daily logging form for temperature, pulse, energy, sleep, and digestion
 - `/experiments` - Library of experiment templates and active experiment management
 - `/progress` - Charts and trends visualization with 30-day history
+- `/messages` - User messaging interface to ask questions and view responses
+- `/admin/messages` - Admin dashboard to view and respond to user messages (requires ADMIN_EMAILS)
 - `/api/login` - Initiates Replit Auth login flow
 - `/api/logout` - Logs out and redirects to landing page
 
 ### Mobile-First Navigation
 
-Bottom tab bar navigation with 5 primary sections (Home, Learn, Track, Experiments, Progress), fixed to viewport bottom with backdrop blur effect. The Learn tab was added to provide users with educational context about metabolic health before they begin tracking.
+Bottom tab bar navigation with 5 primary sections (Home, Learn, Track, Experiments, Progress), fixed to viewport bottom with backdrop blur effect. The Learn tab was added to provide users with educational context about metabolic health before they begin tracking. Messaging is accessible via "Ask a Question" card on Home page.
 
 ## External Dependencies
 
