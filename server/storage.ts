@@ -68,7 +68,7 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  // Daily log operations
+  // Daily log operations (upsert to handle duplicate dates)
   async createDailyLog(userId: string, log: InsertDailyLog): Promise<DailyLog> {
     const [created] = await db
       .insert(dailyLogs)
@@ -76,6 +76,17 @@ export class DatabaseStorage implements IStorage {
         ...log,
         userId,
         createdAt: new Date().toISOString(),
+      })
+      .onConflictDoUpdate({
+        target: [dailyLogs.userId, dailyLogs.date],
+        set: {
+          temperature: log.temperature,
+          pulse: log.pulse,
+          energy: log.energy,
+          sleep: log.sleep,
+          digestion: log.digestion,
+          notes: log.notes,
+        },
       })
       .returning();
     return created;

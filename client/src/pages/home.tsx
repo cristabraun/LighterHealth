@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/hooks/useAuth";
 import { 
   Thermometer, 
   Heart, 
@@ -19,56 +21,32 @@ import { EXPERIMENTS } from "@/data/experiments";
 import confetti from "canvas-confetti";
 
 export default function Home() {
-  const [user, setUser] = useState<any>(null);
-  const [todayLog, setTodayLog] = useState<DailyLog | null>(null);
-  const [recentLogs, setRecentLogs] = useState<DailyLog[]>([]);
-  const [activeExperiments, setActiveExperiments] = useState<ActiveExperiment[]>([]);
+  const { user } = useAuth();
   const [recommendations, setRecommendations] = useState<string[]>([]);
-  const [, setLocation] = useLocation();
 
-  const loadData = () => {
-    const userData = localStorage.getItem("lighter_user");
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
+  // Fetch daily logs
+  const { data: logs = [] } = useQuery<DailyLog[]>({
+    queryKey: ["/api/logs"],
+  });
 
-    const logs = localStorage.getItem("lighter_daily_logs");
-    if (logs) {
-      const parsedLogs: DailyLog[] = JSON.parse(logs)
-        .sort((a: DailyLog, b: DailyLog) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      const today = new Date().toISOString().split('T')[0];
-      const todaysLog = parsedLogs.find(log => log.date === today);
-      setTodayLog(todaysLog || null);
-      const recent = parsedLogs.slice(-7).reverse();
-      setRecentLogs(recent);
-      generateRecommendations(recent);
-    }
+  // Fetch active experiments
+  const { data: activeExperiments = [] } = useQuery<ActiveExperiment[]>({
+    queryKey: ["/api/experiments"],
+  });
 
-    const experiments = localStorage.getItem("lighter_active_experiments");
-    if (experiments) {
-      const allExperiments = JSON.parse(experiments);
-      setActiveExperiments(allExperiments);
-    }
-  };
+  // Get today's log and recent logs
+  const today = new Date().toISOString().split('T')[0];
+  const todayLog = logs.find(log => log.date === today);
+  const recentLogs = logs.slice(0, 7);
 
+  // Generate recommendations
   useEffect(() => {
-    loadData();
+    if (recentLogs.length < 3) return;
 
-    const handleDataUpdate = () => {
-      loadData();
-    };
-
-    window.addEventListener('lighterDataUpdate', handleDataUpdate);
-    return () => window.removeEventListener('lighterDataUpdate', handleDataUpdate);
-  }, []);
-
-  const generateRecommendations = (logs: DailyLog[]) => {
-    if (logs.length < 3) return;
-
-    const avgTemp = logs.reduce((sum, log) => sum + log.temperature, 0) / logs.length;
-    const avgPulse = logs.reduce((sum, log) => sum + log.pulse, 0) / logs.length;
-    const avgEnergy = logs.reduce((sum, log) => sum + log.energy, 0) / logs.length;
-    const poorSleep = logs.filter(log => log.sleep < 6).length > logs.length / 2;
+    const avgTemp = recentLogs.reduce((sum, log) => sum + log.temperature, 0) / recentLogs.length;
+    const avgPulse = recentLogs.reduce((sum, log) => sum + log.pulse, 0) / recentLogs.length;
+    const avgEnergy = recentLogs.reduce((sum, log) => sum + log.energy, 0) / recentLogs.length;
+    const poorSleep = recentLogs.filter(log => log.sleep < 6).length > recentLogs.length / 2;
 
     const recs: string[] = [];
 
@@ -89,8 +67,9 @@ export default function Home() {
     }
 
     setRecommendations([...new Set(recs)].slice(0, 3));
-  };
+  }, [recentLogs]);
 
+  // Confetti celebration for temperature milestone
   useEffect(() => {
     if (todayLog && todayLog.temperature >= 98 && !sessionStorage.getItem("confetti_shown_today")) {
       confetti({
@@ -102,15 +81,6 @@ export default function Home() {
       sessionStorage.setItem("confetti_shown_today", "true");
     }
   }, [todayLog]);
-
-  const getTemperatureTrend = () => {
-    if (recentLogs.length < 2) return null;
-    const recent = recentLogs[0].temperature;
-    const previous = recentLogs[1].temperature;
-    return recent > previous ? "up" : recent < previous ? "down" : "same";
-  };
-
-  const tempTrend = getTemperatureTrend();
 
   return (
     <div className="min-h-screen pb-20 bg-background">
@@ -127,37 +97,27 @@ export default function Home() {
         {todayLog ? (
           <div className="grid grid-cols-3 gap-4">
             <Card className="p-4 space-y-2" data-testid="card-temperature">
-              <div className="flex items-center justify-between">
-                <Thermometer className="w-5 h-5 text-primary" data-testid="icon-temperature" />
-                {tempTrend === "up" && <TrendingUp className="w-4 h-4 text-green-500" data-testid="icon-trend-up" />}
-                {tempTrend === "down" && <TrendingDown className="w-4 h-4 text-amber-500" data-testid="icon-trend-down" />}
+              <div className="flex items-center gap-2">
+                <Thermometer className="w-4 h-4 text-primary" />
+                <span className="text-xs font-medium text-muted-foreground">Temp</span>
               </div>
-              <div className="space-y-1">
-                <p className="text-2xl font-bold" data-testid="text-temp-value">
-                  {todayLog.temperature.toFixed(1)}°F
-                </p>
-                <p className="text-xs text-muted-foreground">Temperature</p>
-              </div>
+              <p className="text-2xl font-bold" data-testid="text-temperature">{todayLog.temperature.toFixed(1)}°F</p>
             </Card>
 
             <Card className="p-4 space-y-2" data-testid="card-pulse">
-              <Heart className="w-5 h-5 text-primary" data-testid="icon-pulse" />
-              <div className="space-y-1">
-                <p className="text-2xl font-bold" data-testid="text-pulse-value">
-                  {todayLog.pulse}
-                </p>
-                <p className="text-xs text-muted-foreground">Pulse (bpm)</p>
+              <div className="flex items-center gap-2">
+                <Heart className="w-4 h-4 text-primary" />
+                <span className="text-xs font-medium text-muted-foreground">Pulse</span>
               </div>
+              <p className="text-2xl font-bold" data-testid="text-pulse">{todayLog.pulse} BPM</p>
             </Card>
 
             <Card className="p-4 space-y-2" data-testid="card-energy">
-              <Zap className="w-5 h-5 text-primary" data-testid="icon-energy" />
-              <div className="space-y-1">
-                <p className="text-2xl font-bold" data-testid="text-energy-value">
-                  {todayLog.energy}/10
-                </p>
-                <p className="text-xs text-muted-foreground">Energy</p>
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-primary" />
+                <span className="text-xs font-medium text-muted-foreground">Energy</span>
               </div>
+              <p className="text-2xl font-bold" data-testid="text-energy">{todayLog.energy}/10</p>
             </Card>
           </div>
         ) : (
@@ -188,17 +148,18 @@ export default function Home() {
               if (!experiment) return null;
 
               return (
-                <Card key={experiment.id} className="p-6 space-y-4 border-l-4 border-l-primary" data-testid={`card-recommendation-${experiment.id}`}>
+                <Card 
+                  key={experiment.id}
+                  className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-transparent hover:border-primary/20 transition-colors"
+                  data-testid={`card-recommendation-${experiment.id}`}
+                >
                   <div className="space-y-2">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg" data-testid={`text-recommendation-title-${experiment.id}`}>{experiment.title}</h3>
-                        <p className="text-sm text-muted-foreground mt-1" data-testid={`text-recommendation-duration-${experiment.id}`}>
-                          {experiment.duration} days • {experiment.category}
-                        </p>
-                      </div>
-                      <Badge variant="secondary" data-testid={`badge-category-${experiment.id}`}>{experiment.category}</Badge>
-                    </div>
+                    <Badge variant="secondary" className="bg-gradient-to-r from-primary/10 to-chart-2/10" data-testid={`badge-category-${experiment.id}`}>
+                      {experiment.category}
+                    </Badge>
+                    <h3 className="text-lg font-semibold" data-testid={`text-recommendation-title-${experiment.id}`}>
+                      {experiment.title}
+                    </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2" data-testid={`text-recommendation-why-${experiment.id}`}>
                       {experiment.why}
                     </p>

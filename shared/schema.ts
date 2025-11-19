@@ -59,7 +59,9 @@ export const dailyLogs = pgTable("daily_logs", {
   digestion: text("digestion").notNull(), // 'good' | 'okay' | 'poor'
   notes: text("notes"),
   createdAt: text("created_at").notNull(), // ISO string
-});
+}, (table) => ({
+  userDateIdx: index("daily_logs_user_date_idx").on(table.userId, table.date),
+}));
 
 export const insertDailyLogSchema = createInsertSchema(dailyLogs).omit({ 
   id: true, 

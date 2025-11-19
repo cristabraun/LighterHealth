@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,27 +22,73 @@ export default function Track() {
   const [sleep, setSleep] = useState([7]);
   const [digestion, setDigestion] = useState<"good" | "okay" | "poor">("good");
   const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(false);
 
+  const today = new Date().toISOString().split('T')[0];
+
+  // Fetch today's log
+  const { data: todaysLog } = useQuery<DailyLog>({
+    queryKey: ["/api/logs", today],
+  });
+
+  // Pre-fill form with existing data
   useEffect(() => {
-    const logs = localStorage.getItem("lighter_daily_logs");
-    if (logs) {
-      const parsedLogs: DailyLog[] = JSON.parse(logs);
-      const today = new Date().toISOString().split('T')[0];
-      const todaysLog = parsedLogs.find(log => log.date === today);
-      
-      if (todaysLog) {
-        setTemperature(todaysLog.temperature.toString());
-        setPulse(todaysLog.pulse.toString());
-        setEnergy([todaysLog.energy]);
-        setSleep([todaysLog.sleep]);
-        setDigestion(todaysLog.digestion as "good" | "okay" | "poor");
-        setNotes(todaysLog.notes || "");
-      }
+    if (todaysLog) {
+      setTemperature(todaysLog.temperature.toString());
+      setPulse(todaysLog.pulse.toString());
+      setEnergy([todaysLog.energy]);
+      setSleep([todaysLog.sleep]);
+      setDigestion(todaysLog.digestion as "good" | "okay" | "poor");
+      setNotes(todaysLog.notes || "");
     }
-  }, []);
+  }, [todaysLog]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const saveMutation = useMutation({
+    mutationFn: async (logData: InsertDailyLog) => {
+      return await apiRequest("/api/logs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(logData),
+      });
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/logs"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/logs", today] });
+
+      const tempNum = variables.temperature;
+      if (tempNum >= 98 && !sessionStorage.getItem("confetti_shown_today")) {
+        confetti({
+          particleCount: 150,
+          spread: 90,
+          origin: { y: 0.6 },
+          colors: ['#FF6B35', '#FF8C42', '#FFA552']
+        });
+        sessionStorage.setItem("confetti_shown_today", "true");
+        
+        toast({
+          title: "You're glowing!",
+          description: "Your temperature is rising - that's amazing progress!",
+        });
+      } else {
+        toast({
+          title: "Data Saved!",
+          description: "Your vitals have been tracked successfully",
+        });
+      }
+
+      setTimeout(() => {
+        setLocation("/");
+      }, 1500);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to save log",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!temperature || !pulse) {
@@ -73,9 +121,6 @@ export default function Track() {
       return;
     }
 
-    setLoading(true);
-
-    const today = new Date().toISOString().split('T')[0];
     const logData: InsertDailyLog = {
       date: today,
       temperature: tempNum,
@@ -86,52 +131,7 @@ export default function Track() {
       notes: notes.trim() || undefined,
     };
 
-    const logs = localStorage.getItem("lighter_daily_logs");
-    const parsedLogs: DailyLog[] = logs ? JSON.parse(logs) : [];
-    
-    const existingIndex = parsedLogs.findIndex(log => log.date === today);
-    const newLog: DailyLog = {
-      ...logData,
-      id: existingIndex >= 0 ? parsedLogs[existingIndex].id : `log_${Date.now()}`,
-      createdAt: new Date().toISOString(),
-    };
-
-    if (existingIndex >= 0) {
-      parsedLogs[existingIndex] = newLog;
-    } else {
-      parsedLogs.push(newLog);
-    }
-
-    const sortedLogs = parsedLogs.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    localStorage.setItem("lighter_daily_logs", JSON.stringify(sortedLogs));
-
-    window.dispatchEvent(new CustomEvent('lighterDataUpdate', { detail: { type: 'dailyLog' } }));
-
-    if (tempNum >= 98 && !sessionStorage.getItem("confetti_shown_today")) {
-      confetti({
-        particleCount: 150,
-        spread: 90,
-        origin: { y: 0.6 },
-        colors: ['#FF6B35', '#FF8C42', '#FFA552']
-      });
-      sessionStorage.setItem("confetti_shown_today", "true");
-      
-      toast({
-        title: "You're glowing!",
-        description: "Your temperature is rising - that's amazing progress!",
-      });
-    } else {
-      toast({
-        title: "Data Saved!",
-        description: "Your vitals have been tracked successfully",
-      });
-    }
-
-    setLoading(false);
-    
-    setTimeout(() => {
-      setLocation("/");
-    }, 1500);
+    saveMutation.mutate(logData);
   };
 
   return (
