@@ -386,6 +386,27 @@ export default function Learn() {
           </AccordionItem>
         </Accordion>
 
+        <Card className="p-6 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <ExternalLink className="w-6 h-6 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-xl font-semibold">Resources</h2>
+            </div>
+          </div>
+          <p className="text-muted-foreground leading-relaxed">
+            Explore additional resources and references to deepen your understanding of metabolic health.
+          </p>
+          <div className="space-y-3 pt-2">
+            <div className="p-4 rounded-lg bg-muted/30 text-center">
+              <p className="text-sm text-muted-foreground">
+                Additional resources and references will be added here soon.
+              </p>
+            </div>
+          </div>
+        </Card>
+
         <Card className="p-6 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20">
           <div className="space-y-3 text-center">
             <h3 className="text-lg font-semibold">Remember</h3>

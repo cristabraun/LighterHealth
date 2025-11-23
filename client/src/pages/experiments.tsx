@@ -158,13 +158,13 @@ export default function Experiments() {
               >
                 All
               </Badge>
-              {["Energy", "Sleep", "Digestion", "Recovery"].map(cat => (
+              {["Temperature & Pulse", "Nutrition", "Stress & Nervous System", "Movement", "Hormones & Cycle", "Digestion", "Advanced"].map(cat => (
                 <Badge
                   key={cat}
                   variant={filter === cat ? "default" : "outline"}
                   className="cursor-pointer whitespace-nowrap"
                   onClick={() => setFilter(cat)}
-                  data-testid={`filter-${cat.toLowerCase()}`}
+                  data-testid={`filter-${cat.toLowerCase().replace(/\s+/g, '-').replace('&', 'and')}`}
                 >
                   {cat}
                 </Badge>
@@ -401,6 +401,19 @@ export default function Experiments() {
                       ))}
                     </div>
                   </div>
+
+                  {selectedExperiment.alternatives && selectedExperiment.alternatives.length > 0 && (
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-base">Alternatives</h3>
+                      <div className="p-4 rounded-lg bg-primary/5 space-y-2">
+                        {selectedExperiment.alternatives.map((alt, idx) => (
+                          <p key={idx} className="text-sm text-muted-foreground leading-relaxed">
+                            • {alt}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <Button

@@ -45,14 +45,9 @@ export default function Onboarding() {
       return await res.json();
     },
     onSuccess: async () => {
-      // Invalidate and refetch user data
+      // Invalidate and refetch user data - Router will automatically update when query completes
       await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
       await queryClient.refetchQueries({ queryKey: ["/api/auth/user"] });
-      
-      // Small delay to ensure state updates, then reload to trigger auth check
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
     },
     onError: (error: any) => {
       toast({
