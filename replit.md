@@ -10,12 +10,29 @@ The application emphasizes a warm, encouraging design approach inspired by welln
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes (November 19, 2025)
+## Recent Changes (November 23, 2025)
 
-**Latest Updates: Food Logging Feature**
+**Latest Updates: "My Metabolism" Dashboard Redesign**
+- Renamed Progress page to "My Metabolism" with warm, feminine branding
+- Built comprehensive dashboard with 8 sections:
+  1. Header with sparkles icon and gentle subtitle
+  2. Today's Overview - 3 cards showing current temp, pulse, sleep with trend indicators
+  3. Active Experiments - shows running experiments with progress bars
+  4. Food Log Summary - today's meals grouped by type
+  5. 7-Day Trends - charts for temp, pulse, energy, sleep with warm gradients
+  6. Weekly Highlights - summary stats and averages
+  7. Encouragement Card - gentle reminder with supportive messaging
+  8. Empty state - welcomes new users with CTA to start tracking
+- Fixed data handling bugs: logs sorted by date, NaN prevention, conditional rendering
+- All sections render conditionally based on available data
+- Maintains warm coral/orange color scheme throughout
+
+**Previous Updates: Food Logging & Temperature Tracking**
 - Added complete food logging system with database schema (foodLogs table)
 - Integrated food logging UI into Track page (breakfast/lunch/dinner/snack selection)
-- Added "Today's Food" preview card on Home page showing recent meals
+- Added numerical input fields for temperature tracking experiments
+- Temperature experiments now capture actual temp/pulse readings (e.g., 97.2°F, 65 bpm)
+- Measurements stored in JSONB format in activeExperiments table
 - Implemented add/delete functionality with optimistic UI updates
 - Fixed data-fetching strategy using consistent query keys for efficient caching
 
@@ -142,8 +159,8 @@ The application uses PostgreSQL database for all persistent data:
 - `/` (authenticated, onboarding complete) - Home dashboard with today's vitals, active experiments, recommendations, "Today's Food" preview, and "Ask a Question" card
 - `/learn` - Educational library page explaining metabolic health concepts (temperature, pulse, energy, nutrition, stress, experiments)
 - `/track` - Daily logging form for temperature, pulse, energy, sleep, digestion, and food intake
-- `/experiments` - Library of experiment templates and active experiment management
-- `/progress` - Charts and trends visualization with 30-day history
+- `/experiments` - Library of experiment templates and active experiment management with numerical tracking
+- `/progress` - **"My Metabolism" Dashboard** - Comprehensive overview with today's vitals, active experiments, food summary, 7-day trends charts, weekly highlights, and encouragement
 - `/messages` - User messaging interface to ask questions and view responses
 - `/admin/messages` - Admin dashboard to view and respond to user messages (requires ADMIN_EMAILS)
 - `/api/login` - Initiates Replit Auth login flow
@@ -151,7 +168,7 @@ The application uses PostgreSQL database for all persistent data:
 
 ### Mobile-First Navigation
 
-Bottom tab bar navigation with 5 primary sections (Home, Learn, Track, Experiments, Progress), fixed to viewport bottom with backdrop blur effect. The Learn tab was added to provide users with educational context about metabolic health before they begin tracking. Messaging is accessible via "Ask a Question" card on Home page.
+Bottom tab bar navigation with 5 primary sections (Home, Learn, Track, Experiments, **My Metabolism**), fixed to viewport bottom with backdrop blur effect. The "My Metabolism" tab (formerly "Progress") provides a warm, feminine dashboard experience with comprehensive metabolic insights. The Learn tab provides educational context about metabolic health. Messaging is accessible via "Ask a Question" card on Home page.
 
 ## External Dependencies
 
