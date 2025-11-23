@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { 
   Dialog,
   DialogContent,
@@ -17,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Beaker, Clock, ChevronDown, ChevronUp, CheckCircle2, XCircle } from "lucide-react";
 import { EXPERIMENTS } from "@/data/experiments";
-import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
+import type { ActiveExperiment, ExperimentTemplate, DailyMeasurements } from "@shared/schema";
 
 export default function Experiments() {
   const { toast } = useToast();
@@ -49,12 +50,14 @@ export default function Experiments() {
 
     const newExperiment: ActiveExperiment = {
       id: `active_${Date.now()}`,
+      userId: 'local', // Temporary for localStorage-based experiments
       experimentId,
       startDate: new Date().toISOString().split('T')[0],
       currentDay: 1,
       completed: false,
       notes: [],
       checklist: [],
+      measurements: '{}', // Initialize as empty JSON object
     };
 
     const updated = [...activeExperiments, newExperiment];
@@ -105,6 +108,36 @@ export default function Experiments() {
           ? checklist.filter(i => i !== item)
           : [...checklist, item];
         return { ...e, checklist: newChecklist };
+      }
+      return e;
+    });
+    setActiveExperiments(updated);
+    localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
+  };
+
+  const handleMeasurementChange = (experimentId: string, inputId: string, value: string) => {
+    const updated = activeExperiments.map(e => {
+      if (e.id === experimentId) {
+        const numValue = parseFloat(value);
+        if (isNaN(numValue)) return e;
+
+        const measurements: DailyMeasurements = e.measurements ? JSON.parse(e.measurements) : {};
+        const currentDay = e.currentDay.toString();
+        
+        if (!measurements[currentDay]) {
+          measurements[currentDay] = {};
+        }
+        
+        const experiment = EXPERIMENTS.find(exp => exp.id === e.experimentId);
+        const input = experiment?.inputs?.find(inp => inp.id === inputId);
+        
+        measurements[currentDay][inputId] = {
+          value: numValue,
+          unit: input?.unit || "",
+          timestamp: new Date().toISOString()
+        };
+        
+        return { ...e, measurements: JSON.stringify(measurements) };
       }
       return e;
     });
@@ -265,6 +298,46 @@ export default function Experiments() {
 
                         {isExpanded && (
                           <div className="space-y-4 pt-4 border-t">
+                            {experiment.inputs && experiment.inputs.length > 0 && (
+                              <div className="space-y-3">
+                                <h4 className="font-medium text-sm">Today's Measurements</h4>
+                                <div className="grid grid-cols-2 gap-3">
+                                  {experiment.inputs.map((input) => {
+                                    const measurements: DailyMeasurements = active.measurements 
+                                      ? JSON.parse(active.measurements) 
+                                      : {};
+                                    const currentDayMeasurements = measurements[active.currentDay.toString()];
+                                    const currentValue = currentDayMeasurements?.[input.id]?.value || "";
+
+                                    return (
+                                      <div key={input.id} className="space-y-1.5">
+                                        <Label htmlFor={`${active.id}-${input.id}`} className="text-xs text-muted-foreground">
+                                          {input.label}
+                                        </Label>
+                                        <div className="relative">
+                                          <Input
+                                            id={`${active.id}-${input.id}`}
+                                            type={input.type}
+                                            placeholder="0"
+                                            value={currentValue}
+                                            onChange={(e) => handleMeasurementChange(active.id, input.id, e.target.value)}
+                                            min={input.min}
+                                            max={input.max}
+                                            step={input.step}
+                                            className="pr-12"
+                                            data-testid={`input-${active.id}-${input.id}`}
+                                          />
+                                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground pointer-events-none">
+                                            {input.unit}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+
                             <div className="space-y-3">
                               <h4 className="font-medium text-sm">Today's Checklist</h4>
                               {experiment.dailyChecklist.map((item, idx) => (

@@ -22,7 +22,13 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
       { day: "Days 6-7", description: "You understand which meals support your metabolism and can adjust accordingly." }
     ],
     dailyChecklist: ["Measured temp/pulse before meal", "Measured temp/pulse 30-60 min after", "Noted warmth and mood changes"],
-    alternatives: ["If tracking numbers feels overwhelming, just track: Warmer/Cooler/Same and Calmer/Anxious/Same"]
+    alternatives: ["If tracking numbers feels overwhelming, just track: Warmer/Cooler/Same and Calmer/Anxious/Same"],
+    inputs: [
+      { id: "beforeTemp", label: "Temperature Before Meal", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "beforePulse", label: "Pulse Before Meal", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
+      { id: "afterTemp", label: "Temperature After Meal (30-60 min)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "afterPulse", label: "Pulse After Meal (30-60 min)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
+    ]
   },
   {
     id: "morning-vs-afternoon-temp",
@@ -43,7 +49,13 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
       { day: "Days 6-7", description: "If reversed pattern (high AM, low PM), focus on reducing stress and supporting nutrition." }
     ],
     dailyChecklist: ["Measured temp/pulse upon waking", "Measured temp/pulse mid-afternoon", "Noted warmth, calmness, hunger"],
-    alternatives: ["If pulse tracking feels stressful, only track temperature and warmth"]
+    alternatives: ["If pulse tracking feels stressful, only track temperature and warmth"],
+    inputs: [
+      { id: "morningTemp", label: "Morning Temperature (upon waking)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "morningPulse", label: "Morning Pulse (upon waking)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
+      { id: "afternoonTemp", label: "Afternoon Temperature (2-4 PM)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "afternoonPulse", label: "Afternoon Pulse (2-4 PM)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
+    ]
   },
   {
     id: "warm-vs-cold-foods",

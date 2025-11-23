@@ -1,0 +1,187 @@
+Your dashboard will live under Progress, which we’ll rename in the UI to:
+
+⭐ My Metabolism
+
+because it feels:
+
+warm
+
+feminine
+
+intuitive
+
+bioenergetic
+
+positive
+
+not clinical
+
+⭐ Lighter App – DASHBOARD UI DESIGN
+(Everything below can be built directly into your current layout.)
+🌤️ HEADER SECTION
+
+Title: My Metabolism
+Subtitle: “A gentle overview of your daily energy, patterns, and progress.”
+
+A soft icon: 🌞, ♡, ✨, or a warm glowing circle.
+
+📊 SECTION 1 — Today’s Overview (Top Cards)
+
+3 small horizontal cards showing today’s key vitals:
+
+Card 1 — Temp
+
+Big number: 98.1°F
+
+Small text: “Warmth today”
+
+Trend icon: ↑ or ↓ vs yesterday
+
+Card 2 — Pulse
+
+Big number: 79 bpm
+
+Small text: “Energy & stress indicator”
+
+Card 3 — Sleep
+
+Big number: 7.2 hrs
+
+Small text: “Rest & recovery”
+
+These three instantly tell her how she’s doing today.
+
+🔄 SECTION 2 — Active Experiments
+
+Title: Your Current Experiments
+Subtitle: “What you’re exploring right now.”
+
+Display cards like:
+
+Experiment Card Example
+
+OJ Before Coffee
+Day 3 / 5
+Warmth ↑ | Anxiety ↓
+Button: View Progress
+
+Raw Carrot Salad
+Day 1 / 7
+Digestion ↓ | Bloat ↓
+View Progress
+
+Warm Foods Only Day
+Day 2 / 3
+Pulse stable
+View Progress
+
+Button under cards:
++ Add Another Experiment
+
+This makes the app feel alive and tailored.
+
+🔥 SECTION 3 — Goal-Based Insights (VERY Powerful)
+
+Show insights based on the user’s primary goal(s):
+
+Goal = Lose Weight
+Show:
+
+Weight Trend
+Small graph:
+📉 little slope
+
+Insight:
+“You warmed up this week. Warmer women lose weight more easily.”
+Or:
+“Your breakfast experiment improved your energy by 14%.”
+
+Goal = Sleep Better
+Show:
+
+Sleep Trend
+“I noticed you slept 35 minutes longer on days you did the honey + salt evening experiment.”
+
+Goal = Energy
+Show:
+
+“Your pulse improved this week — you’re trending toward higher daily energy.”
+
+You can reuse the metrics you already measure.
+
+🍎 SECTION 4 — Food Log Summary
+
+If they log food:
+
+Your Meals Today
+
+Breakfast: 🍳 Protein + Fruit
+
+Lunch: 🍠 Warm carbs, dairy
+
+Dinner: 🥛 Milk + Gelatin
+
+Pattern Insight:
+“You felt warmest after breakfast.”
+or
+“Cold foods lowered your warmth yesterday.”
+
+This is simple and powerful.
+
+📈 SECTION 5 — Metabolic Graphs
+
+3 small graphs, scrollable:
+
+Temperature (7 days)
+
+Pulse (7 days)
+
+Weight (7 days)
+
+Sleep (7 days)
+
+Digestion Score (optional)
+
+Use a soft peach/pink gradient for the line colors → feminine + warm.
+
+🧡 SECTION 6 — Weekly Highlights
+
+Title: This Week at a Glance
+
+“You completed 9/12 daily tasks.”
+
+“Warmth increased by 0.4°F.”
+
+“Pulse stabilized.”
+
+“Bloating decreased.”
+
+“You improved sleep by 12%.”
+
+“OJ Before Coffee was your most successful experiment.”
+
+Every week, this makes the app feel rewarding.
+
+✨ SECTION 7 — Encouragement Card
+
+Small box at the bottom:
+
+✨ Gentle Reminder
+“You’re doing beautifully. Metabolic healing is a journey, not a rush.”
+
+This reinforces the soft, feminine bioenergetic voice of Lighter.
+
+⭐ This Dashboard Makes Your App Feel:
+
+✔ intuitive
+✔ guided
+✔ supportive
+✔ non-overwhelming
+✔ personalized
+✔ calming
+✔ feminine
+✔ science-backed
+✔ “I know what to do next”
+
+It solves the exact problem you mentioned:
+Women know exactly where to start and what to do every day.

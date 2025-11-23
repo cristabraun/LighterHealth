@@ -91,6 +91,7 @@ export const activeExperiments = pgTable("active_experiments", {
   completed: boolean("completed").notNull().default(false),
   notes: text("notes").array(),
   checklist: text("checklist").array(), // daily checklist items completed
+  measurements: text("measurements").notNull().default('{}'), // JSONB stored as text: { "1": { "morningTemp": { "value": 97.2, "unit": "°F", "timestamp": "..." }, ... }, "2": { ... } }
 });
 
 export const insertActiveExperimentSchema = createInsertSchema(activeExperiments).omit({ 
@@ -157,6 +158,29 @@ export const insertFoodLogSchema = createInsertSchema(foodLogs).omit({
 export type InsertFoodLog = z.infer<typeof insertFoodLogSchema>;
 export type FoodLog = typeof foodLogs.$inferSelect;
 
+// Measurement Types for Experiments
+export type MeasurementInput = {
+  id: string; // e.g., "morningTemp", "afternoonTemp", "beforeMealTemp"
+  label: string; // e.g., "Morning Temperature"
+  unit: string; // e.g., "°F", "bpm"
+  type: 'number'; // input type
+  min?: number;
+  max?: number;
+  step?: number;
+};
+
+export type MeasurementValue = {
+  value: number;
+  unit: string;
+  timestamp: string; // ISO string
+};
+
+export type DailyMeasurements = {
+  [day: string]: { // e.g., "1", "2", "3"
+    [inputId: string]: MeasurementValue; // e.g., "morningTemp": { value: 97.2, unit: "°F", timestamp: "..." }
+  };
+};
+
 // Experiment Template Type (not stored in DB, just TypeScript)
 export type ExperimentTemplate = {
   id: string;
@@ -169,4 +193,5 @@ export type ExperimentTemplate = {
   whatToExpect: { day: string; description: string }[];
   dailyChecklist: string[];
   alternatives?: string[]; // Optional alternatives if the primary method doesn't work
+  inputs?: MeasurementInput[]; // Optional numerical inputs for measurements
 };
