@@ -162,10 +162,11 @@ export type ExperimentTemplate = {
   id: string;
   title: string;
   duration: number; // days
-  category: 'Energy' | 'Sleep' | 'Digestion' | 'Recovery';
+  category: 'Temperature & Pulse' | 'Nutrition' | 'Stress & Nervous System' | 'Movement' | 'Hormones & Cycle' | 'Digestion' | 'Advanced';
   why: string;
   how: string[];
   when: string;
   whatToExpect: { day: string; description: string }[];
   dailyChecklist: string[];
+  alternatives?: string[]; // Optional alternatives if the primary method doesn't work
 };
