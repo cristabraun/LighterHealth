@@ -283,6 +283,20 @@ export default function Home() {
             </Button>
           </Link>
         </div>
+
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border-primary/20" data-testid="card-message-coach">
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold" data-testid="heading-message-coach">Need Personalized Guidance?</h3>
+            <p className="text-sm text-muted-foreground" data-testid="text-message-coach-description">
+              Message your metabolic health coach with questions about your experiments, symptoms, or next steps.
+            </p>
+          </div>
+          <Link href="/messages">
+            <Button className="w-full bg-gradient-to-r from-primary to-chart-2" data-testid="button-message-coach">
+              Message Me
+            </Button>
+          </Link>
+        </Card>
       </div>
     </div>
   );
