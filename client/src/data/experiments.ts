@@ -5,7 +5,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "temp-before-after-meals",
     title: "Temperature Before + After Meals",
-    duration: 7,
+    duration: 30,
     category: "Temperature & Pulse",
     why: "Your body's temperature response to food reveals how well you're converting food into energy. If a meal raises temp/pulse → metabolism is strong. If it drops → low thyroid or high cortisol response. This is one of Ray Peat's foundational metabolic tracking methods.",
     how: [
@@ -17,9 +17,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Choose one meal per day (ideally the same meal each day) to track consistently.",
     whatToExpect: [
-      { day: "Days 1-3", description: "Learning your baseline. You may notice that some meals warm you up while others don't." },
-      { day: "Days 4-5", description: "Patterns emerge - certain foods consistently raise or lower your temperature." },
-      { day: "Days 6-7", description: "You understand which meals support your metabolism and can adjust accordingly." }
+      { day: "Days 1-7", description: "Learning your baseline. You may notice that some meals warm you up while others don't." },
+      { day: "Days 8-20", description: "Patterns emerge - certain foods consistently raise or lower your temperature." },
+      { day: "Days 21-30", description: "Deep understanding of which meals support your metabolism. You can confidently adjust your diet." }
     ],
     dailyChecklist: ["Measured temp/pulse before meal", "Measured temp/pulse 30-60 min after", "Noted warmth and mood changes"],
     alternatives: ["If tracking numbers feels overwhelming, just track: Warmer/Cooler/Same and Calmer/Anxious/Same"],
@@ -33,7 +33,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "morning-vs-afternoon-temp",
     title: "Morning vs Afternoon Temp/Pulse",
-    duration: 7,
+    duration: 30,
     category: "Temperature & Pulse",
     why: "Morning is when metabolism is lowest. Afternoon should be highest. If this pattern is reversed (high AM, low PM), it indicates cortisol dominance - your body is running on stress hormones rather than efficient energy production.",
     how: [
@@ -42,11 +42,11 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
       "Track the difference between AM and PM readings",
       "Note: afternoon should be warmer with stable pulse (70-90)"
     ],
-    when: "Daily tracking for 7 days. Consistency is key to identifying patterns.",
+    when: "Daily tracking for 30 days. Consistency is key to identifying patterns.",
     whatToExpect: [
-      { day: "Days 1-3", description: "Establishing baseline. You may notice your AM temp is quite low." },
-      { day: "Days 4-5", description: "Patterns become clear - healthy pattern shows rising temp throughout day." },
-      { day: "Days 6-7", description: "If reversed pattern (high AM, low PM), focus on reducing stress and supporting nutrition." }
+      { day: "Days 1-7", description: "Establishing baseline. You may notice your AM temp is quite low." },
+      { day: "Days 8-20", description: "Patterns become clear - healthy pattern shows rising temp throughout day." },
+      { day: "Days 21-30", description: "Deep insights into your circadian rhythm. If reversed pattern persists, focus on reducing stress and supporting nutrition." }
     ],
     dailyChecklist: ["Measured temp/pulse upon waking", "Measured temp/pulse mid-afternoon", "Noted warmth, calmness, hunger"],
     alternatives: ["If pulse tracking feels stressful, only track temperature and warmth"],
@@ -82,7 +82,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "oj-before-coffee",
     title: "OJ Before Coffee",
-    duration: 7,
+    duration: 30,
     category: "Nutrition",
     why: "Coffee on an empty stomach spikes cortisol and adrenaline. Orange juice provides easily digestible sugar that supports liver glycogen, stabilizes blood sugar, and prevents the anxious, jittery response to caffeine. This is a Ray Peat fundamental.",
     how: [
@@ -93,9 +93,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Every morning before your first coffee. Make this a consistent habit.",
     whatToExpect: [
-      { day: "Days 1-2", description: "Reduced jitters and anxiety from coffee. Energy feels smoother." },
-      { day: "Days 3-5", description: "Coffee becomes energizing without the crash. Heart rate stays stable." },
-      { day: "Days 6-7", description: "You feel warmer throughout the morning. Less reliance on caffeine for energy." }
+      { day: "Days 1-7", description: "Reduced jitters and anxiety from coffee. Energy feels smoother." },
+      { day: "Days 8-20", description: "Coffee becomes energizing without the crash. Heart rate stays stable. This becomes second nature." },
+      { day: "Days 21-30", description: "You feel warmer throughout the morning. Less reliance on caffeine for energy. A new healthy habit is formed." }
     ],
     dailyChecklist: ["Drank OJ before coffee", "Added pinch of salt", "Tracked anxiety/jitters"],
     alternatives: ["Honey water (1 tbsp in warm water)", "Ripe fruit (banana, mango)", "Milk with a teaspoon of sugar"]
@@ -103,7 +103,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "raw-carrot-salad",
     title: "Raw Carrot Salad Daily",
-    duration: 7,
+    duration: 30,
     category: "Nutrition",
     why: "Raw carrot fiber uniquely binds to excess estrogen and endotoxins in your gut, helping eliminate them through bowel movements. This can reduce bloating, improve skin clarity, ease PMS, and support hormonal balance. Ray Peat's most famous recommendation.",
     how: [
@@ -115,9 +115,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Best consumed with lunch or dinner. The fibers work throughout your digestive tract for several hours.",
     whatToExpect: [
-      { day: "Days 1-2", description: "Increased bowel movements as your body begins eliminating bound toxins - normal and healthy." },
-      { day: "Days 3-5", description: "Reduced bloating after meals. Digestion feels lighter and more efficient." },
-      { day: "Days 6-7", description: "Clearer skin, more stable mood, reduced PMS symptoms if cycle is approaching." }
+      { day: "Days 1-7", description: "Increased bowel movements as your body begins eliminating bound toxins - normal and healthy." },
+      { day: "Days 8-20", description: "Reduced bloating after meals. Digestion feels lighter and more efficient. Skin starts clearing." },
+      { day: "Days 21-30", description: "Clearer skin, more stable mood, reduced PMS symptoms. Hormonal balance improves significantly." }
     ],
     dailyChecklist: ["Ate raw carrot salad with oil and vinegar", "Tracked bloating, mood, digestion"],
     alternatives: ["If allergic to carrots: cooked bamboo shoots, cooked mushrooms, or activated charcoal 1-2x/week"]
@@ -125,21 +125,21 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "low-pufa-week",
     title: "One Week of Low-PUFA Eating",
-    duration: 7,
+    duration: 30,
     category: "Nutrition",
     why: "Seed oils (PUFA - polyunsaturated fats) are highly inflammatory, suppress thyroid function, and promote estrogen dominance. Canola, soybean, corn, and sunflower oils are found in almost all processed foods. Eliminating them dramatically reduces inflammation.",
     how: [
       "Replace PUFA oils with butter, ghee, or coconut oil",
       "Avoid fried restaurant foods (usually cooked in seed oils)",
       "Read ingredient labels - avoid canola, soybean, corn, sunflower, safflower oils",
-      "Cook at home with quality fats for one week",
+      "Cook at home with quality fats",
       "Focus on whole, unprocessed foods"
     ],
-    when: "Commit to 7 full days of avoiding PUFA oils. Meal prep helps ensure success.",
+    when: "Commit to 30 full days of avoiding PUFA oils. Meal prep helps ensure success.",
     whatToExpect: [
-      { day: "Days 1-3", description: "You may feel different as inflammation begins to reduce. Skin may look clearer." },
-      { day: "Days 4-5", description: "Less puffiness, especially in face and hands. Energy feels more stable." },
-      { day: "Days 6-7", description: "Warmer body temperature, better mood, reduced anxiety. Notice how much better you feel." }
+      { day: "Days 1-7", description: "You may feel different as inflammation begins to reduce. Skin may look clearer." },
+      { day: "Days 8-20", description: "Less puffiness, especially in face and hands. Energy feels more stable. Cravings reduce." },
+      { day: "Days 21-30", description: "Warmer body temperature, better mood, reduced anxiety. Significant inflammation reduction. This becomes your new normal." }
     ],
     dailyChecklist: ["Avoided all seed oils", "Used only butter/coconut oil/ghee", "Tracked skin, energy, warmth"],
     alternatives: ["If you can't fully avoid PUFA, start by replacing just one meal per day with clean fats"]
@@ -210,7 +210,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "gelatin-before-bed",
     title: "Gelatin Before Bed",
-    duration: 14,
+    duration: 30,
     category: "Nutrition",
     why: "Gelatin is rich in glycine, an amino acid that lowers nighttime cortisol, supports detoxification, and promotes deep sleep. It balances out the methionine in muscle meats. Taking it before bed helps you sleep deeper and wake with better temperature and energy.",
     how: [
@@ -221,9 +221,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Every evening before bed. Consistency is important for lowering cortisol patterns.",
     whatToExpect: [
-      { day: "Days 1-3", description: "Falling asleep more easily. Feeling more relaxed in the evening." },
-      { day: "Days 4-7", description: "Fewer nighttime wakings (especially 3-4am wake-ups). Dreams may be more vivid." },
-      { day: "Days 8-14", description: "Waking with warmer temperature and better energy. Deeper, more restorative sleep overall." }
+      { day: "Days 1-7", description: "Falling asleep more easily. Feeling more relaxed in the evening." },
+      { day: "Days 8-20", description: "Fewer nighttime wakings (especially 3-4am wake-ups). Dreams may be more vivid. Sleep deepens." },
+      { day: "Days 21-30", description: "Waking with warmer temperature and better energy. Deeper, more restorative sleep. Skin and joints may also improve." }
     ],
     dailyChecklist: ["Took gelatin before bed", "Tracked sleep quality, night waking, morning temperature"],
     alternatives: ["Collagen powder (though gelatin is superior for sleep)", "Bone broth before bed", "Glycine powder (3-5g)"]
@@ -233,7 +233,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "warm-bath-before-bed",
     title: "Warm Bath Before Bed",
-    duration: 7,
+    duration: 30,
     category: "Stress & Nervous System",
     why: "Heat exposure before bed lowers stress hormones (cortisol and adrenaline), relaxes muscles, and signals to your body that it's safe to rest. This triggers deeper sleep and helps you wake with better temperature and energy.",
     how: [
@@ -244,9 +244,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Every evening, 1-2 hours before your target bedtime.",
     whatToExpect: [
-      { day: "Days 1-2", description: "Feeling more relaxed and drowsy in the evening. Easier time winding down." },
-      { day: "Days 3-5", description: "Falling asleep faster. Less rumination and racing thoughts at bedtime." },
-      { day: "Days 6-7", description: "Waking with warmer body temperature. Better overall sleep quality and morning energy." }
+      { day: "Days 1-7", description: "Feeling more relaxed and drowsy in the evening. Easier time winding down." },
+      { day: "Days 8-20", description: "Falling asleep faster. Less rumination and racing thoughts at bedtime. This becomes a cherished ritual." },
+      { day: "Days 21-30", description: "Waking with warmer body temperature. Better overall sleep quality and morning energy. Nervous system is calmer." }
     ],
     dailyChecklist: ["Took warm bath/shower before bed", "Tracked sleep latency, rumination, morning warmth"],
     alternatives: ["Heating pad on feet or abdomen", "Warm socks to bed", "Hot water bottle on feet"]
@@ -254,7 +254,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "afternoon-sunlight",
     title: "Afternoon Sunlight",
-    duration: 7,
+    duration: 30,
     category: "Stress & Nervous System",
     why: "Afternoon sunlight (2-5pm) helps regulate your circadian rhythm by lowering melatonin during the day, which creates a stronger sleep response at night. It also provides red light that supports mitochondrial energy production and reduces inflammation.",
     how: [
@@ -265,9 +265,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Daily between 2-5 PM. Even 5 minutes makes a difference.",
     whatToExpect: [
-      { day: "Days 1-3", description: "More alert in the afternoon. Less brain fog and sluggishness." },
-      { day: "Days 4-5", description: "Better sleep at night as your circadian rhythm strengthens." },
-      { day: "Days 6-7", description: "More stable mood, better energy, and improved sleep quality overall." }
+      { day: "Days 1-7", description: "More alert in the afternoon. Less brain fog and sluggishness." },
+      { day: "Days 8-20", description: "Better sleep at night as your circadian rhythm strengthens. Mood stabilizes." },
+      { day: "Days 21-30", description: "More stable mood, better energy, and improved sleep quality. This becomes a natural part of your day." }
     ],
     dailyChecklist: ["Got 5-10 min afternoon sunlight", "Tracked mood, brain fog, sleep quality"],
     alternatives: ["Sitting by a sunny window", "Red light therapy device (2-5 minutes)", "Incandescent bulb exposure"]
@@ -275,7 +275,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "honey-salt-nighttime",
     title: "Honey + Salt for Nighttime Waking",
-    duration: 7,
+    duration: 30,
     category: "Stress & Nervous System",
     why: "When blood sugar drops overnight, cortisol spikes to raise it back up - this causes 3-4am wake-ups. Honey with salt before bed provides easily accessible glucose that stabilizes blood sugar, preventing cortisol spikes and nighttime waking.",
     how: [
@@ -286,9 +286,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Every night before bed. Keep honey and salt by your bedside for nighttime waking.",
     whatToExpect: [
-      { day: "Days 1-2", description: "You may sleep through the night without waking, or fall back asleep faster if you do wake." },
-      { day: "Days 3-5", description: "Fewer nighttime wake-ups, especially the 3-4am pattern. Dreams may be more vivid." },
-      { day: "Days 6-7", description: "More stable blood sugar overnight. Less anxiety and better quality sleep overall." }
+      { day: "Days 1-7", description: "You may sleep through the night without waking, or fall back asleep faster if you do wake." },
+      { day: "Days 8-20", description: "Fewer nighttime wake-ups, especially the 3-4am pattern. Dreams may be more vivid. Blood sugar stabilizes." },
+      { day: "Days 21-30", description: "Consistent, uninterrupted sleep. Less anxiety and better quality sleep overall. This becomes a healthy habit." }
     ],
     dailyChecklist: ["Took honey + salt before bed", "Tracked night waking, dreams, anxiety"],
     alternatives: ["Small glass of milk before bed", "4 oz orange juice with pinch of salt", "Banana with salt"]
@@ -298,7 +298,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "nasal-walking",
     title: "Slow, Nasal Walking",
-    duration: 7,
+    duration: 30,
     category: "Movement",
     why: "Breathing only through your nose during gentle walking keeps you in parasympathetic (rest & digest) mode rather than triggering stress hormones. This reduces the cortisol response from exercise, allowing movement to heal rather than stress your metabolism.",
     how: [
@@ -309,9 +309,9 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     ],
     when: "Daily if possible. Morning or evening walks work well.",
     whatToExpect: [
-      { day: "Days 1-3", description: "Learning to pace yourself. It may feel slow at first." },
-      { day: "Days 4-5", description: "Feeling more energized after walks rather than depleted. Better warmth and mood." },
-      { day: "Days 6-7", description: "Improved sleep, stable hunger, better overall energy. Movement supports rather than stresses you." }
+      { day: "Days 1-7", description: "Learning to pace yourself. It may feel slow at first." },
+      { day: "Days 8-20", description: "Feeling more energized after walks rather than depleted. Better warmth and mood. Endurance improves." },
+      { day: "Days 21-30", description: "Improved sleep, stable hunger, better overall energy. Movement supports rather than stresses you. A new healthy habit." }
     ],
     dailyChecklist: ["Walked 20+ min breathing only through nose", "Tracked warmth, sleep, hunger, energy"],
     alternatives: ["Gentle cycling", "Easy yoga or stretching", "Slow dancing", "Swimming at easy pace"]
@@ -342,20 +342,20 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "calcium-boost-pms",
     title: "Calcium Boost for PMS",
-    duration: 7,
+    duration: 30,
     category: "Hormones & Cycle",
     why: "Calcium lowers PTH (parathyroid hormone), a stress hormone that rises when calcium is low. Adequate calcium is calming, reduces PMS symptoms (irritability, cramps, mood swings), and supports thyroid function. Many women are calcium deficient.",
     how: [
-      "Increase dairy or calcium-rich foods for 7 days (or start 3 days before period)",
+      "Increase dairy or calcium-rich foods daily",
       "Best sources: milk, cheese, yogurt, cottage cheese",
       "Aim for 3-4 servings daily",
-      "Track PMS symptoms throughout the week"
+      "Track PMS symptoms throughout the month"
     ],
-    when: "Try this during the week before your period, or anytime to test calcium's effects.",
+    when: "Daily for 30 days to fully replenish calcium stores and see cycle improvements.",
     whatToExpect: [
-      { day: "Days 1-3", description: "Mood begins to stabilize. Less irritability and emotional sensitivity." },
-      { day: "Days 4-5", description: "Reduced breast tenderness and bloating. Fewer sugar cravings." },
-      { day: "Days 6-7", description: "Significantly lighter PMS symptoms overall. Cramps may be reduced or absent." }
+      { day: "Days 1-7", description: "Mood begins to stabilize. Less irritability and emotional sensitivity." },
+      { day: "Days 8-20", description: "Reduced breast tenderness and bloating. Fewer sugar cravings. Better sleep." },
+      { day: "Days 21-30", description: "Significantly lighter PMS symptoms overall. Cramps may be reduced or absent. Full cycle improvement visible." }
     ],
     dailyChecklist: ["Had 3-4 servings calcium-rich foods", "Tracked mood, cramps, puffiness"],
     alternatives: ["Filtered milk if regular milk bothers you", "Cottage cheese or ricotta", "Calcium supplement (500mg 2x/day)"]
@@ -363,7 +363,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "magnesium-night",
     title: "Magnesium at Night",
-    duration: 14,
+    duration: 30,
     category: "Hormones & Cycle",
     why: "Magnesium is essential for over 300 processes including muscle relaxation, nervous system regulation, and lowering adrenaline. Most women are deficient. Magnesium glycinate at night improves sleep, reduces cramps, and lowers anxiety.",
     how: [
@@ -372,11 +372,11 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
       "Take with food if you experience stomach sensitivity",
       "Use magnesium glycinate specifically (not oxide)"
     ],
-    when: "Every evening for 14 days to build up magnesium stores.",
+    when: "Every evening for 30 days to fully build up magnesium stores.",
     whatToExpect: [
-      { day: "Days 1-5", description: "More relaxed in evening. Muscles feel less tense. May notice softer bowel movements (normal)." },
-      { day: "Days 6-10", description: "Falling asleep easier. Less nighttime anxiety and restless legs. Reduced muscle cramps." },
-      { day: "Days 11-14", description: "Deeper sleep quality. Better stress resilience during day. Fewer headaches and muscle tension." }
+      { day: "Days 1-7", description: "More relaxed in evening. Muscles feel less tense. May notice softer bowel movements (normal)." },
+      { day: "Days 8-20", description: "Falling asleep easier. Less nighttime anxiety and restless legs. Reduced muscle cramps." },
+      { day: "Days 21-30", description: "Deeper sleep quality. Better stress resilience during day. Fewer headaches and muscle tension. Magnesium stores replenished." }
     ],
     dailyChecklist: ["Took magnesium glycinate (200-400mg)", "Tracked sleep, cramps, anxiety"],
     alternatives: ["Epsom salt bath (magnesium absorbed through skin)", "Topical magnesium spray or lotion"]
@@ -386,20 +386,20 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "coffee-with-sugar",
     title: "Coffee with Sugar vs Black Coffee",
-    duration: 7,
+    duration: 30,
     category: "Digestion",
     why: "Black coffee spikes adrenaline and cortisol, which can suppress digestion, increase anxiety, and stress your metabolism. Adding sugar and dairy provides glucose and calcium that buffer caffeine's stress response while still providing energy.",
     how: [
-      "For 7 days, add 1-2 teaspoons sugar and cream/milk to your coffee",
+      "Add 1-2 teaspoons sugar and cream/milk to your coffee",
       "Never drink coffee black or on an empty stomach",
       "Have coffee with or after breakfast, not before",
       "Notice how your body responds"
     ],
-    when: "Every morning for 7 days. Make this your default way to drink coffee.",
+    when: "Every morning for 30 days. Make this your default way to drink coffee.",
     whatToExpect: [
-      { day: "Days 1-2", description: "Less anxiety and jitters from coffee. Energy feels smoother and more sustained." },
-      { day: "Days 3-5", description: "Better digestion. No stomach upset or racing heart from caffeine." },
-      { day: "Days 6-7", description: "Stable energy and warmth throughout morning. Coffee enhances rather than stresses you." }
+      { day: "Days 1-7", description: "Less anxiety and jitters from coffee. Energy feels smoother and more sustained." },
+      { day: "Days 8-20", description: "Better digestion. No stomach upset or racing heart from caffeine. This becomes your new normal." },
+      { day: "Days 21-30", description: "Stable energy and warmth throughout morning. Coffee enhances rather than stresses you. A healthier coffee habit is formed." }
     ],
     dailyChecklist: ["Drank coffee with sugar + dairy", "Had coffee after food", "Tracked anxiety, warmth, hunger"],
     alternatives: ["Half-caf coffee with sugar", "Decaf coffee with sugar and cream", "Coffee only after breakfast"]
@@ -430,7 +430,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "red-light-therapy",
     title: "Red Light Therapy",
-    duration: 14,
+    duration: 30,
     category: "Advanced",
     why: "Red light (600-850nm wavelength) penetrates skin and directly boosts mitochondrial energy production. It supports thyroid function, reduces inflammation, improves skin, and enhances metabolism. It's like giving your cells a direct energy boost.",
     how: [
@@ -439,11 +439,11 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
       "Use daily or 5x per week",
       "Best time: morning to support circadian rhythm"
     ],
-    when: "Daily for 14 days. Morning is ideal but any consistent time works.",
+    when: "Daily for 30 days. Morning is ideal but any consistent time works.",
     whatToExpect: [
-      { day: "Days 1-5", description: "Warmer body temperature after sessions. Improved mood and mental clarity." },
-      { day: "Days 6-10", description: "Better energy throughout the day. Skin looks healthier and more radiant." },
-      { day: "Days 11-14", description: "Pain or inflammation noticeably reduced. Metabolism feels stronger overall." }
+      { day: "Days 1-7", description: "Warmer body temperature after sessions. Improved mood and mental clarity." },
+      { day: "Days 8-20", description: "Better energy throughout the day. Skin looks healthier and more radiant." },
+      { day: "Days 21-30", description: "Pain or inflammation noticeably reduced. Metabolism feels stronger overall. Cumulative benefits become clear." }
     ],
     dailyChecklist: ["Used red light for 2-5 min", "Tracked warmth, mood, pain levels"],
     alternatives: ["Morning sunlight exposure (free red light)", "Incandescent light bulbs (some red spectrum)"]
@@ -451,7 +451,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   {
     id: "meal-timing-test",
     title: "Meal Timing Test",
-    duration: 7,
+    duration: 30,
     category: "Advanced",
     why: "Eating too close to bed can disrupt sleep as digestion continues overnight. But eating too early can cause blood sugar crashes. This test helps you find your optimal dinner timing for best sleep and morning temperature.",
     how: [
@@ -460,11 +460,11 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
       "If you wake hungry, try honey + salt before bed",
       "Track sleep quality and morning temperature"
     ],
-    when: "For 7 days, keep consistent timing. Adjust based on results.",
+    when: "For 30 days, keep consistent timing. Adjust based on results.",
     whatToExpect: [
-      { day: "Days 1-3", description: "Learning your optimal window. You may sleep better or feel too hungry initially." },
-      { day: "Days 4-5", description: "Sleep quality improves if timing is right. Morning temperature may be higher." },
-      { day: "Days 6-7", description: "More vivid dreams, better sleep, and warmer waking temperature if timing is optimal." }
+      { day: "Days 1-7", description: "Learning your optimal window. You may sleep better or feel too hungry initially." },
+      { day: "Days 8-20", description: "Sleep quality improves if timing is right. Morning temperature may be higher. Fine-tune your timing." },
+      { day: "Days 21-30", description: "More vivid dreams, better sleep, and warmer waking temperature. Your optimal meal timing is established." }
     ],
     dailyChecklist: ["Ate last meal 3 hours before bed", "Tracked sleep quality, morning temp, dreams"],
     alternatives: ["Small bedtime snack (honey + salt, milk, banana) if 3 hours feels too long"]
