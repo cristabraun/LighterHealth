@@ -16,7 +16,8 @@ import {
   Plus,
   Utensils,
   Calendar,
-  ArrowRight
+  ArrowRight,
+  MessageSquare
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -702,7 +703,25 @@ export default function MyMetabolism() {
           </div>
         )}
 
-        {/* Section 6: Encouragement Card */}
+        {/* Section: Message Coach */}
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border-primary/20" data-testid="card-message-coach-progress">
+          <div className="flex items-start gap-3">
+            <MessageSquare className="w-5 h-5 text-primary shrink-0 mt-1" />
+            <div className="space-y-2 flex-1">
+              <h3 className="font-semibold" data-testid="heading-message-coach-progress">Hit a Block or Need Help?</h3>
+              <p className="text-sm text-muted-foreground" data-testid="text-message-coach-progress-description">
+                If you're not seeing progress, facing challenges, or just have questions about what you're experiencing, message me. I'm here to help you work through it.
+              </p>
+            </div>
+          </div>
+          <Link href="/messages" data-testid="link-message-from-progress">
+            <Button className="w-full bg-gradient-to-r from-primary to-chart-2" data-testid="button-message-coach-progress">
+              Message Me
+            </Button>
+          </Link>
+        </Card>
+
+        {/* Section: Encouragement Card */}
         <Card className="p-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-primary/20">
           <div className="flex items-start gap-4">
             <Sparkles className="w-6 h-6 text-primary shrink-0 mt-1" />
