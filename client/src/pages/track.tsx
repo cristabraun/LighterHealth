@@ -60,14 +60,14 @@ export default function Track() {
   }, [todaysLog]);
 
   const checklistItems = [
-    "Keep blood sugar steady — Eat every 3–4 hours. Pair sugar + protein. Don't fast.",
-    "Stop drinking coffee on an empty stomach — Have OJ, fruit, or milk first.",
-    "Get morning light + gentle movement — 10 minutes of sunlight or walking.",
-    "Reduce estrogen + endotoxin load — Daily raw carrot salad or cooked white mushrooms.",
-    "Prioritize easy-to-digest foods — Fruit, dairy, juice, root veggies, gelatin.",
-    "Support warmth — Dress warm, avoid cold plunges, choose warming foods.",
-    "Fuel before and after workouts — Never train fasted. Have sugar + protein afterward.",
-    "Have a bedtime snack — Milk + honey, fruit + cheese, or gelatin + juice.",
+    "Ate regularly today (every 3–4 hours, paired carbs + protein)",
+    "Had food before coffee (OJ, fruit, or milk first)",
+    "Got morning light or movement (10 min outside or a short walk)",
+    "Supported digestion (raw carrot salad or cooked mushrooms)",
+    "Chose easy-to-digest foods (fruit, dairy, juice, root veggies, gelatin)",
+    "Stayed warm (dressed warmly, chose warming foods)",
+    "Fueled workouts properly (ate before/after if I exercised)",
+    "Had a bedtime snack if hungry (milk + honey, fruit + cheese, etc.)",
   ];
 
   const toggleChecklistItem = (index: number) => {
