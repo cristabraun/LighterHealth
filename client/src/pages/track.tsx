@@ -22,6 +22,8 @@ export default function Track() {
   const [energy, setEnergy] = useState([7]);
   const [sleep, setSleep] = useState([7]);
   const [digestion, setDigestion] = useState<"good" | "okay" | "poor">("good");
+  const [howYouFeelNotes, setHowYouFeelNotes] = useState("");
+  const [digestionNotes, setDigestionNotes] = useState("");
   const [notes, setNotes] = useState("");
 
   // Food log state
@@ -50,6 +52,8 @@ export default function Track() {
       setEnergy([todaysLog.energy]);
       setSleep([todaysLog.sleep]);
       setDigestion(todaysLog.digestion as "good" | "okay" | "poor");
+      setHowYouFeelNotes(todaysLog.howYouFeelNotes || "");
+      setDigestionNotes(todaysLog.digestionNotes || "");
       setNotes(todaysLog.notes || "");
     }
   }, [todaysLog]);
@@ -182,6 +186,8 @@ export default function Track() {
       energy: energy[0],
       sleep: sleep[0],
       digestion,
+      howYouFeelNotes: howYouFeelNotes.trim() || undefined,
+      digestionNotes: digestionNotes.trim() || undefined,
       notes: notes.trim() || undefined,
     };
 
@@ -370,6 +376,29 @@ export default function Track() {
                       Poor
                     </Button>
                   </div>
+                  <Textarea
+                    placeholder="Any digestion issues or observations? (Optional)"
+                    value={digestionNotes}
+                    onChange={(e) => setDigestionNotes(e.target.value)}
+                    rows={2}
+                    className="resize-none mt-2"
+                    data-testid="textarea-digestion-notes"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="howYouFeelNotes" className="text-base">
+                    How You're Feeling (Optional)
+                  </Label>
+                  <Textarea
+                    id="howYouFeelNotes"
+                    placeholder="Describe how you feel today - mood, focus, cravings, symptoms..."
+                    value={howYouFeelNotes}
+                    onChange={(e) => setHowYouFeelNotes(e.target.value)}
+                    rows={3}
+                    className="resize-none"
+                    data-testid="textarea-how-you-feel"
+                  />
                 </div>
               </div>
             </div>

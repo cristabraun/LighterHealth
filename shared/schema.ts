@@ -57,6 +57,8 @@ export const dailyLogs = pgTable("daily_logs", {
   energy: integer("energy").notNull(), // 1-10
   sleep: integer("sleep").notNull(), // 1-10
   digestion: text("digestion").notNull(), // 'good' | 'okay' | 'poor'
+  howYouFeelNotes: text("how_you_feel_notes"),
+  digestionNotes: text("digestion_notes"),
   notes: text("notes"),
   createdAt: text("created_at").notNull(), // ISO string
 }, (table) => {
