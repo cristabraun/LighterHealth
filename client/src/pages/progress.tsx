@@ -89,6 +89,77 @@ export default function MyMetabolism() {
     return { breakfast, lunch, dinner, snacks };
   };
 
+  const getDigestionSummary = () => {
+    const allLogs = logs.slice(0, 7);
+    const good = allLogs.filter(l => l.digestion === 'good').length;
+    const okay = allLogs.filter(l => l.digestion === 'okay').length;
+    const poor = allLogs.filter(l => l.digestion === 'poor').length;
+    return { good, okay, poor, total: allLogs.length };
+  };
+
+  const getGoodVitalsDays = () => {
+    const allLogs = logs.slice(0, 7);
+    return allLogs.filter(log => 
+      log.temperature >= 98 && log.pulse <= 85 && log.energy >= 6
+    ).length;
+  };
+
+  const getConsecutiveGoodDays = () => {
+    let streak = 0;
+    for (let i = 0; i < logs.length; i++) {
+      if (logs[i].temperature >= 98 && logs[i].pulse <= 85 && logs[i].energy >= 6) {
+        streak++;
+      } else {
+        break;
+      }
+    }
+    return streak;
+  };
+
+  const getAverageDigestion = () => {
+    const allLogs = logs.slice(0, 7);
+    const scores = allLogs.map(l => {
+      if (l.digestion === 'good') return 10;
+      if (l.digestion === 'okay') return 5;
+      return 0;
+    });
+    return (scores.reduce((a, b) => a + b, 0) / allLogs.length).toFixed(0);
+  };
+
+  const getPatternInsights = () => {
+    const insights: string[] = [];
+    const allLogs = logs.slice(0, 7);
+    
+    const avgTemp = getAverage("temperature", 7);
+    const avgPulse = getAverage("pulse", 7);
+    const avgEnergy = getAverage("energy", 7);
+    const avgSleep = getAverage("sleep", 7);
+    
+    if (avgTemp >= 98.1) {
+      insights.push("Your temperature is consistently elevated - great metabolic sign!");
+    } else if (avgTemp < 97.5) {
+      insights.push("Focus on increasing your metabolic temperature with carbs and consistency.");
+    }
+    
+    if (avgPulse < 75) {
+      insights.push("Low resting pulse indicates excellent cardiovascular health.");
+    } else if (avgPulse > 85) {
+      insights.push("Elevated pulse may indicate stress - try more rest and relaxation.");
+    }
+    
+    if (avgEnergy >= 7) {
+      insights.push("Your energy levels are strong - you're on the right track!");
+    }
+    
+    if (avgSleep >= 8) {
+      insights.push("Excellent sleep quality supporting your recovery.");
+    } else if (avgSleep < 7) {
+      insights.push("Prioritize sleep - it's crucial for metabolic healing.");
+    }
+    
+    return insights;
+  };
+
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
@@ -485,39 +556,149 @@ export default function MyMetabolism() {
           </div>
         )}
 
-        {/* Section 5: Weekly Highlights */}
+        {/* Section 5: Progress Insights & Patterns */}
         {logs.length >= 7 && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-primary" />
-              <h2 className="text-xl font-semibold">This Week at a Glance</h2>
-            </div>
-            <Card className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">Average Warmth</p>
-                  <p className="text-xl font-semibold">{getAverage("temperature", 7).toFixed(1)}°F</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">Average Pulse</p>
-                  <p className="text-xl font-semibold">{getAverage("pulse", 7).toFixed(0)} bpm</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">Average Energy</p>
-                  <p className="text-xl font-semibold">{getAverage("energy", 7).toFixed(1)}/10</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">Average Sleep</p>
-                  <p className="text-xl font-semibold">{getAverage("sleep", 7).toFixed(1)} hrs</p>
-                </div>
-                {activeExperiments.length > 0 && (
-                  <div className="space-y-1 md:col-span-2">
-                    <p className="text-sm text-muted-foreground">Active Experiments</p>
-                    <p className="text-xl font-semibold">{activeExperiments.length} in progress</p>
+            <h2 className="text-xl font-semibold">Your Progress & Patterns</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Week-over-Week Improvements */}
+              {logs.length >= 14 && (
+                <Card className="p-6 space-y-4 bg-gradient-to-br from-green-500/5 to-transparent" data-testid="card-week-comparison">
+                  <h3 className="font-semibold">Week-over-Week Change</h3>
+                  <div className="space-y-2">
+                    {getWeeklyImprovement("temperature") !== null && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Temperature</span>
+                        <div className="flex items-center gap-1">
+                          {parseFloat(getWeeklyImprovement("temperature")!) > 0 ? (
+                            <TrendingUp className="w-4 h-4 text-green-500" data-testid="icon-temp-improvement" />
+                          ) : (
+                            <TrendingDown className="w-4 h-4 text-amber-500" />
+                          )}
+                          <span className={parseFloat(getWeeklyImprovement("temperature")!) > 0 ? "text-green-600 font-semibold" : "text-amber-600 font-semibold"}>
+                            {getWeeklyImprovement("temperature")}%
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    {getWeeklyImprovement("pulse") !== null && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Pulse</span>
+                        <div className="flex items-center gap-1">
+                          {parseFloat(getWeeklyImprovement("pulse")!) < 0 ? (
+                            <TrendingDown className="w-4 h-4 text-green-500" data-testid="icon-pulse-improvement" />
+                          ) : (
+                            <TrendingUp className="w-4 h-4 text-amber-500" />
+                          )}
+                          <span className={parseFloat(getWeeklyImprovement("pulse")!) < 0 ? "text-green-600 font-semibold" : "text-amber-600 font-semibold"}>
+                            {Math.abs(parseFloat(getWeeklyImprovement("pulse")!))}%
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    {getWeeklyImprovement("energy") !== null && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Energy</span>
+                        <div className="flex items-center gap-1">
+                          {parseFloat(getWeeklyImprovement("energy")!) > 0 ? (
+                            <TrendingUp className="w-4 h-4 text-green-500" data-testid="icon-energy-improvement" />
+                          ) : (
+                            <TrendingDown className="w-4 h-4 text-amber-500" />
+                          )}
+                          <span className={parseFloat(getWeeklyImprovement("energy")!) > 0 ? "text-green-600 font-semibold" : "text-amber-600 font-semibold"}>
+                            {getWeeklyImprovement("energy")}%
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </Card>
+                </Card>
+              )}
+
+              {/* Streaks & Milestones */}
+              <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-transparent" data-testid="card-streaks">
+                <h3 className="font-semibold">Streaks & Milestones</h3>
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">Optimal Health Days</p>
+                    <p className="text-2xl font-bold text-primary" data-testid="text-good-vitals-days">{getConsecutiveGoodDays()} day streak</p>
+                    <p className="text-xs text-muted-foreground">{getGoodVitalsDays()}/7 days with optimal vitals</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Digestion Summary */}
+              <Card className="p-6 space-y-4" data-testid="card-digestion-summary">
+                <h3 className="font-semibold">Digestion This Week</h3>
+                <div className="space-y-2">
+                  {(() => {
+                    const dig = getDigestionSummary();
+                    return (
+                      <>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Good Days</span>
+                          <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100" data-testid="badge-good-digestion">
+                            {dig.good}/{dig.total}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Okay Days</span>
+                          <Badge variant="secondary" className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-100" data-testid="badge-okay-digestion">
+                            {dig.okay}/{dig.total}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Challenging Days</span>
+                          <Badge variant="secondary" className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100" data-testid="badge-poor-digestion">
+                            {dig.poor}/{dig.total}
+                          </Badge>
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+              </Card>
+
+              {/* Weekly Averages */}
+              <Card className="p-6 space-y-4" data-testid="card-weekly-averages">
+                <h3 className="font-semibold">7-Day Averages</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Temp</p>
+                    <p className="text-lg font-semibold" data-testid="text-avg-temp">{getAverage("temperature", 7).toFixed(1)}°F</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Pulse</p>
+                    <p className="text-lg font-semibold" data-testid="text-avg-pulse">{getAverage("pulse", 7).toFixed(0)} bpm</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Energy</p>
+                    <p className="text-lg font-semibold" data-testid="text-avg-energy">{getAverage("energy", 7).toFixed(1)}/10</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Sleep</p>
+                    <p className="text-lg font-semibold" data-testid="text-avg-sleep">{getAverage("sleep", 7).toFixed(1)} hrs</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        )}
+
+        {/* Section 6: Personalized Pattern Insights */}
+        {logs.length >= 7 && getPatternInsights().length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold">What We're Seeing</h2>
+            <div className="space-y-2">
+              {getPatternInsights().map((insight, idx) => (
+                <Card key={idx} className="p-4 space-y-2 bg-gradient-to-r from-primary/5 to-chart-2/5" data-testid={`card-insight-${idx}`}>
+                  <div className="flex gap-3">
+                    <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-muted-foreground" data-testid={`text-insight-${idx}`}>{insight}</p>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 
