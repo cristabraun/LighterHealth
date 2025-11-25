@@ -298,11 +298,14 @@ export default function Home() {
           </Link>
         </Card>
 
-        <Card className="p-4 bg-white dark:bg-card/60 border border-primary/10 hover-elevate" data-testid="card-daily-affirmation">
-          <p className="text-sm text-center text-muted-foreground leading-relaxed" data-testid="text-affirmation">
-            {getDailyAffirmation()}
-          </p>
-        </Card>
+        <div className="mt-8 space-y-2" data-testid="section-daily-reminder">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide px-1" data-testid="text-daily-reminder-title">Daily Reminder</p>
+          <Card className="p-4 bg-white dark:bg-card/60 border border-primary/10 hover-elevate" data-testid="card-daily-affirmation">
+            <p className="text-sm text-center text-muted-foreground leading-relaxed" data-testid="text-affirmation">
+              {getDailyAffirmation()}
+            </p>
+          </Card>
+        </div>
       </div>
     </div>
   );
