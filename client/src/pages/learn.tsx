@@ -1,15 +1,230 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Thermometer, Heart, Zap, Moon, Apple, Sun, Flame, BookOpen, Sparkles, ExternalLink } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Apple, Sun, Flame, BookOpen, Sparkles, ExternalLink, Heart as HeartIcon } from "lucide-react";
+import { useLocation } from "wouter";
 
 export default function Learn() {
+  const [, navigate] = useLocation();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 pb-24">
       <div className="max-w-2xl mx-auto p-6 space-y-6">
         <div className="text-center space-y-2 mb-8">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">
-            Understanding Metabolic Health
+            Welcome to Metabolic Healing
           </h1>
+          <p className="text-muted-foreground">
+            Everything you need to know to get started
+          </p>
+        </div>
+
+        <Accordion type="single" collapsible className="space-y-4">
+          <AccordionItem value="not-broken" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
+                <div className="flex items-center gap-3 flex-1 transition-colors">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <HeartIcon className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-left">You're Not Broken</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <div className="space-y-3 text-muted-foreground">
+                  <p>
+                    If you're eating less and exercising more but still gaining weight or feeling exhausted, it's not your fault. Your metabolism isn't broken—it's protecting itself.
+                  </p>
+                  <p>
+                    When your body doesn't feel safe (from undereating, over-exercising, or chronic stress), it slows down to conserve energy. This is a survival mechanism, not a character flaw. The good news? Your metabolism can heal.
+                  </p>
+                  <p className="font-medium text-foreground">
+                    You're here to change that. And we're going to do it together.
+                  </p>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+
+          <AccordionItem value="what-is-prometric" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
+                <div className="flex items-center gap-3 flex-1 transition-colors">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Flame className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-left">What "Pro-Metabolic" Means</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <div className="space-y-3 text-muted-foreground">
+                  <p>
+                    Pro-metabolic is NOT about calorie counting, cutting carbs, or punishing your body.
+                  </p>
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-3">
+                    <p className="font-medium text-foreground">Pro-metabolic IS about:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Tracking your temperature, pulse, and energy to understand your body</li>
+                      <li>Eating enough food—including carbohydrates—to feel good</li>
+                      <li>Supporting your thyroid and hormones naturally</li>
+                      <li>Reducing physical and emotional stress</li>
+                      <li>Noticing how different foods make you feel</li>
+                    </ul>
+                  </div>
+                  <p>
+                    Think of your metabolism like a fire. When you starve it (undereating, fasting), the fire goes out and your energy dies. When you feed it properly—with enough food, carbs, and minerals—the fire comes roaring back. That's what we're doing here.
+                  </p>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+
+          <AccordionItem value="takes-time" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
+                <div className="flex items-center gap-3 flex-1 transition-colors">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Sun className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-left">This Takes Time</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <div className="space-y-3 text-muted-foreground">
+                  <p className="font-medium text-foreground">Here's what to expect:</p>
+                  <div className="space-y-2 text-sm">
+                    <p><strong>Weeks 1–2:</strong> Learning the rhythm, body adjusting to eating more</p>
+                    <p><strong>Weeks 3–4:</strong> Better sleep, more stable energy, warmer hands and feet</p>
+                    <p><strong>Weeks 6–8:</strong> Temperature rising, steadier energy throughout the day</p>
+                    <p><strong>Months 3–6:</strong> Metabolism healing, hormones balancing, profound shifts in how you feel</p>
+                  </div>
+                  <p className="pt-2">
+                    <strong>Key message:</strong> Consistency over perfection. This is an experimental app—there's no one-size-fits-all approach. Every person is different. Your job is to become your own biohacker: track your data, notice patterns, feel how your body responds, and adjust accordingly.
+                  </p>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+
+          <AccordionItem value="makes-difference" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
+                <div className="flex items-center gap-3 flex-1 transition-colors">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Zap className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-left">What Makes the Difference</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <div className="space-y-3 text-muted-foreground">
+                  <p>
+                    Every day, check off these 8 practices on your track page—they're your foundation for metabolic healing:
+                  </p>
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2 text-sm">
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Ate regularly (every 3–4 hours, paired carbs + protein)</li>
+                      <li>Had food before coffee (OJ, fruit, or milk first)</li>
+                      <li>Got morning light or movement (10 min outside or a short walk)</li>
+                      <li>Supported digestion (raw carrot salad or cooked mushrooms)</li>
+                      <li>Chose easy-to-digest foods (fruit, dairy, juice, root veggies, gelatin)</li>
+                      <li>Stayed warm (dressed warmly, chose warming foods)</li>
+                      <li>Fueled workouts properly (ate before/after if I exercised)</li>
+                      <li>Had a bedtime snack if hungry (milk + honey, fruit + cheese, etc.)</li>
+                    </ul>
+                  </div>
+                  <p>
+                    Start slow, build habits gradually. Pay attention to how your body feels and how it's responding. Notice what works, what doesn't, and adjust. Small, consistent changes create big results.
+                  </p>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+
+          <AccordionItem value="success-looks-like" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
+                <div className="flex items-center gap-3 flex-1 transition-colors">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Sparkles className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-left">What Success Looks Like</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <div className="space-y-3 text-muted-foreground">
+                  <p>
+                    You'll know it's working when you experience:
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Waking with natural energy—no alarm needed</li>
+                      <li>Warm hands and feet throughout the day</li>
+                      <li>Clear thinking and better focus</li>
+                      <li>Sleeping through the night peacefully</li>
+                      <li>Regular, healthy periods</li>
+                      <li>Feeling genuinely alive—not just surviving</li>
+                    </ul>
+                  </div>
+                  <p className="pt-2">
+                    Body composition changes happen as a side effect of your metabolism healing—not from deprivation or restriction. When your body feels safe and your metabolism is thriving, weight naturally stabilizes.
+                  </p>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+
+          <AccordionItem value="you-got-this" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
+                <div className="flex items-center gap-3 flex-1 transition-colors">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <BookOpen className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-left">You've Got This</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <div className="space-y-3 text-muted-foreground">
+                  <p>
+                    You're here because you want to feel good—not just smaller. That matters.
+                  </p>
+                  <p>
+                    Here's all you need to do:
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Track your vitals and how you're feeling</li>
+                      <li>Follow the 8 daily practices</li>
+                      <li>Give your body time to heal</li>
+                      <li>Keep showing up, one day at a time</li>
+                    </ul>
+                  </div>
+                  <p className="pt-2">
+                    Your body knows how to heal. It just needed permission, nourishment, and your gentle attention. You're giving it all three right now.
+                  </p>
+                  <p className="font-medium text-foreground pt-2">
+                    Let's get started.
+                  </p>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+        </Accordion>
+
+        <Button 
+          onClick={() => navigate("/")}
+          className="w-full bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
+          size="lg"
+          data-testid="button-start-tracking"
+        >
+          Let's Start Tracking
+        </Button>
+
+        <div className="text-center space-y-2 mt-12 pt-8 border-t">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">
+            Understanding Metabolic Health
+          </h2>
           <p className="text-muted-foreground">
             Learn the science behind feeling lighter, energized, and balanced
           </p>
