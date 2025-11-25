@@ -21,6 +21,24 @@ import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import confetti from "canvas-confetti";
 
+const DAILY_AFFIRMATIONS = [
+  "A body that is fed well, will heal well.",
+  "You don't have to earn rest. You get to choose it whenever you want.",
+  "Play counts. Fun counts. Joy counts.",
+  "Sunlight is free medicine.",
+  "Healing takes time, you're right on schedule.",
+  "High body temp = higher metabolism",
+  "Weight-loss is a side effect of healing your metabolism and lowering stress.",
+  "Being energized and alert and happy is winning.",
+  "Stable blood sugar = stable mood = stable hormones."
+];
+
+function getDailyAffirmation(): string {
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
+  return DAILY_AFFIRMATIONS[dayOfYear % DAILY_AFFIRMATIONS.length];
+}
+
 export default function Home() {
   const { user } = useAuth();
   const [recommendations, setRecommendations] = useState<string[]>([]);
@@ -278,6 +296,12 @@ export default function Home() {
               Message Me
             </Button>
           </Link>
+        </Card>
+
+        <Card className="p-4 bg-white dark:bg-card/60 border border-primary/10 hover-elevate" data-testid="card-daily-affirmation">
+          <p className="text-sm text-center text-muted-foreground leading-relaxed" data-testid="text-affirmation">
+            {getDailyAffirmation()}
+          </p>
         </Card>
       </div>
     </div>
