@@ -73,6 +73,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.patch('/api/logs/:date/checklist', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { date } = req.params;
+      const { checklistCompleted } = req.body;
+
+      if (!Array.isArray(checklistCompleted)) {
+        return res.status(400).json({ message: "checklistCompleted must be an array" });
+      }
+
+      const updated = await storage.updateChecklistCompleted(userId, date, checklistCompleted);
+      if (!updated) {
+        return res.status(404).json({ message: "Log not found" });
+      }
+      res.json(updated);
+    } catch (error) {
+      console.error("Error updating checklist:", error);
+      res.status(500).json({ message: "Failed to update checklist" });
+    }
+  });
+
   app.post('/api/logs', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;

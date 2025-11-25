@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus, Check } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { InsertDailyLog, DailyLog, InsertFoodLog, FoodLog } from "@shared/schema";
 import confetti from "canvas-confetti";
@@ -24,6 +25,7 @@ export default function Track() {
   const [digestion, setDigestion] = useState<"good" | "okay" | "poor">("good");
   const [howYouFeelNotes, setHowYouFeelNotes] = useState("");
   const [digestionNotes, setDigestionNotes] = useState("");
+  const [checklistCompleted, setChecklistCompleted] = useState<number[]>([]);
 
   // Food log state
   const [showFoodForm, setShowFoodForm] = useState(false);
@@ -53,8 +55,44 @@ export default function Track() {
       setDigestion(todaysLog.digestion as "good" | "okay" | "poor");
       setHowYouFeelNotes(todaysLog.howYouFeelNotes || "");
       setDigestionNotes(todaysLog.digestionNotes || "");
+      setChecklistCompleted(todaysLog.checklistCompleted || []);
     }
   }, [todaysLog]);
+
+  const checklistItems = [
+    "Keep blood sugar steady — Eat every 3–4 hours. Pair sugar + protein. Don't fast.",
+    "Stop drinking coffee on an empty stomach — Have OJ, fruit, or milk first.",
+    "Get morning light + gentle movement — 10 minutes of sunlight or walking.",
+    "Reduce estrogen + endotoxin load — Daily raw carrot salad or cooked white mushrooms.",
+    "Prioritize easy-to-digest foods — Fruit, dairy, juice, root veggies, gelatin.",
+    "Support warmth — Dress warm, avoid cold plunges, choose warming foods.",
+    "Fuel before and after workouts — Never train fasted. Have sugar + protein afterward.",
+    "Have a bedtime snack — Milk + honey, fruit + cheese, or gelatin + juice.",
+  ];
+
+  const toggleChecklistItem = (index: number) => {
+    setChecklistCompleted(prev => {
+      if (prev.includes(index)) {
+        return prev.filter(i => i !== index);
+      } else {
+        return [...prev, index];
+      }
+    });
+  };
+
+  const saveChecklistMutation = useMutation({
+    mutationFn: async (completed: number[]) => {
+      const res = await apiRequest("PATCH", `/api/logs/${today}/checklist`, { checklistCompleted: completed });
+      return await res.json();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to save checklist",
+        variant: "destructive",
+      });
+    },
+  });
 
   const saveMutation = useMutation({
     mutationFn: async (logData: InsertDailyLog) => {
@@ -538,6 +576,45 @@ export default function Track() {
               </p>
             )
           )}
+        </Card>
+
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-daily-checklist">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <Check className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold">Heal Your Metabolism — Daily Checklist</h2>
+              <p className="text-sm text-muted-foreground">{checklistCompleted.length} of {checklistItems.length} completed</p>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
+            {checklistItems.map((item, index) => (
+              <label
+                key={index}
+                className="flex items-start gap-3 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                data-testid={`checklist-item-${index}`}
+              >
+                <Checkbox
+                  checked={checklistCompleted.includes(index)}
+                  onCheckedChange={() => {
+                    toggleChecklistItem(index);
+                    // Save immediately
+                    const updated = checklistCompleted.includes(index)
+                      ? checklistCompleted.filter(i => i !== index)
+                      : [...checklistCompleted, index];
+                    saveChecklistMutation.mutate(updated);
+                  }}
+                  className="mt-1 flex-shrink-0"
+                  data-testid={`checkbox-${index}`}
+                />
+                <span className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-item-${index}`}>
+                  {item}
+                </span>
+              </label>
+            ))}
+          </div>
         </Card>
       </div>
     </div>

@@ -60,6 +60,7 @@ export const dailyLogs = pgTable("daily_logs", {
   howYouFeelNotes: text("how_you_feel_notes"),
   digestionNotes: text("digestion_notes"),
   notes: text("notes"),
+  checklistCompleted: integer("checklist_completed").array().default(sql`'{}'`), // Array of completed checklist item indices (0-7)
   createdAt: text("created_at").notNull(), // ISO string
 }, (table) => {
   return {

@@ -29,6 +29,7 @@ export interface IStorage {
   createDailyLog(userId: string, log: InsertDailyLog): Promise<DailyLog>;
   getDailyLogs(userId: string): Promise<DailyLog[]>;
   getDailyLog(userId: string, date: string): Promise<DailyLog | undefined>;
+  updateChecklistCompleted(userId: string, date: string, checklistCompleted: number[]): Promise<DailyLog | undefined>;
   
   // Active experiment operations
   createActiveExperiment(userId: string, experiment: InsertActiveExperiment): Promise<ActiveExperiment>;
@@ -93,6 +94,7 @@ export class DatabaseStorage implements IStorage {
         ...log,
         userId,
         createdAt: new Date().toISOString(),
+        checklistCompleted: [],
       })
       .onConflictDoUpdate({
         target: [dailyLogs.userId, dailyLogs.date],
@@ -102,11 +104,22 @@ export class DatabaseStorage implements IStorage {
           energy: log.energy,
           sleep: log.sleep,
           digestion: log.digestion,
+          howYouFeelNotes: log.howYouFeelNotes,
+          digestionNotes: log.digestionNotes,
           notes: log.notes,
         },
       })
       .returning();
     return created;
+  }
+
+  async updateChecklistCompleted(userId: string, date: string, checklistCompleted: number[]): Promise<DailyLog | undefined> {
+    const [updated] = await db
+      .update(dailyLogs)
+      .set({ checklistCompleted })
+      .where(and(eq(dailyLogs.userId, userId), eq(dailyLogs.date, date)))
+      .returning();
+    return updated;
   }
 
   async getDailyLogs(userId: string): Promise<DailyLog[]> {
