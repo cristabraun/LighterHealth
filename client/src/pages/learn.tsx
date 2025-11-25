@@ -254,6 +254,86 @@ export default function Learn() {
         </Card>
 
         <Accordion type="single" collapsible className="space-y-4">
+          <AccordionItem value="diet-difference" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
+                <div className="flex items-center gap-3 flex-1 transition-colors">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Flame className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-left">Why Pro-Metabolic is Different From Diets</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4">
+                <div className="space-y-4 text-muted-foreground">
+                  <p>
+                    Most diets focus on restriction—cutting calories, avoiding carbs, or eliminating food groups. The pro-metabolic approach is completely different: it aims to support your metabolism rather than suppress it.
+                  </p>
+                  
+                  <div className="bg-gradient-to-r from-primary/10 to-chart-2/10 p-4 rounded-lg space-y-3">
+                    <p className="font-medium text-foreground">Think of your body like a furnace:</p>
+                    <div className="space-y-2 text-sm">
+                      <p><strong>Regular diets:</strong> Turn down the fire (eat less, move more, slow everything down)</p>
+                      <p><strong>Pro-metabolic:</strong> Stokes the fire hotter and brighter</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="font-medium text-foreground">The key differences:</p>
+                    <div className="grid gap-3">
+                      <div className="bg-red-50 dark:bg-red-950/20 p-3 rounded-lg border border-red-200 dark:border-red-900 text-sm">
+                        <p className="font-medium text-foreground mb-1">❌ Regular Diets:</p>
+                        <ul className="list-disc list-inside space-y-1 ml-2 text-xs">
+                          <li>Cut calories and restrict food</li>
+                          <li>Leave you cold, tired, and constantly hungry</li>
+                          <li>Slow down metabolism over time</li>
+                          <li>Signal to your body it's in survival mode</li>
+                        </ul>
+                      </div>
+                      <div className="bg-primary/10 p-3 rounded-lg border border-primary/20 text-sm">
+                        <p className="font-medium text-foreground mb-1">✓ Pro-Metabolic Approach:</p>
+                        <ul className="list-disc list-inside space-y-1 ml-2 text-xs">
+                          <li>Provides plenty of easy-to-digest nutrients</li>
+                          <li>Keeps you warm, energized, and satisfied</li>
+                          <li>Signals to your body that it's safe and well-fed</li>
+                          <li>Helps your cells make energy efficiently</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="pt-2">
+                    Your cells are like little power plants. When they're working well—producing energy efficiently—everything else works better: hormones balance, mood improves, and your body naturally maintains a healthy weight.
+                  </p>
+
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                    <p className="font-medium text-foreground">Why carbs and sugar matter:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
+                      <li>They're the easiest fuel for your cells to use efficiently</li>
+                      <li>They support thyroid function (your metabolic master switch)</li>
+                      <li>They help your body feel safe and well-fed</li>
+                      <li>They allow your cells to produce energy the clean, efficient way</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                    <p className="font-medium text-foreground">Why lowering stress is crucial:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
+                      <li>Chronic stress impairs mitochondrial function, dragging down your cellular energy</li>
+                      <li>Stress hormones like cortisol push your body into survival mode</li>
+                      <li>Stress makes your cells switch to inefficient energy production</li>
+                      <li>High stress + low carbs = metabolic disaster</li>
+                    </ul>
+                  </div>
+
+                  <p className="pt-2 font-medium text-foreground">
+                    The goal is simple: give your body abundant, easy-to-use fuel (carbs, sugar, fruit, dairy) and reduce stress so your cells can make energy efficiently. When your metabolism heals, you'll naturally feel warmer, have more energy, sleep better, and maintain a healthy weight without extreme restriction.
+                  </p>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+
           <AccordionItem value="temperature" className="border-none">
             <Card className="overflow-hidden">
               <AccordionTrigger className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5">
