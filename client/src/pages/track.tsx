@@ -24,7 +24,6 @@ export default function Track() {
   const [digestion, setDigestion] = useState<"good" | "okay" | "poor">("good");
   const [howYouFeelNotes, setHowYouFeelNotes] = useState("");
   const [digestionNotes, setDigestionNotes] = useState("");
-  const [notes, setNotes] = useState("");
 
   // Food log state
   const [showFoodForm, setShowFoodForm] = useState(false);
@@ -54,7 +53,6 @@ export default function Track() {
       setDigestion(todaysLog.digestion as "good" | "okay" | "poor");
       setHowYouFeelNotes(todaysLog.howYouFeelNotes || "");
       setDigestionNotes(todaysLog.digestionNotes || "");
-      setNotes(todaysLog.notes || "");
     }
   }, [todaysLog]);
 
@@ -188,7 +186,6 @@ export default function Track() {
       digestion,
       howYouFeelNotes: howYouFeelNotes.trim() || undefined,
       digestionNotes: digestionNotes.trim() || undefined,
-      notes: notes.trim() || undefined,
     };
 
     saveMutation.mutate(logData);
@@ -402,21 +399,6 @@ export default function Track() {
                 </div>
               </div>
             </div>
-          </Card>
-
-          <Card className="p-6 space-y-4">
-            <Label htmlFor="notes" className="text-base">
-              Notes (Optional)
-            </Label>
-            <Textarea
-              id="notes"
-              placeholder="What did you notice today? Any observations about how you're feeling?"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={4}
-              className="resize-none"
-              data-testid="textarea-notes"
-            />
           </Card>
 
           <Button
