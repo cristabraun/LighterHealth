@@ -171,6 +171,17 @@ export default function Experiments() {
           </p>
         </div>
 
+        <Card className="p-4 bg-primary/5 border border-primary/10" data-testid="card-experiments-intro">
+          <div className="space-y-3 text-sm">
+            <p className="text-muted-foreground">
+              You don't need to do all of these experiments. Try one and see how you feel doing it, then decide if you want to keep going with it or not.
+            </p>
+            <p className="text-muted-foreground">
+              There's no one right way to do this—everybody is different. That's exactly why we have this experiments library. It will keep growing over time with new experiments to try and test with.
+            </p>
+          </div>
+        </Card>
+
         <Tabs defaultValue="library" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="library" data-testid="tab-library">
