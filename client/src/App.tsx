@@ -14,6 +14,7 @@ import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
 import Progress from "@/pages/progress";
 import Messages from "@/pages/messages";
+import Essentials from "@/pages/essentials";
 import AdminMessages from "@/pages/admin-messages";
 import NotFound from "@/pages/not-found";
 
@@ -49,6 +50,7 @@ function Router() {
         <Route path="/experiments" component={Experiments} />
         <Route path="/progress" component={Progress} />
         <Route path="/messages" component={Messages} />
+        <Route path="/essentials" component={Essentials} />
         <Route path="/admin/messages" component={AdminMessages} />
         <Route component={NotFound} />
       </Switch>
