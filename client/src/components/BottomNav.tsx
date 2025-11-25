@@ -15,7 +15,7 @@ export function BottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-sm border-t border-card-border z-50">
-      <div className="max-w-md mx-auto px-2">
+      <div className="max-w-md mx-auto px-1">
         <div className="flex items-center justify-around h-16">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -28,16 +28,16 @@ export function BottomNav() {
                 data-testid={`link-nav-${tab.label.toLowerCase()}`}
               >
                 <div 
-                  className="flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-xl min-h-12 hover-elevate active-elevate-2 transition-colors relative"
+                  className="flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-xl min-h-12 hover-elevate active-elevate-2 transition-colors relative"
                   data-testid={`button-nav-${tab.label.toLowerCase()}`}
                 >
                   <Icon 
-                    className={`w-5 h-5 transition-colors ${
+                    className={`w-4 h-4 transition-colors ${
                       isActive ? "text-primary" : "text-muted-foreground"
                     }`}
                     data-testid={`icon-nav-${tab.label.toLowerCase()}`}
                   />
-                  <span className={`text-xs font-medium transition-colors ${
+                  <span className={`text-xs font-medium transition-colors leading-none ${
                     isActive ? "text-primary" : "text-muted-foreground"
                   }`}
                     data-testid={`text-nav-${tab.label.toLowerCase()}`}
