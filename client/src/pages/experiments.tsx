@@ -182,6 +182,9 @@ export default function Experiments() {
             <p className="text-muted-foreground">
               The experiments we recommend you follow, like carrot salad, will appear on your Track page for easy reference.
             </p>
+            <p className="text-muted-foreground">
+              The pro-metabolic approach really works when you listen to your body and stay in tune with how you feel. Don't just push through if you're exhausted—pay attention to how foods make you feel throughout the day. Get good at noticing all your symptoms and what they're telling you.
+            </p>
           </div>
         </Card>
 
