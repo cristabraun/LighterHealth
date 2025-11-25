@@ -15,7 +15,8 @@ import {
   Sparkles,
   Clock,
   AlertCircle,
-  Utensils
+  Utensils,
+  Sun
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -299,7 +300,10 @@ export default function Home() {
         </Card>
 
         <div className="mt-8 space-y-2" data-testid="section-daily-reminder">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide px-1" data-testid="text-daily-reminder-title">Daily Reminder</p>
+          <div className="flex items-center gap-2 px-1">
+            <Sun className="w-4 h-4 text-primary" data-testid="icon-daily-reminder-sun" />
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide" data-testid="text-daily-reminder-title">Daily Reminder</p>
+          </div>
           <Card className="p-4 bg-white dark:bg-card/60 border border-primary/10 hover-elevate" data-testid="card-daily-affirmation">
             <p className="text-sm text-center text-muted-foreground leading-relaxed" data-testid="text-affirmation">
               {getDailyAffirmation()}
