@@ -169,6 +169,8 @@ export default function Learn() {
                     <ul className="list-disc list-inside space-y-1 ml-2">
                       <li><strong>Dairy (milk, cheese, yogurt):</strong> Complete protein with calcium; supports thyroid and bone health</li>
                       <li><strong>Eggs:</strong> Nutrient-dense with essential amino acids, choline, and vitamins</li>
+                      <li><strong>Beef liver:</strong> Nutrient powerhouse with iron, B vitamins, vitamin A, and highly absorbable minerals</li>
+                      <li><strong>Beef:</strong> Complete protein with amino acids, iron, zinc, and B vitamins for energy and healing</li>
                       <li><strong>Shellfish (oysters, shrimp):</strong> High in zinc and copper for thyroid and immune function</li>
                       <li><strong>White fish:</strong> Easy to digest, low in inflammatory fats</li>
                       <li><strong>Gelatin/Collagen:</strong> Balances muscle meat amino acids; supports gut and skin health</li>
