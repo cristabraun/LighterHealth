@@ -179,6 +179,9 @@ export default function Experiments() {
             <p className="text-muted-foreground">
               There's no one right way to do this—everybody is different. That's exactly why we have this experiments library. It will keep growing over time with new experiments to try and test with.
             </p>
+            <p className="text-muted-foreground">
+              The experiments we recommend you follow, like carrot salad, will appear on your Track page for easy reference.
+            </p>
           </div>
         </Card>
 
