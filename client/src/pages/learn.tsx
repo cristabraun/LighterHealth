@@ -119,9 +119,15 @@ export default function Learn() {
               <AccordionContent className="px-6 pb-4">
                 <div className="space-y-3 text-muted-foreground">
                   <p>
-                    Every day, check off these 8 practices on your track page—they're your foundation for metabolic healing:
+                    Every day on your track page, start by recording your vitals, then follow these 8 practices—together, they're your foundation for metabolic healing:
                   </p>
                   <div className="bg-muted/50 p-4 rounded-lg space-y-2 text-sm">
+                    <p className="font-medium text-foreground mb-2">Track Your Vitals:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2 mb-3">
+                      <li>Morning body temperature (upon waking, before getting out of bed)</li>
+                      <li>Resting pulse (count for 60 seconds while sitting or lying down)</li>
+                    </ul>
+                    <p className="font-medium text-foreground mb-2">Daily Practices:</p>
                     <ul className="list-disc list-inside space-y-1 ml-2">
                       <li>Ate regularly (every 3–4 hours, paired carbs + protein)</li>
                       <li>Had food before coffee (OJ, fruit, or milk first)</li>
@@ -134,7 +140,7 @@ export default function Learn() {
                     </ul>
                   </div>
                   <p>
-                    Start slow, build habits gradually. Pay attention to how your body feels and how it's responding. Notice what works, what doesn't, and adjust. Small, consistent changes create big results.
+                    Start slow, build habits gradually. Pay attention to how your body feels and how it's responding. Notice what works, what doesn't, and adjust. Your vitals will tell you the story—watch them rise as your metabolism heals. Small, consistent changes create big results.
                   </p>
                 </div>
               </AccordionContent>
