@@ -203,6 +203,23 @@ export default function MyMetabolism() {
               </Button>
             </Link>
           </Card>
+
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border-primary/20" data-testid="card-message-coach-empty-state">
+            <div className="flex items-start gap-3">
+              <MessageSquare className="w-5 h-5 text-primary shrink-0 mt-1" />
+              <div className="space-y-2 flex-1">
+                <h3 className="font-semibold" data-testid="heading-message-coach-empty">Questions or Challenges?</h3>
+                <p className="text-sm text-muted-foreground" data-testid="text-message-coach-empty-description">
+                  Message me if you have questions about getting started or need guidance on your metabolic healing journey.
+                </p>
+              </div>
+            </div>
+            <Link href="/messages" data-testid="link-message-from-empty">
+              <Button className="w-full bg-gradient-to-r from-primary to-chart-2" data-testid="button-message-coach-empty">
+                Message Me
+              </Button>
+            </Link>
+          </Card>
         </div>
       </div>
     );
