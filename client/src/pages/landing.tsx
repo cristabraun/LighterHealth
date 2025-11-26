@@ -51,7 +51,7 @@ export default function Landing() {
               
               <div className="flex flex-col items-center gap-4" data-testid="section-pricing">
                 <div className="space-y-2">
-                  <p className="text-muted-foreground">Your metabolic health coach for</p>
+                  <p className="text-muted-foreground">Your Pro-Metabolic Guide for</p>
                   <span className="text-4xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
                 </div>
                 <Button 
