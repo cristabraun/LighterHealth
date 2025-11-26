@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Thermometer, Heart, Zap, Moon, Apple, Sun, Flame, BookOpen, Sparkles, ExternalLink, Heart as HeartIcon } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Apple, Sun, Flame, BookOpen, Sparkles, ExternalLink, Heart as HeartIcon, MessageSquare } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function Learn() {
@@ -710,18 +710,21 @@ export default function Learn() {
           </div>
         </Card>
 
-        <Card className="p-6 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20">
-          <div className="space-y-3 text-center">
-            <h3 className="text-lg font-semibold">Remember</h3>
-            <p className="text-muted-foreground">
-              Healing your metabolism is not about perfection, restriction, or forcing your body to 
-              change. It's about listening, experimenting, and providing what your body needs to 
-              produce energy efficiently. Small, consistent steps create lasting transformation.
-            </p>
-            <p className="text-sm text-primary font-medium">
-              You deserve to feel lighter - emotionally, energetically, and physically.
-            </p>
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border-primary/20" data-testid="card-message-coach-learn">
+          <div className="flex items-start gap-3">
+            <MessageSquare className="w-5 h-5 text-primary shrink-0 mt-1" />
+            <div className="space-y-2 flex-1">
+              <h3 className="font-semibold" data-testid="heading-message-coach-learn">Questions or Challenges?</h3>
+              <p className="text-sm text-muted-foreground" data-testid="text-message-coach-learn-description">
+                Feeling stuck or unsure what to try next? I'm here to help you through it.
+              </p>
+            </div>
           </div>
+          <a href="/messages" data-testid="link-message-from-learn">
+            <Button className="w-full bg-gradient-to-r from-primary to-chart-2" data-testid="button-message-coach-learn">
+              Message Me
+            </Button>
+          </a>
         </Card>
       </div>
     </div>
