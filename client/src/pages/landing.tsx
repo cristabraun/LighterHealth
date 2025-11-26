@@ -198,14 +198,28 @@ export default function Landing() {
       {/* Philosophy Section */}
       <div className="max-w-4xl mx-auto px-6 py-16" data-testid="section-philosophy">
         <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5">
-          <h2 className="text-3xl font-bold text-center" data-testid="heading-philosophy">Not a Diet App</h2>
-          <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
+          <h2 className="text-3xl font-bold text-center" data-testid="heading-philosophy">The Lighter Philosophy</h2>
+          <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+            <p data-testid="text-philosophy-intro" className="font-medium text-foreground text-center">
+              All about healing your metabolism so your body can produce energy easily again.
+            </p>
             <p data-testid="text-philosophy-1">
-              We track energy first. Weight loss is just a side effect of a healthy, healed metabolism.
+              Instead of restricting calories, we focus on helping your body use them well — supporting your thyroid, lowering stress, and restoring your natural ability to burn fuel.
             </p>
-            <p data-testid="text-philosophy-2">
-              Your body knows what it needs. We help you discover it through personalized experiments and tracking what makes YOU feel lighter.
-            </p>
+            <div className="space-y-4 pt-4 border-t border-border/50">
+              <p className="font-medium text-foreground" data-testid="text-philosophy-2">
+                This isn't a quick fix.
+              </p>
+              <p data-testid="text-philosophy-3">
+                It takes consistency, patience, and a willingness to nourish your body instead of fighting it.
+              </p>
+              <p className="font-medium text-foreground pt-4" data-testid="text-philosophy-4">
+                But over time, you'll feel real change:
+              </p>
+              <p data-testid="text-philosophy-5">
+                More steady energy, a calmer mood, deeper vitality, easier weight loss, and the feeling of finally being at home in your body again.
+              </p>
+            </div>
           </div>
         </Card>
       </div>
