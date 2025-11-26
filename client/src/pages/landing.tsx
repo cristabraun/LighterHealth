@@ -30,16 +30,16 @@ export default function Landing() {
             </p>
 
             <div className="space-y-3 max-w-2xl mx-auto" data-testid="section-benefits">
-              <div className="flex items-center justify-start gap-3 text-foreground pl-6">
-                <Heart className="w-5 h-5 text-primary flex-shrink-0" data-testid="icon-benefit-1" />
+              <div className="flex items-start justify-start gap-3 text-foreground pl-6 pt-1">
+                <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-benefit-1" />
                 <span className="text-lg font-medium">Lower stress</span>
               </div>
-              <div className="flex items-center justify-start gap-3 text-foreground pl-6">
-                <Heart className="w-5 h-5 text-primary flex-shrink-0" data-testid="icon-benefit-2" />
+              <div className="flex items-start justify-start gap-3 text-foreground pl-6 pt-1">
+                <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-benefit-2" />
                 <span className="text-lg font-medium">Increase energy & wellbeing</span>
               </div>
-              <div className="flex items-center justify-start gap-3 text-foreground pl-6">
-                <Heart className="w-5 h-5 text-primary flex-shrink-0" data-testid="icon-benefit-3" />
+              <div className="flex items-start justify-start gap-3 text-foreground pl-6 pt-1">
+                <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-benefit-3" />
                 <span className="text-lg font-medium">Let weight come off without restriction</span>
               </div>
             </div>
