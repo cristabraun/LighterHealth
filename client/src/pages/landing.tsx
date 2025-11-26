@@ -52,7 +52,7 @@ export default function Landing() {
               
               <div className="flex flex-col items-center gap-4" data-testid="section-pricing">
                 <div className="space-y-2">
-                  <p className="text-muted-foreground">Your metabolic healing guide, 3-day trial, then</p>
+                  <p className="text-muted-foreground">Your metabolic healing guide for</p>
                   <span className="text-4xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
                 </div>
                 <Button 
@@ -60,7 +60,7 @@ export default function Landing() {
                   className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
                   data-testid="button-get-started"
                 >
-                  Start Your Journey
+                  Start Your 3-Day Trial
                 </Button>
               </div>
             </div>
