@@ -14,9 +14,12 @@ export default function Landing() {
                 Welcome to Lighter
               </h1>
               
-              <div className="flex justify-center gap-2 text-4xl lg:text-5xl">
+              <div className="flex justify-center gap-2 text-4xl lg:text-5xl flex-wrap">
                 <span>☀️</span>
                 <span>🍊</span>
+                <span>🥕</span>
+                <span>🥚</span>
+                <span>🥛</span>
                 <span>🌿</span>
                 <span>🍓</span>
               </div>
