@@ -23,6 +23,9 @@ export default function Landing() {
               <p className="text-2xl lg:text-3xl font-semibold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent" data-testid="text-tagline">
                 Restore your energy & metabolism
               </p>
+              <p className="text-xl font-medium text-foreground" data-testid="text-hero-benefit">
+                Feel lighter, calmer, and more energized — every day.
+              </p>
             </div>
 
             <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed" data-testid="text-description">
@@ -74,29 +77,31 @@ export default function Landing() {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
               <TrendingUp className="w-6 h-6 text-primary" data-testid="icon-track" />
             </div>
-            <h3 className="text-xl font-semibold" data-testid="heading-track">Track Your Vitals</h3>
-            <p className="text-muted-foreground leading-relaxed" data-testid="text-track">
-              Monitor morning temperature, pulse, energy, sleep, and digestion. See patterns emerge over time with beautiful charts.
-            </p>
+            <h3 className="text-xl font-semibold" data-testid="heading-track">Track Your Temperature, Pulse, Sleep & Energy</h3>
+            <div className="space-y-3 text-muted-foreground leading-relaxed" data-testid="text-track">
+              <p>See what truly supports your body.</p>
+              <p className="font-medium text-foreground">Finally understand what your body needs to feel good again.</p>
+            </div>
           </Card>
 
           <Card className="p-8 space-y-4" data-testid="card-feature-experiments">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-primary" data-testid="icon-experiments" />
             </div>
-            <h3 className="text-xl font-semibold" data-testid="heading-experiments">Run Experiments</h3>
-            <p className="text-muted-foreground leading-relaxed" data-testid="text-experiments">
-              Try science-backed protocols like the 7-Day Carrot Salad or Daily Orange Juice. Track what works for YOUR body.
-            </p>
+            <h3 className="text-xl font-semibold" data-testid="heading-experiments">Run Gentle Experiments</h3>
+            <div className="space-y-3 text-muted-foreground leading-relaxed" data-testid="text-experiments">
+              <p>Discover what works for you and how your body actually responds.</p>
+              <p className="font-medium text-foreground">A softer way to get healthy — one that actually works with your body.</p>
+            </div>
           </Card>
 
           <Card className="p-8 space-y-4" data-testid="card-feature-insights">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
               <Calendar className="w-6 h-6 text-primary" data-testid="icon-insights" />
             </div>
-            <h3 className="text-xl font-semibold" data-testid="heading-insights">Get Insights</h3>
+            <h3 className="text-xl font-semibold" data-testid="heading-insights">Get Insights & Recommendations</h3>
             <p className="text-muted-foreground leading-relaxed" data-testid="text-insights">
-              Receive personalized experiment recommendations based on your vitals. Celebrate milestones and metabolic wins.
+              Based on your vitals, always know your next step in healing your metabolism and restoring energy.
             </p>
           </Card>
         </div>
