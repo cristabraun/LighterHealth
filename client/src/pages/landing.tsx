@@ -15,7 +15,7 @@ export default function Landing() {
               </h1>
               
               <div className="flex justify-center gap-0 text-4xl lg:text-5xl">
-                <span>☀️</span><span>🍊</span><span>🥕</span><span>🥚</span><span>🥛</span><span>🌿</span><span>🍓</span>
+                <span>☀️</span><span>🍊</span><span>🥕</span><span>🥚</span><span>🥛</span><span>🌿</span><span>🍓</span><span>🍦</span>
               </div>
               
               <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
