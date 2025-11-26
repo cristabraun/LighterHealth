@@ -9,16 +9,17 @@ export default function Landing() {
       <div className="relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
-            <div className="space-y-4">
-              <div className="flex justify-center gap-3 text-5xl lg:text-6xl">
-                <span>☀️</span>
-                <span>🌿</span>
-                <span>✨</span>
-              </div>
-              
+            <div className="space-y-6">
               <h1 className="text-5xl lg:text-6xl font-bold tracking-tight" data-testid="heading-hero">
                 Welcome to Lighter
               </h1>
+              
+              <div className="flex justify-center gap-2 text-4xl lg:text-5xl">
+                <span>☀️</span>
+                <span>🍊</span>
+                <span>🌿</span>
+                <span>🍓</span>
+              </div>
               
               <p className="text-2xl lg:text-3xl font-semibold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent" data-testid="text-tagline">
                 Restore your energy & metabolism
