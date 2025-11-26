@@ -40,7 +40,7 @@ export default function Landing() {
               </div>
               <div className="flex items-start justify-start gap-3 text-foreground pl-6 pt-1">
                 <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-benefit-3" />
-                <span className="text-lg font-medium">Let weight come off without restriction</span>
+                <span className="text-lg font-medium">Let weight come off gently</span>
               </div>
             </div>
 
