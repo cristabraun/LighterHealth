@@ -21,14 +21,13 @@ export default function Landing() {
               <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
                 Restore your energy & metabolism
               </p>
-              <p className="text-xl font-medium text-foreground" data-testid="text-hero-benefit">
-                Feel lighter, calmer, and more energized — every day.
-              </p>
             </div>
 
-            <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed" data-testid="text-description">
-              Feel like you again using carbs, sugar, warmth, and gentle movement — the pro-metabolic way.
-            </p>
+            <Card className="p-6 bg-primary/5 border border-primary/20 max-w-3xl mx-auto" data-testid="text-hero-box">
+              <p className="text-lg lg:text-xl font-medium text-foreground leading-relaxed" data-testid="text-description">
+                Feel lighter, calmer, and more energized every day using carbs, sugar, warmth, and gentle movement — the pro-metabolic way.
+              </p>
+            </Card>
 
             <div className="space-y-3 max-w-2xl mx-auto" data-testid="section-benefits">
               <div className="flex items-start justify-start gap-3 text-foreground pl-6 pt-1">
