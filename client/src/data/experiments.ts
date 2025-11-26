@@ -124,7 +124,7 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   },
   {
     id: "low-pufa-week",
-    title: "One Week of Low-PUFA Eating",
+    title: "Low-PUFA Eating",
     duration: 30,
     category: "Nutrition",
     why: "Seed oils (PUFA - polyunsaturated fats) are highly inflammatory, suppress thyroid function, and promote estrogen dominance. Canola, soybean, corn, and sunflower oils are found in almost all processed foods. Eliminating them dramatically reduces inflammation.",
