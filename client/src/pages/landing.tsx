@@ -22,7 +22,7 @@ export default function Landing() {
                 Restore your energy & metabolism
               </p>
               <p className="text-xl font-medium text-foreground" data-testid="text-hero-benefit">
-                3-day trial, then $19/month. Feel lighter, calmer, and more energized — every day.
+                Feel lighter, calmer, and more energized — every day.
               </p>
             </div>
 
@@ -52,7 +52,7 @@ export default function Landing() {
               
               <div className="flex flex-col items-center gap-4" data-testid="section-pricing">
                 <div className="space-y-2">
-                  <p className="text-muted-foreground">Your metabolic healing guide for</p>
+                  <p className="text-muted-foreground">Your metabolic healing guide, 3-day trial, then</p>
                   <span className="text-4xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
                 </div>
                 <Button 
