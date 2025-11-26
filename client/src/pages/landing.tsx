@@ -6,7 +6,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden border-b border-border/40">
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
             <div className="space-y-6">
@@ -69,9 +69,9 @@ export default function Landing() {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-6xl mx-auto px-6 py-16" data-testid="section-features">
+      <div className="max-w-6xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-features">
         <div className="grid md:grid-cols-3 gap-6">
-          <Card className="p-8 space-y-4" data-testid="card-feature-track">
+          <Card className="p-8 space-y-4 border-2 border-border/30 hover-elevate transition-all" data-testid="card-feature-track">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
               <TrendingUp className="w-6 h-6 text-primary" data-testid="icon-track" />
             </div>
@@ -82,7 +82,7 @@ export default function Landing() {
             </div>
           </Card>
 
-          <Card className="p-8 space-y-4" data-testid="card-feature-experiments">
+          <Card className="p-8 space-y-4 border-2 border-border/30 hover-elevate transition-all" data-testid="card-feature-experiments">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-primary" data-testid="icon-experiments" />
             </div>
@@ -93,7 +93,7 @@ export default function Landing() {
             </div>
           </Card>
 
-          <Card className="p-8 space-y-4" data-testid="card-feature-insights">
+          <Card className="p-8 space-y-4 border-2 border-border/30 hover-elevate transition-all" data-testid="card-feature-insights">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
               <Calendar className="w-6 h-6 text-primary" data-testid="icon-insights" />
             </div>
@@ -106,8 +106,8 @@ export default function Landing() {
       </div>
 
       {/* Value Proposition Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16" data-testid="section-value">
-        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5">
+      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-value">
+        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
           <h2 className="text-3xl font-bold text-center" data-testid="heading-value">Your Pocket Metabolism Coach</h2>
           <div className="space-y-6">
             <p className="text-xl text-center text-muted-foreground leading-relaxed" data-testid="text-value-intro">
@@ -194,8 +194,8 @@ export default function Landing() {
       </div>
 
       {/* Philosophy Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16" data-testid="section-philosophy">
-        <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5">
+      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-philosophy">
+        <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
           <h2 className="text-3xl font-bold text-center whitespace-nowrap" data-testid="heading-philosophy">The Lighter Lifestyle</h2>
           <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
             <p data-testid="text-philosophy-intro" className="font-medium text-foreground">
