@@ -29,20 +29,18 @@ export default function Landing() {
               Feel like you again using carbs, sugar, warmth, and gentle movement — the pro-metabolic way.
             </p>
 
-            <div className="bg-primary/5 rounded-2xl p-8 space-y-4 max-w-2xl mx-auto border border-primary/10" data-testid="section-benefits">
-              <div className="space-y-3">
-                <div className="flex items-center justify-center gap-3 text-foreground">
-                  <span className="text-2xl">💚</span>
-                  <span className="text-lg font-medium">Lower stress</span>
-                </div>
-                <div className="flex items-center justify-center gap-3 text-foreground">
-                  <span className="text-2xl">⚡</span>
-                  <span className="text-lg font-medium">Increase energy & wellbeing</span>
-                </div>
-                <div className="flex items-center justify-center gap-3 text-foreground">
-                  <span className="text-2xl">🦋</span>
-                  <span className="text-lg font-medium">Let weight come off without restriction</span>
-                </div>
+            <div className="space-y-3 max-w-2xl mx-auto" data-testid="section-benefits">
+              <div className="flex items-center justify-start gap-3 text-foreground pl-6">
+                <Heart className="w-5 h-5 text-primary flex-shrink-0" data-testid="icon-benefit-1" />
+                <span className="text-lg font-medium">Lower stress</span>
+              </div>
+              <div className="flex items-center justify-start gap-3 text-foreground pl-6">
+                <Heart className="w-5 h-5 text-primary flex-shrink-0" data-testid="icon-benefit-2" />
+                <span className="text-lg font-medium">Increase energy & wellbeing</span>
+              </div>
+              <div className="flex items-center justify-start gap-3 text-foreground pl-6">
+                <Heart className="w-5 h-5 text-primary flex-shrink-0" data-testid="icon-benefit-3" />
+                <span className="text-lg font-medium">Let weight come off without restriction</span>
               </div>
             </div>
 
