@@ -10,11 +10,11 @@ export default function Landing() {
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
             <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight" data-testid="heading-hero">
+              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight whitespace-nowrap" data-testid="heading-hero">
                 Welcome to Lighter
               </h1>
               
-              <div className="flex justify-center gap-2 text-4xl lg:text-5xl flex-wrap">
+              <div className="flex justify-center gap-1 text-4xl lg:text-5xl">
                 <span>☀️</span>
                 <span>🍊</span>
                 <span>🥕</span>
