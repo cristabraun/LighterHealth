@@ -142,7 +142,7 @@ export default function Landing() {
                   <span className="font-semibold">$150+</span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-primary/50 bg-primary/5">
-                  <span className="font-semibold text-foreground">Lighter (unlimited coaching)</span>
+                  <span className="font-semibold text-foreground">Lighter + free messaging support</span>
                   <span className="font-bold text-primary">$19/mo</span>
                 </div>
               </div>
