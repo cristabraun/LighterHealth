@@ -11,14 +11,14 @@ export default function Landing() {
           <div className="text-center space-y-8">
             <div className="space-y-6">
               <h1 className="text-5xl lg:text-6xl font-bold tracking-tight" data-testid="heading-hero">
-                Welcome to Lighter
+                <span className="bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">Welcome to</span> Lighter
               </h1>
               
               <div className="flex justify-center gap-0 text-4xl lg:text-5xl">
                 <span>☀️</span><span>🍊</span><span>🥕</span><span>🥚</span><span>🥛</span><span>🌿</span><span>🍓</span>
               </div>
               
-              <p className="text-2xl lg:text-3xl font-semibold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent" data-testid="text-tagline">
+              <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
                 Restore your energy & metabolism
               </p>
               <p className="text-xl font-medium text-foreground" data-testid="text-hero-benefit">
