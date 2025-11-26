@@ -210,7 +210,7 @@ export default function MyMetabolism() {
               <div className="space-y-2 flex-1">
                 <h3 className="font-semibold" data-testid="heading-message-coach-empty">Questions or Challenges?</h3>
                 <p className="text-sm text-muted-foreground" data-testid="text-message-coach-empty-description">
-                  Message me if you have questions about getting started or need guidance on your metabolic healing journey.
+                  Are you just stuck? Or if you have questions or need any kind of clarity, you can message me.
                 </p>
               </div>
             </div>
