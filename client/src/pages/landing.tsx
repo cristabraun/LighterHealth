@@ -219,7 +219,7 @@ export default function Landing() {
           className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
           data-testid="button-cta-login"
         >
-          Start Your Journey
+          Start Your 3-Day Trial
         </Button>
       </div>
 
