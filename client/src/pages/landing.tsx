@@ -22,7 +22,7 @@ export default function Landing() {
                 Restore your energy & metabolism
               </p>
               <p className="text-xl font-medium text-foreground" data-testid="text-hero-benefit">
-                Feel lighter, calmer, and more energized — every day.
+                3-day trial, then $19/month. Feel lighter, calmer, and more energized — every day.
               </p>
             </div>
 
