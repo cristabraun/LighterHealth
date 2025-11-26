@@ -7,49 +7,63 @@ export default function Landing() {
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 py-24 lg:py-32">
+        <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
-            <div className="flex justify-center">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-chart-2 flex items-center justify-center">
-                <Sparkles className="w-12 h-12 text-white" data-testid="icon-hero-sparkles" />
+            <div className="space-y-4">
+              <div className="flex justify-center gap-3 text-5xl lg:text-6xl">
+                <span>☀️</span>
+                <span>🌿</span>
+                <span>✨</span>
               </div>
-            </div>
-            
-            <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent" data-testid="heading-hero">
-              Become Lighter
-            </h1>
-            
-            <div className="flex items-center justify-center gap-8 text-muted-foreground flex-wrap" data-testid="section-benefits">
-              <div className="flex items-center gap-2">
-                <Heart className="w-6 h-6 text-primary" data-testid="icon-emotionally" />
-                <span className="text-lg">Emotionally</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-6 h-6 text-primary" data-testid="icon-energetically" />
-                <span className="text-lg">Energetically</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <ThermometerSun className="w-6 h-6 text-primary" data-testid="icon-physically" />
-                <span className="text-lg">Physically</span>
-              </div>
+              
+              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight" data-testid="heading-hero">
+                Welcome to Lighter
+              </h1>
+              
+              <p className="text-2xl lg:text-3xl font-semibold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent" data-testid="text-tagline">
+                Restore your energy & metabolism
+              </p>
             </div>
 
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed" data-testid="text-description">
-              Track your metabolism, run personalized experiments, and discover what makes YOU feel lighter. This is not a diet app.
+            <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed" data-testid="text-description">
+              Feel like you again using carbs, sugar, warmth, and gentle movement — the pro-metabolic way.
             </p>
 
-            <div className="pt-6 space-y-4">
-              <div className="flex items-center justify-center gap-2" data-testid="section-pricing">
-                <span className="text-3xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
-                <span className="text-muted-foreground">— Your metabolic health coach</span>
+            <div className="bg-primary/5 rounded-2xl p-8 space-y-4 max-w-2xl mx-auto border border-primary/10" data-testid="section-benefits">
+              <div className="space-y-3">
+                <div className="flex items-center justify-center gap-3 text-foreground">
+                  <span className="text-2xl">💚</span>
+                  <span className="text-lg font-medium">Lower stress</span>
+                </div>
+                <div className="flex items-center justify-center gap-3 text-foreground">
+                  <span className="text-2xl">⚡</span>
+                  <span className="text-lg font-medium">Increase energy & wellbeing</span>
+                </div>
+                <div className="flex items-center justify-center gap-3 text-foreground">
+                  <span className="text-2xl">🦋</span>
+                  <span className="text-lg font-medium">Let weight come off without restriction</span>
+                </div>
               </div>
-              <Button 
-                onClick={() => window.location.href = '/api/login'}
-                className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
-                data-testid="button-get-started"
-              >
-                Start Your Journey
-              </Button>
+            </div>
+
+            <div className="space-y-6 pt-4">
+              <h2 className="text-2xl lg:text-3xl font-bold" data-testid="heading-cta-main">
+                Are you ready to feel lighter?
+              </h2>
+              
+              <div className="flex flex-col items-center gap-4" data-testid="section-pricing">
+                <div className="space-y-2">
+                  <p className="text-muted-foreground">Your metabolic health coach for</p>
+                  <span className="text-4xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
+                </div>
+                <Button 
+                  onClick={() => window.location.href = '/api/login'}
+                  className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
+                  data-testid="button-get-started"
+                >
+                  Start Your Journey
+                </Button>
+              </div>
             </div>
           </div>
         </div>
