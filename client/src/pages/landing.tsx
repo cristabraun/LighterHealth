@@ -273,9 +273,9 @@ export default function Landing() {
               Let me show you how.
             </p>
             
-            <p data-testid="text-about-signature" className="text-right pt-4 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '2.25rem', fontStyle: 'italic', fontWeight: '400', letterSpacing: '0.05em' }}>
+            <p data-testid="text-about-signature" className="text-right pt-4 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '1.625rem', fontWeight: '400', letterSpacing: '0.08em' }}>
               Crista
-              <Heart className="w-5 h-5 text-primary fill-primary" />
+              <Heart className="w-4 h-4 text-primary fill-primary" />
             </p>
           </div>
         </Card>
