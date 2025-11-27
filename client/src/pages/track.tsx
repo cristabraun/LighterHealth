@@ -68,6 +68,7 @@ export default function Track() {
     "Stayed warm (dressed warmly, chose warming foods)",
     "Fueled workouts properly (ate before/after if I exercised)",
     "Had a bedtime snack if hungry (milk + honey, fruit + cheese, etc.)",
+    "Did something today that made me feel calm, joyful and energized (Good energy is not just physiological, it's also emotional)",
   ];
 
   const toggleChecklistItem = (index: number) => {
