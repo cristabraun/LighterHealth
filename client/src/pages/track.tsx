@@ -80,20 +80,6 @@ export default function Track() {
     });
   };
 
-  const saveChecklistMutation = useMutation({
-    mutationFn: async (completed: number[]) => {
-      const res = await apiRequest("PATCH", `/api/logs/${today}/checklist`, { checklistCompleted: completed });
-      return await res.json();
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to save checklist",
-        variant: "destructive",
-      });
-    },
-  });
-
   const saveMutation = useMutation({
     mutationFn: async (logData: InsertDailyLog) => {
       const res = await apiRequest("POST", "/api/logs", logData);
@@ -224,6 +210,7 @@ export default function Track() {
       digestion,
       howYouFeelNotes: howYouFeelNotes.trim() || undefined,
       digestionNotes: digestionNotes.trim() || undefined,
+      checklistCompleted,
     };
 
     saveMutation.mutate(logData);
@@ -600,11 +587,6 @@ export default function Track() {
                   checked={checklistCompleted.includes(index)}
                   onCheckedChange={() => {
                     toggleChecklistItem(index);
-                    // Save immediately
-                    const updated = checklistCompleted.includes(index)
-                      ? checklistCompleted.filter(i => i !== index)
-                      : [...checklistCompleted, index];
-                    saveChecklistMutation.mutate(updated);
                   }}
                   className="mt-1 flex-shrink-0"
                   data-testid={`checkbox-${index}`}
