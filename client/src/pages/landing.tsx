@@ -210,6 +210,66 @@ export default function Landing() {
         </Card>
       </div>
 
+      {/* About Me Section */}
+      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-about">
+        <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
+          <h2 className="text-3xl font-bold text-center" data-testid="heading-about">Hi, I'm Crista</h2>
+          <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
+            <p data-testid="text-about-1" className="font-medium text-foreground">
+              I've been where you are.
+            </p>
+            
+            <p data-testid="text-about-2">
+              The endless cycle of being "good" all day, then standing in front of the fridge at night, eating everything in sight because your body was screaming for nourishment you kept denying it. The confusion of trying to keep up with every new diet trend, wondering why nothing ever sticks. The hours spent running, training, working out—desperately trying to "earn" your food or burn off yesterday's "mistake."
+            </p>
+            
+            <p data-testid="text-about-3">
+              It never worked long term. And it left me exhausted.
+            </p>
+            
+            <p data-testid="text-about-4">
+              I know what it's like to wake up with anxiety coursing through your body, your heart pounding in your chest when you're supposed to be sleeping. To feel irritable, foggy, and like you're running on fumes and stress hormones instead of actual energy. I ignored what my body was trying to tell me for way too long.
+            </p>
+            
+            <p data-testid="text-about-5" className="font-medium text-foreground">
+              Then I discovered the pro-metabolic approach—and a light went on.
+            </p>
+            
+            <p data-testid="text-about-6">
+              My body wasn't broken. My metabolism just needed healing. I realized that all the conventional diet and fitness advice—while it might help you lose weight in the short term—doesn't work long term because it doesn't address the root cause.
+            </p>
+            
+            <p data-testid="text-about-7">
+              Now, every day, I see women talking about: "This must be what getting older is like." "I can't sleep well anymore." "I feel drained all the time." "My hair is falling out, my skin is dull." "I'm cold all the time." "I'm not excited about anything anymore."
+            </p>
+            
+            <p data-testid="text-about-8">
+              And my heart breaks—because I know there's another way.
+            </p>
+            
+            <p data-testid="text-about-9" className="font-medium text-foreground">
+              That's why I created Lighter.
+            </p>
+            
+            <p data-testid="text-about-10">
+              I built this app to help women feel GOOD again. To feel energized, happy, and truly lighter—not just in body, but in spirit. To finally understand how to work WITH their metabolism instead of against it.
+            </p>
+            
+            <p data-testid="text-about-11" className="font-medium text-foreground pt-4">
+              You deserve to feel warm, rested, and alive. You deserve to eat without guilt and sleep without anxiety. You deserve to trust your body again.
+            </p>
+            
+            <p data-testid="text-about-12" className="pt-4">
+              Let me show you how.
+            </p>
+            
+            <p data-testid="text-about-signature" className="text-right font-semibold pt-2">
+              — Crista
+            </p>
+          </div>
+        </Card>
+      </div>
+
       {/* CTA Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 text-center" data-testid="section-cta">
         <h2 className="text-3xl font-bold mb-6" data-testid="heading-cta">Ready to Feel Lighter?</h2>
