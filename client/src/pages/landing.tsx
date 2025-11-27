@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar } from "lucide-react";
+import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
 
 export default function Landing() {
   return (
@@ -213,7 +214,16 @@ export default function Landing() {
       {/* About Me Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-about">
         <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
-          <h2 className="text-3xl font-bold text-center" data-testid="heading-about">Hi, I'm Crista</h2>
+          <div className="flex flex-col items-center gap-6">
+            <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/20 to-chart-2/20 flex-shrink-0" data-testid="image-crista">
+              <img 
+                src={cristaPhoto} 
+                alt="Crista"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h2 className="text-3xl font-bold text-center" data-testid="heading-about">Hi, I'm Crista</h2>
+          </div>
           <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
             <p data-testid="text-about-1" className="font-medium text-foreground">
               I've been where you are.
