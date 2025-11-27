@@ -273,8 +273,9 @@ export default function Landing() {
               Let me show you how.
             </p>
             
-            <p data-testid="text-about-signature" className="text-right font-semibold pt-2">
+            <p data-testid="text-about-signature" className="text-right pt-2 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '1.5rem' }}>
               — Crista
+              <Heart className="w-4 h-4 text-primary fill-primary" />
             </p>
           </div>
         </Card>
