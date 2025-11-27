@@ -12,7 +12,7 @@ export default function Landing() {
           <div className="text-center space-y-8">
             <div className="space-y-6">
               <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1" data-testid="heading-hero">
-                Welcome to Lighter
+                Welcome to Lighter™
               </h1>
               
               <div className="flex justify-center gap-0 text-4xl lg:text-5xl">
@@ -140,7 +140,7 @@ export default function Landing() {
                   <span className="font-semibold">$150+</span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-primary/50 bg-primary/5">
-                  <span className="font-semibold text-foreground">Lighter (+ private support messaging)</span>
+                  <span className="font-semibold text-foreground">Lighter™ (+ private support messaging)</span>
                   <span className="font-bold text-primary">$19/mo</span>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function Landing() {
 
             <div className="pt-4 space-y-4">
               <p className="text-center text-lg font-medium" data-testid="text-value-what-you-get">
-                What you get with Lighter:
+                What you get with Lighter™:
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-muted-foreground">
                 <div className="flex items-start gap-3">
@@ -258,7 +258,7 @@ export default function Landing() {
             </p>
             
             <p data-testid="text-about-9" className="font-medium text-foreground">
-              That's why I created Lighter.
+              That's why I created Lighter™.
             </p>
             
             <p data-testid="text-about-10">
@@ -296,7 +296,7 @@ export default function Landing() {
       {/* Footer */}
       <footer className="max-w-4xl mx-auto px-6 py-8 pb-12 text-center" data-testid="footer">
         <p className="text-sm text-muted-foreground" data-testid="text-disclaimer">
-          Lighter provides wellness and lifestyle guidance and does not provide medical advice.
+          Lighter™ provides wellness and lifestyle guidance and does not provide medical advice.
         </p>
       </footer>
     </div>

@@ -9,7 +9,7 @@ export default function StartHere() {
       </h1>
 
       <p className="text-gray-700 leading-relaxed">
-        Welcome to <strong>Lighter</strong> — the metabolic healing system that helps you feel
+        Welcome to <strong>Lighter™</strong> — the metabolic healing system that helps you feel
         energized, calm, and in control of your body again.  
         Instead of dieting or forcing discipline, we use bioenergetic
         principles to restore your metabolism, lower stress, and help your body feel safe.
