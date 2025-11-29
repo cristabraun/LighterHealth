@@ -21,36 +21,10 @@ export default function AdminMessages() {
     queryKey: ['/api/auth/is-admin'],
   });
 
-  // Redirect if not admin
-  useEffect(() => {
-    if (!isCheckingAdmin && !adminCheck?.isAdmin) {
-      toast({
-        title: "Access Denied",
-        description: "You don't have permission to access the admin dashboard.",
-        variant: "destructive",
-      });
-      setLocation('/');
-    }
-  }, [adminCheck, isCheckingAdmin, setLocation, toast]);
-
   const { data: messages = [], isLoading } = useQuery<Message[]>({
     queryKey: ['/api/admin/messages'],
     enabled: adminCheck?.isAdmin === true,
   });
-
-  // Show loading state while checking admin status
-  if (isCheckingAdmin) {
-    return (
-      <div className="min-h-screen bg-background pb-24 flex items-center justify-center">
-        <div className="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin" />
-      </div>
-    );
-  }
-
-  // Don't render anything if not admin (will redirect)
-  if (!adminCheck?.isAdmin) {
-    return null;
-  }
 
   const respondMutation = useMutation({
     mutationFn: async ({ messageId, response }: { messageId: string; response: string }) => {
@@ -73,6 +47,32 @@ export default function AdminMessages() {
       });
     },
   });
+
+  // Redirect if not admin
+  useEffect(() => {
+    if (!isCheckingAdmin && !adminCheck?.isAdmin) {
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to access the admin dashboard.",
+        variant: "destructive",
+      });
+      setLocation('/');
+    }
+  }, [adminCheck, isCheckingAdmin, setLocation, toast]);
+
+  // Show loading state while checking admin status
+  if (isCheckingAdmin) {
+    return (
+      <div className="min-h-screen bg-background pb-24 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+      </div>
+    );
+  }
+
+  // Don't render anything if not admin (will redirect)
+  if (!adminCheck?.isAdmin) {
+    return null;
+  }
 
   const handleRespond = (messageId: string) => {
     if (responseText.trim().length < 10) {
