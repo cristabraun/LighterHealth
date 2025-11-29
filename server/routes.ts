@@ -180,6 +180,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
     const userEmail = req.user?.claims?.email;
     const isUserAdmin = userEmail && adminEmails.includes(userEmail);
+    console.log("Admin check - Email:", userEmail, "Admin emails:", adminEmails, "Is admin:", isUserAdmin);
     res.json({ isAdmin: isUserAdmin });
   });
 
