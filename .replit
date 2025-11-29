@@ -80,4 +80,4 @@ integrations = ["javascript_log_in_with_replit:1.0.0"]
 [userenv]
 
 [userenv.shared]
-ADMIN_EMAILS = "trainwithcrista@gmail.com"
+ADMIN_EMAILS = "crista.ann.braun@gmail.com"
