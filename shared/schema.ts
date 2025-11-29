@@ -141,6 +141,7 @@ export const foodLogs = pgTable("food_logs", {
   date: text("date").notNull(), // YYYY-MM-DD format
   meal: text("meal").notNull(), // 'breakfast' | 'lunch' | 'dinner' | 'snack'
   foodItem: text("food_item").notNull(), // What they ate
+  energyIntake: integer("energy_intake"), // Calories
   notes: text("notes"), // Optional additional details
   createdAt: timestamp("created_at").defaultNow(),
 }, (table) => {
@@ -156,6 +157,7 @@ export const insertFoodLogSchema = createInsertSchema(foodLogs).omit({
 }).extend({
   meal: z.enum(['breakfast', 'lunch', 'dinner', 'snack']),
   foodItem: z.string().min(1, "Food item is required"),
+  energyIntake: z.number().int().min(0).optional(),
 });
 
 export type InsertFoodLog = z.infer<typeof insertFoodLogSchema>;

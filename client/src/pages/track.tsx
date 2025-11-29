@@ -31,6 +31,7 @@ export default function Track() {
   const [showFoodForm, setShowFoodForm] = useState(false);
   const [meal, setMeal] = useState<"breakfast" | "lunch" | "dinner" | "snack">("breakfast");
   const [foodItem, setFoodItem] = useState("");
+  const [energyIntake, setEnergyIntake] = useState("");
   const [foodNotes, setFoodNotes] = useState("");
 
   const today = new Date().toISOString().split('T')[0];
@@ -132,6 +133,7 @@ export default function Track() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`/api/food-logs?date=${today}`] });
       setFoodItem("");
+      setEnergyIntake("");
       setFoodNotes("");
       setShowFoodForm(false);
       toast({
@@ -233,6 +235,7 @@ export default function Track() {
       date: today,
       meal,
       foodItem: foodItem.trim(),
+      energyIntake: energyIntake ? parseInt(energyIntake) : undefined,
       notes: foodNotes.trim() || undefined,
     };
 
@@ -488,6 +491,19 @@ export default function Track() {
               </div>
 
               <div className="space-y-2">
+                <Label htmlFor="energyIntake">Energy Intake (calories)</Label>
+                <Input
+                  id="energyIntake"
+                  type="number"
+                  placeholder="e.g., 250"
+                  value={energyIntake}
+                  onChange={(e) => setEnergyIntake(e.target.value)}
+                  data-testid="input-energy-intake"
+                  min="0"
+                />
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="foodNotes">Notes (Optional)</Label>
                 <Textarea
                   id="foodNotes"
@@ -515,6 +531,7 @@ export default function Track() {
                   onClick={() => {
                     setShowFoodForm(false);
                     setFoodItem("");
+                    setEnergyIntake("");
                     setFoodNotes("");
                   }}
                   data-testid="button-cancel-food"
@@ -526,7 +543,13 @@ export default function Track() {
           )}
 
           {foodLogs.length > 0 ? (
-            <div className="space-y-2">
+            <div className="space-y-4">
+              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                <p className="text-sm font-medium text-muted-foreground mb-1">Total Daily Energy Intake</p>
+                <p className="text-2xl font-bold text-primary" data-testid="text-total-energy">
+                  {foodLogs.reduce((sum, log) => sum + (log.energyIntake || 0), 0)} cal
+                </p>
+              </div>
               <p className="text-sm text-muted-foreground">Today's meals:</p>
               {foodLogs.map((log) => (
                 <div
@@ -540,6 +563,13 @@ export default function Track() {
                         {log.meal}
                       </span>
                       <span className="text-sm font-medium">{log.foodItem}</span>
+                    </div>
+                    <div className="flex items-center gap-3 mt-2">
+                      {log.energyIntake && (
+                        <span className="text-xs text-muted-foreground" data-testid={`text-energy-${log.id}`}>
+                          Energy Intake (cal): <span className="font-semibold text-foreground">{log.energyIntake}</span>
+                        </span>
+                      )}
                     </div>
                     {log.notes && (
                       <p className="text-xs text-muted-foreground mt-1">{log.notes}</p>
