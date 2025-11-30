@@ -111,7 +111,7 @@ export default function Landing() {
       {/* Value Proposition Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-value">
         <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
-          <h2 className="text-3xl font-bold text-center" data-testid="heading-value">Your Pocket Metabolism Coach</h2>
+          <h2 className="text-3xl font-bold text-center" data-testid="heading-value">Your Daily Metabolism Support System — Right in Your Pocket</h2>
           <div className="space-y-6">
             <p className="text-xl text-center text-muted-foreground leading-relaxed" data-testid="text-value-intro">
               For the price of a streaming subscription, get personalized metabolic health coaching every single day.
