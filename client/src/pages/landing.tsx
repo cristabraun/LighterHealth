@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar } from "lucide-react";
 import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
+import lighterIcon from "@assets/generated_images/lighter_app_icon_coral_gradient.png";
 
 export default function Landing() {
   return (
@@ -11,16 +12,21 @@ export default function Landing() {
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
             <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1" data-testid="heading-hero">
+              <h1 className="text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1" data-testid="heading-hero">
                 Welcome to Lighter™
               </h1>
               
-              <div className="flex justify-center gap-0 text-4xl lg:text-5xl">
-                <span>☀️</span><span>🍊</span><span>🥕</span><span>🥚</span><span>🥛</span><span>🌿</span><span>🍓</span><span>🍦</span>
+              <div className="flex justify-center py-4">
+                <img 
+                  src={lighterIcon} 
+                  alt="Lighter App Icon" 
+                  className="w-16 h-16"
+                  data-testid="image-app-icon"
+                />
               </div>
               
               <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
-                Restore your energy & metabolism
+                Your gentle space for restoring energy, wellbeing & healing your metabolism.
               </p>
             </div>
 
