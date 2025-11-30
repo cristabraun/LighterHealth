@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb } from "lucide-react";
+import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb, Check } from "lucide-react";
 import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
 import lighterIcon from "@assets/IMG_4823_1764541165994.JPG?url";
 
@@ -144,46 +144,52 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="pt-4 space-y-4">
-              <p className="text-center text-lg font-medium" data-testid="text-value-what-you-get">
+            <div className="pt-8 mt-4 space-y-0">
+              <p className="text-center text-lg font-medium mb-6" data-testid="text-value-what-you-get">
                 What you get with Lighter™:
               </p>
-              <div className="grid md:grid-cols-2 gap-4 text-muted-foreground">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-primary text-sm">✓</span>
+              <div className="space-y-0">
+                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-1" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground mb-1">Daily vital tracking with smart insights</h4>
+                    <p className="text-muted-foreground text-sm">Understand your energy, stress, and metabolic patterns with simple daily check-ins.</p>
                   </div>
-                  <span>Daily vital tracking with smart insights</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-primary text-sm">✓</span>
+                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-2" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground mb-1">Personalized experiment recommendations</h4>
+                    <p className="text-muted-foreground text-sm">Find what works for your body with guided, gentle metabolic experiments.</p>
                   </div>
-                  <span>Personalized experiment recommendations</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-primary text-sm">✓</span>
+                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-3" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground mb-1">Science-backed metabolic protocols</h4>
+                    <p className="text-muted-foreground text-sm">Follow simple, proven steps that support thyroid health, lower stress, and boost energy.</p>
                   </div>
-                  <span>Science-backed metabolic protocols</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-primary text-sm">✓</span>
+                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-4" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground mb-1">Direct messaging for questions</h4>
+                    <p className="text-muted-foreground text-sm">Get personalized support when you need clarity or encouragement.</p>
                   </div>
-                  <span>Direct messaging for questions</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-primary text-sm">✓</span>
+                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-5" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground mb-1">Beautiful progress charts and trends</h4>
+                    <p className="text-muted-foreground text-sm">See your improvements over time so you stay motivated and confident.</p>
                   </div>
-                  <span>Beautiful progress charts and trends</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-primary text-sm">✓</span>
+                <div className="flex gap-3 py-4">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-6" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground mb-1">Educational metabolic library</h4>
+                    <p className="text-muted-foreground text-sm">Learn the "why" behind your symptoms, hunger, energy shifts, and mood changes.</p>
                   </div>
-                  <span>Educational library on metabolic health</span>
                 </div>
               </div>
             </div>
