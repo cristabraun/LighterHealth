@@ -73,7 +73,7 @@ function Router() {
         <Route path="/learn-faqs" component={LearnFAQs} />
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
-        <Route path="/experiments/detail" component={ExperimentDetail} />
+        <Route path="/experiments/:id" component={ExperimentDetail} />
         <Route path="/messages" component={Messages} />
         <Route path="/essentials" component={Essentials} />
         <Route path="/admin/messages" component={AdminMessages} />

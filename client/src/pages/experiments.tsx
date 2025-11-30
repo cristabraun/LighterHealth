@@ -239,7 +239,7 @@ export default function Experiments() {
                       </div>
 
                       <Button
-                        onClick={() => setLocation("/experiments/detail")}
+                        onClick={() => setLocation(`/experiments/${active.experimentId}`)}
                         size="sm"
                         variant="outline"
                         className="w-full"
@@ -315,7 +315,7 @@ export default function Experiments() {
                   </div>
 
                   <Button
-                    onClick={() => setLocation("/experiments/detail")}
+                    onClick={() => setLocation(`/experiments/${experiment.id}`)}
                     variant="outline"
                     className="w-full"
                     data-testid={`button-learn-more-${experiment.id}`}
