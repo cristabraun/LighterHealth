@@ -53,10 +53,6 @@ export default function Landing() {
             </div>
 
             <div className="space-y-6 pt-4">
-              <h2 className="text-2xl lg:text-3xl font-bold" data-testid="heading-cta-main">
-                Are you ready to feel lighter?
-              </h2>
-              
               <div className="flex flex-col items-center gap-4" data-testid="section-pricing">
                 <div className="space-y-2">
                   <p className="text-muted-foreground">Your metabolic healing guide for</p>
