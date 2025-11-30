@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
+import OpenAI from "openai";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
@@ -273,6 +274,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.user.claims.sub;
       const { id } = req.params;
       await storage.deleteFoodLog(userId, id);
+    } catch (error) {
+      console.error("Error deleting food log:", error);
+      res.status(500).json({ message: "Failed to delete food log" });
+    }
+  });
+
+  // AI Coach route
+  app.post('/api/ask', async (req: any, res) => {
+    try {
+      const { question } = req.body;
+      
+      if (!question || typeof question !== 'string') {
+        return res.status(400).json({ message: "Question is required" });
+      }
+
+      const apiKey = process.env.OPENAI_API_KEY;
+      if (!apiKey) {
+        console.error("OPENAI_API_KEY is not set");
+        return res.status(500).json({ message: "AI Coach is not configured" });
+      }
+
+      const client = new OpenAI({ apiKey });
+
+      const message = await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: "You are the Lighter™ AI Coach. You answer questions using the pro-metabolic and bioenergetic approach. You focus on warmth, carbs, thyroid-friendly foods, low-PUFA eating, gentle healing, and stress reduction. You never make medical claims. You always speak in a warm, supportive, clear tone."
+          },
+          {
+            role: "user",
+            content: question
+          }
+        ]
+      });
+
+      const reply = message.choices[0]?.message?.content || "I couldn't generate a response. Please try again.";
+      res.json({ reply });
+    } catch (error) {
+      console.error("Error calling OpenAI API:", error);
+      res.status(500).json({ message: "Failed to get AI Coach response" });
+    }
       res.json({ success: true });
     } catch (error) {
       console.error("Error deleting food log:", error);

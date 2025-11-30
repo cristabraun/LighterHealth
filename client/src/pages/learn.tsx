@@ -9,12 +9,30 @@ import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_176
 export default function Learn() {
   const [question, setQuestion] = useState("");
   const [response, setResponse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleAskCoach = () => {
+  const handleAskCoach = async () => {
     if (question.trim()) {
-      // Placeholder response
-      setResponse(`Thanks for asking: "${question}"\n\nThis is a placeholder AI response. In the real app, your question would be sent to the Lighter™ AI Coach for personalized guidance.`);
-      setQuestion("");
+      setIsLoading(true);
+      try {
+        const res = await fetch("/api/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question }),
+        });
+        const data = await res.json();
+        if (data.reply) {
+          setResponse(data.reply);
+        } else {
+          setResponse("I couldn't generate a response. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error asking coach:", error);
+        setResponse("There was an error connecting to the AI Coach. Please try again.");
+      } finally {
+        setIsLoading(false);
+        setQuestion("");
+      }
     }
   };
 
@@ -158,11 +176,12 @@ export default function Learn() {
 
             <Button
               onClick={handleAskCoach}
+              disabled={isLoading}
               className="w-full bg-gradient-to-r from-primary to-chart-2"
               data-testid="button-ask-coach"
             >
               <Send className="w-4 h-4 mr-2" />
-              Ask
+              {isLoading ? "Asking..." : "Ask"}
             </Button>
 
             {response && (
