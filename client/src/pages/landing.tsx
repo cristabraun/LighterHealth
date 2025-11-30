@@ -68,6 +68,9 @@ export default function Landing() {
                 >
                   Start Your 3-Day Trial
                 </Button>
+                <p className="text-xs text-muted-foreground text-center mt-2.5" data-testid="text-microcopy">
+                  Cancel anytime. First 3 days free.
+                </p>
               </div>
             </div>
           </div>
