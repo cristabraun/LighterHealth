@@ -117,35 +117,30 @@ export default function Landing() {
               For the price of a streaming subscription, get personalized metabolic health coaching every single day.
             </p>
             
-            <div className="grid md:grid-cols-2 gap-6 text-muted-foreground" data-testid="section-comparisons">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between py-2 border-b border-border/50">
-                  <span>Netflix Premium</span>
-                  <span className="font-semibold">$23/mo</span>
-                </div>
-                <div className="flex items-center justify-between py-2 border-b border-border/50">
-                  <span>YouTube Premium</span>
-                  <span className="font-semibold">$18/mo</span>
-                </div>
-                <div className="flex items-center justify-between py-2 border-b border-border/50">
-                  <span>Spotify Premium</span>
-                  <span className="font-semibold">$12/mo</span>
-                </div>
+            <div className="space-y-1" data-testid="section-comparisons">
+              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
+                <span className="text-sm">Netflix Premium</span>
+                <span className="font-medium text-sm">$23/mo</span>
               </div>
-              
-              <div className="space-y-3">
-                <div className="flex items-center justify-between py-2 border-b border-border/50">
-                  <span>One health coaching session</span>
-                  <span className="font-semibold">$100+</span>
-                </div>
-                <div className="flex items-center justify-between py-2 border-b border-border/50">
-                  <span>Nutritionist consultation</span>
-                  <span className="font-semibold">$150+</span>
-                </div>
-                <div className="flex items-center justify-between py-2 border-b border-primary/50 bg-primary/5">
-                  <span className="font-semibold text-foreground">Lighter™ (+ private support messaging)</span>
-                  <span className="font-bold text-primary">$19/mo</span>
-                </div>
+              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
+                <span className="text-sm">YouTube Premium</span>
+                <span className="font-medium text-sm">$18/mo</span>
+              </div>
+              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
+                <span className="text-sm">Spotify Premium</span>
+                <span className="font-medium text-sm">$12/mo</span>
+              </div>
+              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
+                <span className="text-sm">One coaching session</span>
+                <span className="font-medium text-sm">$100+</span>
+              </div>
+              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
+                <span className="text-sm">Nutritionist consult</span>
+                <span className="font-medium text-sm">$150+</span>
+              </div>
+              <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-md border border-primary/20">
+                <span className="text-sm font-bold text-foreground">Lighter™ (daily support)</span>
+                <span className="font-bold text-primary text-sm">$19/mo</span>
               </div>
             </div>
 
