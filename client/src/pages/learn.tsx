@@ -221,6 +221,7 @@ export default function Learn() {
                 id: "digestion",
                 title: "Digestion",
                 content: "Discover how digestion impacts energy production, why digestive comfort matters, and which foods are easier to digest. Learn about the role of hydration, temperature, and meal timing in supporting healthy digestion.",
+                link: "/learn-digestion",
               },
               {
                 id: "movement",
