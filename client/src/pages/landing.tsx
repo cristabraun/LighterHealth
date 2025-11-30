@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar } from "lucide-react";
 import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
-import lighterIcon from "@assets/generated_images/lighter_app_icon_coral_gradient.png";
+import lighterIcon from "@assets/IMG_4823_1764541165994.JPG?url";
 
 export default function Landing() {
   return (
