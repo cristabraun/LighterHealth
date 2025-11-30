@@ -264,6 +264,21 @@ export default function ExperimentDetail() {
           </div>
         </Card>
 
+        {/* Recipe/Instructions Section */}
+        <Card className="p-6 bg-white/50 dark:bg-slate-900/50" data-testid="card-recipe">
+          <h2 className="font-semibold text-foreground mb-3" data-testid="heading-recipe">
+            How to Do This
+          </h2>
+          <ul className="space-y-2" data-testid="list-recipe-steps">
+            {experimentTemplate.how.map((step, idx) => (
+              <li key={idx} className="text-sm text-foreground flex gap-3" data-testid={`recipe-step-${idx}`}>
+                <span className="text-primary font-semibold flex-shrink-0">{idx + 1}.</span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+
         {/* Start Experiment Button (only show when not started) */}
         {!currentExperiment && (
           <Button 
