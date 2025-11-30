@@ -128,26 +128,33 @@ export default function ExperimentDetail() {
           </Button>
         </Link>
 
-        {/* Header */}
-        <div className="space-y-4">
-          <div className="flex items-start justify-between">
-            <div>
+        {/* Header Container */}
+        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5 space-y-4" data-testid="card-experiment-header">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1">
               <h1 className="text-3xl font-bold" data-testid="heading-experiment-title">
                 {experimentTemplate.title}
               </h1>
-              <p className="text-muted-foreground mt-1">Track your progress</p>
+              <p className="text-sm text-muted-foreground mt-2" data-testid="text-started-date">
+                Started: {startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
             </div>
             <Badge data-testid="badge-experiment-status">Active</Badge>
           </div>
 
           {/* Day Counter and Progress */}
-          <div className="space-y-2">
-            <p className="text-sm font-semibold text-foreground" data-testid="text-day-counter">
-              Day {currentDay} of {experimentTemplate.duration}
-            </p>
+          <div className="space-y-3 pt-2">
+            <div className="flex items-baseline justify-between">
+              <p className="text-sm font-semibold text-foreground" data-testid="text-day-counter">
+                Day {currentDay} of {experimentTemplate.duration}
+              </p>
+              <span className="text-xs text-muted-foreground" data-testid="text-progress-percentage">
+                {Math.round(Math.min(progress, 100))}%
+              </span>
+            </div>
             <Progress value={Math.min(progress, 100)} data-testid="progress-experiment" />
           </div>
-        </div>
+        </Card>
 
         {/* Experiment Status Section */}
         <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-experiment-status">
