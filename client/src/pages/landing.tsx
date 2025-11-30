@@ -24,7 +24,7 @@ export default function Landing() {
               </h1>
               
               <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
-                Understand Your Body, Lower Stress, and Restore Healthy Energy and Metabolic Balance.
+                Understand your body, lower stress, and restore your energy through simple daily tracking and personalized insights inside the Lighter™ app.
               </p>
             </div>
 
