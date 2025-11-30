@@ -22,7 +22,7 @@ import {
 import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import confetti from "canvas-confetti";
-import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_1764465939114.wav?url";
+import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_1764477961046.wav?url";
 
 const DAILY_AFFIRMATIONS = [
   "A body that is fed well, will heal well.",
