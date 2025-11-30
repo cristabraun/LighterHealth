@@ -127,6 +127,50 @@ export default function MyMetabolism() {
     return (scores.reduce((a, b) => a + b, 0) / allLogs.length).toFixed(0);
   };
 
+  const getMetabolicScore = () => {
+    if (logs.length === 0) return 0;
+    
+    const avgTemp = getAverage("temperature", 7);
+    const avgPulse = getAverage("pulse", 7);
+    const avgEnergy = getAverage("energy", 7);
+    const avgSleep = getAverage("sleep", 7);
+    const goodVitalsDays = getGoodVitalsDays();
+    
+    // Temperature: 0-25 (target 98°F+)
+    let tempScore = 0;
+    if (avgTemp >= 98.5) tempScore = 25;
+    else if (avgTemp >= 98) tempScore = 20;
+    else if (avgTemp >= 97.5) tempScore = 15;
+    else if (avgTemp >= 97) tempScore = 10;
+    else tempScore = 5;
+    
+    // Pulse: 0-25 (lower is better, target <75 bpm)
+    let pulseScore = 0;
+    if (avgPulse < 70) pulseScore = 25;
+    else if (avgPulse < 75) pulseScore = 20;
+    else if (avgPulse < 80) pulseScore = 15;
+    else if (avgPulse < 85) pulseScore = 10;
+    else pulseScore = 5;
+    
+    // Energy: 0-25 (target 7+/10)
+    let energyScore = 0;
+    if (avgEnergy >= 8) energyScore = 25;
+    else if (avgEnergy >= 7) energyScore = 20;
+    else if (avgEnergy >= 6) energyScore = 15;
+    else if (avgEnergy >= 5) energyScore = 10;
+    else energyScore = 5;
+    
+    // Sleep: 0-25 (target 8+ hours)
+    let sleepScore = 0;
+    if (avgSleep >= 8.5) sleepScore = 25;
+    else if (avgSleep >= 8) sleepScore = 20;
+    else if (avgSleep >= 7) sleepScore = 15;
+    else if (avgSleep >= 6) sleepScore = 10;
+    else sleepScore = 5;
+    
+    return Math.round(tempScore + pulseScore + energyScore + sleepScore);
+  };
+
   const getPatternInsights = () => {
     const insights: string[] = [];
     const allLogs = logs.slice(0, 7);
@@ -230,6 +274,9 @@ export default function MyMetabolism() {
   const sleepTrend = getTrend("sleep");
   const meals = getMealsByType();
 
+  const metabolicScore = getMetabolicScore();
+  const scorePercentage = (metabolicScore / 100) * 100;
+
   return (
     <div className="min-h-screen pb-20 bg-background">
       <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -243,6 +290,41 @@ export default function MyMetabolism() {
             A gentle overview of your daily energy, patterns, and progress.
           </p>
         </div>
+
+        {/* Metabolic Health Score */}
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20" data-testid="card-metabolic-score">
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <h2 className="text-lg font-semibold" data-testid="heading-metabolic-score">Metabolic Health Score</h2>
+              <p className="text-sm text-muted-foreground">Your 7-day wellness snapshot</p>
+            </div>
+            <div className="text-right">
+              <p className="text-4xl font-bold text-primary" data-testid="text-score-value">{metabolicScore}</p>
+              <p className="text-xs text-muted-foreground">out of 100</p>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Progress value={scorePercentage} className="h-3" data-testid="progress-metabolic-score" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="text-center p-2 rounded-md bg-background/50" data-testid="metric-temperature">
+                <p className="text-xs text-muted-foreground">Temperature</p>
+                <p className="text-sm font-semibold">{getAverage("temperature", 7).toFixed(1)}°F</p>
+              </div>
+              <div className="text-center p-2 rounded-md bg-background/50" data-testid="metric-pulse">
+                <p className="text-xs text-muted-foreground">Pulse</p>
+                <p className="text-sm font-semibold">{getAverage("pulse", 7).toFixed(0)} bpm</p>
+              </div>
+              <div className="text-center p-2 rounded-md bg-background/50" data-testid="metric-energy">
+                <p className="text-xs text-muted-foreground">Energy</p>
+                <p className="text-sm font-semibold">{getAverage("energy", 7).toFixed(1)}/10</p>
+              </div>
+              <div className="text-center p-2 rounded-md bg-background/50" data-testid="metric-sleep">
+                <p className="text-xs text-muted-foreground">Sleep</p>
+                <p className="text-sm font-semibold">{getAverage("sleep", 7).toFixed(1)}h</p>
+              </div>
+            </div>
+          </div>
+        </Card>
 
         {/* Section 1: Today's Overview */}
         {todayLog && (
