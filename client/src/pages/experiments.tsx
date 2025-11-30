@@ -189,6 +189,70 @@ export default function Experiments() {
           </audio>
         </Card>
 
+        {activeExperiments.filter(e => !e.completed).length > 0 && (
+          <div className="space-y-4" data-testid="section-active-experiments">
+            <div>
+              <h2 className="font-semibold text-lg" data-testid="heading-active-experiments">
+                Active Experiments
+              </h2>
+              <p className="text-sm text-muted-foreground">Your ongoing tracking</p>
+            </div>
+
+            <div className="space-y-3">
+              {activeExperiments
+                .filter(e => !e.completed)
+                .map(active => {
+                  const experiment = EXPERIMENTS.find(e => e.id === active.experimentId);
+                  if (!experiment) return null;
+
+                  const startDate = new Date(active.startDate);
+                  const today = new Date();
+                  const daysPassed = Math.floor(
+                    (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+                  ) + 1;
+                  const currentDay = Math.max(1, daysPassed);
+                  const progress = (currentDay / experiment.duration) * 100;
+
+                  return (
+                    <Card
+                      key={active.id}
+                      className="p-4 space-y-3 bg-gradient-to-br from-primary/5 to-chart-2/5"
+                      data-testid={`card-active-${active.id}`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-sm" data-testid={`text-active-title-${active.id}`}>
+                            {experiment.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground mt-1" data-testid={`text-active-day-${active.id}`}>
+                            Day {currentDay} of {experiment.duration}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="h-1.5 bg-muted rounded-full overflow-hidden" data-testid={`progress-active-${active.id}`}>
+                        <div
+                          className="h-full bg-gradient-to-r from-primary to-chart-2 transition-all"
+                          style={{ width: `${Math.min(progress, 100)}%` }}
+                        />
+                      </div>
+
+                      <Button
+                        onClick={() => setLocation("/experiments/detail")}
+                        size="sm"
+                        variant="outline"
+                        className="w-full"
+                        data-testid={`button-active-detail-${active.id}`}
+                      >
+                        View Progress
+                      </Button>
+                    </Card>
+                  );
+                })}
+            </div>
+          </div>
+        )}
+
         <Tabs defaultValue="library" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="library" data-testid="tab-library">
