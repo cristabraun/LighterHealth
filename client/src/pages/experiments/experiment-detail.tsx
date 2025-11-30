@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2, Zap } from "lucide-react";
 import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import { generateAIInsight } from "@/lib/ai";
@@ -17,6 +17,11 @@ export interface LogEntry {
   temp: number | null;
   pulse: number | null;
   notes: string;
+}
+
+interface AIInsight {
+  text: string;
+  date: string;
 }
 
 export default function ExperimentDetail() {
@@ -30,7 +35,8 @@ export default function ExperimentDetail() {
   const [formTemp, setFormTemp] = useState<string>("");
   const [formPulse, setFormPulse] = useState<string>("");
   const [formNotes, setFormNotes] = useState<string>("");
-  const [aiInsight, setAiInsight] = useState<string>("");
+  const [aiInsights, setAiInsights] = useState<AIInsight[]>([]);
+  const [aiLoading, setAiLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // Find the experiment template from the static list
@@ -59,13 +65,21 @@ export default function ExperimentDetail() {
   useEffect(() => {
     if (logs.length > 0 && experimentTemplate && currentExperiment) {
       const fetchInsight = async () => {
+        setAiLoading(true);
         const insight = await generateAIInsight({
           experimentId: currentExperiment.experimentId,
           experimentTitle: experimentTemplate.title,
           logs,
           date: new Date().toISOString().split('T')[0],
         });
-        setAiInsight(insight);
+        setAiInsights(prev => [
+          {
+            text: insight,
+            date: new Date().toISOString()
+          },
+          ...prev
+        ]);
+        setAiLoading(false);
       };
       fetchInsight();
     }
@@ -320,21 +334,41 @@ export default function ExperimentDetail() {
         </Card>
 
         {/* AI Insights Section */}
-        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-ai-insights">
-          <h2 className="font-semibold text-foreground mb-3" data-testid="heading-ai-insights">
-            AI Insights
-          </h2>
+        <Card className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border border-primary/20 rounded-lg shadow-sm" data-testid="card-ai-insights">
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="w-5 h-5 text-primary" data-testid="icon-ai-zap" />
+            <h2 className="font-semibold text-foreground" data-testid="heading-ai-insights">
+              Your Metabolic Insight
+            </h2>
+          </div>
+
           {logs.length === 0 ? (
             <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-empty">
               AI insights will appear once you log data.
             </p>
-          ) : aiInsight ? (
-            <p className="text-foreground text-sm" data-testid="text-ai-insights-content">
-              {aiInsight}
-            </p>
+          ) : aiLoading ? (
+            <div className="flex items-center gap-2" data-testid="section-ai-loading">
+              <Loader2 className="w-4 h-4 text-primary animate-spin" data-testid="icon-loader-spin" />
+              <p className="text-muted-foreground text-sm" data-testid="text-ai-analyzing">
+                Analyzing your logs…
+              </p>
+            </div>
+          ) : aiInsights.length > 0 ? (
+            <div className="space-y-3" data-testid="section-ai-insights-list">
+              {aiInsights.map((insight, idx) => (
+                <div key={idx} className="p-3 bg-white/50 dark:bg-slate-900/50 rounded-md border border-primary/10" data-testid={`ai-insight-item-${idx}`}>
+                  <p className="text-xs text-muted-foreground mb-2" data-testid={`ai-insight-date-${idx}`}>
+                    {new Date(insight.date).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                  <p className="text-sm text-foreground leading-relaxed" data-testid={`ai-insight-text-${idx}`}>
+                    {insight.text}
+                  </p>
+                </div>
+              ))}
+            </div>
           ) : (
-            <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-loading">
-              Your logs have been received. AI insights will be generated soon.
+            <p className="text-muted-foreground text-sm" data-testid="text-ai-generating">
+              Generating insights…
             </p>
           )}
         </Card>
