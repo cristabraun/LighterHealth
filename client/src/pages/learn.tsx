@@ -209,6 +209,7 @@ export default function Learn() {
                 id: "hormones",
                 title: "Hormones",
                 content: "Understand how hormones regulate your metabolism, why thyroid function matters, and how the pro-metabolic approach supports hormonal balance. Learn about the connection between nutrition, stress, and hormone production.",
+                link: "/learn-hormones",
               },
               {
                 id: "sleep-stress",
@@ -240,24 +241,41 @@ export default function Learn() {
                 title: "FAQs",
                 content: "Find answers to common questions about metabolic healing, tracking, experiments, and the Lighter™ app. If your question isn't here, ask the AI Coach above.",
               },
-            ].map((topic) => (
-              <AccordionItem key={topic.id} value={topic.id} className="border-none" data-testid={`accordion-${topic.id}`}>
-                <Card className="overflow-hidden border border-primary/10">
-                  <AccordionTrigger
-                    className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5"
-                    data-testid={`trigger-${topic.id}`}
-                  >
-                    <div className="flex items-center gap-3 flex-1 transition-colors text-left">
-                      <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span className="font-semibold">{topic.title}</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4" data-testid={`content-${topic.id}`}>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{topic.content}</p>
-                  </AccordionContent>
-                </Card>
-              </AccordionItem>
-            ))}
+            ].map((topic) => {
+              if (topic.link) {
+                return (
+                  <Link key={topic.id} href={topic.link} data-testid={`link-topic-${topic.id}`}>
+                    <Card className="p-4 space-y-3 hover-elevate active-elevate-2 border border-primary/10 cursor-pointer" data-testid={`card-topic-${topic.id}`}>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
+                        <div className="flex-1">
+                          <h3 className="font-semibold" data-testid={`heading-${topic.id}`}>{topic.title}</h3>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{topic.content}</p>
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
+                );
+              }
+              return (
+                <AccordionItem key={topic.id} value={topic.id} className="border-none" data-testid={`accordion-${topic.id}`}>
+                  <Card className="overflow-hidden border border-primary/10">
+                    <AccordionTrigger
+                      className="px-6 py-4 hover:no-underline [&[data-state=open]>div]:bg-primary/5"
+                      data-testid={`trigger-${topic.id}`}
+                    >
+                      <div className="flex items-center gap-3 flex-1 transition-colors text-left">
+                        <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="font-semibold">{topic.title}</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-4" data-testid={`content-${topic.id}`}>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{topic.content}</p>
+                    </AccordionContent>
+                  </Card>
+                </AccordionItem>
+              );
+            })}
           </Accordion>
         </div>
 
