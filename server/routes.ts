@@ -371,6 +371,46 @@ RESPONSE GUIDELINES:
     }
   });
 
+  // AI Insight for experiments
+  app.post('/api/ai/insight', async (req, res) => {
+    try {
+      const { experimentId, experimentTitle, logs, date } = req.body;
+
+      if (!experimentId || !experimentTitle || !logs || !Array.isArray(logs)) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
+
+      const logsText = logs
+        .map(log => `Date: ${new Date(log.date).toLocaleString()}, Temp: ${log.temp || 'N/A'}°F, Pulse: ${log.pulse || 'N/A'} bpm, Notes: ${log.notes || 'N/A'}`)
+        .join('\n');
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        max_tokens: 150,
+        messages: [
+          {
+            role: "system",
+            content: "You are an AI coach for metabolic health tracking. Provide concise, actionable insights (1-2 sentences max) about metabolic patterns and health trends based on logged data."
+          },
+          {
+            role: "user",
+            content: `Experiment: ${experimentTitle}\nDate: ${date}\n\nLogs:\n${logsText}\n\nProvide a brief, insightful observation about the logged data.`
+          }
+        ]
+      });
+
+      const insight = response.choices[0]?.message?.content || "Unable to generate insights.";
+      res.json({ insight });
+    } catch (error) {
+      console.error("Error generating AI insight:", error);
+      res.status(500).json({ message: "Failed to generate insight" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -10,8 +10,9 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
 import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
+import { generateAIInsight } from "@/lib/ai";
 
-interface LogEntry {
+export interface LogEntry {
   date: string;
   temp: number | null;
   pulse: number | null;
@@ -29,6 +30,7 @@ export default function ExperimentDetail() {
   const [formTemp, setFormTemp] = useState<string>("");
   const [formPulse, setFormPulse] = useState<string>("");
   const [formNotes, setFormNotes] = useState<string>("");
+  const [aiInsight, setAiInsight] = useState<string>("");
 
   useEffect(() => {
     // Find the experiment template from the static list
@@ -52,6 +54,22 @@ export default function ExperimentDetail() {
       }
     }
   }, [experimentId]);
+
+  // Fetch AI insights when logs change and logs exist
+  useEffect(() => {
+    if (logs.length > 0 && experimentTemplate && currentExperiment) {
+      const fetchInsight = async () => {
+        const insight = await generateAIInsight({
+          experimentId: currentExperiment.experimentId,
+          experimentTitle: experimentTemplate.title,
+          logs,
+          date: new Date().toISOString().split('T')[0],
+        });
+        setAiInsight(insight);
+      };
+      fetchInsight();
+    }
+  }, [logs, experimentTemplate, currentExperiment]);
 
   const handleLogData = () => {
     if (!currentExperiment) return;
@@ -310,8 +328,12 @@ export default function ExperimentDetail() {
             <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-empty">
               AI insights will appear once you log data.
             </p>
+          ) : aiInsight ? (
+            <p className="text-foreground text-sm" data-testid="text-ai-insights-content">
+              {aiInsight}
+            </p>
           ) : (
-            <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-received">
+            <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-loading">
               Your logs have been received. AI insights will be generated soon.
             </p>
           )}
