@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Card } from "@/components/ui/card";
@@ -49,15 +49,24 @@ export default function Dashboard() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [welcomeExpanded, setWelcomeExpanded] = useState(true);
+  const [activeExperiments, setActiveExperiments] = useState<ActiveExperiment[]>([]);
+
+  // Load active experiments from localStorage
+  useEffect(() => {
+    const experimentsData = localStorage.getItem("lighter_active_experiments");
+    if (experimentsData) {
+      try {
+        const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
+        setActiveExperiments(experiments);
+      } catch {
+        setActiveExperiments([]);
+      }
+    }
+  }, []);
 
   // Fetch daily logs
   const { data: logs = [] } = useQuery<DailyLog[]>({
     queryKey: ["/api/logs"],
-  });
-
-  // Fetch active experiments
-  const { data: activeExperiments = [] } = useQuery<ActiveExperiment[]>({
-    queryKey: ["/api/experiments"],
   });
 
   const today = new Date().toISOString().split("T")[0];
@@ -84,14 +93,12 @@ export default function Dashboard() {
 
   // Get active foundational experiments
   const foundationalIds = [
-    "morning-temp-pulse",
-    "carrot-salad",
-    "no-pufas",
-    "oj-before-coffee",
-    "pairing-carbs-protein",
+    "morning-vs-afternoon-temp",
+    "raw-carrot-salad",
+    "low-pufa-week",
   ];
   const activeFoundational = activeExperiments
-    .filter((exp) => foundationalIds.includes(exp.experimentId))
+    .filter((exp) => !exp.completed && foundationalIds.includes(exp.experimentId))
     .slice(0, 5);
 
   const isFirstTimeUser = !user?.onboardingCompleted;
