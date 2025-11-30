@@ -51,17 +51,31 @@ export default function Dashboard() {
   const [welcomeExpanded, setWelcomeExpanded] = useState(true);
   const [activeExperiments, setActiveExperiments] = useState<ActiveExperiment[]>([]);
 
-  // Load active experiments from localStorage
+  // Load active experiments from localStorage and listen for changes
   useEffect(() => {
-    const experimentsData = localStorage.getItem("lighter_active_experiments");
-    if (experimentsData) {
-      try {
-        const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
-        setActiveExperiments(experiments);
-      } catch {
-        setActiveExperiments([]);
+    const loadExperiments = () => {
+      const experimentsData = localStorage.getItem("lighter_active_experiments");
+      if (experimentsData) {
+        try {
+          const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
+          setActiveExperiments(experiments);
+        } catch {
+          setActiveExperiments([]);
+        }
       }
-    }
+    };
+
+    loadExperiments();
+
+    // Listen for visibility changes (when returning to this tab)
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        loadExperiments();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
   // Fetch daily logs
