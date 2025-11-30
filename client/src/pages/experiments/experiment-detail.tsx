@@ -332,18 +332,6 @@ export default function ExperimentDetail() {
         </Card>
         )}
 
-        {/* Daily Tasks Section (only show when active) */}
-        {isActive && (
-        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-daily-tasks">
-          <h2 className="font-semibold text-foreground mb-3" data-testid="heading-daily-tasks">
-            Daily Tasks
-          </h2>
-          <p className="text-muted-foreground text-sm" data-testid="text-daily-tasks-placeholder">
-            Placeholder: Daily tasks and checklist items will appear here. Check off completed actions as you go.
-          </p>
-        </Card>
-        )}
-
         {/* Logs Section (only show when active) */}
         {isActive && (
         <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-logs">
