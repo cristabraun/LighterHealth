@@ -75,6 +75,7 @@ export default function Experiments() {
     });
 
     setSelectedExperiment(null);
+    setLocation("/experiments/detail");
   };
 
   const handleCompleteExperiment = (id: string) => {
