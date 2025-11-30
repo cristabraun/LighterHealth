@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar } from "lucide-react";
+import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb } from "lucide-react";
 import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
 import lighterIcon from "@assets/IMG_4823_1764541165994.JPG?url";
 
@@ -78,39 +78,33 @@ export default function Landing() {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-6xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-features">
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card className="p-8 space-y-4 border-2 border-border/30 hover-elevate transition-all" data-testid="card-feature-track">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-primary" data-testid="icon-track" />
+      <div className="max-w-6xl mx-auto px-6 py-8 border-b border-border/40" data-testid="section-features">
+        <div className="bg-primary/5 rounded-lg p-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="flex flex-col gap-3" data-testid="card-feature-track">
+              <TrendingUp className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-track" />
+              <h3 className="text-lg font-bold text-foreground" data-testid="heading-track">Track Your Body's Signals</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-track">
+                See how your temperature, pulse, sleep, and daily habits affect your energy and stress.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold" data-testid="heading-track">Track Your Temperature, Pulse, Sleep & Energy</h3>
-            <div className="space-y-3 text-muted-foreground leading-relaxed" data-testid="text-track">
-              <p>See what truly supports your body.</p>
-              <p className="font-medium text-foreground">Finally understand what your body needs to feel good again.</p>
-            </div>
-          </Card>
 
-          <Card className="p-8 space-y-4 border-2 border-border/30 hover-elevate transition-all" data-testid="card-feature-experiments">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-primary" data-testid="icon-experiments" />
+            <div className="flex flex-col gap-3" data-testid="card-feature-experiments">
+              <Beaker className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-experiments" />
+              <h3 className="text-lg font-bold text-foreground" data-testid="heading-experiments">Run Gentle Experiments</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-experiments">
+                Find out which foods, routines, and rhythms your body actually responds well to.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold" data-testid="heading-experiments">Run Gentle Experiments</h3>
-            <div className="space-y-3 text-muted-foreground leading-relaxed" data-testid="text-experiments">
-              <p>Discover what works for you and how your body actually responds.</p>
-              <p className="font-medium text-foreground">A softer way to get healthy — one that actually works with your body.</p>
-            </div>
-          </Card>
 
-          <Card className="p-8 space-y-4 border-2 border-border/30 hover-elevate transition-all" data-testid="card-feature-insights">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-chart-2/20 flex items-center justify-center">
-              <Calendar className="w-6 h-6 text-primary" data-testid="icon-insights" />
+            <div className="flex flex-col gap-3" data-testid="card-feature-insights">
+              <Lightbulb className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-insights" />
+              <h3 className="text-lg font-bold text-foreground" data-testid="heading-insights">Get Insights & Recommendations</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-insights">
+                Always know your next step with simple, personalized guidance based on your vitals.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold" data-testid="heading-insights">Get Insights & Recommendations</h3>
-            <p className="text-muted-foreground leading-relaxed" data-testid="text-insights">
-              Based on your vitals, always know your next step in healing your metabolism and restoring energy.
-            </p>
-          </Card>
+          </div>
         </div>
       </div>
 
