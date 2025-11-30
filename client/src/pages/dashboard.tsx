@@ -22,6 +22,7 @@ import {
   Sun,
   Calendar,
   ExternalLink,
+  ArrowRight,
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -418,46 +419,39 @@ export default function Dashboard() {
         {/* SECTION 9: Message Me & Strategy Call CTA */}
         <div className="mt-8 grid grid-cols-2 gap-3" data-testid="section-cta">
           {/* Message Me */}
-          <div className="space-y-2">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Need Support</p>
-            <p className="text-xs text-muted-foreground">Don't Know Where to Start</p>
-            <Link href="/messages">
-              <Button
-                className="w-full h-16 bg-gradient-to-br from-primary to-primary/80 hover-elevate active-elevate-2"
-                data-testid="button-message-me"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <MessageSquare className="w-4 h-4" />
-                  <span className="text-sm font-medium">Message Me</span>
-                </div>
-              </Button>
-            </Link>
-          </div>
+          <Link href="/messages" data-testid="link-message-me-cta">
+            <Card
+              className="p-4 space-y-3 bg-gradient-to-br from-primary/5 to-chart-2/5 border-primary/20 hover-elevate cursor-pointer"
+              data-testid="card-message-me"
+            >
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Need Support</p>
+              <p className="text-sm text-muted-foreground">Confused with the app?</p>
+              <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+                <ArrowRight className="w-4 h-4" />
+                <span>Message Me</span>
+              </div>
+            </Card>
+          </Link>
 
           {/* Book Strategy Call */}
-          <div className="space-y-2">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Need Support</p>
-            <p className="text-xs text-muted-foreground">Confused with How to Use the App</p>
-            <a
-              href="https://calendly.com"
-              target="_blank"
-              rel="noopener noreferrer"
+          <a
+            href="https://calendly.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="link-book-call-cta"
+          >
+            <Card
+              className="p-4 space-y-3 border-primary/20 hover-elevate cursor-pointer"
+              data-testid="card-book-call"
             >
-              <Button
-                variant="outline"
-                className="w-full h-16 hover-elevate active-elevate-2"
-                data-testid="button-strategy-call"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <ExternalLink className="w-3 h-3" />
-                  </div>
-                  <span className="text-xs font-medium">Free Metabolic<br />Strategy Call</span>
-                </div>
-              </Button>
-            </a>
-          </div>
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Want Further Coaching?</p>
+              <p className="text-sm text-muted-foreground">Get a free metabolic coaching call.</p>
+              <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+                <ArrowRight className="w-4 h-4" />
+                <span>Book a Call</span>
+              </div>
+            </Card>
+          </a>
         </div>
       </div>
     </div>
