@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Loader2, Zap } from "lucide-react";
+import { ArrowLeft, Loader2, Zap, Lightbulb } from "lucide-react";
 import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import { generateAIInsight } from "@/lib/ai";
@@ -22,6 +22,40 @@ export interface LogEntry {
 interface AIInsight {
   text: string;
   date: string;
+}
+
+// Helper function to generate habit suggestions based on log patterns
+function generateHabitSuggestions(logs: LogEntry[]): string[] {
+  const suggestions: string[] = [];
+
+  if (logs.length === 0) return suggestions;
+
+  // Analyze temperature patterns
+  const temps = logs.filter(log => log.temp !== null).map(log => log.temp as number);
+  if (temps.length > 0) {
+    const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
+    if (avgTemp < 97.4) {
+      suggestions.push("Try increasing morning carbs or adding a warm beverage to support your metabolism.");
+    }
+  }
+
+  // Analyze pulse patterns
+  const pulses = logs.filter(log => log.pulse !== null).map(log => log.pulse as number);
+  if (pulses.length > 0) {
+    const avgPulse = pulses.reduce((a, b) => a + b, 0) / pulses.length;
+    if (avgPulse > 90) {
+      suggestions.push("Consider adding more sodium or evaluating stress triggers throughout your day.");
+    }
+  }
+
+  // Analyze notes patterns
+  const emptyNotes = logs.filter(log => !log.notes || log.notes.trim().length === 0).length;
+  const emptyNotesRatio = emptyNotes / logs.length;
+  if (emptyNotesRatio > 0.5) {
+    suggestions.push("Try adding short daily notes to help AI understand your patterns better.");
+  }
+
+  return suggestions;
 }
 
 export default function ExperimentDetail() {
@@ -372,6 +406,36 @@ export default function ExperimentDetail() {
             </p>
           )}
         </Card>
+
+        {/* Suggested Habits Section */}
+        {logs.length > 0 && (
+          <Card className="p-6 bg-gradient-to-br from-chart-2/10 via-primary/5 to-primary/10 border border-chart-2/20 rounded-lg shadow-sm" data-testid="card-habits">
+            <div className="flex items-center gap-2 mb-4">
+              <Lightbulb className="w-5 h-5 text-chart-2" data-testid="icon-habit-lightbulb" />
+              <h2 className="font-semibold text-foreground" data-testid="heading-habits">
+                Suggested Habits
+              </h2>
+            </div>
+
+            {(() => {
+              const suggestions = generateHabitSuggestions(logs);
+              return suggestions.length > 0 ? (
+                <ul className="space-y-2" data-testid="section-habits-list">
+                  {suggestions.map((suggestion, idx) => (
+                    <li key={idx} className="text-sm text-foreground flex gap-2" data-testid={`habit-suggestion-${idx}`}>
+                      <span className="text-chart-2 font-semibold">•</span>
+                      <span>{suggestion}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-muted-foreground text-sm" data-testid="text-habits-none">
+                  Keep logging to receive personalized habit suggestions.
+                </p>
+              );
+            })()}
+          </Card>
+        )}
 
         {/* Finish Experiment Button */}
         <Button 
