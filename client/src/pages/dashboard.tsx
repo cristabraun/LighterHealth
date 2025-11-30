@@ -163,7 +163,7 @@ export default function Dashboard() {
                     <Sparkles className="w-6 h-6 text-primary" />
                   </div>
                   <p className="text-lg text-muted-foreground font-medium">
-                    Your metabolic dashboard..
+                    Your Metabolic Dashboard
                   </p>
                 </div>
                 <p className="text-sm text-muted-foreground" data-testid="text-welcome-description">
