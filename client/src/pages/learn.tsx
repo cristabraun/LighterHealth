@@ -239,6 +239,7 @@ export default function Learn() {
                 id: "food-lists",
                 title: "Food Lists",
                 content: "Browse curated lists of pro-metabolic foods organized by category: fruits, grains, proteins, dairy, vegetables, oils, and supplements. Use these to plan meals and understand which foods best support your healing.",
+                link: "/learn-food-lists",
               },
               {
                 id: "faqs",
