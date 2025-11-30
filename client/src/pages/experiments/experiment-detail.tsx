@@ -4,6 +4,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
 import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -23,6 +26,9 @@ export default function ExperimentDetail() {
   const [currentExperiment, setCurrentExperiment] = useState<ActiveExperiment | null>(null);
   const [experimentTemplate, setExperimentTemplate] = useState<ExperimentTemplate | null>(null);
   const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [formTemp, setFormTemp] = useState<string>("");
+  const [formPulse, setFormPulse] = useState<string>("");
+  const [formNotes, setFormNotes] = useState<string>("");
 
   useEffect(() => {
     // Find the experiment template from the static list
@@ -52,9 +58,9 @@ export default function ExperimentDetail() {
 
     const newLog: LogEntry = {
       date: new Date().toISOString(),
-      temp: null,
-      pulse: null,
-      notes: "",
+      temp: formTemp ? parseFloat(formTemp) : null,
+      pulse: formPulse ? parseFloat(formPulse) : null,
+      notes: formNotes,
     };
 
     const updatedLogs = [...logs, newLog];
@@ -71,6 +77,11 @@ export default function ExperimentDetail() {
       );
       localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
     }
+
+    // Clear the form inputs
+    setFormTemp("");
+    setFormPulse("");
+    setFormNotes("");
   };
 
   const handleFinishExperiment = () => {
@@ -221,19 +232,72 @@ export default function ExperimentDetail() {
                     <p className="text-sm text-foreground mt-1" data-testid={`log-notes-${idx}`}>
                       Temp: {log.temp || "-"} | Pulse: {log.pulse || "-"}
                     </p>
+                    {log.notes && (
+                      <p className="text-sm text-muted-foreground mt-1" data-testid={`log-notes-text-${idx}`}>
+                        {log.notes}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
             )}
-            
-            <Button 
-              onClick={handleLogData}
-              variant="outline" 
-              className="w-full" 
-              data-testid="button-log-data"
-            >
-              Log Today's Data
-            </Button>
+
+            {/* Log Form Inputs */}
+            <div className="space-y-3 pt-4 border-t" data-testid="section-log-form">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="temp-input" className="text-xs text-muted-foreground">
+                    Temperature (°F)
+                  </Label>
+                  <Input
+                    id="temp-input"
+                    type="number"
+                    placeholder="98.6"
+                    value={formTemp}
+                    onChange={(e) => setFormTemp(e.target.value)}
+                    step="0.1"
+                    data-testid="input-log-temp"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="pulse-input" className="text-xs text-muted-foreground">
+                    Pulse (bpm)
+                  </Label>
+                  <Input
+                    id="pulse-input"
+                    type="number"
+                    placeholder="72"
+                    value={formPulse}
+                    onChange={(e) => setFormPulse(e.target.value)}
+                    step="1"
+                    data-testid="input-log-pulse"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="notes-input" className="text-xs text-muted-foreground">
+                  Notes
+                </Label>
+                <Textarea
+                  id="notes-input"
+                  placeholder="How are you feeling? Any observations?"
+                  value={formNotes}
+                  onChange={(e) => setFormNotes(e.target.value)}
+                  className="resize-none"
+                  data-testid="textarea-log-notes"
+                />
+              </div>
+
+              <Button 
+                onClick={handleLogData}
+                variant="outline" 
+                className="w-full" 
+                data-testid="button-log-data"
+              >
+                Log Today's Data
+              </Button>
+            </div>
           </div>
         </Card>
 
