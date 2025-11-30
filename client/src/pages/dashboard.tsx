@@ -20,6 +20,8 @@ import {
   Beaker,
   ClipboardList,
   Sun,
+  Calendar,
+  ExternalLink,
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -361,6 +363,49 @@ export default function Dashboard() {
             </p>
           </div>
         </Card>
+
+        {/* SECTION 6.5: Message Me & Strategy Call CTA */}
+        <div className="grid grid-cols-2 gap-3" data-testid="section-cta">
+          {/* Message Me */}
+          <div className="space-y-2">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Need support?</p>
+            <Link href="/messages">
+              <Button
+                className="w-full h-16 bg-gradient-to-br from-primary to-primary/80 hover-elevate active-elevate-2"
+                data-testid="button-message-me"
+              >
+                <div className="flex flex-col items-center gap-1">
+                  <MessageSquare className="w-4 h-4" />
+                  <span className="text-sm font-medium">Message Me</span>
+                </div>
+              </Button>
+            </Link>
+          </div>
+
+          {/* Book Strategy Call */}
+          <div className="space-y-2">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Free call</p>
+            <a
+              href="https://calendly.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="outline"
+                className="w-full h-16 hover-elevate active-elevate-2"
+                data-testid="button-strategy-call"
+              >
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-4 h-4" />
+                    <ExternalLink className="w-3 h-3" />
+                  </div>
+                  <span className="text-sm font-medium">20-Min Call</span>
+                </div>
+              </Button>
+            </a>
+          </div>
+        </div>
 
         {/* SECTION 7: Quick Links */}
         <div className="grid grid-cols-3 gap-3" data-testid="section-quick-links">
