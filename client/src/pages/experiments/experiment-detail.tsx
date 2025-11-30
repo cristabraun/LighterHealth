@@ -135,8 +135,8 @@ export default function ExperimentDetail() {
       localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
     }
 
-    // Navigate back to experiments page
-    setLocation("/experiments");
+    // Navigate to experiment summary page
+    setLocation(`/experiments/summary?experimentId=${currentExperiment.experimentId}`);
   };
 
   if (!experimentTemplate) {

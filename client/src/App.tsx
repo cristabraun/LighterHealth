@@ -25,6 +25,7 @@ import LearnFAQs from "@/pages/learn-faqs";
 import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
 import ExperimentDetail from "@/pages/experiments/experiment-detail";
+import ExperimentSummary from "@/pages/experiments/summary";
 import Messages from "@/pages/messages";
 import Essentials from "@/pages/essentials";
 import AdminMessages from "@/pages/admin-messages";
@@ -74,6 +75,7 @@ function Router() {
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
         <Route path="/experiments/:id" component={ExperimentDetail} />
+        <Route path="/experiments/summary" component={ExperimentSummary} />
         <Route path="/messages" component={Messages} />
         <Route path="/essentials" component={Essentials} />
         <Route path="/admin/messages" component={AdminMessages} />
