@@ -317,11 +317,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Error calling OpenAI API:", error);
       res.status(500).json({ message: "Failed to get AI Coach response" });
     }
-      res.json({ success: true });
-    } catch (error) {
-      console.error("Error deleting food log:", error);
-      res.status(500).json({ message: "Failed to delete food log" });
-    }
   });
 
   const httpServer = createServer(app);
