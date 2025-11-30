@@ -16,11 +16,13 @@ import {
   Clock,
   AlertCircle,
   Utensils,
-  Sun
+  Sun,
+  Volume2
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import confetti from "canvas-confetti";
+import audioFile from "@assets/Pro Metabolic Tracking and Healing Intro_1764465939114.wav";
 
 const DAILY_AFFIRMATIONS = [
   "A body that is fed well, will heal well.",
@@ -118,6 +120,21 @@ export default function Home() {
             {todayLog ? "You're glowing today!" : "Ready to track today's vitals?"}
           </p>
         </div>
+
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-start-here">
+          <div className="flex items-center gap-3">
+            <Volume2 className="w-5 h-5 text-primary" data-testid="icon-volume" />
+            <h2 className="text-lg font-semibold" data-testid="heading-start-here">Start Here</h2>
+          </div>
+          <audio 
+            controls 
+            className="w-full rounded-md"
+            data-testid="audio-intro"
+          >
+            <source src={audioFile} type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
+        </Card>
 
         {todayLog ? (
           <div className="grid grid-cols-3 gap-4">
