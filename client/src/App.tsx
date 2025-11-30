@@ -15,6 +15,7 @@ import LearnStressPhysiology from "@/pages/learn-stress-physiology";
 import LearnFoodFoundations from "@/pages/learn-food-foundations";
 import LearnWarmthVitals from "@/pages/learn-warmth-vitals";
 import LearnHealingTools from "@/pages/learn-healing-tools";
+import LearnHormones from "@/pages/learn-hormones";
 import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
 import Messages from "@/pages/messages";
@@ -56,6 +57,7 @@ function Router() {
         <Route path="/learn-food-foundations" component={LearnFoodFoundations} />
         <Route path="/learn-warmth-vitals" component={LearnWarmthVitals} />
         <Route path="/learn-healing-tools" component={LearnHealingTools} />
+        <Route path="/learn-hormones" component={LearnHormones} />
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
         <Route path="/messages" component={Messages} />
