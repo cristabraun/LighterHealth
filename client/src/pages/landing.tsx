@@ -30,7 +30,7 @@ export default function Landing() {
 
             <div className="space-y-6 max-w-2xl mx-auto" data-testid="section-benefits">
               <div className="text-center mb-2">
-                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide" data-testid="label-benefits">Benefits</p>
+                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide" data-testid="label-benefits">What Lighter™ Helps You Improve</p>
               </div>
               <div className="flex gap-4 text-left">
                 <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-1" />
