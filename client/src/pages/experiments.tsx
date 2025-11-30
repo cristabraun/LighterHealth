@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +24,7 @@ import experimentsAudio from "@assets/Five Foundational Metabolic Experiments_17
 
 export default function Experiments() {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const [activeExperiments, setActiveExperiments] = useState<ActiveExperiment[]>([]);
   const [selectedExperiment, setSelectedExperiment] = useState<ExperimentTemplate | null>(null);
   const [expandedExperiments, setExpandedExperiments] = useState<Set<string>>(new Set());
@@ -248,7 +250,7 @@ export default function Experiments() {
                   </div>
 
                   <Button
-                    onClick={() => setSelectedExperiment(experiment)}
+                    onClick={() => setLocation("/experiments/detail")}
                     variant="outline"
                     className="w-full"
                     data-testid={`button-learn-more-${experiment.id}`}
