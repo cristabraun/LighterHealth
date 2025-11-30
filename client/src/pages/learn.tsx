@@ -65,6 +65,7 @@ export default function Learn() {
                 title: "Energy Basics",
                 subtitle: "Metabolism 101",
                 desc: "Understand how your body makes energy, why metabolism matters, and how the pro-metabolic approach differs from restrictive diets.",
+                href: "/essentials",
               },
               {
                 id: "stress-physiology",
@@ -72,6 +73,7 @@ export default function Learn() {
                 title: "Stress Physiology",
                 subtitle: "Why You Feel the Way You Feel",
                 desc: "Learn how stress affects your body, why it slows metabolism, and how to support your nervous system.",
+                href: "/essentials",
               },
               {
                 id: "food-foundations",
@@ -79,6 +81,7 @@ export default function Learn() {
                 title: "Food Foundations",
                 subtitle: "Carbs, Protein, Fats",
                 desc: "Discover why carbs are your friend, how to pair nutrients, and what easy-to-digest foods support healing.",
+                href: "/essentials",
               },
               {
                 id: "warmth-vitals",
@@ -86,6 +89,7 @@ export default function Learn() {
                 title: "Warmth & Vitals",
                 subtitle: "What Temperature & Pulse Tell You",
                 desc: "Learn to interpret your morning temperature, resting pulse, and what these numbers reveal about your metabolism.",
+                href: "/track",
               },
               {
                 id: "healing-tools",
@@ -93,6 +97,7 @@ export default function Learn() {
                 title: "Healing Tools",
                 subtitle: "Foundational Experiments",
                 desc: "Explore the 5 core experiments that form your metabolic healing foundation and why they work.",
+                href: "/experiments",
               },
             ].map((step) => (
               <Card
@@ -110,10 +115,12 @@ export default function Learn() {
                     </h3>
                     <p className="text-xs text-muted-foreground mb-2">{step.subtitle}</p>
                     <p className="text-sm text-muted-foreground leading-relaxed mb-3">{step.desc}</p>
-                    <Button variant="outline" size="sm" data-testid={`button-learn-${step.id}`}>
-                      Learn More
-                      <ArrowRight className="w-3 h-3 ml-1" />
-                    </Button>
+                    <Link href={step.href} data-testid={`link-learn-${step.id}`}>
+                      <Button variant="outline" size="sm" data-testid={`button-learn-${step.id}`}>
+                        Learn More
+                        <ArrowRight className="w-3 h-3 ml-1" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </Card>
