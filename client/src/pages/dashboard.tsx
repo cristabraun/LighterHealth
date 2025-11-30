@@ -445,7 +445,7 @@ export default function Dashboard() {
               data-testid="card-book-call"
             >
               <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Want Further Coaching?</p>
-              <p className="text-sm text-muted-foreground">Get a free metabolic coaching call.</p>
+              <p className="text-sm text-muted-foreground">Get a free 20-minute metabolic strategy coaching call.</p>
               <div className="flex items-center gap-2 text-primary font-semibold text-sm">
                 <ArrowRight className="w-4 h-4" />
                 <span>Book a Call</span>
