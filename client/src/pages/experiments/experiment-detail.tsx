@@ -306,9 +306,15 @@ export default function ExperimentDetail() {
           <h2 className="font-semibold text-foreground mb-3" data-testid="heading-ai-insights">
             AI Insights
           </h2>
-          <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-placeholder">
-            Placeholder: AI-powered insights and analysis of your experiment progress will appear here as you log data.
-          </p>
+          {logs.length === 0 ? (
+            <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-empty">
+              AI insights will appear once you log data.
+            </p>
+          ) : (
+            <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-received">
+              Your logs have been received. AI insights will be generated soon.
+            </p>
+          )}
         </Card>
 
         {/* Finish Experiment Button */}
