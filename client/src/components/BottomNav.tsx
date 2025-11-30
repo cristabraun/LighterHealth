@@ -5,7 +5,7 @@ export function BottomNav() {
   const [location] = useLocation();
 
   const tabs = [
-    { path: "/", icon: Home, label: "Home" },
+    { path: "/", icon: Home, label: "Dashboard" },
     { path: "/learn", icon: BookOpen, label: "Learn" },
     { path: "/track", icon: ClipboardList, label: "Track" },
     { path: "/experiments", icon: Beaker, label: "Experiments" },
