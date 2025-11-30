@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "wouter";
+import { Link, useParams, useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +18,7 @@ interface LogEntry {
 export default function ExperimentDetail() {
   const params = useParams();
   const experimentId = params.id as string;
+  const [, setLocation] = useLocation();
   
   const [currentExperiment, setCurrentExperiment] = useState<ActiveExperiment | null>(null);
   const [experimentTemplate, setExperimentTemplate] = useState<ExperimentTemplate | null>(null);
@@ -70,6 +71,29 @@ export default function ExperimentDetail() {
       );
       localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
     }
+  };
+
+  const handleFinishExperiment = () => {
+    if (!currentExperiment) return;
+
+    // Update the experiment in localStorage
+    const experimentsData = localStorage.getItem("lighter_active_experiments");
+    if (experimentsData) {
+      const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
+      const updated = experiments.map(e =>
+        e.id === currentExperiment.id
+          ? { 
+              ...e, 
+              completed: true, 
+              completedAt: new Date().toISOString() 
+            }
+          : e
+      );
+      localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
+    }
+
+    // Navigate back to experiments page
+    setLocation("/experiments");
   };
 
   if (!experimentTemplate) {
@@ -222,6 +246,15 @@ export default function ExperimentDetail() {
             Placeholder: AI-powered insights and analysis of your experiment progress will appear here as you log data.
           </p>
         </Card>
+
+        {/* Finish Experiment Button */}
+        <Button 
+          onClick={handleFinishExperiment}
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+          data-testid="button-finish-experiment"
+        >
+          Finish Experiment
+        </Button>
 
       </div>
     </div>
