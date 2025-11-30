@@ -16,11 +16,11 @@ export default function Landing() {
                 Welcome to Lighter™
               </h1>
               
-              <div className="flex justify-center py-4">
+              <div className="flex justify-center py-6">
                 <img 
                   src={lighterIcon} 
                   alt="Lighter App Icon" 
-                  className="w-16 h-16"
+                  className="w-48 h-48"
                   data-testid="image-app-icon"
                 />
               </div>
