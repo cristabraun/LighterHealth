@@ -20,7 +20,7 @@ export default function LearnMovement() {
             Movement
           </h1>
           <p className="text-muted-foreground" data-testid="subheading-movement">
-            How to Exercise in a Pro-Metabolic, Feminine, Healing Way
+            How to Exercise in a Pro-Metabolic, Healing Way
           </p>
         </div>
 
