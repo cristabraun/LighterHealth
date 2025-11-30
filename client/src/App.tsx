@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { BottomNav } from "@/components/BottomNav";
 import Landing from "@/pages/landing";
 import Onboarding from "@/pages/onboarding";
-import Home from "@/pages/home";
+import Dashboard from "@/pages/dashboard";
 import Learn from "@/pages/learn";
 import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
@@ -44,7 +44,7 @@ function Router() {
   return (
     <div className="min-h-screen">
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path="/" component={Dashboard} />
         <Route path="/landing" component={Landing} />
         <Route path="/learn" component={Learn} />
         <Route path="/track" component={Track} />

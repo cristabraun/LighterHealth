@@ -1,11 +1,15 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Thermometer, Heart, Zap, Moon, Apple, Sun, Flame, BookOpen, Sparkles, ExternalLink, Heart as HeartIcon, MessageSquare } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Apple, Sun, Flame, BookOpen, Sparkles, ExternalLink, Heart as HeartIcon, MessageSquare, Volume2 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useAuth } from "@/hooks/useAuth";
+import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_1764477961046.wav?url";
 
 export default function Learn() {
   const [, navigate] = useLocation();
+  const { user } = useAuth();
+  const isFirstTimeUser = !user?.onboardingCompleted;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 pb-24">
@@ -18,6 +22,23 @@ export default function Learn() {
             Everything you need to know to get started
           </p>
         </div>
+
+        {isFirstTimeUser && (
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-start-here-learn">
+            <div className="flex items-center gap-3">
+              <Volume2 className="w-5 h-5 text-primary" data-testid="icon-volume-learn" />
+              <h2 className="text-lg font-semibold" data-testid="heading-start-here-learn">Start Here</h2>
+            </div>
+            <audio 
+              controls 
+              className="w-full rounded-md"
+              data-testid="audio-intro-learn"
+            >
+              <source src={startHereAudio} type="audio/wav" />
+              Your browser does not support the audio element.
+            </audio>
+          </Card>
+        )}
 
         <Accordion type="single" collapsible className="space-y-4">
           <AccordionItem value="not-broken" className="border-none">
