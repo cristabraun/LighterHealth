@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Beaker, Clock, ChevronDown, ChevronUp, CheckCircle2, XCircle } from "lucide-react";
+import { Beaker, Clock, ChevronDown, ChevronUp, CheckCircle2, XCircle, Volume2 } from "lucide-react";
+import audioFile from "@assets/Five Foundational Metabolic Experiments_1764467246426.wav";
 import { EXPERIMENTS } from "@/data/experiments";
 import type { ActiveExperiment, ExperimentTemplate, DailyMeasurements } from "@shared/schema";
 
@@ -171,21 +172,19 @@ export default function Experiments() {
           </p>
         </div>
 
-        <Card className="p-4 bg-primary/5 border border-primary/10" data-testid="card-experiments-intro">
-          <div className="space-y-3 text-sm">
-            <p className="text-muted-foreground">
-              You don't need to do all of these experiments. Try one and see how you feel doing it, then decide if you want to keep going with it or not.
-            </p>
-            <p className="text-muted-foreground">
-              There's no one right way to do this—everybody is different. That's exactly why we have this experiments library. It will keep growing over time with new experiments to try and test with.
-            </p>
-            <p className="text-muted-foreground">
-              The experiments we recommend you follow, like carrot salad, will appear on your Track page for easy reference.
-            </p>
-            <p className="text-muted-foreground">
-              The pro-metabolic approach really works when you listen to your body and stay in tune with how you feel. Don't just push through if you're exhausted—pay attention to how foods make you feel throughout the day. Get good at noticing all your symptoms and what they're telling you.
-            </p>
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-experiments-intro">
+          <div className="flex items-center gap-3">
+            <Volume2 className="w-5 h-5 text-primary" data-testid="icon-volume" />
+            <h2 className="text-lg font-semibold" data-testid="heading-how-to-use">How to Use the Experiments Page</h2>
           </div>
+          <audio 
+            controls 
+            className="w-full rounded-md"
+            data-testid="audio-experiments-guide"
+          >
+            <source src={audioFile} type="audio/wav" />
+            Your browser does not support the audio element.
+          </audio>
         </Card>
 
         <Tabs defaultValue="library" className="w-full">
