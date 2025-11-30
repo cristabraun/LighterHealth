@@ -254,6 +254,63 @@ export default function Experiments() {
           </div>
         )}
 
+        {activeExperiments.filter(e => e.completed).length > 0 && (
+          <div className="space-y-4" data-testid="section-completed-experiments">
+            <div>
+              <h2 className="font-semibold text-lg" data-testid="heading-completed-experiments">
+                Completed Experiments
+              </h2>
+              <p className="text-sm text-muted-foreground">Your experiment history</p>
+            </div>
+
+            <div className="space-y-3">
+              {activeExperiments
+                .filter(e => e.completed)
+                .map(completed => {
+                  const experiment = EXPERIMENTS.find(e => e.id === completed.experimentId);
+                  if (!experiment) return null;
+
+                  const startDate = new Date(completed.startDate);
+                  const completedDate = completed.completedAt ? new Date(completed.completedAt) : new Date();
+                  const totalDays = Math.floor(
+                    (completedDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+                  ) + 1;
+
+                  return (
+                    <Card
+                      key={completed.id}
+                      className="p-4 space-y-3 bg-gradient-to-br from-primary/5 to-chart-2/5"
+                      data-testid={`card-completed-${completed.id}`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-sm" data-testid={`text-completed-title-${completed.id}`}>
+                            {experiment.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground mt-1" data-testid={`text-completed-date-${completed.id}`}>
+                            Completed on {completedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1" data-testid={`text-completed-days-${completed.id}`}>
+                            {totalDays} day{totalDays !== 1 ? 's' : ''} tracked
+                          </p>
+                        </div>
+                      </div>
+
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full"
+                        data-testid={`button-completed-summary-${completed.id}`}
+                      >
+                        View Summary
+                      </Button>
+                    </Card>
+                  );
+                })}
+            </div>
+          </div>
+        )}
+
         <Tabs defaultValue="library" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="library" data-testid="tab-library">
