@@ -156,7 +156,7 @@ export default function Dashboard() {
             <div className="flex items-start justify-between">
               <div className="space-y-2 flex-1">
                 <h1 className="text-2xl font-bold" data-testid="heading-welcome">
-                  Hey {user?.name || "Crista"}! Your metabolic healing space
+                  Hey {user?.name || "Crista"}! Your metabolic dashboard
                 </h1>
                 <p className="text-sm text-muted-foreground" data-testid="text-welcome-description">
                   Track your warmth, energy, and nourishment daily to heal your metabolism from the inside out.
