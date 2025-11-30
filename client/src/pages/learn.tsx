@@ -227,6 +227,7 @@ export default function Learn() {
                 id: "movement",
                 title: "Movement",
                 content: "Learn how to move your body in ways that support—not stress—your metabolism. Understand the difference between sustainable movement and over-exercising, and how to fuel your workouts properly.",
+                link: "/learn-movement",
               },
               {
                 id: "supplements",
