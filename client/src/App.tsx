@@ -10,6 +10,11 @@ import Landing from "@/pages/landing";
 import Onboarding from "@/pages/onboarding";
 import Dashboard from "@/pages/dashboard";
 import Learn from "@/pages/learn";
+import LearnEnergyBasics from "@/pages/learn-energy-basics";
+import LearnStressPhysiology from "@/pages/learn-stress-physiology";
+import LearnFoodFoundations from "@/pages/learn-food-foundations";
+import LearnWarmthVitals from "@/pages/learn-warmth-vitals";
+import LearnHealingTools from "@/pages/learn-healing-tools";
 import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
 import Messages from "@/pages/messages";
@@ -46,6 +51,11 @@ function Router() {
         <Route path="/" component={Dashboard} />
         <Route path="/landing" component={Landing} />
         <Route path="/learn" component={Learn} />
+        <Route path="/learn-energy-basics" component={LearnEnergyBasics} />
+        <Route path="/learn-stress-physiology" component={LearnStressPhysiology} />
+        <Route path="/learn-food-foundations" component={LearnFoodFoundations} />
+        <Route path="/learn-warmth-vitals" component={LearnWarmthVitals} />
+        <Route path="/learn-healing-tools" component={LearnHealingTools} />
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
         <Route path="/messages" component={Messages} />
