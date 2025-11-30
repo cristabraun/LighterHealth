@@ -9,7 +9,6 @@ export function BottomNav() {
     { path: "/learn", icon: BookOpen, label: "Learn" },
     { path: "/track", icon: ClipboardList, label: "Track" },
     { path: "/experiments", icon: Beaker, label: "Experiments" },
-    { path: "/progress", icon: TrendingUp, label: "Progress" },
     { path: "/essentials", icon: Pill, label: "Essentials" },
   ];
 

@@ -10,34 +10,32 @@ import {
   Thermometer, 
   Heart, 
   Zap, 
-  TrendingUp, 
-  TrendingDown, 
+  TrendingUp,
   Sparkles,
   Clock,
   AlertCircle,
-  Utensils,
-  Sun,
   Volume2,
-  ArrowRight
+  ArrowRight,
+  MessageSquare,
+  Sun
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import confetti from "canvas-confetti";
 import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_1764477961046.wav?url";
 
-const DAILY_AFFIRMATIONS = [
-  "A body that is fed well, will heal well.",
-  "You don't have to earn rest. You get to choose it whenever you want.",
-  "Play counts. Fun counts. Joy counts.",
-  "Sunlight is free medicine.",
-  "Healing takes time, you're right on schedule.",
-  "High body temp = higher metabolism",
-  "Weight-loss is a side effect of healing your metabolism and lowering stress.",
-  "Being energized and alert and happy is winning.",
-  "Stable blood sugar = stable mood = stable hormones."
-];
-
 function getDailyAffirmation(): string {
+  const DAILY_AFFIRMATIONS = [
+    "A body that is fed well, will heal well.",
+    "You don't have to earn rest. You get to choose it whenever you want.",
+    "Play counts. Fun counts. Joy counts.",
+    "Sunlight is free medicine.",
+    "Healing takes time, you're right on schedule.",
+    "High body temp = higher metabolism",
+    "Weight-loss is a side effect of healing your metabolism and lowering stress.",
+    "Being energized and alert and happy is winning.",
+    "Stable blood sugar = stable mood = stable hormones."
+  ];
   const today = new Date();
   const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
   return DAILY_AFFIRMATIONS[dayOfYear % DAILY_AFFIRMATIONS.length];
@@ -45,7 +43,7 @@ function getDailyAffirmation(): string {
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const [recommendations, setRecommendations] = useState<string[]>([]);
+  const [showFullWelcome, setShowFullWelcome] = useState(false);
 
   // Fetch daily logs
   const { data: logs = [] } = useQuery<DailyLog[]>({
@@ -57,45 +55,9 @@ export default function Dashboard() {
     queryKey: ["/api/experiments"],
   });
 
-  // Get today's log and recent logs
   const today = new Date().toISOString().split('T')[0];
   const todayLog = logs.find(log => log.date === today);
   const recentLogs = logs.slice(0, 7);
-
-  // Fetch today's food logs
-  const { data: foodLogs = [] } = useQuery<FoodLog[]>({
-    queryKey: [`/api/food-logs?date=${today}`],
-  });
-
-  // Generate recommendations
-  useEffect(() => {
-    if (recentLogs.length < 3) return;
-
-    const avgTemp = recentLogs.reduce((sum, log) => sum + log.temperature, 0) / recentLogs.length;
-    const avgPulse = recentLogs.reduce((sum, log) => sum + log.pulse, 0) / recentLogs.length;
-    const avgEnergy = recentLogs.reduce((sum, log) => sum + log.energy, 0) / recentLogs.length;
-    const poorSleep = recentLogs.filter(log => log.sleep < 6).length > recentLogs.length / 2;
-
-    const recs: string[] = [];
-
-    if (avgTemp < 97.5) {
-      recs.push("orange-juice", "carbs-at-dinner");
-    }
-
-    if (avgPulse > 90 && avgTemp < 98) {
-      recs.push("reduce-cardio", "morning-salt-oj");
-    }
-
-    if (poorSleep) {
-      recs.push("magnesium-glycinate", "carbs-at-dinner", "sleep-optimization");
-    }
-
-    if (avgEnergy < 6) {
-      recs.push("orange-juice", "reduce-cardio");
-    }
-
-    setRecommendations([...new Set(recs)].slice(0, 3));
-  }, [recentLogs]);
 
   // Confetti celebration for temperature milestone
   useEffect(() => {
@@ -112,16 +74,70 @@ export default function Dashboard() {
 
   const isFirstTimeUser = !user?.onboardingCompleted;
 
+  // Helper: Calculate Metabolic Score
+  const getMetabolicScore = () => {
+    if (recentLogs.length === 0) return 0;
+    const avgTemp = recentLogs.reduce((sum, log) => sum + log.temperature, 0) / recentLogs.length;
+    const avgPulse = recentLogs.reduce((sum, log) => sum + log.pulse, 0) / recentLogs.length;
+    const avgEnergy = recentLogs.reduce((sum, log) => sum + log.energy, 0) / recentLogs.length;
+    const sleepConsistency = recentLogs.length; // How many days logged
+    
+    let tempScore = avgTemp >= 98 ? 25 : avgTemp >= 97.5 ? 15 : 5;
+    let pulseScore = avgPulse < 75 ? 25 : avgPulse < 85 ? 15 : 5;
+    let energyScore = avgEnergy >= 7 ? 25 : avgEnergy >= 5 ? 15 : 5;
+    let sleepScore = sleepConsistency >= 6 ? 25 : sleepConsistency >= 4 ? 15 : 5;
+    
+    return Math.round(tempScore + pulseScore + energyScore + sleepScore);
+  };
+
+  // Helper: Get Smart Insights
+  const getSmartInsights = () => {
+    if (recentLogs.length < 3) return [];
+    
+    const avgTemp = recentLogs.reduce((sum, log) => sum + log.temperature, 0) / recentLogs.length;
+    const avgPulse = recentLogs.reduce((sum, log) => sum + log.pulse, 0) / recentLogs.length;
+    const avgEnergy = recentLogs.reduce((sum, log) => sum + log.energy, 0) / recentLogs.length;
+    const avgSleep = recentLogs.reduce((sum, log) => sum + log.sleep, 0) / recentLogs.length;
+
+    const insights: string[] = [];
+    
+    if (avgTemp >= 98.1) insights.push("Your temperature is rising—keep doing what you're doing!");
+    else if (avgTemp < 97.5) insights.push("Try adding more carbs and salt to support your warmth.");
+    
+    if (avgPulse < 75) insights.push("Your resting pulse is steady and healthy.");
+    else if (avgPulse > 85) insights.push("Elevated pulse? Try more rest and nourishment.");
+    
+    if (avgEnergy >= 7) insights.push("Your energy is strong—this is metabolic healing happening!");
+    
+    if (avgSleep >= 8) insights.push("Great sleep consistency—rest is where healing happens.");
+    else if (avgSleep < 6) insights.push("Prioritize sleep. It's your metabolism's best friend.");
+    
+    return insights.slice(0, 2);
+  };
+
+  const metabolicScore = getMetabolicScore();
+  const scorePercentage = (metabolicScore / 100) * 100;
+  const smartInsights = getSmartInsights();
+
+  // Get Foundation Experiments (top 5)
+  const foundationExperiments = activeExperiments
+    .filter(e => {
+      const exp = EXPERIMENTS.find(x => x.id === e.experimentId);
+      return exp && ['morning-temp-pulse', 'carrot-salad', 'no-pufas', 'oj-before-coffee', 'pairing-carbs-protein'].includes(e.experimentId);
+    })
+    .slice(0, 5);
+
   return (
-    <div className="min-h-screen pb-20 bg-background">
+    <div className="min-h-screen pb-24 bg-background">
       <div className="max-w-md mx-auto p-6 space-y-6">
-        {/* Welcome to Lighter - First-time users only */}
-        {isFirstTimeUser && (
-          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20" data-testid="card-welcome-lighter">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold" data-testid="heading-welcome-lighter">Welcome to Lighter</h2>
-              <p className="text-sm text-muted-foreground" data-testid="text-welcome-description">
-                Your metabolic healing journey starts here. Track your temperature, pulse, energy, and sleep to understand your unique metabolic patterns.
+
+        {/* SECTION 1: Welcome Card */}
+        {isFirstTimeUser ? (
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20" data-testid="card-welcome">
+            <div className="space-y-3">
+              <h2 className="text-2xl font-bold" data-testid="heading-welcome-title">Welcome to Lighter</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-welcome-message">
+                Your metabolic healing space. Track your warmth, energy, and nourishment daily to heal your metabolism from the inside out.
               </p>
             </div>
             <Link href="/learn">
@@ -131,222 +147,182 @@ export default function Dashboard() {
               </Button>
             </Link>
           </Card>
+        ) : (
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold" data-testid="heading-greeting">
+              Hey {user?.name || "there"}! <Sparkles className="inline w-6 h-6 text-primary ml-1" />
+            </h1>
+            <p className="text-muted-foreground" data-testid="text-greeting-subtext">
+              Your metabolic healing space
+            </p>
+          </div>
         )}
 
         {/* Start Here Audio - First-time users only */}
         {isFirstTimeUser && (
           <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-start-here">
             <div className="flex items-center gap-3">
-              <Volume2 className="w-5 h-5 text-primary" data-testid="icon-volume" />
+              <Volume2 className="w-5 h-5 text-primary" />
               <h2 className="text-lg font-semibold" data-testid="heading-start-here">Start Here</h2>
             </div>
-            <audio 
-              controls 
-              className="w-full rounded-md"
-              data-testid="audio-intro"
-            >
+            <audio controls className="w-full rounded-md" data-testid="audio-intro">
               <source src={startHereAudio} type="audio/wav" />
               Your browser does not support the audio element.
             </audio>
           </Card>
         )}
 
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight" data-testid="heading-welcome">
-            Hey {user?.name || "there"}! <Sparkles className="inline w-6 h-6 text-primary ml-1" data-testid="icon-sparkles" />
-          </h1>
-          <p className="text-muted-foreground" data-testid="text-greeting">
-            {todayLog ? "You're glowing today!" : "Ready to track today's vitals?"}
-          </p>
-        </div>
-
-        {todayLog ? (
-          <div className="grid grid-cols-3 gap-4">
-            <Card className="p-4 space-y-2" data-testid="card-temperature">
-              <div className="flex items-center gap-2">
-                <Thermometer className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium text-muted-foreground">Temp</span>
-              </div>
-              <p className="text-2xl font-bold" data-testid="text-temperature">{todayLog.temperature.toFixed(1)}°F</p>
-            </Card>
-
-            <Card className="p-4 space-y-2" data-testid="card-pulse">
-              <div className="flex items-center gap-2">
-                <Heart className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium text-muted-foreground">Pulse</span>
-              </div>
-              <p className="text-2xl font-bold" data-testid="text-pulse">{todayLog.pulse} BPM</p>
-            </Card>
-
-            <Card className="p-4 space-y-2" data-testid="card-energy">
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium text-muted-foreground">Energy</span>
-              </div>
-              <p className="text-2xl font-bold" data-testid="text-energy">{todayLog.energy}/10</p>
-            </Card>
+        {/* SECTION 2: Metabolic Score */}
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20" data-testid="card-metabolic-score">
+          <div className="flex items-start justify-between">
+            <div>
+              <h2 className="text-lg font-semibold" data-testid="heading-score">Your Score</h2>
+              <p className="text-xs text-muted-foreground">7-day wellness snapshot</p>
+            </div>
+            <p className="text-4xl font-bold text-primary" data-testid="text-score-number">{metabolicScore}</p>
           </div>
-        ) : (
-          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-track-prompt">
-            <div className="flex items-center gap-3">
-              <AlertCircle className="w-6 h-6 text-primary" data-testid="icon-alert" />
-              <div>
-                <h3 className="font-semibold" data-testid="heading-track-prompt">Track Today's Vitals</h3>
-                <p className="text-sm text-muted-foreground" data-testid="text-track-description">Start building your metabolic data</p>
+          <Progress value={scorePercentage} className="h-3" data-testid="progress-score" />
+        </Card>
+
+        {/* SECTION 3: Today Snapshot */}
+        {todayLog && (
+          <Card className="p-6 space-y-4" data-testid="card-today-snapshot">
+            <h2 className="text-lg font-semibold" data-testid="heading-today">Today's Snapshot</h2>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="text-center p-3 rounded-lg bg-muted/40" data-testid="metric-temp-snapshot">
+                <Thermometer className="w-4 h-4 text-primary mx-auto mb-1" />
+                <p className="text-2xl font-bold">{todayLog.temperature.toFixed(1)}°</p>
+                <p className="text-xs text-muted-foreground">Warmth</p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-muted/40" data-testid="metric-pulse-snapshot">
+                <Heart className="w-4 h-4 text-primary mx-auto mb-1" />
+                <p className="text-2xl font-bold">{todayLog.pulse}</p>
+                <p className="text-xs text-muted-foreground">Pulse</p>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-muted/40" data-testid="metric-energy-snapshot">
+                <Zap className="w-4 h-4 text-primary mx-auto mb-1" />
+                <p className="text-2xl font-bold">{todayLog.energy}</p>
+                <p className="text-xs text-muted-foreground">Energy</p>
               </div>
             </div>
-            <Link href="/track">
-              <Button className="w-full bg-gradient-to-r from-primary to-chart-2" data-testid="button-track-today">
-                Track Now
-              </Button>
-            </Link>
           </Card>
         )}
 
-        {foodLogs.length > 0 && (
-          <Card className="p-6 space-y-4" data-testid="card-food-log">
+        {/* SECTION 4: Active Experiments Overview */}
+        {foundationExperiments.length > 0 && (
+          <Card className="p-6 space-y-4" data-testid="card-experiments-overview">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Utensils className="w-5 h-5 text-primary" data-testid="icon-food" />
-                <h2 className="text-lg font-semibold" data-testid="heading-food-log">Today's Food</h2>
-              </div>
-              <Link href="/track">
-                <Button size="sm" variant="ghost" data-testid="button-add-more-food">
-                  Add More
+              <h2 className="text-lg font-semibold" data-testid="heading-experiments">Foundation Experiments</h2>
+              <Link href="/experiments">
+                <Button size="sm" variant="ghost" data-testid="button-view-all">
+                  View All →
                 </Button>
               </Link>
             </div>
-            <div className="space-y-2">
-              {foodLogs.slice(0, 4).map((log) => (
-                <div
-                  key={log.id}
-                  className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg"
-                  data-testid={`dashboard-food-${log.id}`}
-                >
-                  <span className="text-xs font-medium text-primary capitalize min-w-fit">
-                    {log.meal}
-                  </span>
-                  <span className="text-sm text-muted-foreground">•</span>
-                  <span className="text-sm truncate">{log.foodItem}</span>
-                </div>
-              ))}
-              {foodLogs.length > 4 && (
-                <p className="text-xs text-muted-foreground text-center pt-2">
-                  +{foodLogs.length - 4} more items
-                </p>
-              )}
+            <div className="space-y-3">
+              {foundationExperiments.map(active => {
+                const experiment = EXPERIMENTS.find(e => e.id === active.experimentId);
+                if (!experiment) return null;
+                const progress = (active.currentDay / experiment.duration) * 100;
+                const daysLeft = experiment.duration - active.currentDay;
+
+                return (
+                  <div key={active.id} className="p-3 rounded-lg bg-muted/50 space-y-2" data-testid={`exp-overview-${active.id}`}>
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm" data-testid={`exp-title-${active.id}`}>{experiment.title}</p>
+                      <Badge variant="secondary" className="text-xs" data-testid={`exp-badge-${active.id}`}>
+                        Day {active.currentDay}
+                      </Badge>
+                    </div>
+                    <Progress value={progress} className="h-2" data-testid={`exp-progress-${active.id}`} />
+                    <p className="text-xs text-muted-foreground" data-testid={`exp-days-left-${active.id}`}>
+                      {daysLeft} days to keep the momentum going
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </Card>
         )}
 
-        {recommendations.length > 0 && (
-          <div className="space-y-4" data-testid="section-recommendations">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-primary" data-testid="icon-recommendations" />
-              <h2 className="text-xl font-semibold" data-testid="heading-recommendations">Recommended for You</h2>
+        {/* SECTION 5: Weekly Trends */}
+        {recentLogs.length > 0 && (
+          <Card className="p-6 space-y-4" data-testid="card-weekly-trends">
+            <h2 className="text-lg font-semibold" data-testid="heading-trends">Weekly Overview</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 rounded-lg bg-muted/40" data-testid="trend-temp">
+                <p className="text-xs text-muted-foreground">Avg Warmth</p>
+                <p className="text-2xl font-bold">
+                  {(recentLogs.reduce((s, l) => s + l.temperature, 0) / recentLogs.length).toFixed(1)}°F
+                </p>
+              </div>
+              <div className="p-3 rounded-lg bg-muted/40" data-testid="trend-pulse">
+                <p className="text-xs text-muted-foreground">Avg Pulse</p>
+                <p className="text-2xl font-bold">
+                  {Math.round(recentLogs.reduce((s, l) => s + l.pulse, 0) / recentLogs.length)}
+                </p>
+              </div>
+              <div className="p-3 rounded-lg bg-muted/40" data-testid="trend-energy">
+                <p className="text-xs text-muted-foreground">Avg Energy</p>
+                <p className="text-2xl font-bold">
+                  {(recentLogs.reduce((s, l) => s + l.energy, 0) / recentLogs.length).toFixed(1)}/10
+                </p>
+              </div>
+              <div className="p-3 rounded-lg bg-muted/40" data-testid="trend-sleep">
+                <p className="text-xs text-muted-foreground">Avg Sleep</p>
+                <p className="text-2xl font-bold">
+                  {(recentLogs.reduce((s, l) => s + l.sleep, 0) / recentLogs.length).toFixed(1)}h
+                </p>
+              </div>
             </div>
-            {recommendations.map(recId => {
-              const experiment = EXPERIMENTS.find(e => e.id === recId);
-              if (!experiment) return null;
-
-              return (
-                <Card 
-                  key={experiment.id}
-                  className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-transparent hover:border-primary/20 transition-colors"
-                  data-testid={`card-recommendation-${experiment.id}`}
-                >
-                  <div className="space-y-2">
-                    <Badge variant="secondary" className="bg-gradient-to-r from-primary/10 to-chart-2/10" data-testid={`badge-category-${experiment.id}`}>
-                      {experiment.category}
-                    </Badge>
-                    <h3 className="text-lg font-semibold" data-testid={`text-recommendation-title-${experiment.id}`}>
-                      {experiment.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2" data-testid={`text-recommendation-why-${experiment.id}`}>
-                      {experiment.why}
-                    </p>
-                  </div>
-                  <Link href="/experiments" data-testid={`link-view-${experiment.id}`}>
-                    <Button variant="outline" className="w-full" data-testid={`button-view-${experiment.id}`}>
-                      Learn More
-                    </Button>
-                  </Link>
-                </Card>
-              );
-            })}
-          </div>
+          </Card>
         )}
 
-        {activeExperiments.filter(e => !e.completed).length > 0 && (
-          <div className="space-y-4" data-testid="section-active-experiments">
-            <h2 className="text-xl font-semibold" data-testid="heading-active-experiments">Active Experiments</h2>
-            {activeExperiments
-              .filter(e => !e.completed)
-              .map(active => {
-                const experiment = EXPERIMENTS.find(e => e.id === active.experimentId);
-                if (!experiment) return null;
-
-                const progress = (active.currentDay / experiment.duration) * 100;
-
-                return (
-                  <Card key={active.id} className="p-6 space-y-4" data-testid={`card-active-${active.id}`}>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-semibold" data-testid={`text-active-title-${active.id}`}>{experiment.title}</h3>
-                        <Badge variant="secondary" data-testid={`badge-day-${active.id}`}>
-                          <Clock className="w-3 h-3 mr-1" />
-                          Day {active.currentDay}/{experiment.duration}
-                        </Badge>
-                      </div>
-                      <Progress value={progress} className="h-2" data-testid={`progress-${active.id}`} />
-                    </div>
-                    <Link href="/experiments" data-testid={`link-continue-${active.id}`}>
-                      <Button variant="outline" size="sm" className="w-full" data-testid={`button-continue-${active.id}`}>
-                        Continue Experiment
-                      </Button>
-                    </Link>
-                  </Card>
-                );
-              })}
-          </div>
+        {/* SECTION 6: Smart Insights */}
+        {smartInsights.length > 0 && (
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-insights">
+            <h2 className="text-lg font-semibold" data-testid="heading-insights">Mini Coaching</h2>
+            <div className="space-y-2">
+              {smartInsights.map((insight, idx) => (
+                <div key={idx} className="flex gap-2" data-testid={`insight-${idx}`}>
+                  <Sparkles className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-muted-foreground">{insight}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
         )}
 
-        <div className="grid grid-cols-2 gap-4" data-testid="section-quick-actions">
-          <Link href="/experiments" data-testid="link-experiments">
-            <Button variant="outline" className="w-full h-24 flex flex-col gap-2" data-testid="button-browse-experiments">
-              <Sparkles className="w-6 h-6" data-testid="icon-browse-experiments" />
-              <span className="text-sm">Browse Experiments</span>
+        {/* SECTION 7: Quick Links */}
+        <div className="grid grid-cols-3 gap-3" data-testid="section-quick-links">
+          <Link href="/track" data-testid="link-quick-track">
+            <Button variant="outline" className="w-full h-20 flex flex-col gap-1" data-testid="btn-quick-track">
+              <Clock className="w-5 h-5" />
+              <span className="text-xs">Track</span>
             </Button>
           </Link>
-          <Link href="/progress" data-testid="link-progress">
-            <Button variant="outline" className="w-full h-24 flex flex-col gap-2" data-testid="button-view-progress">
-              <TrendingUp className="w-6 h-6" data-testid="icon-view-progress" />
-              <span className="text-sm">View Progress</span>
+          <Link href="/experiments" data-testid="link-quick-experiments">
+            <Button variant="outline" className="w-full h-20 flex flex-col gap-1" data-testid="btn-quick-experiments">
+              <TrendingUp className="w-5 h-5" />
+              <span className="text-xs">Experiments</span>
+            </Button>
+          </Link>
+          <Link href="/messages" data-testid="link-quick-messages">
+            <Button variant="outline" className="w-full h-20 flex flex-col gap-1" data-testid="btn-quick-messages">
+              <MessageSquare className="w-5 h-5" />
+              <span className="text-xs">Message</span>
             </Button>
           </Link>
         </div>
 
-        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border-primary/20" data-testid="card-message-coach">
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold" data-testid="heading-message-coach">Need Personalized Guidance?</h3>
-            <p className="text-sm text-muted-foreground" data-testid="text-message-coach-description">
-              Message your metabolic health coach with questions about your experiments, symptoms, or next steps.
-            </p>
-          </div>
-          <Link href="/messages">
-            <Button className="w-full bg-gradient-to-r from-primary to-chart-2" data-testid="button-message-coach">
-              Message Me
-            </Button>
-          </Link>
-        </Card>
-
-        <div className="mt-8 space-y-2" data-testid="section-daily-reminder">
+        {/* Daily Affirmation */}
+        <div className="mt-8 space-y-2" data-testid="section-affirmation">
           <div className="flex items-center justify-center gap-2 px-1">
-            <Sun className="w-4 h-4 text-primary" data-testid="icon-daily-reminder-sun-left" />
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide" data-testid="text-daily-reminder-title">Daily Reminder</p>
-            <Sun className="w-4 h-4 text-primary" data-testid="icon-daily-reminder-sun-right" />
+            <Sun className="w-4 h-4 text-primary" />
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Daily Reminder</p>
+            <Sun className="w-4 h-4 text-primary" />
           </div>
-          <Card className="p-4 bg-white dark:bg-card/60 border border-primary/10 hover-elevate" data-testid="card-daily-affirmation">
+          <Card className="p-4 bg-white dark:bg-card/60 border border-primary/10 hover-elevate" data-testid="card-affirmation">
             <p className="text-sm text-center text-muted-foreground leading-relaxed" data-testid="text-affirmation">
               {getDailyAffirmation()}
             </p>
