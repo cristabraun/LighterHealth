@@ -23,7 +23,7 @@ export default function Landing() {
                 Feel Good in Your Body Again.
               </h1>
               
-              <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
+              <p className="text-xl lg:text-2xl font-semibold text-foreground" data-testid="text-tagline">
                 Understand your body, lower stress, and restore your energy through simple daily tracking and personalized insights inside the Lighter™ app.
               </p>
             </div>
