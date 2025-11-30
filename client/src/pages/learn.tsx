@@ -212,9 +212,14 @@ export default function Learn() {
                 link: "/learn-hormones",
               },
               {
-                id: "sleep-stress",
-                title: "Sleep & Stress",
-                content: "Explore how sleep affects metabolism, why stress slows healing, and practical strategies to improve rest quality. Learn why warm bedrooms, magnesium, and consistent timing matter for metabolic recovery.",
+                id: "sleep",
+                title: "Sleep",
+                content: "Explore how sleep affects metabolism and practical strategies to improve rest quality. Learn why warm bedrooms, magnesium, and consistent timing matter for metabolic recovery.",
+              },
+              {
+                id: "stress",
+                title: "Stress",
+                content: "Understand why stress slows healing and how to support your nervous system. Learn practical strategies for managing cortisol levels and protecting your metabolism from chronic stress.",
               },
               {
                 id: "digestion",
