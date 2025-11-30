@@ -215,6 +215,7 @@ export default function Learn() {
                 id: "sleep",
                 title: "Sleep",
                 content: "Explore how sleep affects metabolism and practical strategies to improve rest quality. Learn why warm bedrooms, magnesium, and consistent timing matter for metabolic recovery.",
+                link: "/learn-sleep",
               },
               {
                 id: "digestion",
