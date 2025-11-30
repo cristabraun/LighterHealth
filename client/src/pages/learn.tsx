@@ -206,11 +206,6 @@ export default function Learn() {
           <Accordion type="single" collapsible className="space-y-3">
             {[
               {
-                id: "metabolic-nutrition",
-                title: "Metabolic Nutrition",
-                content: "Learn about pro-metabolic foods, macronutrient ratios, and how to fuel your body for optimal energy production. Discover why carbohydrates are essential, how to pair nutrients, and which foods support metabolic healing.",
-              },
-              {
                 id: "hormones",
                 title: "Hormones",
                 content: "Understand how hormones regulate your metabolism, why thyroid function matters, and how the pro-metabolic approach supports hormonal balance. Learn about the connection between nutrition, stress, and hormone production.",
