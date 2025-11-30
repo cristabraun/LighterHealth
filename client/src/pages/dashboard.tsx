@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "@/hooks/useTheme";
 import {
   Thermometer,
   Heart,
@@ -46,6 +47,7 @@ function getTodayAffirmation(): string {
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [welcomeExpanded, setWelcomeExpanded] = useState(true);
 
   // Fetch daily logs
@@ -97,6 +99,29 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen pb-24 bg-gradient-to-b from-background via-background to-primary/5">
       <div className="max-w-md mx-auto p-6 space-y-6">
+        
+        {/* Theme Toggle - Top Right */}
+        <div className="flex justify-end mb-2" data-testid="section-theme-toggle">
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={toggleTheme}
+            className="gap-1"
+            data-testid="button-theme-toggle"
+          >
+            {theme === "light" ? (
+              <>
+                <Moon className="w-4 h-4" />
+                <span className="text-xs">Dark</span>
+              </>
+            ) : (
+              <>
+                <Sun className="w-4 h-4" />
+                <span className="text-xs">Light</span>
+              </>
+            )}
+          </Button>
+        </div>
         
         {/* SECTION 1: Welcome Card */}
         {welcomeExpanded && (
