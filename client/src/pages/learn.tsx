@@ -217,11 +217,6 @@ export default function Learn() {
                 content: "Explore how sleep affects metabolism and practical strategies to improve rest quality. Learn why warm bedrooms, magnesium, and consistent timing matter for metabolic recovery.",
               },
               {
-                id: "stress",
-                title: "Stress",
-                content: "Understand why stress slows healing and how to support your nervous system. Learn practical strategies for managing cortisol levels and protecting your metabolism from chronic stress.",
-              },
-              {
                 id: "digestion",
                 title: "Digestion",
                 content: "Discover how digestion impacts energy production, why digestive comfort matters, and which foods are easier to digest. Learn about the role of hydration, temperature, and meal timing in supporting healthy digestion.",
