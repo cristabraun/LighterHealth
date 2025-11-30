@@ -19,6 +19,7 @@ export default function Track() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [temperature, setTemperature] = useState("");
+  const [temperatureUnit, setTemperatureUnit] = useState<"F" | "C">("F");
   const [pulse, setPulse] = useState("");
   const [energy, setEnergy] = useState([7]);
   const [sleep, setSleep] = useState([7]);
@@ -186,7 +187,21 @@ export default function Track() {
     const tempNum = parseFloat(temperature);
     const pulseNum = parseInt(pulse);
 
-    if (tempNum < 94 || tempNum > 102) {
+    // Convert Celsius to Fahrenheit for storage if needed
+    const tempInF = temperatureUnit === "C" ? (tempNum * 9/5) + 32 : tempNum;
+
+    // Validate Celsius input (34°C - 39°C roughly equals 94°F - 102°F)
+    if (temperatureUnit === "C" && (tempNum < 34 || tempNum > 39)) {
+      toast({
+        title: "Invalid Temperature",
+        description: "Please enter a temperature between 34°C and 39°C",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate Fahrenheit input
+    if (temperatureUnit === "F" && (tempNum < 94 || tempNum > 102)) {
       toast({
         title: "Invalid Temperature",
         description: "Please enter a temperature between 94°F and 102°F",
@@ -206,7 +221,7 @@ export default function Track() {
 
     const logData: InsertDailyLog = {
       date: today,
-      temperature: tempNum,
+      temperature: tempInF,
       pulse: pulseNum,
       energy: energy[0],
       sleep: sleep[0],
@@ -264,25 +279,49 @@ export default function Track() {
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="temperature" className="text-base">
-                    Morning Temperature (°F) <span className="text-destructive">*</span>
-                  </Label>
+                  <div className="flex items-center justify-between mb-2">
+                    <Label htmlFor="temperature" className="text-base">
+                      Morning Temperature <span className="text-destructive">*</span>
+                    </Label>
+                    <div className="flex gap-1">
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant={temperatureUnit === "F" ? "default" : "outline"}
+                        onClick={() => setTemperatureUnit("F")}
+                        className="h-7 px-2 text-xs"
+                        data-testid="button-temp-fahrenheit"
+                      >
+                        °F
+                      </Button>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant={temperatureUnit === "C" ? "default" : "outline"}
+                        onClick={() => setTemperatureUnit("C")}
+                        className="h-7 px-2 text-xs"
+                        data-testid="button-temp-celsius"
+                      >
+                        °C
+                      </Button>
+                    </div>
+                  </div>
                   <div className="flex items-center gap-2">
                     <Input
                       id="temperature"
                       type="number"
                       step="0.1"
-                      placeholder="97.8"
+                      placeholder={temperatureUnit === "F" ? "97.8" : "36.6"}
                       value={temperature}
                       onChange={(e) => setTemperature(e.target.value)}
                       className="text-lg"
                       data-testid="input-temperature"
                       required
                     />
-                    <span className="text-sm text-muted-foreground min-w-fit">°F</span>
+                    <span className="text-sm text-muted-foreground min-w-fit">°{temperatureUnit}</span>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Take immediately upon waking, before getting out of bed
+                    Take immediately upon waking, before getting out of bed {temperatureUnit === "F" ? "(94-102°F)" : "(34-39°C)"}
                   </p>
                 </div>
 

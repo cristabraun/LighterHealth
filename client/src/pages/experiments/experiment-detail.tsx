@@ -67,6 +67,7 @@ export default function ExperimentDetail() {
   const [experimentTemplate, setExperimentTemplate] = useState<ExperimentTemplate | null>(null);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [formTemp, setFormTemp] = useState<string>("");
+  const [temperatureUnit, setTemperatureUnit] = useState<"F" | "C">("F");
   const [formPulse, setFormPulse] = useState<string>("");
   const [formNotes, setFormNotes] = useState<string>("");
   const [aiInsights, setAiInsights] = useState<AIInsight[]>([]);
@@ -124,9 +125,16 @@ export default function ExperimentDetail() {
   const handleLogData = () => {
     if (!currentExperiment) return;
 
+    let tempNum: number | null = null;
+    if (isTempPulseExperiment && formTemp) {
+      const parsedTemp = parseFloat(formTemp);
+      // Convert Celsius to Fahrenheit for storage if needed
+      tempNum = temperatureUnit === "C" ? (parsedTemp * 9/5) + 32 : parsedTemp;
+    }
+
     const newLog: LogEntry = {
       date: new Date().toISOString(),
-      temp: isTempPulseExperiment && formTemp ? parseFloat(formTemp) : null,
+      temp: tempNum,
       pulse: isTempPulseExperiment && formPulse ? parseFloat(formPulse) : null,
       notes: formNotes,
     };
@@ -371,15 +379,39 @@ export default function ExperimentDetail() {
             {/* Log Form Inputs */}
             <div className="space-y-3 pt-4 border-t" data-testid="section-log-form">
               {isTempPulseExperiment && (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-3">
                   <div className="space-y-1.5">
-                    <Label htmlFor="temp-input" className="text-xs text-muted-foreground">
-                      Temperature (°F)
-                    </Label>
+                    <div className="flex items-center justify-between mb-1">
+                      <Label htmlFor="temp-input" className="text-xs text-muted-foreground">
+                        Temperature
+                      </Label>
+                      <div className="flex gap-1">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant={temperatureUnit === "F" ? "default" : "outline"}
+                          onClick={() => setTemperatureUnit("F")}
+                          className="h-6 px-1.5 text-xs"
+                          data-testid="button-exp-temp-fahrenheit"
+                        >
+                          °F
+                        </Button>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant={temperatureUnit === "C" ? "default" : "outline"}
+                          onClick={() => setTemperatureUnit("C")}
+                          className="h-6 px-1.5 text-xs"
+                          data-testid="button-exp-temp-celsius"
+                        >
+                          °C
+                        </Button>
+                      </div>
+                    </div>
                     <Input
                       id="temp-input"
                       type="number"
-                      placeholder="98.6"
+                      placeholder={temperatureUnit === "F" ? "98.6" : "37"}
                       value={formTemp}
                       onChange={(e) => setFormTemp(e.target.value)}
                       step="0.1"
