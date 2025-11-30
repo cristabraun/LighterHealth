@@ -22,7 +22,6 @@ import {
 import type { DailyLog, ActiveExperiment, FoodLog } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import confetti from "canvas-confetti";
-import audioFile from "@assets/Pro Metabolic Tracking and Healing Intro_1764465939114.wav";
 
 const DAILY_AFFIRMATIONS = [
   "A body that is fed well, will heal well.",
@@ -131,7 +130,7 @@ export default function Home() {
             className="w-full rounded-md"
             data-testid="audio-intro"
           >
-            <source src={audioFile} type="audio/wav" />
+            <source src="/attached_assets/Pro Metabolic Tracking and Healing Intro_1764465939114.wav" type="audio/wav" />
             Your browser does not support the audio element.
           </audio>
         </Card>

@@ -17,7 +17,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Beaker, Clock, ChevronDown, ChevronUp, CheckCircle2, XCircle, Volume2 } from "lucide-react";
-import audioFile from "@assets/Five Foundational Metabolic Experiments_1764467246426.wav";
 import { EXPERIMENTS } from "@/data/experiments";
 import type { ActiveExperiment, ExperimentTemplate, DailyMeasurements } from "@shared/schema";
 
@@ -182,7 +181,7 @@ export default function Experiments() {
             className="w-full rounded-md"
             data-testid="audio-experiments-guide"
           >
-            <source src={audioFile} type="audio/wav" />
+            <source src="/attached_assets/Five Foundational Metabolic Experiments_1764467246426.wav" type="audio/wav" />
             Your browser does not support the audio element.
           </audio>
         </Card>
