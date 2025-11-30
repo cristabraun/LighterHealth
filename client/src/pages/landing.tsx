@@ -30,21 +30,21 @@ export default function Landing() {
 
             <div className="space-y-6 max-w-2xl mx-auto" data-testid="section-benefits">
               <div className="flex gap-4 text-left">
-                <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-1" />
+                <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-1" />
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-1">Lower stress</h3>
                   <p className="text-muted-foreground">Feel calmer and more grounded throughout the day.</p>
                 </div>
               </div>
               <div className="flex gap-4 text-left">
-                <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-2" />
+                <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-2" />
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-1">Increase energy & wellbeing</h3>
                   <p className="text-muted-foreground">Restore steady, natural energy without stimulants or burnout.</p>
                 </div>
               </div>
               <div className="flex gap-4 text-left">
-                <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-3" />
+                <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-3" />
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-1">Let weight come off gently</h3>
                   <p className="text-muted-foreground">Support your metabolism so weight loss becomes effortless, not stressful.</p>
