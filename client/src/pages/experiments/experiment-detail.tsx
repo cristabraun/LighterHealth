@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Loader2, Zap, Lightbulb } from "lucide-react";
+import { ArrowLeft, Loader2, Zap, Lightbulb, Clock } from "lucide-react";
 import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import { generateAIInsight } from "@/lib/ai";
@@ -150,6 +150,30 @@ export default function ExperimentDetail() {
     setFormNotes("");
   };
 
+  const handleStartExperiment = () => {
+    if (!experimentTemplate) return;
+
+    const newExperiment: ActiveExperiment = {
+      id: `active_${Date.now()}`,
+      userId: 'local',
+      experimentId,
+      startDate: new Date().toISOString().split('T')[0],
+      currentDay: 1,
+      completed: false,
+      notes: [],
+      checklist: [],
+      measurements: '{}',
+      logs: [],
+    };
+
+    const experimentsData = localStorage.getItem("lighter_active_experiments");
+    const existing: ActiveExperiment[] = experimentsData ? JSON.parse(experimentsData) : [];
+    const updated = [...existing, newExperiment];
+    localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
+
+    setCurrentExperiment(newExperiment);
+  };
+
   const handleFinishExperiment = () => {
     if (!currentExperiment) return;
 
@@ -191,31 +215,20 @@ export default function ExperimentDetail() {
     );
   }
 
-  if (!currentExperiment) {
-    return (
-      <div className="min-h-screen pb-24 bg-gradient-to-b from-background via-background to-primary/5">
-        <div className="max-w-md mx-auto p-6 space-y-6">
-          <Link href="/experiments">
-            <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-to-experiments">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Experiments
-            </Button>
-          </Link>
-          <p className="text-muted-foreground" data-testid="text-no-active-experiment">
-            No active experiment. Start this experiment to begin tracking.
-          </p>
-        </div>
-      </div>
-    );
+  // Calculate day counter and progress for active experiments
+  let currentDay = 1;
+  let progress = 0;
+  const isActive = currentExperiment && !currentExperiment.completed;
+  
+  if (currentExperiment) {
+    const startDate = new Date(currentExperiment.startDate);
+    const today = new Date();
+    const daysPassed = Math.floor(
+      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    ) + 1;
+    currentDay = Math.max(1, daysPassed);
+    progress = (currentDay / experimentTemplate.duration) * 100;
   }
-
-  const startDate = new Date(currentExperiment.startDate);
-  const today = new Date();
-  const daysPassed = Math.floor(
-    (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-  ) + 1;
-  const currentDay = Math.max(1, daysPassed);
-  const progress = (currentDay / experimentTemplate.duration) * 100;
 
   return (
     <div className="min-h-screen pb-24 bg-gradient-to-b from-background via-background to-primary/5">
@@ -229,15 +242,49 @@ export default function ExperimentDetail() {
           </Button>
         </Link>
 
-        {/* Header Container */}
+        {/* Experiment Overview */}
+        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5 space-y-4" data-testid="card-experiment-overview">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground" data-testid="heading-overview-title">
+              {experimentTemplate.title}
+            </h1>
+            <p className="text-sm text-muted-foreground mt-2 leading-relaxed" data-testid="text-overview-description">
+              {experimentTemplate.why}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap pt-2">
+            <Badge variant="secondary" data-testid="badge-category">
+              {experimentTemplate.category}
+            </Badge>
+            <span className="text-xs text-muted-foreground flex items-center gap-1" data-testid="text-duration">
+              <Clock className="w-3 h-3" />
+              {experimentTemplate.duration} days
+            </span>
+          </div>
+        </Card>
+
+        {/* Start Experiment Button (only show when not started) */}
+        {!currentExperiment && (
+          <Button 
+            onClick={handleStartExperiment}
+            className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground text-base font-semibold py-3"
+            data-testid="button-start-experiment"
+          >
+            Start Experiment
+          </Button>
+        )}
+
+        {/* Header Container (only show when active) */}
+        {isActive && (
         <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5 space-y-4" data-testid="card-experiment-header">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1">
-              <h1 className="text-3xl font-bold" data-testid="heading-experiment-title">
-                {experimentTemplate.title}
-              </h1>
-              <p className="text-sm text-muted-foreground mt-2" data-testid="text-started-date">
-                Started: {startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              <h2 className="text-lg font-semibold" data-testid="heading-progress-title">
+                Progress
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1" data-testid="text-started-date">
+                Started: {new Date(currentExperiment.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
             <Badge data-testid="badge-experiment-status">Active</Badge>
@@ -256,8 +303,10 @@ export default function ExperimentDetail() {
             <Progress value={Math.min(progress, 100)} data-testid="progress-experiment" />
           </div>
         </Card>
+        )}
 
-        {/* Experiment Status Section */}
+        {/* Experiment Status Section (only show when active) */}
+        {isActive && (
         <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-experiment-status">
           <h2 className="font-semibold text-foreground mb-3" data-testid="heading-status">
             Experiment Status
@@ -266,8 +315,10 @@ export default function ExperimentDetail() {
             Started on {new Date(currentExperiment.startDate).toLocaleDateString()}. Ongoing tracking across all metrics.
           </p>
         </Card>
+        )}
 
-        {/* Daily Tasks Section */}
+        {/* Daily Tasks Section (only show when active) */}
+        {isActive && (
         <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-daily-tasks">
           <h2 className="font-semibold text-foreground mb-3" data-testid="heading-daily-tasks">
             Daily Tasks
@@ -276,8 +327,10 @@ export default function ExperimentDetail() {
             Placeholder: Daily tasks and checklist items will appear here. Check off completed actions as you go.
           </p>
         </Card>
+        )}
 
-        {/* Logs Section */}
+        {/* Logs Section (only show when active) */}
+        {isActive && (
         <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-logs">
           <div className="space-y-3">
             <h2 className="font-semibold text-foreground" data-testid="heading-logs">
@@ -366,8 +419,10 @@ export default function ExperimentDetail() {
             </div>
           </div>
         </Card>
+        )}
 
-        {/* AI Insights Section */}
+        {/* AI Insights Section (only show when active) */}
+        {isActive && (
         <Card className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border border-primary/20 rounded-lg shadow-sm" data-testid="card-ai-insights">
           <div className="flex items-center gap-2 mb-4">
             <Zap className="w-5 h-5 text-primary" data-testid="icon-ai-zap" />
@@ -406,9 +461,10 @@ export default function ExperimentDetail() {
             </p>
           )}
         </Card>
+        )}
 
-        {/* Suggested Habits Section */}
-        {logs.length > 0 && (
+        {/* Suggested Habits Section (only show when active) */}
+        {isActive && logs.length > 0 && (
           <Card className="p-6 bg-gradient-to-br from-chart-2/10 via-primary/5 to-primary/10 border border-chart-2/20 rounded-lg shadow-sm" data-testid="card-habits">
             <div className="flex items-center gap-2 mb-4">
               <Lightbulb className="w-5 h-5 text-chart-2" data-testid="icon-habit-lightbulb" />
@@ -437,7 +493,8 @@ export default function ExperimentDetail() {
           </Card>
         )}
 
-        {/* Finish Experiment Button */}
+        {/* Finish Experiment Button (only show when active) */}
+        {isActive && (
         <Button 
           onClick={handleFinishExperiment}
           className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
@@ -445,6 +502,7 @@ export default function ExperimentDetail() {
         >
           Finish Experiment
         </Button>
+        )}
 
       </div>
     </div>
