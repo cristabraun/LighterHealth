@@ -233,6 +233,7 @@ export default function Learn() {
                 id: "supplements",
                 title: "Supplements",
                 content: "Explore foundational supplements that support metabolic healing, including minerals, vitamins, and digestive aids. Learn what to prioritize and why whole foods come first.",
+                link: "/learn-supplements",
               },
               {
                 id: "food-lists",

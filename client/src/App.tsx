@@ -19,6 +19,7 @@ import LearnHormones from "@/pages/learn-hormones";
 import LearnSleep from "@/pages/learn-sleep";
 import LearnDigestion from "@/pages/learn-digestion";
 import LearnMovement from "@/pages/learn-movement";
+import LearnSupplements from "@/pages/learn-supplements";
 import Track from "@/pages/track";
 import Experiments from "@/pages/experiments";
 import Messages from "@/pages/messages";
@@ -64,6 +65,7 @@ function Router() {
         <Route path="/learn-sleep" component={LearnSleep} />
         <Route path="/learn-digestion" component={LearnDigestion} />
         <Route path="/learn-movement" component={LearnMovement} />
+        <Route path="/learn-supplements" component={LearnSupplements} />
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
         <Route path="/messages" component={Messages} />
