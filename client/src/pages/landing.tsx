@@ -20,11 +20,11 @@ export default function Landing() {
               />
               
               <h1 className="text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1 mt-4" data-testid="heading-hero">
-                Welcome to Lighter™
+                Feel Good in Your Body Again.
               </h1>
               
               <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
-                Your gentle space for restoring energy, wellbeing & healing your metabolism.
+                Understand Your Body, Lower Stress, and Restore Healthy Energy and Metabolic Balance.
               </p>
             </div>
 
