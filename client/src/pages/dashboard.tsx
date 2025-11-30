@@ -154,10 +154,18 @@ export default function Dashboard() {
             data-testid="card-welcome"
           >
             <div className="flex items-start justify-between">
-              <div className="space-y-2 flex-1">
-                <h1 className="text-2xl font-bold" data-testid="heading-welcome">
-                  Hey {user?.name || "Crista"}! Your metabolic dashboard
-                </h1>
+              <div className="space-y-3 flex-1">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2" data-testid="heading-welcome">
+                    <h1 className="text-3xl font-bold">
+                      Hey {user?.name || "Crista"}!
+                    </h1>
+                    <Sparkles className="w-6 h-6 text-primary" />
+                  </div>
+                  <p className="text-lg text-muted-foreground font-medium">
+                    Here's your metabolic dashboard
+                  </p>
+                </div>
                 <p className="text-sm text-muted-foreground" data-testid="text-welcome-description">
                   Track your warmth, energy, and nourishment daily to heal your metabolism from the inside out.
                 </p>
