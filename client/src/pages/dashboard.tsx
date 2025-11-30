@@ -435,7 +435,7 @@ export default function Dashboard() {
 
           {/* Book Strategy Call */}
           <a
-            href="https://calendly.com"
+            href="https://calendly.com/chatwithcrista/30min"
             target="_blank"
             rel="noopener noreferrer"
             data-testid="link-book-call-cta"
