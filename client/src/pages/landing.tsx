@@ -11,19 +11,17 @@ export default function Landing() {
       <div className="relative overflow-hidden border-b border-border/40">
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
-            <div className="space-y-6">
-              <h1 className="text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1" data-testid="heading-hero">
+            <div className="space-y-4">
+              <img 
+                src={lighterIcon} 
+                alt="Lighter App Icon" 
+                className="w-28 h-28 mx-auto mb-2 rounded-xl shadow-md"
+                data-testid="image-app-icon"
+              />
+              
+              <h1 className="text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1 mt-4" data-testid="heading-hero">
                 Welcome to Lighter™
               </h1>
-              
-              <div className="flex justify-center py-6">
-                <img 
-                  src={lighterIcon} 
-                  alt="Lighter App Icon" 
-                  className="w-48 h-48"
-                  data-testid="image-app-icon"
-                />
-              </div>
               
               <p className="text-2xl lg:text-3xl font-semibold text-foreground" data-testid="text-tagline">
                 Your gentle space for restoring energy, wellbeing & healing your metabolism.
