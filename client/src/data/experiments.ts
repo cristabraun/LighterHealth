@@ -1,35 +1,7 @@
 import type { ExperimentTemplate } from "@shared/schema";
 
 export const EXPERIMENTS: ExperimentTemplate[] = [
-  // MODULE SET 1 — Temperature & Pulse Experiments
-  {
-    id: "temp-before-after-meals",
-    title: "Temperature Before + After Meals",
-    duration: 30,
-    category: "Temperature & Pulse",
-    why: "Your body's temperature response to food reveals how well you're converting food into energy. If a meal raises temp/pulse → metabolism is strong. If it drops → low thyroid or high cortisol response. This is one of Ray Peat's foundational metabolic tracking methods.",
-    how: [
-      "Take temperature and pulse before eating",
-      "Eat a normal, balanced meal",
-      "Measure temperature and pulse again 30–60 minutes later",
-      "Record the changes in your notes",
-      "Track how you feel (warmer, calmer, energized, or opposite)"
-    ],
-    when: "Choose one meal per day (ideally the same meal each day) to track consistently.",
-    whatToExpect: [
-      { day: "Days 1-7", description: "Learning your baseline. You may notice that some meals warm you up while others don't." },
-      { day: "Days 8-20", description: "Patterns emerge - certain foods consistently raise or lower your temperature." },
-      { day: "Days 21-30", description: "Deep understanding of which meals support your metabolism. You can confidently adjust your diet." }
-    ],
-    dailyChecklist: ["Measured temp/pulse before meal", "Measured temp/pulse 30-60 min after", "Noted warmth and mood changes"],
-    alternatives: ["If tracking numbers feels overwhelming, just track: Warmer/Cooler/Same and Calmer/Anxious/Same"],
-    inputs: [
-      { id: "beforeTemp", label: "Temperature Before Meal", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
-      { id: "beforePulse", label: "Pulse Before Meal", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
-      { id: "afterTemp", label: "Temperature After Meal (30-60 min)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
-      { id: "afterPulse", label: "Pulse After Meal (30-60 min)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
-    ]
-  },
+  // FOUNDATIONAL 5 — Start Here
   {
     id: "morning-vs-afternoon-temp",
     title: "Morning vs Afternoon Temp/Pulse",
@@ -56,49 +28,6 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
       { id: "afternoonTemp", label: "Afternoon Temperature (2-4 PM)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
       { id: "afternoonPulse", label: "Afternoon Pulse (2-4 PM)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
     ]
-  },
-  {
-    id: "warm-vs-cold-foods",
-    title: "Warm vs Cold Foods",
-    duration: 3,
-    category: "Temperature & Pulse",
-    why: "Food temperature impacts your nervous system. Warm foods activate parasympathetic (rest & digest) mode. Cold foods can trigger a cortisol spike as your body works to warm them. This simple shift can dramatically improve digestion and reduce anxiety.",
-    how: [
-      "For 3 days, choose warm meals only (soups, cooked foods, warm drinks)",
-      "Warm up leftovers rather than eating them cold",
-      "Drink warm or room temperature beverages",
-      "Notice how your body responds"
-    ],
-    when: "Try this for 3 consecutive days, especially if you struggle with anxiety or poor digestion.",
-    whatToExpect: [
-      { day: "Days 1-2", description: "You may feel calmer during and after meals. Digestion feels easier." },
-      { day: "Day 3", description: "Notice if your hands/feet are warmer, anxiety is lower, and energy is more stable." }
-    ],
-    dailyChecklist: ["All meals and drinks were warm/room temp", "Tracked digestion quality", "Noted mood and anxiety levels"],
-    alternatives: ["If you prefer cold foods, warm only the protein portion of your meals"]
-  },
-
-  // MODULE SET 2 — Nutrition Experiments
-  {
-    id: "oj-before-coffee",
-    title: "OJ Before Coffee",
-    duration: 30,
-    category: "Nutrition",
-    why: "Coffee on an empty stomach spikes cortisol and adrenaline. Orange juice provides easily digestible sugar that supports liver glycogen, stabilizes blood sugar, and prevents the anxious, jittery response to caffeine. This is a Ray Peat fundamental.",
-    how: [
-      "Drink 4–8 oz orange juice 10-15 minutes before your coffee",
-      "Add a small pinch of salt to the OJ for better absorption",
-      "Have your coffee with cream or milk if desired",
-      "Notice the difference in how caffeine affects you"
-    ],
-    when: "Every morning before your first coffee. Make this a consistent habit.",
-    whatToExpect: [
-      { day: "Days 1-7", description: "Reduced jitters and anxiety from coffee. Energy feels smoother." },
-      { day: "Days 8-20", description: "Coffee becomes energizing without the crash. Heart rate stays stable. This becomes second nature." },
-      { day: "Days 21-30", description: "You feel warmer throughout the morning. Less reliance on caffeine for energy. A new healthy habit is formed." }
-    ],
-    dailyChecklist: ["Drank OJ before coffee", "Added pinch of salt", "Tracked anxiety/jitters"],
-    alternatives: ["Honey water (1 tbsp in warm water)", "Ripe fruit (banana, mango)", "Milk with a teaspoon of sugar"]
   },
   {
     id: "raw-carrot-salad",
@@ -144,6 +73,101 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     dailyChecklist: ["Avoided all seed oils", "Used only butter/coconut oil/ghee", "Tracked skin, energy, warmth"],
     alternatives: ["If you can't fully avoid PUFA, start by replacing just one meal per day with clean fats"]
   },
+  {
+    id: "oj-before-coffee",
+    title: "No Coffee on an Empty Stomach",
+    duration: 30,
+    category: "Nutrition",
+    why: "Coffee on an empty stomach spikes cortisol and adrenaline. Orange juice provides easily digestible sugar that supports liver glycogen, stabilizes blood sugar, and prevents the anxious, jittery response to caffeine. This is a Ray Peat fundamental.",
+    how: [
+      "Drink 4–8 oz orange juice 10-15 minutes before your coffee",
+      "Add a small pinch of salt to the OJ for better absorption",
+      "Have your coffee with cream or milk if desired",
+      "Notice the difference in how caffeine affects you"
+    ],
+    when: "Every morning before your first coffee. Make this a consistent habit.",
+    whatToExpect: [
+      { day: "Days 1-7", description: "Reduced jitters and anxiety from coffee. Energy feels smoother." },
+      { day: "Days 8-20", description: "Coffee becomes energizing without the crash. Heart rate stays stable. This becomes second nature." },
+      { day: "Days 21-30", description: "You feel warmer throughout the morning. Less reliance on caffeine for energy. A new healthy habit is formed." }
+    ],
+    dailyChecklist: ["Drank OJ before coffee", "Added pinch of salt", "Tracked anxiety/jitters"],
+    alternatives: ["Honey water (1 tbsp in warm water)", "Ripe fruit (banana, mango)", "Milk with a teaspoon of sugar"]
+  },
+  {
+    id: "carbs-protein-pairing",
+    title: "Pairing Carbs and Protein",
+    duration: 30,
+    category: "Nutrition",
+    why: "Eating carbs and protein together stabilizes blood sugar, prevents cortisol spikes, and supports thyroid function. Carbs alone cause rapid blood sugar swings. Protein alone without adequate carbs increases stress hormones. The balanced pairing creates metabolic stability, sustained energy, and hormonal harmony. This is central to Ray Peat's pro-metabolic nutrition philosophy.",
+    how: [
+      "At each meal, combine a carbohydrate with a protein source",
+      "Carb examples: rice, potatoes, pasta, bread, fruit, juice, honey",
+      "Protein examples: eggs, dairy, fish, meat, beans, nuts",
+      "Include quality fat for absorption and satiety (butter, coconut oil, olive oil)",
+      "Example meal: eggs with toast and butter, or chicken with rice, or fish with potato"
+    ],
+    when: "Apply to every meal and snack for 30 days. Consistency matters for metabolic reset.",
+    whatToExpect: [
+      { day: "Days 1-7", description: "More stable energy throughout the day. Less afternoon crashes and sugar cravings. Brain fog lifts." },
+      { day: "Days 8-20", description: "Better mood stability. Reduced anxiety and irritability. Sleep quality improves. Temperature may be warmer." },
+      { day: "Days 21-30", description: "Sustained energy without reliance on stimulants. Hormonal stability. Reduced period symptoms if applicable. Body temperature more consistently warm. This becomes your natural eating pattern." }
+    ],
+    dailyChecklist: ["Combined carbs + protein at each meal", "Included quality fat", "Tracked energy, mood, temperature, cravings"],
+    alternatives: ["If you can't combine at every meal, focus on at least lunch and dinner first", "Use quick options: milk + fruit, toast + butter + eggs, yogurt + honey + granola"]
+  },
+
+  // MODULE SET 1 — Temperature & Pulse Experiments
+  {
+    id: "temp-before-after-meals",
+    title: "Temperature Before + After Meals",
+    duration: 30,
+    category: "Temperature & Pulse",
+    why: "Your body's temperature response to food reveals how well you're converting food into energy. If a meal raises temp/pulse → metabolism is strong. If it drops → low thyroid or high cortisol response. This is one of Ray Peat's foundational metabolic tracking methods.",
+    how: [
+      "Take temperature and pulse before eating",
+      "Eat a normal, balanced meal",
+      "Measure temperature and pulse again 30–60 minutes later",
+      "Record the changes in your notes",
+      "Track how you feel (warmer, calmer, energized, or opposite)"
+    ],
+    when: "Choose one meal per day (ideally the same meal each day) to track consistently.",
+    whatToExpect: [
+      { day: "Days 1-7", description: "Learning your baseline. You may notice that some meals warm you up while others don't." },
+      { day: "Days 8-20", description: "Patterns emerge - certain foods consistently raise or lower your temperature." },
+      { day: "Days 21-30", description: "Deep understanding of which meals support your metabolism. You can confidently adjust your diet." }
+    ],
+    dailyChecklist: ["Measured temp/pulse before meal", "Measured temp/pulse 30-60 min after", "Noted warmth and mood changes"],
+    alternatives: ["If tracking numbers feels overwhelming, just track: Warmer/Cooler/Same and Calmer/Anxious/Same"],
+    inputs: [
+      { id: "beforeTemp", label: "Temperature Before Meal", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "beforePulse", label: "Pulse Before Meal", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
+      { id: "afterTemp", label: "Temperature After Meal (30-60 min)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "afterPulse", label: "Pulse After Meal (30-60 min)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
+    ]
+  },
+  {
+    id: "warm-vs-cold-foods",
+    title: "Warm vs Cold Foods",
+    duration: 3,
+    category: "Temperature & Pulse",
+    why: "Food temperature impacts your nervous system. Warm foods activate parasympathetic (rest & digest) mode. Cold foods can trigger a cortisol spike as your body works to warm them. This simple shift can dramatically improve digestion and reduce anxiety.",
+    how: [
+      "For 3 days, choose warm meals only (soups, cooked foods, warm drinks)",
+      "Warm up leftovers rather than eating them cold",
+      "Drink warm or room temperature beverages",
+      "Notice how your body responds"
+    ],
+    when: "Try this for 3 consecutive days, especially if you struggle with anxiety or poor digestion.",
+    whatToExpect: [
+      { day: "Days 1-2", description: "You may feel calmer during and after meals. Digestion feels easier." },
+      { day: "Day 3", description: "Notice if your hands/feet are warmer, anxiety is lower, and energy is more stable." }
+    ],
+    dailyChecklist: ["All meals and drinks were warm/room temp", "Tracked digestion quality", "Noted mood and anxiety levels"],
+    alternatives: ["If you prefer cold foods, warm only the protein portion of your meals"]
+  },
+
+  // MODULE SET 2 — Nutrition Experiments (continued)
   {
     id: "dairy-support-test",
     title: "Dairy Support Test",
