@@ -245,6 +245,7 @@ export default function Learn() {
                 id: "faqs",
                 title: "FAQs",
                 content: "Find answers to common questions about metabolic healing, tracking, experiments, and the Lighter™ app. If your question isn't here, ask the AI Coach above.",
+                link: "/learn-faqs",
               },
             ].map((topic) => {
               if (topic.link) {
