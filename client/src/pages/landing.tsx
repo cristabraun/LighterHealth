@@ -28,12 +28,6 @@ export default function Landing() {
               </p>
             </div>
 
-            <Card className="p-6 bg-primary/5 border border-primary/20 max-w-3xl mx-auto" data-testid="text-hero-box">
-              <p className="text-lg lg:text-xl font-medium text-foreground leading-relaxed" data-testid="text-description">
-                Feel lighter, calmer, and more energized every day using carbs, sugar, warmth, and gentle movement — the pro-metabolic way.
-              </p>
-            </Card>
-
             <div className="space-y-3 max-w-2xl mx-auto" data-testid="section-benefits">
               <div className="flex items-start justify-start gap-3 text-foreground pl-6 pt-1">
                 <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-benefit-1" />
