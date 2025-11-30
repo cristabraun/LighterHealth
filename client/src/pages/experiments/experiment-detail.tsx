@@ -119,13 +119,15 @@ export default function ExperimentDetail() {
     }
   }, [logs, experimentTemplate, currentExperiment]);
 
+  const isTempPulseExperiment = experimentId === "morning-vs-afternoon-temp";
+
   const handleLogData = () => {
     if (!currentExperiment) return;
 
     const newLog: LogEntry = {
       date: new Date().toISOString(),
-      temp: formTemp ? parseFloat(formTemp) : null,
-      pulse: formPulse ? parseFloat(formPulse) : null,
+      temp: isTempPulseExperiment && formTemp ? parseFloat(formTemp) : null,
+      pulse: isTempPulseExperiment && formPulse ? parseFloat(formPulse) : null,
       notes: formNotes,
     };
 
@@ -351,9 +353,11 @@ export default function ExperimentDetail() {
                     <p className="text-xs text-muted-foreground" data-testid={`log-date-${idx}`}>
                       {new Date(log.date).toLocaleString()}
                     </p>
-                    <p className="text-sm text-foreground mt-1" data-testid={`log-notes-${idx}`}>
-                      Temp: {log.temp || "-"} | Pulse: {log.pulse || "-"}
-                    </p>
+                    {isTempPulseExperiment && (
+                      <p className="text-sm text-foreground mt-1" data-testid={`log-notes-${idx}`}>
+                        Temp: {log.temp || "-"} | Pulse: {log.pulse || "-"}
+                      </p>
+                    )}
                     {log.notes && (
                       <p className="text-sm text-muted-foreground mt-1" data-testid={`log-notes-text-${idx}`}>
                         {log.notes}
@@ -366,36 +370,38 @@ export default function ExperimentDetail() {
 
             {/* Log Form Inputs */}
             <div className="space-y-3 pt-4 border-t" data-testid="section-log-form">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="temp-input" className="text-xs text-muted-foreground">
-                    Temperature (°F)
-                  </Label>
-                  <Input
-                    id="temp-input"
-                    type="number"
-                    placeholder="98.6"
-                    value={formTemp}
-                    onChange={(e) => setFormTemp(e.target.value)}
-                    step="0.1"
-                    data-testid="input-log-temp"
-                  />
+              {isTempPulseExperiment && (
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="temp-input" className="text-xs text-muted-foreground">
+                      Temperature (°F)
+                    </Label>
+                    <Input
+                      id="temp-input"
+                      type="number"
+                      placeholder="98.6"
+                      value={formTemp}
+                      onChange={(e) => setFormTemp(e.target.value)}
+                      step="0.1"
+                      data-testid="input-log-temp"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="pulse-input" className="text-xs text-muted-foreground">
+                      Pulse (bpm)
+                    </Label>
+                    <Input
+                      id="pulse-input"
+                      type="number"
+                      placeholder="72"
+                      value={formPulse}
+                      onChange={(e) => setFormPulse(e.target.value)}
+                      step="1"
+                      data-testid="input-log-pulse"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="pulse-input" className="text-xs text-muted-foreground">
-                    Pulse (bpm)
-                  </Label>
-                  <Input
-                    id="pulse-input"
-                    type="number"
-                    placeholder="72"
-                    value={formPulse}
-                    onChange={(e) => setFormPulse(e.target.value)}
-                    step="1"
-                    data-testid="input-log-pulse"
-                  />
-                </div>
-              </div>
+              )}
 
               <div className="space-y-1.5">
                 <Label htmlFor="notes-input" className="text-xs text-muted-foreground">
