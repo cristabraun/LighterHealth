@@ -1,0 +1,106 @@
+Please refine the design and spacing of the entire landing page to create a clean, premium, modern app-style layout. Apply all of the following updates section by section:
+
+1. HERO SECTION
+
+Add ~10–15px more space below the headline.
+
+Add ~20px more space above the subtitle.
+
+Slightly reduce the space below the subtitle.
+
+Slightly increase headline font size and reduce subtitle font size to enhance hierarchy.
+
+2. “WHAT LIGHTER IMPROVES” SECTION
+
+Add a thin horizontal divider above this section.
+
+Add ~20–30px more top margin.
+
+Slightly reduce spacing between each mini-header and its supporting sentence.
+
+3. MAIN FEATURE SECTION (Track / Experiments / Insights)
+
+Place each feature inside a light card with soft borders or a subtle background.
+
+Add 12–18px padding inside each card.
+
+Ensure all three cards match in height.
+
+Add ~20–25px spacing between cards.
+
+Add a very soft background color behind the entire block (#fafafa or similar).
+
+4. VALUE COMPARISON (Netflix, YouTube, etc.)
+
+Convert the list into a clean two-column grid:
+Left column = service name
+Right column = price
+
+Add thin dividers between each row.
+
+Bold the “Lighter™ — $19/mo” row.
+
+Add a light background behind this entire block.
+
+Add a centered section header above it:
+“Why Lighter™ Makes Sense”
+
+5. “WHAT YOU GET WITH LIGHTER™” SECTION
+
+Add very light horizontal dividers between each bullet item.
+
+Slightly increase padding between items.
+
+Make the bolded feature titles slightly larger.
+
+Reduce the space between the bold title and its description sentence.
+
+6. “WHY YOU CAN TRUST LIGHTER™” SECTION
+
+Slightly reduce the vertical spacing between bullet items.
+
+Align bold titles consistently with left margin.
+
+Add a subtle background behind this block to match the value comparison section.
+
+Keep the text formatting clean and modern.
+
+7. “WHO LIGHTER™ IS FOR” SECTION
+
+Convert the bullet list into a two-column layout on desktop and keep one column on mobile.
+
+Use modern checkmark icons for bullets.
+
+Reduce vertical spacing between bullet items by ~20%.
+
+Add a little extra top margin above the header.
+
+8. “HI, I’M CRISTA” SECTION
+
+Add 15–25px more space between the image and the text.
+
+Make the image slightly smaller for better balance.
+
+Add either a subtle border radius or soft shadow around the image.
+
+Increase top margin above the section header.
+
+9. FINAL CTA SECTION
+
+Add more top padding so the section is clearly separated from the founder story.
+
+Add additional bottom padding to create a balanced, elegant closing block.
+
+Slightly increase the button size.
+
+10. FOOTER
+
+Place navigation links (Dashboard, Learn, Track, Experiments, Essentials) in a centered horizontal row with equal spacing.
+
+Use smaller, lighter text (light gray).
+
+Add ~20–30px more bottom padding.
+
+Add a thin divider line above the footer for separation.
+
+Please maintain consistent font sizes, colors, spacing rhythm, and alignment across all sections so the entire landing page looks cohesive, intentional, and premium.

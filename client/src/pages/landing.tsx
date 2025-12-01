@@ -11,7 +11,7 @@ export default function Landing() {
       <div className="relative overflow-hidden border-b border-border/40">
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
-            <div className="space-y-4">
+            <div className="space-y-5">
               <img 
                 src={lighterIcon} 
                 alt="Lighter App Icon" 
@@ -19,38 +19,38 @@ export default function Landing() {
                 data-testid="image-app-icon"
               />
               
-              <h1 className="text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1 mt-4" data-testid="heading-hero">
+              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1 mt-4" data-testid="heading-hero">
                 Feel Good in Your Body Again.
               </h1>
               
-              <p className="text-xl lg:text-2xl font-semibold text-foreground" data-testid="text-tagline">
+              <p className="text-lg lg:text-xl font-medium text-foreground" data-testid="text-tagline">
                 Understand your body, lower stress, and restore your energy through simple daily tracking and personalized insights inside the Lighter™ app.
               </p>
             </div>
 
-            <div className="space-y-6 max-w-2xl mx-auto" data-testid="section-benefits">
+            <div className="space-y-6 max-w-2xl mx-auto pt-8 border-t border-border/40" data-testid="section-benefits">
               <div className="text-center mb-2">
                 <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide" data-testid="label-benefits">What Lighter™ Improves</p>
               </div>
               <div className="flex gap-4 text-left">
                 <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-1" />
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-1">Lower stress</h3>
-                  <p className="text-muted-foreground">Feel calmer and more grounded throughout the day.</p>
+                  <h3 className="text-base font-semibold text-foreground mb-0.5">Lower stress</h3>
+                  <p className="text-sm text-muted-foreground">Feel calmer and more grounded throughout the day.</p>
                 </div>
               </div>
               <div className="flex gap-4 text-left">
                 <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-2" />
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-1">Increase energy & wellbeing</h3>
-                  <p className="text-muted-foreground">Restore steady, natural energy without stimulants or burnout.</p>
+                  <h3 className="text-base font-semibold text-foreground mb-0.5">Increase energy & wellbeing</h3>
+                  <p className="text-sm text-muted-foreground">Restore steady, natural energy without stimulants or burnout.</p>
                 </div>
               </div>
               <div className="flex gap-4 text-left">
                 <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-3" />
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-1">Let weight come off gently</h3>
-                  <p className="text-muted-foreground">Support your metabolism so weight loss becomes effortless, not stressful.</p>
+                  <h3 className="text-base font-semibold text-foreground mb-0.5">Let weight come off gently</h3>
+                  <p className="text-sm text-muted-foreground">Support your metabolism so weight loss becomes effortless, not stressful.</p>
                 </div>
               </div>
             </div>
@@ -78,148 +78,148 @@ export default function Landing() {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-6xl mx-auto px-6 py-8 border-b border-border/40" data-testid="section-features">
-        <div className="bg-primary/5 rounded-lg p-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="flex flex-col gap-3" data-testid="card-feature-track">
+      <div className="max-w-6xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-features">
+        <div className="bg-slate-50 dark:bg-slate-900/30 rounded-lg p-8">
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white dark:bg-background h-full" data-testid="card-feature-track">
               <TrendingUp className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-track" />
-              <h3 className="text-lg font-bold text-foreground" data-testid="heading-track">Track Your Body's Signals</h3>
+              <h3 className="text-base font-bold text-foreground" data-testid="heading-track">Track Your Body's Signals</h3>
               <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-track">
                 See how your temperature, pulse, sleep, and daily habits affect your energy and stress.
               </p>
-            </div>
+            </Card>
 
-            <div className="flex flex-col gap-3" data-testid="card-feature-experiments">
+            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white dark:bg-background h-full" data-testid="card-feature-experiments">
               <Beaker className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-experiments" />
-              <h3 className="text-lg font-bold text-foreground" data-testid="heading-experiments">Run Gentle Experiments</h3>
+              <h3 className="text-base font-bold text-foreground" data-testid="heading-experiments">Run Gentle Experiments</h3>
               <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-experiments">
                 Find out which foods, routines, and rhythms your body actually responds well to.
               </p>
-            </div>
+            </Card>
 
-            <div className="flex flex-col gap-3" data-testid="card-feature-insights">
+            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white dark:bg-background h-full" data-testid="card-feature-insights">
               <Lightbulb className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-insights" />
-              <h3 className="text-lg font-bold text-foreground" data-testid="heading-insights">Get Insights & Recommendations</h3>
+              <h3 className="text-base font-bold text-foreground" data-testid="heading-insights">Get Insights & Recommendations</h3>
               <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-insights">
                 Always know your next step with simple, personalized guidance based on your vitals.
               </p>
-            </div>
+            </Card>
           </div>
         </div>
       </div>
 
       {/* Value Proposition Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-value">
-        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
-          <h2 className="text-3xl font-bold text-center" data-testid="heading-value">Your Daily Metabolism Support System — Right in Your Pocket</h2>
-          <div className="space-y-6">
-            <p className="text-xl text-center text-muted-foreground leading-relaxed" data-testid="text-value-intro">
+        <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
+          <div>
+            <h2 className="text-2xl font-bold text-center mb-3" data-testid="heading-value-context">Why Lighter™ Makes Sense</h2>
+            <p className="text-center text-base text-muted-foreground leading-relaxed" data-testid="text-value-intro">
               For the price of a streaming subscription, get personalized metabolic health coaching every single day.
             </p>
+          </div>
             
-            <div className="space-y-1" data-testid="section-comparisons">
-              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
-                <span className="text-sm">Netflix Premium</span>
-                <span className="font-medium text-sm">$23/mo</span>
-              </div>
-              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
-                <span className="text-sm">YouTube Premium</span>
-                <span className="font-medium text-sm">$18/mo</span>
-              </div>
-              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
-                <span className="text-sm">Spotify Premium</span>
-                <span className="font-medium text-sm">$12/mo</span>
-              </div>
-              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
-                <span className="text-sm">One coaching session</span>
-                <span className="font-medium text-sm">$100+</span>
-              </div>
-              <div className="flex items-center justify-between py-2 px-3 border-b border-border/30 text-muted-foreground">
-                <span className="text-sm">Nutritionist consult</span>
-                <span className="font-medium text-sm">$150+</span>
-              </div>
-              <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-md border border-primary/20">
-                <span className="text-sm font-bold text-foreground">Lighter™ (daily support)</span>
-                <span className="font-bold text-primary text-sm">$19/mo</span>
-              </div>
+          <div className="space-y-0" data-testid="section-comparisons">
+            <div className="grid grid-cols-2 gap-4 py-3 px-4 border-b border-border/30 text-muted-foreground">
+              <span className="text-sm">Netflix Premium</span>
+              <span className="font-medium text-sm text-right">$23/mo</span>
             </div>
+            <div className="grid grid-cols-2 gap-4 py-3 px-4 border-b border-border/30 text-muted-foreground">
+              <span className="text-sm">YouTube Premium</span>
+              <span className="font-medium text-sm text-right">$18/mo</span>
+            </div>
+            <div className="grid grid-cols-2 gap-4 py-3 px-4 border-b border-border/30 text-muted-foreground">
+              <span className="text-sm">Spotify Premium</span>
+              <span className="font-medium text-sm text-right">$12/mo</span>
+            </div>
+            <div className="grid grid-cols-2 gap-4 py-3 px-4 border-b border-border/30 text-muted-foreground">
+              <span className="text-sm">One coaching session</span>
+              <span className="font-medium text-sm text-right">$100+</span>
+            </div>
+            <div className="grid grid-cols-2 gap-4 py-3 px-4 border-b border-border/30 text-muted-foreground">
+              <span className="text-sm">Nutritionist consult</span>
+              <span className="font-medium text-sm text-right">$150+</span>
+            </div>
+            <div className="grid grid-cols-2 gap-4 py-3 px-4 bg-primary/10 rounded-md border border-primary/20">
+              <span className="text-sm font-bold text-foreground">Lighter™ (daily support)</span>
+              <span className="font-bold text-primary text-sm text-right">$19/mo</span>
+            </div>
+          </div>
 
             <div className="pt-8 mt-4 space-y-0">
               <p className="text-center text-lg font-medium mb-6" data-testid="text-value-what-you-get">
                 What you get with Lighter™:
               </p>
               <div className="space-y-0">
-                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                <div className="flex gap-3 py-3 border-b border-border/30 last:border-b-0">
                   <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-1" />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">Daily vital tracking with smart insights</h4>
-                    <p className="text-muted-foreground text-sm">Understand your energy, stress, and metabolic patterns with simple daily check-ins.</p>
+                    <h4 className="font-semibold text-foreground text-sm mb-0.5">Daily vital tracking with smart insights</h4>
+                    <p className="text-muted-foreground text-xs">Understand your energy, stress, and metabolic patterns with simple daily check-ins.</p>
                   </div>
                 </div>
-                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                <div className="flex gap-3 py-3 border-b border-border/30 last:border-b-0">
                   <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-2" />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">Personalized experiment recommendations</h4>
-                    <p className="text-muted-foreground text-sm">Find what works for your body with guided, gentle metabolic experiments.</p>
+                    <h4 className="font-semibold text-foreground text-sm mb-0.5">Personalized experiment recommendations</h4>
+                    <p className="text-muted-foreground text-xs">Find what works for your body with guided, gentle metabolic experiments.</p>
                   </div>
                 </div>
-                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                <div className="flex gap-3 py-3 border-b border-border/30 last:border-b-0">
                   <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-3" />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">Science-backed metabolic protocols</h4>
-                    <p className="text-muted-foreground text-sm">Follow simple, proven steps that support thyroid health, lower stress, and boost energy.</p>
+                    <h4 className="font-semibold text-foreground text-sm mb-0.5">Science-backed metabolic protocols</h4>
+                    <p className="text-muted-foreground text-xs">Follow simple, proven steps that support thyroid health, lower stress, and boost energy.</p>
                   </div>
                 </div>
-                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                <div className="flex gap-3 py-3 border-b border-border/30 last:border-b-0">
                   <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-4" />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">Direct messaging for questions</h4>
-                    <p className="text-muted-foreground text-sm">Get personalized support when you need clarity or encouragement.</p>
+                    <h4 className="font-semibold text-foreground text-sm mb-0.5">Direct messaging for questions</h4>
+                    <p className="text-muted-foreground text-xs">Get personalized support when you need clarity or encouragement.</p>
                   </div>
                 </div>
-                <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
+                <div className="flex gap-3 py-3 border-b border-border/30 last:border-b-0">
                   <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-5" />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">Beautiful progress charts and trends</h4>
-                    <p className="text-muted-foreground text-sm">See your improvements over time so you stay motivated and confident.</p>
+                    <h4 className="font-semibold text-foreground text-sm mb-0.5">Beautiful progress charts and trends</h4>
+                    <p className="text-muted-foreground text-xs">See your improvements over time so you stay motivated and confident.</p>
                   </div>
                 </div>
-                <div className="flex gap-3 py-4">
+                <div className="flex gap-3 py-3">
                   <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-feature-6" />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">Educational metabolic library</h4>
-                    <p className="text-muted-foreground text-sm">Learn the "why" behind your symptoms, hunger, energy shifts, and mood changes.</p>
+                    <h4 className="font-semibold text-foreground text-sm mb-0.5">Educational metabolic library</h4>
+                    <p className="text-muted-foreground text-xs">Learn the "why" behind your symptoms, hunger, energy shifts, and mood changes.</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
         </Card>
       </div>
 
       {/* Social Proof Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-trust">
-        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
+        <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
           <h2 className="text-3xl font-bold text-center" data-testid="heading-trust">Why You Can Trust Lighter™</h2>
           <div className="space-y-0">
-            <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
+            <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-1" />
               <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">15+ years in fitness & women's health</h4>
+                <h4 className="font-semibold text-foreground text-sm mb-1">15+ years in fitness & women's health</h4>
                 <p className="text-muted-foreground text-sm">Crista has spent more than a decade helping women understand their bodies, build strength, and finally feel good from the inside out. She knows the frustration of endless research, trial and error, and the emotional toll it takes. Lighter™ was created to save you that struggle and give you clear answers that actually help.</p>
               </div>
             </div>
-            <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
+            <div className="flex gap-3 py-4 border-b border-border/30 last:border-b-0">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-2" />
               <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Certified nutritional consultant with real-world experience</h4>
+                <h4 className="font-semibold text-foreground text-sm mb-1">Certified nutritional consultant with real-world experience</h4>
                 <p className="text-muted-foreground text-sm">Her approach blends physiology, stress science, and practical nutrition — grounded in both education and lived experience.</p>
               </div>
             </div>
-            <div className="flex gap-3 py-5">
+            <div className="flex gap-3 py-4">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-3" />
               <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Worked with dozens of women just like you</h4>
+                <h4 className="font-semibold text-foreground text-sm mb-1">Worked with dozens of women just like you</h4>
                 <p className="text-muted-foreground text-sm">From fatigue and cravings to stress weight and metabolic confusion, Crista has supported many women through the exact struggles Lighter™ is designed to help with.</p>
               </div>
             </div>
@@ -228,43 +228,43 @@ export default function Landing() {
       </div>
 
       {/* Who Lighter Is For Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-who-is-for">
-        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
+      <div className="max-w-4xl mx-auto px-6 py-20 border-b border-border/40" data-testid="section-who-is-for">
+        <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
           <h2 className="text-3xl font-bold text-center" data-testid="heading-who-is-for">Who Lighter™ Is For</h2>
-          <div className="space-y-0">
-            <div className="flex gap-3 py-4 border-b border-border/30">
+          <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
+            <div className="flex gap-3" data-testid="item-for-1">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-1" />
               <p className="text-muted-foreground text-sm">You feel tired, cold, wired, stressed, or "not yourself," and nothing seems to help.</p>
             </div>
-            <div className="flex gap-3 py-4 border-b border-border/30">
+            <div className="flex gap-3" data-testid="item-for-2">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-2" />
               <p className="text-muted-foreground text-sm">You've dieted for years and feel like you've damaged your metabolism.</p>
             </div>
-            <div className="flex gap-3 py-4 border-b border-border/30">
+            <div className="flex gap-3" data-testid="item-for-3">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-3" />
               <p className="text-muted-foreground text-sm">You've over-exercised or pushed too hard — and now your body isn't responding like it used to.</p>
             </div>
-            <div className="flex gap-3 py-4 border-b border-border/30">
+            <div className="flex gap-3" data-testid="item-for-4">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-4" />
               <p className="text-muted-foreground text-sm">You struggle with low energy, mood swings, cravings, or nighttime eating.</p>
             </div>
-            <div className="flex gap-3 py-4 border-b border-border/30">
+            <div className="flex gap-3" data-testid="item-for-5">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-5" />
               <p className="text-muted-foreground text-sm">You feel overwhelmed, on edge, or like you're "about to lose it" far too often.</p>
             </div>
-            <div className="flex gap-3 py-4 border-b border-border/30">
+            <div className="flex gap-3" data-testid="item-for-6">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-6" />
               <p className="text-muted-foreground text-sm">You wake up tired or have trouble sleeping deeply and recovering.</p>
             </div>
-            <div className="flex gap-3 py-4 border-b border-border/30">
+            <div className="flex gap-3" data-testid="item-for-7">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-7" />
               <p className="text-muted-foreground text-sm">You want gentle, sustainable weight loss without wrecking your hormones or metabolism.</p>
             </div>
-            <div className="flex gap-3 py-4 border-b border-border/30">
+            <div className="flex gap-3" data-testid="item-for-8">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-8" />
               <p className="text-muted-foreground text-sm">You want to understand what your body is actually telling you.</p>
             </div>
-            <div className="flex gap-3 py-4">
+            <div className="md:col-span-2 flex gap-3" data-testid="item-for-9">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-9" />
               <p className="text-muted-foreground text-sm">You're ready for a calmer, warmer, more energized version of yourself.</p>
             </div>
@@ -273,10 +273,10 @@ export default function Landing() {
       </div>
 
       {/* About Me Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-about">
-        <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
-          <div className="flex flex-col items-center gap-6">
-            <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/20 to-chart-2/20 flex-shrink-0" data-testid="image-crista">
+      <div className="max-w-4xl mx-auto px-6 py-20 border-b border-border/40" data-testid="section-about">
+        <Card className="p-12 space-y-6 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
+          <div className="flex flex-col items-center gap-8">
+            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/20 to-chart-2/20 flex-shrink-0 shadow-sm" data-testid="image-crista">
               <img 
                 src={cristaPhoto} 
                 alt="Crista"
@@ -321,23 +321,23 @@ export default function Landing() {
       </div>
 
       {/* CTA Section */}
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center" data-testid="section-cta">
+      <div className="max-w-4xl mx-auto px-6 pt-32 pb-24 text-center" data-testid="section-cta">
         <h2 className="text-3xl font-bold mb-4" data-testid="heading-cta">Ready to Feel Lighter?</h2>
         <p className="text-base text-muted-foreground mb-8" data-testid="subheading-cta">Start tracking, understanding, and healing your metabolism today.</p>
         <Button 
           onClick={() => window.location.href = '/api/login'}
-          className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
+          className="h-16 px-10 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
           data-testid="button-cta-login"
         >
           Start Your 3-Day Trial
         </Button>
-        <p className="text-xs text-muted-foreground mt-2.5" data-testid="text-cta-micro">Cancel anytime. No pressure.</p>
+        <p className="text-xs text-muted-foreground mt-4" data-testid="text-cta-micro">Cancel anytime. No pressure.</p>
       </div>
 
       {/* Footer */}
       <footer className="border-t border-border/30" data-testid="footer">
-        <div className="max-w-4xl mx-auto px-6 pt-12 pb-8 text-center">
-          <nav className="flex justify-center gap-8 mb-6" data-testid="nav-footer">
+        <div className="max-w-4xl mx-auto px-6 pt-12 pb-10 text-center">
+          <nav className="flex justify-center gap-8 mb-8 flex-wrap" data-testid="nav-footer">
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-dashboard">Dashboard</a>
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-learn">Learn</a>
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-track">Track</a>
