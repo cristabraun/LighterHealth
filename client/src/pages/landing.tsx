@@ -335,10 +335,19 @@ export default function Landing() {
       </div>
 
       {/* Footer */}
-      <footer className="max-w-4xl mx-auto px-6 py-8 pb-12 text-center" data-testid="footer">
-        <p className="text-sm text-muted-foreground" data-testid="text-disclaimer">
-          Lighter™ provides wellness and lifestyle guidance and does not provide medical advice.
-        </p>
+      <footer className="border-t border-border/30" data-testid="footer">
+        <div className="max-w-4xl mx-auto px-6 pt-12 pb-8 text-center">
+          <nav className="flex justify-center gap-8 mb-6" data-testid="nav-footer">
+            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-dashboard">Dashboard</a>
+            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-learn">Learn</a>
+            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-track">Track</a>
+            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-experiments">Experiments</a>
+            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-essentials">Essentials</a>
+          </nav>
+          <p className="text-xs text-muted-foreground" data-testid="text-disclaimer">
+            Lighter™ provides wellness and lifestyle guidance and does not provide medical advice.
+          </p>
+        </div>
       </footer>
     </div>
   );
