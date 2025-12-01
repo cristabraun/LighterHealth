@@ -286,3 +286,12 @@
     inset: -1px;
   }
 }
+
+/* Hide Replit branding */
+[data-testid="replit-dev-banner"],
+.replit-dev-banner,
+div[style*="replit"],
+div[class*="replit"],
+div[class*="Replit"] {
+  display: none !important;
+}
