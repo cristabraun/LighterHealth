@@ -197,24 +197,6 @@ export default function Landing() {
         </Card>
       </div>
 
-      {/* Philosophy Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-philosophy">
-        <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
-          <h2 className="text-3xl font-bold text-center whitespace-nowrap" data-testid="heading-philosophy">The Lighter™ Lifestyle</h2>
-          <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
-            <p data-testid="text-philosophy-intro" className="font-medium text-foreground">
-              Healing your metabolism so your body can produce energy easily again.
-            </p>
-            <p data-testid="text-philosophy-1">
-              Instead of restricting calories, we help your body use them well — supporting your thyroid, lowering stress, and restoring your natural ability to burn fuel.
-            </p>
-            <p data-testid="text-philosophy-2" className="font-medium text-foreground pt-2">
-              Over time, you'll feel real change: steady energy, a calmer mood, deeper vitality, easier weight loss, and finally feeling at home in your body again.
-            </p>
-          </div>
-        </Card>
-      </div>
-
       {/* Social Proof Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-trust">
         <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
