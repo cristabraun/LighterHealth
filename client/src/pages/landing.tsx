@@ -321,8 +321,9 @@ export default function Landing() {
       </div>
 
       {/* CTA Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16 text-center" data-testid="section-cta">
-        <h2 className="text-3xl font-bold mb-6" data-testid="heading-cta">Ready to Feel Lighter?</h2>
+      <div className="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center" data-testid="section-cta">
+        <h2 className="text-3xl font-bold mb-4" data-testid="heading-cta">Ready to Feel Lighter?</h2>
+        <p className="text-base text-muted-foreground mb-8" data-testid="subheading-cta">Start tracking, understanding, and healing your metabolism today.</p>
         <Button 
           onClick={() => window.location.href = '/api/login'}
           className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
@@ -330,6 +331,7 @@ export default function Landing() {
         >
           Start Your 3-Day Trial
         </Button>
+        <p className="text-xs text-muted-foreground mt-2.5" data-testid="text-cta-micro">Cancel anytime. No pressure.</p>
       </div>
 
       {/* Footer */}
