@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb, Check } from "lucide-react";
 import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
-import lighterIcon from "@assets/IMG_4823_1764541165994.JPG?url";
+import lighterIcon from "@assets/ChatGPT Image Nov 30, 2025, 08_16_18 PM_1764551798966.png";
 
 export default function Landing() {
   return (
@@ -15,7 +15,7 @@ export default function Landing() {
               <img 
                 src={lighterIcon} 
                 alt="Lighter App Icon" 
-                className="w-28 h-28 mx-auto mb-2 rounded-xl shadow-md"
+                className="w-24 h-24 mx-auto mb-2 rounded-xl shadow-md"
                 data-testid="image-app-icon"
               />
               
