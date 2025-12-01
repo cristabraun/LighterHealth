@@ -206,7 +206,7 @@ export default function Landing() {
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-1" />
               <div className="flex-1">
                 <h4 className="font-semibold text-foreground mb-1">15+ years in fitness & women's health</h4>
-                <p className="text-muted-foreground text-sm">Crista has spent more than a decade helping women understand their bodies, build strength, and feel better from the inside out.</p>
+                <p className="text-muted-foreground text-sm">Crista has spent more than a decade helping women understand their bodies, build strength, and feel better from the inside out. I understand the pain of spending countless hours researching, trial and error, and heartache. With Lighter™, I want to save you that time and give you the answers you need right now.</p>
               </div>
             </div>
             <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
@@ -221,13 +221,6 @@ export default function Landing() {
               <div className="flex-1">
                 <h4 className="font-semibold text-foreground mb-1">Worked with dozens of women just like you</h4>
                 <p className="text-muted-foreground text-sm">From fatigue and cravings to stress weight and metabolic confusion, Crista has supported many women through the exact struggles Lighter™ is designed to help with.</p>
-              </div>
-            </div>
-            <div className="flex gap-3 py-5 border-b border-border/30">
-              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-4" />
-              <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Wishes she had this app sooner</h4>
-                <p className="text-muted-foreground text-sm">Crista knows the pain of spending countless hours researching, trial and error, and heartache. With Lighter™, she wants to save you that time and give you the answers you need right now.</p>
               </div>
             </div>
             <div className="flex gap-3 py-5">
