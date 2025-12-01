@@ -1,4 +1,6 @@
 import type { Express } from "express";
+import express from "express";
+import path from "path";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
@@ -7,6 +9,9 @@ import { fromZodError } from "zod-validation-error";
 import OpenAI from "openai";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve public folder for PWA assets (manifest, service worker, icons, etc.)
+  app.use(express.static(path.resolve(import.meta.dirname, "..", "public")));
+
   // Setup authentication
   await setupAuth(app);
 
