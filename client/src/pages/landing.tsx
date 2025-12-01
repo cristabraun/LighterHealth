@@ -7,19 +7,39 @@ import lighterIcon from "@assets/ChatGPT Image Nov 30, 2025, 08_16_18 PM_1764551
 export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10">
+      {/* Header */}
+      <header className="border-b border-border/40 bg-white/50 dark:bg-background/50 backdrop-blur-sm sticky top-0 z-40" data-testid="header-main">
+        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+          {/* Logo and Brand */}
+          <div className="flex items-center gap-3" data-testid="header-branding">
+            <img 
+              src={lighterIcon} 
+              alt="Lighter App Icon" 
+              className="w-12 h-12 rounded-lg shadow-sm"
+              data-testid="image-header-icon"
+            />
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent" data-testid="text-header-brand">
+              Lighter™
+            </span>
+          </div>
+          
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center gap-8" data-testid="nav-header">
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-dashboard">Dashboard</a>
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-learn">Learn</a>
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-track">Track</a>
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-experiments">Experiments</a>
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-essentials">Essentials</a>
+          </nav>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <div className="relative overflow-hidden border-b border-border/40">
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           <div className="text-center space-y-8">
             <div className="space-y-5">
-              <img 
-                src={lighterIcon} 
-                alt="Lighter App Icon" 
-                className="w-24 h-24 mx-auto mb-2 rounded-xl shadow-md"
-                data-testid="image-app-icon"
-              />
-              
-              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1 mt-4" data-testid="heading-hero">
+              <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1" data-testid="heading-hero">
                 Feel Good in Your Body Again.
               </h1>
               
