@@ -215,6 +215,50 @@ export default function Landing() {
         </Card>
       </div>
 
+      {/* Social Proof Section */}
+      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-trust">
+        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
+          <h2 className="text-3xl font-bold text-center" data-testid="heading-trust">Why You Can Trust Lighter™</h2>
+          <div className="space-y-0">
+            <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-1" />
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">15+ years in fitness & women's health</h4>
+                <p className="text-muted-foreground text-sm">Crista has spent more than a decade helping women understand their bodies, build strength, and feel better from the inside out.</p>
+              </div>
+            </div>
+            <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-2" />
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">Certified nutritional consultant with real-world experience</h4>
+                <p className="text-muted-foreground text-sm">Her approach blends physiology, stress science, and practical nutrition — grounded in both education and lived experience.</p>
+              </div>
+            </div>
+            <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-3" />
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">Worked with dozens of women just like you</h4>
+                <p className="text-muted-foreground text-sm">From fatigue and cravings to stress weight and metabolic confusion, Crista has supported many women through the exact struggles Lighter™ is designed to help with.</p>
+              </div>
+            </div>
+            <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-4" />
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">Became her own best expert</h4>
+                <p className="text-muted-foreground text-sm">After years of research, trial, error, and personal healing, Crista learned how to restore her own metabolism when nothing else worked — and everything inside Lighter™ comes from that journey.</p>
+              </div>
+            </div>
+            <div className="flex gap-3 py-5">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-5" />
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">Built from lived experience, not theory</h4>
+                <p className="text-muted-foreground text-sm">This is the exact process she has used on herself and her clients to feel calmer, warmer, more energized, and more in tune with their bodies.</p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
       {/* About Me Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-about">
         <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
