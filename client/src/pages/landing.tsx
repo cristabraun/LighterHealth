@@ -386,7 +386,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="border-t border-border/30" data-testid="footer">
-        <div className="max-w-4xl mx-auto px-6 pt-12 pb-10 text-center">
+        <div className="max-w-4xl mx-auto px-6 pt-12 pb-16 text-center">
           <nav className="flex justify-center gap-8 mb-8 flex-wrap" data-testid="nav-footer">
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-dashboard">Dashboard</a>
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors" data-testid="link-learn">Learn</a>
