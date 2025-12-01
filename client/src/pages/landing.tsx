@@ -326,7 +326,7 @@ export default function Landing() {
       <div className="max-w-4xl mx-auto px-6 py-20 border-b border-border/40" data-testid="section-about">
         <Card className="p-12 space-y-6 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
           <div className="flex flex-col items-center gap-8">
-            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/20 to-chart-2/20 flex-shrink-0 shadow-sm" data-testid="image-crista">
+            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-primary/40 bg-gradient-to-br from-primary/50 to-primary/25 flex-shrink-0 shadow-md" data-testid="image-crista">
               <img 
                 src={cristaPhoto} 
                 alt="Crista"
