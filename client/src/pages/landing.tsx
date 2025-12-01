@@ -286,55 +286,33 @@ export default function Landing() {
             <h2 className="text-3xl font-bold text-center" data-testid="heading-about">Hi, I'm Crista</h2>
           </div>
           <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
-            <p data-testid="text-about-1" className="font-medium text-foreground">
-              I've been where you are.
+            <p data-testid="text-about-1">
+              I've been where you are — exhausted, anxious, trying to "be good" all day only to lose control at night. I spent years over-exercising, restricting, chasing every new diet trend, and wondering why my body kept fighting me.
             </p>
             
-            <p data-testid="text-about-2">
-              The endless cycle of being "good" all day, then standing in front of the fridge at night, eating everything in sight because your body was screaming for nourishment you kept denying it. The confusion of trying to keep up with every new diet trend, wondering why nothing ever sticks. The hours spent running, training, working out—desperately trying to "earn" your food or burn off yesterday's "mistake."
+            <p data-testid="text-about-2" className="font-medium text-foreground">
+              It wasn't lack of discipline.
+              <br />
+              My metabolism was stressed and confused.
             </p>
             
             <p data-testid="text-about-3">
-              It never worked long term. And it left me exhausted.
+              I know what it's like to wake up with anxiety, to feel wired and tired at the same time, to run on stress hormones instead of real energy. I ignored the signs for far too long.
             </p>
             
             <p data-testid="text-about-4">
-              I know what it's like to wake up with anxiety coursing through your body, your heart pounding in your chest when you're supposed to be sleeping. To feel irritable, foggy, and like you're running on fumes and stress hormones instead of actual energy. I ignored what my body was trying to tell me for way too long.
+              When I discovered the pro-metabolic approach, everything clicked. My body wasn't broken — it just needed support, not punishment.
             </p>
             
-            <p data-testid="text-about-5" className="font-medium text-foreground">
-              Then I discovered the pro-metabolic approach—and a light went on.
+            <p data-testid="text-about-5">
+              Lighter™ is everything I wish I had years ago: a simple, gentle way to understand your body, support your energy, and finally feel good again.
             </p>
             
-            <p data-testid="text-about-6">
-              My body wasn't broken. My metabolism just needed healing. I realized that all the conventional diet and fitness advice—while it might help you lose weight in the short term—doesn't work long term because it doesn't address the root cause.
+            <p data-testid="text-about-6" className="font-medium text-foreground pt-4">
+              You deserve to feel warm, rested, nourished, and alive. And you deserve a path that actually works — not one that breaks you.
             </p>
             
-            <p data-testid="text-about-7">
-              Now, every day, I see women talking about: "This must be what getting older is like." "I can't sleep well anymore." "I feel drained all the time." "My hair is falling out, my skin is dull." "I'm cold all the time." "I'm not excited about anything anymore."
-            </p>
-            
-            <p data-testid="text-about-8">
-              And my heart breaks—because I know there's another way.
-            </p>
-            
-            <p data-testid="text-about-9" className="font-medium text-foreground">
-              That's why I created Lighter™.
-            </p>
-            
-            <p data-testid="text-about-10">
-              I built this app to help women feel GOOD again. To feel energized, happy, and truly lighter—not just in body, but in spirit. To finally understand how to work WITH their metabolism instead of against it.
-            </p>
-            
-            <p data-testid="text-about-11" className="font-medium text-foreground pt-4">
-              You deserve to feel warm, rested, and alive. You deserve to eat without guilt and sleep without anxiety. You deserve to trust your body again.
-            </p>
-            
-            <p data-testid="text-about-12" className="pt-4">
-              Let me show you how.
-            </p>
-            
-            <p data-testid="text-about-signature" className="text-right pt-4 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '1.625rem', fontWeight: '400', letterSpacing: '0.08em' }}>
+            <p data-testid="text-about-signature" className="text-right pt-6 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '1.625rem', fontWeight: '400', letterSpacing: '0.08em' }}>
               Xo, Crista
               <Heart className="w-4 h-4 text-primary fill-primary" />
             </p>
