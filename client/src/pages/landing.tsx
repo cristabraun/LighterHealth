@@ -227,7 +227,7 @@ export default function Landing() {
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-4" />
               <div className="flex-1">
                 <h4 className="font-semibold text-foreground mb-1">Built from lived experience, not theory</h4>
-                <p className="text-muted-foreground text-sm">After years of research, trial, error, and personal healing, Crista learned how to restore her own metabolism. This is the exact process she has used on herself. This is the exact process that helps clients feel calm, warmer, and more energized, more in tune with their bodies.</p>
+                <p className="text-muted-foreground text-sm">After years of research, trial and error, and personal experimenting, Crista learned what works best for her energy and metabolism. This is the exact process she uses on herself and clients to help them feel more calmer and more energized and in tune with their bodies.</p>
               </div>
             </div>
           </div>
