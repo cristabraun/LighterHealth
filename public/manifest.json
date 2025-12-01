@@ -1,6 +1,6 @@
 {
   "name": "Lighter™",
-  "short_name": "LighterTM",
+  "short_name": "Lighter™",
   "description": "Lighter™ helps women heal their metabolism by tracking vitals, running personalized experiments, and discovering what makes their body feel lighter.",
   "start_url": "/",
   "scope": "/",
@@ -10,13 +10,13 @@
   "background_color": "#FFECE6",
   "icons": [
     {
-      "src": "/app-icon.png",
+      "src": "/lighter-app-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/app-icon.png",
+      "src": "/lighter-app-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
