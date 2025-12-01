@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb, Check, Menu, X } from "lucide-react";
-import cristaPhoto from "@assets/Untitled design (26)_1764553836322.png";
+import cristaPhoto from "@assets/Untitled design (27)_1764553980867.png";
 import lighterIcon from "@assets/ChatGPT Image Nov 30, 2025, 08_16_18 PM_1764551798966.png";
 
 export default function Landing() {
