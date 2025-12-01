@@ -331,6 +331,7 @@ export default function Landing() {
                 src={cristaPhoto} 
                 alt="Crista"
                 className="w-full h-full object-cover"
+                style={{ filter: "hue-rotate(-15deg) saturate(1.1)" }}
               />
             </div>
             <h2 className="text-3xl font-bold text-center" data-testid="heading-about">Hi, I'm Crista</h2>
