@@ -312,7 +312,7 @@ export default function Landing() {
               You deserve to feel warm, rested, nourished, and alive. And you deserve a path that actually works — not one that breaks you.
             </p>
             
-            <p data-testid="text-about-signature" className="text-right pt-6 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '1.625rem', fontWeight: '400', letterSpacing: '0.08em' }}>
+            <p data-testid="text-about-signature" className="text-right pt-2 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '1.375rem', fontWeight: '400', letterSpacing: '0.08em' }}>
               Xo, Crista
               <Heart className="w-4 h-4 text-primary fill-primary" />
             </p>
