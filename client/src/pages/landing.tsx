@@ -216,18 +216,11 @@ export default function Landing() {
                 <p className="text-muted-foreground text-sm">Her approach blends physiology, stress science, and practical nutrition — grounded in both education and lived experience.</p>
               </div>
             </div>
-            <div className="flex gap-3 py-5 border-b border-border/30">
+            <div className="flex gap-3 py-5">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-3" />
               <div className="flex-1">
                 <h4 className="font-semibold text-foreground mb-1">Worked with dozens of women just like you</h4>
                 <p className="text-muted-foreground text-sm">From fatigue and cravings to stress weight and metabolic confusion, Crista has supported many women through the exact struggles Lighter™ is designed to help with.</p>
-              </div>
-            </div>
-            <div className="flex gap-3 py-5">
-              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-5" />
-              <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Built from lived experience, not theory</h4>
-                <p className="text-muted-foreground text-sm">After years of research, trial and error, and personal experimenting, Crista learned what works best for her energy and metabolism. This is the exact process she uses on herself and clients to help them feel more calmer and more energized and in tune with their bodies.</p>
               </div>
             </div>
           </div>
