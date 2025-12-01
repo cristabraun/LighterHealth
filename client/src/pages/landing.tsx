@@ -206,7 +206,7 @@ export default function Landing() {
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-1" />
               <div className="flex-1">
                 <h4 className="font-semibold text-foreground mb-1">15+ years in fitness & women's health</h4>
-                <p className="text-muted-foreground text-sm">Crista has spent more than a decade helping women understand their bodies, build strength, and feel better from the inside out. I understand the pain of spending countless hours researching, trial and error, and heartache. With Lighter™, I want to save you that time and give you the answers you need right now.</p>
+                <p className="text-muted-foreground text-sm">Crista has spent more than a decade helping women understand their bodies, build strength, and finally feel good from the inside out. She knows the frustration of endless research, trial and error, and the emotional toll it takes. Lighter™ was created to save you that struggle and give you clear answers that actually help.</p>
               </div>
             </div>
             <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
