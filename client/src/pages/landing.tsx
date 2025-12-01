@@ -223,18 +223,11 @@ export default function Landing() {
                 <p className="text-muted-foreground text-sm">From fatigue and cravings to stress weight and metabolic confusion, Crista has supported many women through the exact struggles Lighter™ is designed to help with.</p>
               </div>
             </div>
-            <div className="flex gap-3 py-5 border-b border-border/30 last:border-b-0">
+            <div className="flex gap-3 py-5">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-4" />
               <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Became her own best expert</h4>
-                <p className="text-muted-foreground text-sm">After years of research, trial, error, and personal healing, Crista learned how to restore her own metabolism when nothing else worked — and everything inside Lighter™ comes from that journey.</p>
-              </div>
-            </div>
-            <div className="flex gap-3 py-5">
-              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-trust-5" />
-              <div className="flex-1">
                 <h4 className="font-semibold text-foreground mb-1">Built from lived experience, not theory</h4>
-                <p className="text-muted-foreground text-sm">This is the exact process she has used on herself and her clients to feel calmer, warmer, more energized, and more in tune with their bodies.</p>
+                <p className="text-muted-foreground text-sm">After years of research, trial, error, and personal healing, Crista learned how to restore her own metabolism. This is the exact process she has used on herself. This is the exact process that helps clients feel calm, warmer, and more energized, more in tune with their bodies.</p>
               </div>
             </div>
           </div>
