@@ -227,6 +227,51 @@ export default function Landing() {
         </Card>
       </div>
 
+      {/* Who Lighter Is For Section */}
+      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-who-is-for">
+        <Card className="p-12 space-y-8 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
+          <h2 className="text-3xl font-bold text-center" data-testid="heading-who-is-for">Who Lighter™ Is For</h2>
+          <div className="space-y-0">
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-1" />
+              <p className="text-muted-foreground text-sm">You feel tired, cold, wired, stressed, or "not yourself," and nothing seems to help.</p>
+            </div>
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-2" />
+              <p className="text-muted-foreground text-sm">You've dieted for years and feel like you've damaged your metabolism.</p>
+            </div>
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-3" />
+              <p className="text-muted-foreground text-sm">You've over-exercised or pushed too hard — and now your body isn't responding like it used to.</p>
+            </div>
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-4" />
+              <p className="text-muted-foreground text-sm">You struggle with low energy, mood swings, cravings, or nighttime eating.</p>
+            </div>
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-5" />
+              <p className="text-muted-foreground text-sm">You feel overwhelmed, on edge, or like you're "about to lose it" far too often.</p>
+            </div>
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-6" />
+              <p className="text-muted-foreground text-sm">You wake up tired or have trouble sleeping deeply and recovering.</p>
+            </div>
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-7" />
+              <p className="text-muted-foreground text-sm">You want gentle, sustainable weight loss without wrecking your hormones or metabolism.</p>
+            </div>
+            <div className="flex gap-3 py-4 border-b border-border/30">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-8" />
+              <p className="text-muted-foreground text-sm">You want to understand what your body is actually telling you.</p>
+            </div>
+            <div className="flex gap-3 py-4">
+              <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" data-testid="icon-for-9" />
+              <p className="text-muted-foreground text-sm">You're ready for a calmer, warmer, more energized version of yourself.</p>
+            </div>
+          </div>
+        </Card>
+      </div>
+
       {/* About Me Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-about">
         <Card className="p-12 space-y-6 bg-gradient-to-br from-primary/5 to-chart-2/5 border-2 border-border/30">
