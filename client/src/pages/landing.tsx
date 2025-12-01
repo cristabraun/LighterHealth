@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb, Check } from "lucide-react";
+import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb, Check, Menu, X } from "lucide-react";
 import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
 import lighterIcon from "@assets/ChatGPT Image Nov 30, 2025, 08_16_18 PM_1764551798966.png";
 
 export default function Landing() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10">
       {/* Header */}
@@ -23,15 +26,42 @@ export default function Landing() {
             </span>
           </div>
           
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-8" data-testid="nav-header">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8" data-testid="nav-header-desktop">
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-dashboard">Dashboard</a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-learn">Learn</a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-track">Track</a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-experiments">Experiments</a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-nav-essentials">Essentials</a>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 hover:bg-foreground/10 rounded-lg transition-colors"
+            data-testid="button-mobile-menu-toggle"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6 text-foreground" data-testid="icon-menu-close" />
+            ) : (
+              <Menu className="w-6 h-6 text-foreground" data-testid="icon-menu-open" />
+            )}
+          </button>
         </div>
+
+        {/* Mobile Navigation Dropdown */}
+        {mobileMenuOpen && (
+          <nav className="md:hidden border-t border-border/40 bg-white/50 dark:bg-background/50" data-testid="nav-header-mobile">
+            <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4">
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2" data-testid="link-mobile-dashboard">Dashboard</a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2" data-testid="link-mobile-learn">Learn</a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2" data-testid="link-mobile-track">Track</a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2" data-testid="link-mobile-experiments">Experiments</a>
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2" data-testid="link-mobile-essentials">Essentials</a>
+            </div>
+          </nav>
+        )}
       </header>
 
       {/* Hero Section */}
