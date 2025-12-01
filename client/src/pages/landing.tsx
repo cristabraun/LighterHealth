@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb, Check, Menu, X } from "lucide-react";
-import cristaPhoto from "@assets/Blue and Yellow Instagram Profile Picture_1764221887753.png";
+import cristaPhoto from "@assets/Untitled design (26)_1764553836322.png";
 import lighterIcon from "@assets/ChatGPT Image Nov 30, 2025, 08_16_18 PM_1764551798966.png";
 
 export default function Landing() {
@@ -331,7 +331,6 @@ export default function Landing() {
                 src={cristaPhoto} 
                 alt="Crista"
                 className="w-full h-full object-cover"
-                style={{ filter: "hue-rotate(-15deg) saturate(1.1)" }}
               />
             </div>
             <h2 className="text-3xl font-bold text-center" data-testid="heading-about">Hi, I'm Crista</h2>
