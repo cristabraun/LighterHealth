@@ -6,6 +6,21 @@ import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_176
 
 export default function Learn() {
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const [aiInput, setAiInput] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+
+  const handleAICoachAsk = async () => {
+    if (!aiInput.trim()) return;
+
+    const res = await fetch("/api/ai-coach", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: aiInput }),
+    });
+
+    const data = await res.json();
+    setAiResponse(data.answer);
+  };
 
   return (
     <div className="min-h-screen pb-24 bg-background">
@@ -311,6 +326,43 @@ export default function Learn() {
               </div>
             )}
           </Card>
+        </div>
+
+        {/* --- ASK THE LIGHTER AI COACH --- */}
+        <div className="mt-10 p-6 rounded-xl bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-700" data-testid="card-ai-coach">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+            Ask the Lighter AI Coach
+          </h2>
+
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            Get instant guidance on metabolic healing, stress, digestion, warmth, food, and daily habits.
+            Ask anything — your Lighter Coach is here to help.
+          </p>
+
+          <div className="space-y-3">
+            <textarea
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500"
+              rows={3}
+              placeholder="Ask a question…"
+              value={aiInput}
+              onChange={(e) => setAiInput(e.target.value)}
+              data-testid="textarea-ai-coach"
+            />
+
+            <Button
+              onClick={handleAICoachAsk}
+              className="w-full text-sm bg-orange-500 hover:bg-orange-600 text-white"
+              data-testid="button-ask-coach"
+            >
+              Ask the Coach
+            </Button>
+
+            {aiResponse && (
+              <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-gray-800 dark:text-gray-200 whitespace-pre-line" data-testid="ai-coach-response">
+                {aiResponse}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* bottom spacing */}
