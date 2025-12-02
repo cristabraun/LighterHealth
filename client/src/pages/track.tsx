@@ -72,13 +72,9 @@ export default function Track() {
 
   const checklistItems = [
     "Ate regularly today (every 3–4 hours, paired carbs + protein)",
-    "Had food before coffee (OJ, fruit, or milk first)",
     "Got morning light or movement (10 min outside or a short walk)",
     "Supported digestion (raw carrot salad or cooked mushrooms)",
     "Chose easy-to-digest foods (fruit, dairy, juice, root veggies, gelatin)",
-    "Stayed warm (dressed warmly, chose warming foods)",
-    "Fueled workouts properly (ate before/after if I exercised)",
-    "Had a bedtime snack if hungry (milk + honey, fruit + cheese, etc.)",
     "Did something today that made me feel calm, joyful and energized",
   ];
 
