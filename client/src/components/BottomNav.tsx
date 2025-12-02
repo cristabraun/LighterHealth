@@ -9,7 +9,7 @@ export function BottomNav() {
     { path: "/experiments", icon: Beaker, label: "Experiments" },
     { path: "/learn", icon: BookOpen, label: "Learn" },
     { path: "/essentials", icon: Pill, label: "Essentials" },
-    { path: "/", icon: Home, label: "Dashboard" },
+    { path: "/dashboard", icon: Home, label: "Dashboard" },
   ];
 
   return (

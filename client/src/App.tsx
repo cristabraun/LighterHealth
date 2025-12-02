@@ -58,7 +58,11 @@ function Router() {
     <div className="min-h-screen">
       <Switch>
         <Route path="/" component={Track} />
-        <Route path="/landing" component={Landing} />
+        <Route path="/track" component={Track} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/experiments" component={Experiments} />
+        <Route path="/experiments/:id" component={ExperimentDetail} />
+        <Route path="/experiments/summary" component={ExperimentSummary} />
         <Route path="/learn" component={Learn} />
         <Route path="/learn-energy-basics" component={LearnEnergyBasics} />
         <Route path="/learn-stress-physiology" component={LearnStressPhysiology} />
@@ -72,12 +76,9 @@ function Router() {
         <Route path="/learn-supplements" component={LearnSupplements} />
         <Route path="/learn-food-lists" component={LearnFoodLists} />
         <Route path="/learn-faqs" component={LearnFAQs} />
-        <Route path="/track" component={Track} />
-        <Route path="/experiments" component={Experiments} />
-        <Route path="/experiments/:id" component={ExperimentDetail} />
-        <Route path="/experiments/summary" component={ExperimentSummary} />
         <Route path="/messages" component={Messages} />
         <Route path="/essentials" component={Essentials} />
+        <Route path="/landing" component={Landing} />
         <Route path="/admin/messages" component={AdminMessages} />
         <Route component={NotFound} />
       </Switch>
