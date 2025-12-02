@@ -660,7 +660,7 @@ export default function Dashboard() {
       </div>
 
       {/* Desktop Layout (lg and above) - ENHANCED COLORFUL VERSION */}
-      <div className="hidden lg:block max-w-6xl mx-auto p-6 space-y-6">
+      <div className="hidden lg:block max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Theme Toggle - Top Right */}
         <div className="flex justify-end mb-2" data-testid="section-theme-toggle-desktop">
           <Button
