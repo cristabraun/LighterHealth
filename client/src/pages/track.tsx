@@ -483,21 +483,6 @@ export default function Track() {
                     data-testid="textarea-digestion-notes"
                   />
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="howYouFeelNotes" className="text-base text-gray-700 dark:text-gray-300">
-                    How You're Feeling (Optional)
-                  </Label>
-                  <Textarea
-                    id="howYouFeelNotes"
-                    placeholder="Describe how you feel today - mood, focus, cravings, symptoms..."
-                    value={howYouFeelNotes}
-                    onChange={(e) => setHowYouFeelNotes(e.target.value)}
-                    rows={3}
-                    className="resize-none"
-                    data-testid="textarea-how-you-feel"
-                  />
-                </div>
               </div>
             </div>
           </Card>
