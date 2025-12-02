@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus, Check, Sparkles } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus, Check, Sparkles, Brain, Smile, Meh, Frown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { InsertDailyLog, DailyLog, InsertFoodLog, FoodLog } from "@shared/schema";
@@ -27,6 +27,11 @@ export default function Track() {
   const [howYouFeelNotes, setHowYouFeelNotes] = useState("");
   const [digestionNotes, setDigestionNotes] = useState("");
   const [checklistCompleted, setChecklistCompleted] = useState<number[]>([]);
+  
+  // Stress and Mood state
+  const [stress, setStress] = useState([5]);
+  const [mood, setMood] = useState<"good" | "okay" | "bad">("okay");
+  const [moodNotes, setMoodNotes] = useState("");
 
   // Food log state
   const [showFoodForm, setShowFoodForm] = useState(false);
@@ -58,6 +63,10 @@ export default function Track() {
       setHowYouFeelNotes(todaysLog.howYouFeelNotes || "");
       setDigestionNotes(todaysLog.digestionNotes || "");
       setChecklistCompleted(todaysLog.checklistCompleted || []);
+      // Pre-fill stress and mood
+      if (todaysLog.stress) setStress([todaysLog.stress]);
+      if (todaysLog.mood) setMood(todaysLog.mood as "good" | "okay" | "bad");
+      if (todaysLog.moodNotes) setMoodNotes(todaysLog.moodNotes);
     }
   }, [todaysLog]);
 
@@ -226,6 +235,9 @@ export default function Track() {
       energy: energy[0],
       sleep: sleep[0],
       digestion,
+      stress: stress[0],
+      mood,
+      moodNotes: moodNotes.trim() || undefined,
       howYouFeelNotes: howYouFeelNotes.trim() || undefined,
       digestionNotes: digestionNotes.trim() || undefined,
       checklistCompleted,
@@ -260,19 +272,19 @@ export default function Track() {
   return (
     <div className="min-h-screen pb-20 bg-background">
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
-        {/* Greeting Card */}
+        {/* Greeting Card - Dashboard style */}
         <Card
-          className="p-6 space-y-3 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20"
+          className="p-6 space-y-3 bg-gradient-to-br from-orange-50 to-rose-50 dark:from-orange-950/20 dark:to-rose-950/20 border-primary/20"
           data-testid="card-track-greeting"
         >
           <div className="flex items-start justify-between">
             <div className="space-y-2 flex-1">
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-semibold">
+                <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                   Hi Crista!
                 </h1>
               </div>
-              <p className="text-gray-700 dark:text-gray-300">
+              <p className="text-gray-600 dark:text-gray-400">
                 Ready to track today's progress?
               </p>
             </div>
@@ -282,7 +294,7 @@ export default function Track() {
 
         {/* Track Today Section */}
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Track Today</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-800 dark:text-gray-200">Track Today</h1>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Your warmth, pulse, and daily reflections help you understand how your body is responding day by day. 
             These small check-ins guide your healing and reveal what's improving over time.
@@ -291,21 +303,21 @@ export default function Track() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
 
-          {/* Required Vitals Card - Side by side on desktop */}
-          <Card className="p-6 space-y-6">
+          {/* Required Vitals Card - Dashboard style with gradient */}
+          <Card className="p-6 space-y-6 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border-primary/10">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <Thermometer className="w-5 h-5 text-primary" />
                 </div>
-                <h2 className="text-lg font-semibold">Required Vitals</h2>
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Required Vitals</h2>
               </div>
 
               {/* Temperature and Pulse - Side by side on desktop */}
               <div className="md:grid md:grid-cols-2 md:gap-6 space-y-4 md:space-y-0">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between mb-2">
-                    <Label htmlFor="temperature" className="text-base">
+                    <Label htmlFor="temperature" className="text-base text-gray-700 dark:text-gray-300">
                       Morning Temperature <span className="text-destructive">*</span>
                     </Label>
                     <div className="flex gap-1">
@@ -351,7 +363,7 @@ export default function Track() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="pulse" className="text-base">
+                  <Label htmlFor="pulse" className="text-base text-gray-700 dark:text-gray-300">
                     Resting Pulse (bpm) <span className="text-destructive">*</span>
                   </Label>
                   <div className="flex items-center gap-2">
@@ -375,14 +387,14 @@ export default function Track() {
             </div>
           </Card>
 
-          {/* How You Feel Card - 2-column grid on desktop for Energy/Sleep */}
-          <Card className="p-6 space-y-6">
+          {/* How You Feel Card - Dashboard style with gradient */}
+          <Card className="p-6 space-y-6 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/20 dark:to-purple-950/20 border-violet-200/50 dark:border-violet-800/30">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary" />
+                <div className="w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-violet-600 dark:text-violet-400" />
                 </div>
-                <h2 className="text-lg font-semibold">How You Feel</h2>
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">How You Feel</h2>
               </div>
 
               <div className="space-y-6">
@@ -390,7 +402,7 @@ export default function Track() {
                 <div className="md:grid md:grid-cols-2 md:gap-6 space-y-6 md:space-y-0">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <Label className="text-base">Energy Level</Label>
+                      <Label className="text-base text-gray-700 dark:text-gray-300">Energy Level</Label>
                       <span className="text-2xl font-bold text-primary" data-testid="text-energy-value">
                         {energy[0]}/10
                       </span>
@@ -412,7 +424,7 @@ export default function Track() {
 
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <Label className="text-base flex items-center gap-2">
+                      <Label className="text-base flex items-center gap-2 text-gray-700 dark:text-gray-300">
                         <Moon className="w-4 h-4" />
                         Sleep Quality
                       </Label>
@@ -438,7 +450,7 @@ export default function Track() {
 
                 {/* Digestion - Full width */}
                 <div className="space-y-3">
-                  <Label className="text-base flex items-center gap-2">
+                  <Label className="text-base flex items-center gap-2 text-gray-700 dark:text-gray-300">
                     <Apple className="w-4 h-4" />
                     Digestion
                   </Label>
@@ -482,7 +494,7 @@ export default function Track() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="howYouFeelNotes" className="text-base">
+                  <Label htmlFor="howYouFeelNotes" className="text-base text-gray-700 dark:text-gray-300">
                     How You're Feeling (Optional)
                   </Label>
                   <Textarea
@@ -493,6 +505,99 @@ export default function Track() {
                     rows={3}
                     className="resize-none"
                     data-testid="textarea-how-you-feel"
+                  />
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* NEW: Stress & Mood Card - Dashboard style with gradient */}
+          <Card className="p-6 space-y-6 bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950/20 dark:to-pink-950/20 border-rose-200/50 dark:border-rose-800/30" data-testid="card-stress-mood">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+                </div>
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Stress & Mood</h2>
+              </div>
+
+              <div className="space-y-6">
+                {/* Stress and Mood Rating - Side by side on desktop */}
+                <div className="md:grid md:grid-cols-2 md:gap-6 space-y-6 md:space-y-0">
+                  {/* Stress Level Slider */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-base text-gray-700 dark:text-gray-300">Stress Level (1-10)</Label>
+                      <span className="text-2xl font-bold text-rose-600 dark:text-rose-400" data-testid="text-stress-value">
+                        {stress[0]}/10
+                      </span>
+                    </div>
+                    <Slider
+                      value={stress}
+                      onValueChange={setStress}
+                      min={1}
+                      max={10}
+                      step={1}
+                      className="cursor-pointer"
+                      data-testid="slider-stress"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Calm</span>
+                      <span>Overwhelmed</span>
+                    </div>
+                  </div>
+
+                  {/* Mood Rating Buttons */}
+                  <div className="space-y-3">
+                    <Label className="text-base text-gray-700 dark:text-gray-300">Mood Today</Label>
+                    <div className="grid grid-cols-3 gap-3">
+                      <Button
+                        type="button"
+                        variant={mood === "good" ? "default" : "outline"}
+                        onClick={() => setMood("good")}
+                        className="h-auto py-3 flex flex-col items-center gap-1"
+                        data-testid="button-mood-good"
+                      >
+                        <Smile className="w-5 h-5" />
+                        <span className="text-xs">Good</span>
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={mood === "okay" ? "default" : "outline"}
+                        onClick={() => setMood("okay")}
+                        className="h-auto py-3 flex flex-col items-center gap-1"
+                        data-testid="button-mood-okay"
+                      >
+                        <Meh className="w-5 h-5" />
+                        <span className="text-xs">Okay</span>
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={mood === "bad" ? "default" : "outline"}
+                        onClick={() => setMood("bad")}
+                        className="h-auto py-3 flex flex-col items-center gap-1"
+                        data-testid="button-mood-bad"
+                      >
+                        <Frown className="w-5 h-5" />
+                        <span className="text-xs">Bad</span>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mood Notes */}
+                <div className="space-y-2">
+                  <Label htmlFor="moodNotes" className="text-base text-gray-700 dark:text-gray-300">
+                    Mood Notes (Optional)
+                  </Label>
+                  <Textarea
+                    id="moodNotes"
+                    placeholder="What's affecting your mood today? Any triggers or highlights..."
+                    value={moodNotes}
+                    onChange={(e) => setMoodNotes(e.target.value)}
+                    rows={2}
+                    className="resize-none"
+                    data-testid="textarea-mood-notes"
                   />
                 </div>
               </div>
@@ -512,14 +617,14 @@ export default function Track() {
 
         {/* Food Log and Daily Checklist - Side by side on desktop */}
         <div className="md:grid md:grid-cols-2 md:gap-6 space-y-6 md:space-y-0">
-          {/* Food Log Card */}
-          <Card className="p-6 space-y-4">
+          {/* Food Log Card - Dashboard style */}
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-cyan-950/20 dark:to-teal-950/20 border-cyan-200/50 dark:border-cyan-800/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Utensils className="w-5 h-5 text-primary" />
+                <div className="w-8 h-8 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center">
+                  <Utensils className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                 </div>
-                <h2 className="text-lg font-semibold">Food Log</h2>
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Food Log</h2>
               </div>
               {!showFoodForm && (
                 <Button
@@ -534,9 +639,9 @@ export default function Track() {
             </div>
 
             {showFoodForm && (
-              <form onSubmit={handleAddFood} className="space-y-4 p-4 bg-muted/30 rounded-lg">
+              <form onSubmit={handleAddFood} className="space-y-4 p-4 bg-white/50 dark:bg-black/20 rounded-lg">
                 <div className="space-y-2">
-                  <Label htmlFor="meal">Meal</Label>
+                  <Label htmlFor="meal" className="text-gray-700 dark:text-gray-300">Meal</Label>
                   <Select value={meal} onValueChange={(value: any) => setMeal(value)}>
                     <SelectTrigger id="meal" data-testid="select-meal">
                       <SelectValue />
@@ -551,7 +656,7 @@ export default function Track() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="foodItem">What did you eat? <span className="text-destructive">*</span></Label>
+                  <Label htmlFor="foodItem" className="text-gray-700 dark:text-gray-300">What did you eat? <span className="text-destructive">*</span></Label>
                   <Input
                     id="foodItem"
                     placeholder="e.g., Orange juice, scrambled eggs, carrot salad"
@@ -563,7 +668,7 @@ export default function Track() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="energyIntake">Energy Intake (calories)</Label>
+                  <Label htmlFor="energyIntake" className="text-gray-700 dark:text-gray-300">Energy Intake (calories)</Label>
                   <Input
                     id="energyIntake"
                     type="number"
@@ -576,7 +681,7 @@ export default function Track() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="foodNotes">Notes (Optional)</Label>
+                  <Label htmlFor="foodNotes" className="text-gray-700 dark:text-gray-300">Notes (Optional)</Label>
                   <Textarea
                     id="foodNotes"
                     placeholder="How did you feel after? Any reactions?"
@@ -616,9 +721,9 @@ export default function Track() {
 
             {foodLogs.length > 0 ? (
               <div className="space-y-4">
-                <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                <div className="p-4 bg-white/50 dark:bg-black/20 rounded-lg border border-cyan-200/50 dark:border-cyan-800/30">
                   <p className="text-sm font-medium text-muted-foreground mb-1">Total Daily Energy Intake</p>
-                  <p className="text-2xl font-bold text-primary" data-testid="text-total-energy">
+                  <p className="text-2xl font-bold text-cyan-600 dark:text-cyan-400" data-testid="text-total-energy">
                     {foodLogs.reduce((sum, log) => sum + (log.energyIntake || 0), 0)} cal
                   </p>
                 </div>
@@ -626,15 +731,15 @@ export default function Track() {
                 {foodLogs.map((log) => (
                   <div
                     key={log.id}
-                    className="flex items-start justify-between p-3 bg-muted/30 rounded-lg"
+                    className="flex items-start justify-between p-3 bg-white/50 dark:bg-black/20 rounded-lg"
                     data-testid={`food-log-${log.id}`}
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-primary capitalize">
+                        <span className="text-xs font-medium text-cyan-600 dark:text-cyan-400 capitalize">
                           {log.meal}
                         </span>
-                        <span className="text-sm font-medium">{log.foodItem}</span>
+                        <span className="text-sm font-medium text-gray-800 dark:text-gray-200">{log.foodItem}</span>
                       </div>
                       <div className="flex items-center gap-3 mt-2">
                         {log.energyIntake && (
@@ -668,14 +773,14 @@ export default function Track() {
             )}
           </Card>
 
-          {/* Daily Checklist Card - 2-column grid on desktop */}
-          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-daily-checklist">
+          {/* Daily Checklist Card - Dashboard style */}
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/20 dark:to-green-950/20 border-emerald-200/50 dark:border-emerald-800/30" data-testid="card-daily-checklist">
             <div className="flex items-start gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <Check className="w-5 h-5 text-primary" />
+              <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold">Heal Your Metabolism — Daily Checklist</h2>
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Heal Your Metabolism — Daily Checklist</h2>
                 <p className="text-sm text-muted-foreground">{checklistCompleted.length} of {checklistItems.length} completed</p>
               </div>
             </div>
@@ -684,7 +789,7 @@ export default function Track() {
               {checklistItems.map((item, index) => (
                 <label
                   key={index}
-                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-black/20 cursor-pointer transition-colors"
                   data-testid={`checklist-item-${index}`}
                 >
                   <Checkbox
@@ -695,7 +800,7 @@ export default function Track() {
                     className="mt-1 flex-shrink-0"
                     data-testid={`checkbox-${index}`}
                   />
-                  <span className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-item-${index}`}>
+                  <span className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed" data-testid={`text-item-${index}`}>
                     {item}
                   </span>
                 </label>
