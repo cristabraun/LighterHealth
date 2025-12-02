@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus, Check } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus, Check, Sparkles } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { InsertDailyLog, DailyLog, InsertFoodLog, FoodLog } from "@shared/schema";
@@ -260,17 +260,33 @@ export default function Track() {
   return (
     <div className="min-h-screen pb-20 bg-background">
       <div className="max-w-md mx-auto p-6 space-y-6">
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-            Hi Crista, ready to track today's progress?
-          </h2>
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tight">Track Today</h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Your warmth, pulse, and daily reflections help you understand how your body is responding day by day. 
-              These small check-ins guide your healing and reveal what's improving over time.
-            </p>
+        {/* Greeting Card */}
+        <Card
+          className="p-6 space-y-3 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20"
+          data-testid="card-track-greeting"
+        >
+          <div className="flex items-start justify-between">
+            <div className="space-y-2 flex-1">
+              <div className="flex items-center gap-2">
+                <h1 className="text-xl font-semibold">
+                  Hi Crista!
+                </h1>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300">
+                Ready to track today's progress?
+              </p>
+            </div>
+            <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
           </div>
+        </Card>
+
+        {/* Track Today Section */}
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">Track Today</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            Your warmth, pulse, and daily reflections help you understand how your body is responding day by day. 
+            These small check-ins guide your healing and reveal what's improving over time.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
