@@ -260,7 +260,7 @@ export default function Track() {
   return (
     <div className="min-h-screen pb-20 bg-background">
       <div className="max-w-md mx-auto p-6 space-y-6">
-        <Card className="bg-secondary/50 border-0 p-5 space-y-4">
+        <div className="bg-secondary p-5 rounded-lg border border-secondary-foreground/20 space-y-4">
           <h2 className="text-base font-semibold text-foreground">Quick Start Guide (30 seconds)</h2>
           
           <div className="space-y-3 text-sm">
@@ -282,7 +282,7 @@ export default function Track() {
             
             <p className="text-foreground/80 font-medium">You can't do this wrong — just fill in what you can.</p>
           </div>
-        </Card>
+        </div>
 
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Track Today</h1>
