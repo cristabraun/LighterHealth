@@ -267,30 +267,31 @@ export default function Track() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="p-5 rounded-lg border-2 space-y-4" style={{backgroundColor: '#FFF3CD', borderColor: '#FFB81C'}}>
-            <h2 className="text-base font-semibold" style={{color: '#664d03'}}>Quick Start Guide (30 seconds)</h2>
-            
-            <div className="space-y-3 text-sm">
-              <div>
-                <p className="font-medium text-foreground mb-2">Every morning:</p>
-                <ul className="list-disc list-inside space-y-1 text-foreground/90">
-                  <li>Take your temperature</li>
-                  <li>Take your resting pulse</li>
-                  <li>Log how you slept</li>
-                </ul>
-              </div>
-              
-              <div>
-                <p className="font-medium text-foreground mb-2">Why this matters:</p>
-                <p className="text-foreground/80">Your temperature and pulse show how stressed or supported your metabolism is. As you track each day, Lighter will connect the dots for you.</p>
-              </div>
-              
-              <p className="text-foreground/80 italic">Over time, you'll see your trends and progress right on your dashboard.</p>
-              
-              <p className="text-foreground/80 font-medium">You can't do this wrong — just fill in what you can.</p>
+        <div className="p-5 rounded-lg border-4 space-y-4" style={{backgroundColor: '#FFD700', borderColor: '#FF0000'}}>
+          <h2 className="text-base font-semibold" style={{color: '#000000'}}>🔴 DEBUG: Quick Start Guide (30 seconds)</h2>
+          
+          <div className="space-y-3 text-sm">
+            <div>
+              <p className="font-medium text-foreground mb-2">Every morning:</p>
+              <ul className="list-disc list-inside space-y-1 text-foreground/90">
+                <li>Take your temperature</li>
+                <li>Take your resting pulse</li>
+                <li>Log how you slept</li>
+              </ul>
             </div>
+            
+            <div>
+              <p className="font-medium text-foreground mb-2">Why this matters:</p>
+              <p className="text-foreground/80">Your temperature and pulse show how stressed or supported your metabolism is. As you track each day, Lighter will connect the dots for you.</p>
+            </div>
+            
+            <p className="text-foreground/80 italic">Over time, you'll see your trends and progress right on your dashboard.</p>
+            
+            <p className="text-foreground/80 font-medium">You can't do this wrong — just fill in what you can.</p>
           </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
 
           <Card className="p-6 space-y-6">
             <div className="space-y-2">
