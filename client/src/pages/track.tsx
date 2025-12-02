@@ -259,8 +259,16 @@ export default function Track() {
 
   return (
     <div className="min-h-screen pb-20 bg-background">
-      <div style={{backgroundColor: 'hotpink', padding: '20px', color: 'white', fontWeight: 'bold', textAlign: 'center', border: '4px solid red'}}>
-        DEBUG: This is the REAL Quick Start Component
+      <div style={{
+        backgroundColor: "hotpink",
+        border: "4px solid red",
+        padding: "20px",
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "18px",
+      }}>
+        DEBUG: THIS IS THE REAL TRACK PAGE
       </div>
       <div className="max-w-md mx-auto p-6 space-y-6">
         <div className="space-y-2">
