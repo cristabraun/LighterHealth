@@ -57,7 +57,7 @@ function Router() {
   return (
     <div className="min-h-screen">
       <Switch>
-        <Route path="/" component={Dashboard} />
+        <Route path="/" component={Track} />
         <Route path="/landing" component={Landing} />
         <Route path="/learn" component={Learn} />
         <Route path="/learn-energy-basics" component={LearnEnergyBasics} />
