@@ -53,14 +53,14 @@ export default function Experiments() {
 
     const newExperiment: ActiveExperiment = {
       id: `active_${Date.now()}`,
-      userId: 'local', // Temporary for localStorage-based experiments
+      userId: 'local',
       experimentId,
       startDate: new Date().toISOString().split('T')[0],
       currentDay: 1,
       completed: false,
       notes: [],
       checklist: [],
-      measurements: '{}', // Initialize as empty JSON object
+      measurements: '{}',
     };
 
     const updated = [...activeExperiments, newExperiment];
@@ -167,7 +167,7 @@ export default function Experiments() {
 
   return (
     <div className="min-h-screen pb-20 bg-background">
-      <div className="max-w-md mx-auto p-6 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Experiments</h1>
           <p className="text-muted-foreground">
@@ -190,6 +190,7 @@ export default function Experiments() {
           </audio>
         </Card>
 
+        {/* Active Experiments Section - 2-column grid on desktop */}
         {activeExperiments.filter(e => !e.completed).length > 0 && (
           <div className="space-y-4" data-testid="section-active-experiments">
             <div>
@@ -199,7 +200,7 @@ export default function Experiments() {
               <p className="text-sm text-muted-foreground">Your ongoing tracking</p>
             </div>
 
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 space-y-3 md:space-y-0">
               {activeExperiments
                 .filter(e => !e.completed)
                 .map(active => {
@@ -254,6 +255,7 @@ export default function Experiments() {
           </div>
         )}
 
+        {/* Completed Experiments Section - 2-column grid on desktop */}
         {activeExperiments.filter(e => e.completed).length > 0 && (
           <div className="space-y-4" data-testid="section-completed-experiments">
             <div>
@@ -263,7 +265,7 @@ export default function Experiments() {
               <p className="text-sm text-muted-foreground">Your experiment history</p>
             </div>
 
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 space-y-3 md:space-y-0">
               {activeExperiments
                 .filter(e => e.completed)
                 .map(completed => {
@@ -271,7 +273,7 @@ export default function Experiments() {
                   if (!experiment) return null;
 
                   const startDate = new Date(completed.startDate);
-                  const completedDate = completed.completedAt ? new Date(completed.completedAt) : new Date();
+                  const completedDate = new Date();
                   const totalDays = Math.floor(
                     (completedDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
                   ) + 1;
@@ -344,7 +346,8 @@ export default function Experiments() {
               ))}
             </div>
 
-            <div className="space-y-4">
+            {/* Experiment Library Cards - 2-column grid on desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
               {filteredExperiments.map(experiment => (
                 <Card 
                   key={experiment.id} 
@@ -354,7 +357,7 @@ export default function Experiments() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <h3 className="font-semibold text-lg">{experiment.title}</h3>
-                        <div className="flex items-center gap-3 mt-2">
+                        <div className="flex items-center gap-3 mt-2 flex-wrap">
                           <Badge variant="secondary" className="text-xs">
                             {experiment.category}
                           </Badge>
@@ -399,7 +402,8 @@ export default function Experiments() {
               <>
                 <div className="space-y-2">
                   <h3 className="font-semibold">In Progress</h3>
-                  <div className="space-y-4">
+                  {/* Active experiments in tabs - 2-column grid on desktop */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
                     {activeExperiments
                       .filter(e => !e.completed)
                       .map(active => {
@@ -529,25 +533,25 @@ export default function Experiments() {
                 {activeExperiments.filter(e => e.completed).length > 0 && (
                   <div className="space-y-2">
                     <h3 className="font-semibold">Completed</h3>
-                    <div className="space-y-4">
+                    {/* Completed experiments in tabs - 2-column grid on desktop */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
                       {activeExperiments
                         .filter(e => e.completed)
-                        .map(active => {
-                          const experiment = EXPERIMENTS.find(e => e.id === active.experimentId);
+                        .map(completed => {
+                          const experiment = EXPERIMENTS.find(e => e.id === completed.experimentId);
                           if (!experiment) return null;
 
                           return (
-                            <Card key={active.id} className="p-6 space-y-3 opacity-75" data-testid={`card-completed-${active.id}`}>
-                              <div className="flex items-center justify-between">
-                                <h3 className="font-semibold" data-testid={`text-completed-title-${active.id}`}>{experiment.title}</h3>
-                                <Badge variant="secondary" className="bg-green-500/20 text-green-700 dark:text-green-300" data-testid={`badge-completed-${active.id}`}>
-                                  <CheckCircle2 className="w-3 h-3 mr-1" />
-                                  Completed
-                                </Badge>
+                            <Card key={completed.id} className="p-6 space-y-4 bg-muted/30">
+                              <div className="flex items-center gap-3">
+                                <CheckCircle2 className="w-5 h-5 text-primary" />
+                                <div>
+                                  <h3 className="font-semibold">{experiment.title}</h3>
+                                  <p className="text-xs text-muted-foreground">
+                                    Completed {experiment.duration} days
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm text-muted-foreground">
-                                {experiment.duration} day program • {experiment.category}
-                              </p>
                             </Card>
                           );
                         })}
@@ -559,85 +563,49 @@ export default function Experiments() {
           </TabsContent>
         </Tabs>
 
-        <Dialog open={!!selectedExperiment} onOpenChange={(open) => !open && setSelectedExperiment(null)}>
-          <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
+        {/* Experiment Detail Dialog */}
+        <Dialog open={!!selectedExperiment} onOpenChange={() => setSelectedExperiment(null)}>
+          <DialogContent className="max-w-lg">
             {selectedExperiment && (
-              <div className="space-y-6">
+              <>
                 <DialogHeader>
-                  <DialogTitle className="text-2xl">{selectedExperiment.title}</DialogTitle>
-                  <DialogDescription className="flex items-center gap-3 pt-2">
-                    <Badge variant="secondary">{selectedExperiment.category}</Badge>
-                    <span className="text-sm flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {selectedExperiment.duration} days
-                    </span>
+                  <DialogTitle>{selectedExperiment.title}</DialogTitle>
+                  <DialogDescription>
+                    {selectedExperiment.duration} day experiment
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-6">
-                  <div className="space-y-3">
-                    <h3 className="font-semibold text-base">Why This Works</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {selectedExperiment.why}
-                    </p>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-medium mb-2">Why This Works</h4>
+                    <p className="text-sm text-muted-foreground">{selectedExperiment.why}</p>
                   </div>
 
-                  <div className="space-y-3">
-                    <h3 className="font-semibold text-base">How To Do It</h3>
-                    <ul className="space-y-2">
-                      {selectedExperiment.how.map((step, idx) => (
-                        <li key={idx} className="text-sm text-muted-foreground flex gap-3">
-                          <span className="font-semibold text-primary min-w-fit">{idx + 1}.</span>
-                          <span className="leading-relaxed">{step}</span>
+                  <div>
+                    <h4 className="font-medium mb-2">How To Do It</h4>
+                    <p className="text-sm text-muted-foreground">{selectedExperiment.how}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium mb-2">Daily Checklist</h4>
+                    <ul className="space-y-1">
+                      {selectedExperiment.dailyChecklist.map((item, idx) => (
+                        <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          {item}
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="space-y-3">
-                    <h3 className="font-semibold text-base">When To Do It</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {selectedExperiment.when}
-                    </p>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h3 className="font-semibold text-base">What To Expect</h3>
-                    <div className="space-y-3">
-                      {selectedExperiment.whatToExpect.map((phase, idx) => (
-                        <div key={idx} className="p-4 rounded-lg bg-muted/50 space-y-1">
-                          <p className="font-medium text-sm text-primary">{phase.day}</p>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {phase.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {selectedExperiment.alternatives && selectedExperiment.alternatives.length > 0 && (
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-base">Alternatives</h3>
-                      <div className="p-4 rounded-lg bg-primary/5 space-y-2">
-                        {selectedExperiment.alternatives.map((alt, idx) => (
-                          <p key={idx} className="text-sm text-muted-foreground leading-relaxed">
-                            • {alt}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  <Button
+                    onClick={() => handleStartExperiment(selectedExperiment.id)}
+                    className="w-full bg-gradient-to-r from-primary to-chart-2"
+                  >
+                    Start Experiment
+                  </Button>
                 </div>
-
-                <Button
-                  onClick={() => handleStartExperiment(selectedExperiment.id)}
-                  className="w-full bg-gradient-to-r from-primary to-chart-2"
-                  size="lg"
-                  data-testid={`button-start-${selectedExperiment.id}`}
-                >
-                  Start Experiment
-                </Button>
-              </div>
+              </>
             )}
           </DialogContent>
         </Dialog>

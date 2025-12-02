@@ -259,7 +259,7 @@ export default function Track() {
 
   return (
     <div className="min-h-screen pb-20 bg-background">
-      <div className="max-w-md mx-auto p-6 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Greeting Card */}
         <Card
           className="p-6 space-y-3 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20"
@@ -291,6 +291,7 @@ export default function Track() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
 
+          {/* Required Vitals Card - Side by side on desktop */}
           <Card className="p-6 space-y-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
@@ -300,7 +301,8 @@ export default function Track() {
                 <h2 className="text-lg font-semibold">Required Vitals</h2>
               </div>
 
-              <div className="space-y-4">
+              {/* Temperature and Pulse - Side by side on desktop */}
+              <div className="md:grid md:grid-cols-2 md:gap-6 space-y-4 md:space-y-0">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between mb-2">
                     <Label htmlFor="temperature" className="text-base">
@@ -373,6 +375,7 @@ export default function Track() {
             </div>
           </Card>
 
+          {/* How You Feel Card - 2-column grid on desktop for Energy/Sleep */}
           <Card className="p-6 space-y-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
@@ -383,53 +386,57 @@ export default function Track() {
               </div>
 
               <div className="space-y-6">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-base">Energy Level</Label>
-                    <span className="text-2xl font-bold text-primary" data-testid="text-energy-value">
-                      {energy[0]}/10
-                    </span>
+                {/* Energy and Sleep - Side by side on desktop */}
+                <div className="md:grid md:grid-cols-2 md:gap-6 space-y-6 md:space-y-0">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-base">Energy Level</Label>
+                      <span className="text-2xl font-bold text-primary" data-testid="text-energy-value">
+                        {energy[0]}/10
+                      </span>
+                    </div>
+                    <Slider
+                      value={energy}
+                      onValueChange={setEnergy}
+                      min={1}
+                      max={10}
+                      step={1}
+                      className="cursor-pointer"
+                      data-testid="slider-energy"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Exhausted</span>
+                      <span>Amazing</span>
+                    </div>
                   </div>
-                  <Slider
-                    value={energy}
-                    onValueChange={setEnergy}
-                    min={1}
-                    max={10}
-                    step={1}
-                    className="cursor-pointer"
-                    data-testid="slider-energy"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Exhausted</span>
-                    <span>Amazing</span>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-base flex items-center gap-2">
+                        <Moon className="w-4 h-4" />
+                        Sleep Quality
+                      </Label>
+                      <span className="text-2xl font-bold text-primary" data-testid="text-sleep-value">
+                        {sleep[0]}/10
+                      </span>
+                    </div>
+                    <Slider
+                      value={sleep}
+                      onValueChange={setSleep}
+                      min={1}
+                      max={10}
+                      step={1}
+                      className="cursor-pointer"
+                      data-testid="slider-sleep"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Terrible</span>
+                      <span>Restful</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-base flex items-center gap-2">
-                      <Moon className="w-4 h-4" />
-                      Sleep Quality
-                    </Label>
-                    <span className="text-2xl font-bold text-primary" data-testid="text-sleep-value">
-                      {sleep[0]}/10
-                    </span>
-                  </div>
-                  <Slider
-                    value={sleep}
-                    onValueChange={setSleep}
-                    min={1}
-                    max={10}
-                    step={1}
-                    className="cursor-pointer"
-                    data-testid="slider-sleep"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Terrible</span>
-                    <span>Restful</span>
-                  </div>
-                </div>
-
+                {/* Digestion - Full width */}
                 <div className="space-y-3">
                   <Label className="text-base flex items-center gap-2">
                     <Apple className="w-4 h-4" />
@@ -494,7 +501,7 @@ export default function Track() {
 
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
+            className="w-full md:w-auto md:min-w-[200px] bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
             size="lg"
             disabled={saveMutation.isPending}
             data-testid="button-save-data"
@@ -503,194 +510,199 @@ export default function Track() {
           </Button>
         </form>
 
-        <Card className="p-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <Utensils className="w-5 h-5 text-primary" />
+        {/* Food Log and Daily Checklist - Side by side on desktop */}
+        <div className="md:grid md:grid-cols-2 md:gap-6 space-y-6 md:space-y-0">
+          {/* Food Log Card */}
+          <Card className="p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Utensils className="w-5 h-5 text-primary" />
+                </div>
+                <h2 className="text-lg font-semibold">Food Log</h2>
               </div>
-              <h2 className="text-lg font-semibold">Food Log</h2>
+              {!showFoodForm && (
+                <Button
+                  size="sm"
+                  onClick={() => setShowFoodForm(true)}
+                  data-testid="button-add-food"
+                >
+                  <Plus className="w-4 h-4 mr-1" />
+                  Add Food
+                </Button>
+              )}
             </div>
-            {!showFoodForm && (
-              <Button
-                size="sm"
-                onClick={() => setShowFoodForm(true)}
-                data-testid="button-add-food"
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                Add Food
-              </Button>
-            )}
-          </div>
 
-          {showFoodForm && (
-            <form onSubmit={handleAddFood} className="space-y-4 p-4 bg-muted/30 rounded-lg">
-              <div className="space-y-2">
-                <Label htmlFor="meal">Meal</Label>
-                <Select value={meal} onValueChange={(value: any) => setMeal(value)}>
-                  <SelectTrigger id="meal" data-testid="select-meal">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="breakfast">Breakfast</SelectItem>
-                    <SelectItem value="lunch">Lunch</SelectItem>
-                    <SelectItem value="dinner">Dinner</SelectItem>
-                    <SelectItem value="snack">Snack</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            {showFoodForm && (
+              <form onSubmit={handleAddFood} className="space-y-4 p-4 bg-muted/30 rounded-lg">
+                <div className="space-y-2">
+                  <Label htmlFor="meal">Meal</Label>
+                  <Select value={meal} onValueChange={(value: any) => setMeal(value)}>
+                    <SelectTrigger id="meal" data-testid="select-meal">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="breakfast">Breakfast</SelectItem>
+                      <SelectItem value="lunch">Lunch</SelectItem>
+                      <SelectItem value="dinner">Dinner</SelectItem>
+                      <SelectItem value="snack">Snack</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="foodItem">What did you eat? <span className="text-destructive">*</span></Label>
-                <Input
-                  id="foodItem"
-                  placeholder="e.g., Orange juice, scrambled eggs, carrot salad"
-                  value={foodItem}
-                  onChange={(e) => setFoodItem(e.target.value)}
-                  data-testid="input-food-item"
-                  required
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="foodItem">What did you eat? <span className="text-destructive">*</span></Label>
+                  <Input
+                    id="foodItem"
+                    placeholder="e.g., Orange juice, scrambled eggs, carrot salad"
+                    value={foodItem}
+                    onChange={(e) => setFoodItem(e.target.value)}
+                    data-testid="input-food-item"
+                    required
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="energyIntake">Energy Intake (calories)</Label>
-                <Input
-                  id="energyIntake"
-                  type="number"
-                  placeholder="e.g., 250"
-                  value={energyIntake}
-                  onChange={(e) => setEnergyIntake(e.target.value)}
-                  data-testid="input-energy-intake"
-                  min="0"
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="energyIntake">Energy Intake (calories)</Label>
+                  <Input
+                    id="energyIntake"
+                    type="number"
+                    placeholder="e.g., 250"
+                    value={energyIntake}
+                    onChange={(e) => setEnergyIntake(e.target.value)}
+                    data-testid="input-energy-intake"
+                    min="0"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="foodNotes">Notes (Optional)</Label>
-                <Textarea
-                  id="foodNotes"
-                  placeholder="How did you feel after? Any reactions?"
-                  value={foodNotes}
-                  onChange={(e) => setFoodNotes(e.target.value)}
-                  rows={2}
-                  className="resize-none"
-                  data-testid="textarea-food-notes"
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="foodNotes">Notes (Optional)</Label>
+                  <Textarea
+                    id="foodNotes"
+                    placeholder="How did you feel after? Any reactions?"
+                    value={foodNotes}
+                    onChange={(e) => setFoodNotes(e.target.value)}
+                    rows={2}
+                    className="resize-none"
+                    data-testid="textarea-food-notes"
+                  />
+                </div>
 
-              <div className="flex gap-2">
-                <Button
-                  type="submit"
-                  disabled={addFoodMutation.isPending}
-                  data-testid="button-save-food"
-                  className="flex-1"
-                >
-                  {addFoodMutation.isPending ? "Adding..." : "Add"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => {
-                    setShowFoodForm(false);
-                    setFoodItem("");
-                    setEnergyIntake("");
-                    setFoodNotes("");
-                  }}
-                  data-testid="button-cancel-food"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          )}
-
-          {foodLogs.length > 0 ? (
-            <div className="space-y-4">
-              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-                <p className="text-sm font-medium text-muted-foreground mb-1">Total Daily Energy Intake</p>
-                <p className="text-2xl font-bold text-primary" data-testid="text-total-energy">
-                  {foodLogs.reduce((sum, log) => sum + (log.energyIntake || 0), 0)} cal
-                </p>
-              </div>
-              <p className="text-sm text-muted-foreground">Today's meals:</p>
-              {foodLogs.map((log) => (
-                <div
-                  key={log.id}
-                  className="flex items-start justify-between p-3 bg-muted/30 rounded-lg"
-                  data-testid={`food-log-${log.id}`}
-                >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium text-primary capitalize">
-                        {log.meal}
-                      </span>
-                      <span className="text-sm font-medium">{log.foodItem}</span>
-                    </div>
-                    <div className="flex items-center gap-3 mt-2">
-                      {log.energyIntake && (
-                        <span className="text-xs text-muted-foreground" data-testid={`text-energy-${log.id}`}>
-                          Energy Intake (cal): <span className="font-semibold text-foreground">{log.energyIntake}</span>
-                        </span>
-                      )}
-                    </div>
-                    {log.notes && (
-                      <p className="text-xs text-muted-foreground mt-1">{log.notes}</p>
-                    )}
-                  </div>
+                <div className="flex gap-2">
                   <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => deleteFoodMutation.mutate(log.id)}
-                    disabled={deleteFoodMutation.isPending}
-                    data-testid={`button-delete-food-${log.id}`}
+                    type="submit"
+                    disabled={addFoodMutation.isPending}
+                    data-testid="button-save-food"
+                    className="flex-1"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    {addFoodMutation.isPending ? "Adding..." : "Add"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setShowFoodForm(false);
+                      setFoodItem("");
+                      setEnergyIntake("");
+                      setFoodNotes("");
+                    }}
+                    data-testid="button-cancel-food"
+                  >
+                    Cancel
                   </Button>
                 </div>
+              </form>
+            )}
+
+            {foodLogs.length > 0 ? (
+              <div className="space-y-4">
+                <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                  <p className="text-sm font-medium text-muted-foreground mb-1">Total Daily Energy Intake</p>
+                  <p className="text-2xl font-bold text-primary" data-testid="text-total-energy">
+                    {foodLogs.reduce((sum, log) => sum + (log.energyIntake || 0), 0)} cal
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground">Today's meals:</p>
+                {foodLogs.map((log) => (
+                  <div
+                    key={log.id}
+                    className="flex items-start justify-between p-3 bg-muted/30 rounded-lg"
+                    data-testid={`food-log-${log.id}`}
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-primary capitalize">
+                          {log.meal}
+                        </span>
+                        <span className="text-sm font-medium">{log.foodItem}</span>
+                      </div>
+                      <div className="flex items-center gap-3 mt-2">
+                        {log.energyIntake && (
+                          <span className="text-xs text-muted-foreground" data-testid={`text-energy-${log.id}`}>
+                            Energy Intake (cal): <span className="font-semibold text-foreground">{log.energyIntake}</span>
+                          </span>
+                        )}
+                      </div>
+                      {log.notes && (
+                        <p className="text-xs text-muted-foreground mt-1">{log.notes}</p>
+                      )}
+                    </div>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => deleteFoodMutation.mutate(log.id)}
+                      disabled={deleteFoodMutation.isPending}
+                      data-testid={`button-delete-food-${log.id}`}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              !showFoodForm && (
+                <p className="text-sm text-muted-foreground text-center py-4">
+                  No food logged yet today. Track what you eat to see how it affects your energy and vitals.
+                </p>
+              )
+            )}
+          </Card>
+
+          {/* Daily Checklist Card - 2-column grid on desktop */}
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-daily-checklist">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Check className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold">Heal Your Metabolism — Daily Checklist</h2>
+                <p className="text-sm text-muted-foreground">{checklistCompleted.length} of {checklistItems.length} completed</p>
+              </div>
+            </div>
+            
+            <div className="md:grid md:grid-cols-2 md:gap-3 space-y-3 md:space-y-0">
+              {checklistItems.map((item, index) => (
+                <label
+                  key={index}
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                  data-testid={`checklist-item-${index}`}
+                >
+                  <Checkbox
+                    checked={checklistCompleted.includes(index)}
+                    onCheckedChange={() => {
+                      toggleChecklistItem(index);
+                    }}
+                    className="mt-1 flex-shrink-0"
+                    data-testid={`checkbox-${index}`}
+                  />
+                  <span className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-item-${index}`}>
+                    {item}
+                  </span>
+                </label>
               ))}
             </div>
-          ) : (
-            !showFoodForm && (
-              <p className="text-sm text-muted-foreground text-center py-4">
-                No food logged yet today. Track what you eat to see how it affects your energy and vitals.
-              </p>
-            )
-          )}
-        </Card>
-
-        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-daily-checklist">
-          <div className="flex items-start gap-3 mb-4">
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-              <Check className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold">Heal Your Metabolism — Daily Checklist</h2>
-              <p className="text-sm text-muted-foreground">{checklistCompleted.length} of {checklistItems.length} completed</p>
-            </div>
-          </div>
-          
-          <div className="space-y-3">
-            {checklistItems.map((item, index) => (
-              <label
-                key={index}
-                className="flex items-start gap-3 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors"
-                data-testid={`checklist-item-${index}`}
-              >
-                <Checkbox
-                  checked={checklistCompleted.includes(index)}
-                  onCheckedChange={() => {
-                    toggleChecklistItem(index);
-                  }}
-                  className="mt-1 flex-shrink-0"
-                  data-testid={`checkbox-${index}`}
-                />
-                <span className="text-sm text-muted-foreground leading-relaxed" data-testid={`text-item-${index}`}>
-                  {item}
-                </span>
-              </label>
-            ))}
-          </div>
-        </Card>
+          </Card>
+        </div>
       </div>
     </div>
   );
