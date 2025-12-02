@@ -351,7 +351,7 @@ export default function Learn() {
 
             <Button
               onClick={handleAICoachAsk}
-              className="w-full text-sm bg-orange-500 hover:bg-orange-600 text-white"
+              className="w-full text-sm bg-violet-200 text-violet-800 hover:bg-violet-300"
               data-testid="button-ask-coach"
             >
               Ask the Coach
