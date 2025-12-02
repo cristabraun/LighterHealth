@@ -259,6 +259,9 @@ export default function Track() {
 
   return (
     <div className="min-h-screen pb-20 bg-background">
+      <div style={{backgroundColor: 'hotpink', padding: '20px', color: 'white', fontWeight: 'bold', textAlign: 'center', border: '4px solid red'}}>
+        DEBUG: This is the REAL Quick Start Component
+      </div>
       <div className="max-w-md mx-auto p-6 space-y-6">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Track Today</h1>
@@ -268,7 +271,7 @@ export default function Track() {
         </div>
 
         <div className="p-5 rounded-lg border-4 space-y-4" style={{backgroundColor: '#FFD700', borderColor: '#FF0000'}}>
-          <h2 className="text-base font-semibold" style={{color: '#000000'}}>🔴 DEBUG: Quick Start Guide (30 seconds)</h2>
+          <h2 className="text-base font-semibold" style={{color: '#000000'}}>🔴 Quick Start Guide (30 seconds)</h2>
           
           <div className="space-y-3 text-sm">
             <div>
