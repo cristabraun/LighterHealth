@@ -292,15 +292,6 @@ export default function Track() {
           </div>
         </Card>
 
-        {/* Track Today Section */}
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-800 dark:text-gray-200">Track Today</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-            Your warmth, pulse, and daily reflections help you understand how your body is responding day by day. 
-            These small check-ins guide your healing and reveal what's improving over time.
-          </p>
-        </div>
-
         <form onSubmit={handleSubmit} className="space-y-6">
 
           {/* Required Vitals Card - Dashboard style with gradient */}
