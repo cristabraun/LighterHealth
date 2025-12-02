@@ -1,0 +1,83 @@
+I want to upgrade the desktop Dashboard layout to be more visually alive, colorful, and engaging, inspired by the screenshot I uploaded. Please implement the following enhancements ONLY for desktop (lg+ screens). Keep the mobile layout untouched.
+
+IMPORTANT DESIGN GUIDELINES:
+• Keep my existing brand colors as the base (coral, peach, blush, soft neutrals).
+• You may add additional ACCENT COLORS for fun and variation (soft purples, warm yellows, light blues, pinks)—similar to the screenshot.
+• Do NOT rebrand the entire color palette.
+• Cards should stay rounded, soft, feminine, and spacious.
+• Use my current card components + Tailwind classes.
+• Desktop layout should look vibrant, multi-sectioned, and dynamic.
+
+---------------------------------------
+CHANGES TO IMPLEMENT ON DASHBOARD:
+---------------------------------------
+
+### 1. Add Stress Trend Chart (Line Graph)
+• Add a new Card in the RIGHT COLUMN under the Score Card.
+• Label: “Stress Trend (7 days)”
+• Use a soft coral-to-peach gradient line.
+• Add circular data points like the screenshot.
+• Use placeholder data for now.
+
+### 2. Add Sleep Trend Chart (7-day bar or line)
+• Place this chart BELOW the Stress Chart.
+• Label: “Sleep Quality (7 days)”
+• Use a light blue or lavender accent color for the chart bars/line.
+• Light, airy card design like the screenshot’s charts.
+
+### 3. Add Mood Card (Yesterday → Today)
+• Add a small colorful card in LEFT COLUMN.
+• Should look like the “Photos / Music / Videos” colorful tiles in the screenshot.
+• Use 2–3 colors total (e.g., purple tile, peach tile, yellow tile).
+• Card contents:
+  - Title: “Mood”
+  - Yesterday mood icon + label
+  - Today mood icon + label
+• Use expressive emojis.
+
+### 4. Add Daily Wins / Consistency Meter
+• Add a circular gauge similar to the colorful arc in the screenshot.
+• Place in LEFT COLUMN under the Mood Card.
+• Label: “Consistency This Week”
+• Use a multi-color arc (pastel purple → pastel yellow → pastel coral).
+• Display percentage or “4 of 7 days complete”.
+
+### 5. Make the Dashboard More Colorful (But On-Brand)
+Apply the following changes to match the screenshot’s spirit:
+• Add subtle colored backgrounds to certain cards (e.g., soft purple, soft yellow).
+• Mix accent colors safely (lavender, light blue, soft pink).
+• Keep primary coral as the anchor color.
+• Maintain Tailwind’s dark mode compatibility.
+
+### 6. Maintain Desktop Structure
+Ensure these new elements fit into the existing two-column layout that was just created:
+- LEFT COLUMN:
+  1) Daily Snapshot Card
+  2) Quick Links (Track / Experiments / Message)
+  3) Mood Card
+  4) Daily Wins / Consistency Meter
+  5) Recent Experiments Card
+
+- RIGHT COLUMN:
+  1) Score Card
+  2) Weekly Activity Chart (existing placeholder)
+  3) Stress Trend Chart (new)
+  4) Sleep Trend Chart (new)
+  5) Daily Reminder Card
+  6) Support Cards (Message Me / Book a Call)
+  7) Insights Card
+
+### 7. Keep Existing Logic
+Do NOT remove or break:
+• Data fetching
+• State logic
+• Navigation
+• Mobile layout
+• The greeting card
+
+Just enhance the desktop visual design.
+
+---------------------------------------
+After you finish:
+---------------------------------------
+Show me the updated JSX structure for the new dashboard.tsx, including the new cards and charts, so I can confirm everything is correct.
