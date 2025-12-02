@@ -12,14 +12,14 @@ export default function Learn() {
   const handleAICoachAsk = async () => {
     if (!aiInput.trim()) return;
 
-    const res = await fetch("/api/ai-coach", {
+    const res = await fetch("/api/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: aiInput }),
     });
 
     const data = await res.json();
-    setAiResponse(data.answer);
+    setAiResponse(data.reply);
   };
 
   return (
