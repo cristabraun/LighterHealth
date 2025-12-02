@@ -268,8 +268,8 @@ export default function Track() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="bg-primary/5 p-5 rounded-lg border-2 border-primary/20 space-y-4">
-            <h2 className="text-base font-semibold text-primary">Quick Start Guide (30 seconds)</h2>
+          <div className="p-5 rounded-lg border-2 space-y-4" style={{backgroundColor: '#FFF3CD', borderColor: '#FFB81C'}}>
+            <h2 className="text-base font-semibold" style={{color: '#664d03'}}>Quick Start Guide (30 seconds)</h2>
             
             <div className="space-y-3 text-sm">
               <div>
