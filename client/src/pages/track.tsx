@@ -259,23 +259,18 @@ export default function Track() {
 
   return (
     <div className="min-h-screen pb-20 bg-background">
-      <div style={{
-        backgroundColor: "hotpink",
-        border: "4px solid red",
-        padding: "20px",
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center",
-        fontSize: "18px",
-      }}>
-        DEBUG: THIS IS THE REAL TRACK PAGE
-      </div>
       <div className="max-w-md mx-auto p-6 space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Track Today</h1>
-          <p className="text-muted-foreground">
-            Record your vitals and see how you're feeling
-          </p>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+            Hi Crista, ready to track today's progress?
+          </h2>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold tracking-tight">Track Today</h1>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Your warmth, pulse, and daily reflections help you understand how your body is responding day by day. 
+              These small check-ins guide your healing and reveal what's improving over time.
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
