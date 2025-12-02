@@ -280,15 +280,15 @@ export default function Track() {
           <div className="flex items-start justify-between">
             <div className="space-y-2 flex-1">
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                <h1 className="text-4xl font-bold">
                   Hi Crista!
                 </h1>
+                <Sparkles className="w-7 h-7 text-primary" />
               </div>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-lg text-muted-foreground font-medium">
                 Ready to track today's progress?
               </p>
             </div>
-            <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
           </div>
         </Card>
 
