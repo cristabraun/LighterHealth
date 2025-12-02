@@ -1,0 +1,241 @@
+{/* --- LIGHTER LEARNING PATH CARDS WITH ACCORDION --- */}
+<div className="space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
+
+  {/* ENERGY BASICS */}
+  <Card className="p-5 rounded-xl">
+    <div className="flex items-center gap-3 mb-2">
+      <div className="h-8 w-8 rounded-full bg-orange-200 text-orange-800 flex items-center justify-center font-bold">
+        1
+      </div>
+      <div>
+        <h3 className="font-semibold text-gray-900">Energy Basics</h3>
+        <p className="text-sm text-gray-500">Metabolism 101</p>
+      </div>
+    </div>
+
+    <p className="text-gray-700 text-sm mb-3">
+      Understand how your body makes energy, why metabolism matters, and how the 
+      pro-metabolic approach differs from restrictive diets.
+    </p>
+
+    <Button
+      onClick={() => setOpenSection(openSection === 'energy' ? null : 'energy')}
+      className="w-full text-sm"
+    >
+      {openSection === 'energy' ? "Hide" : "Learn More"}
+    </Button>
+
+    {openSection === 'energy' && (
+      <div className="mt-4 p-4 rounded-lg bg-gray-50 space-y-3">
+        <h4 className="font-semibold text-gray-900">What Is Energy Production?</h4>
+        <p className="text-sm text-gray-700">
+          Metabolism is simply how your body turns food into usable energy. When 
+          energy production is strong, your body stays warm, digestion works well, 
+          hormones stay balanced, and stress hormones stay low.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">Why PUFAs Lower Metabolism</h4>
+        <p className="text-sm text-gray-700">
+          Polyunsaturated fats slow thyroid function and reduce your cells’ ability 
+          to produce energy. This is why the pro-metabolic approach focuses on 
+          saturated fats and minimizing PUFAs.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">Eating for Energy</h4>
+        <p className="text-sm text-gray-700">
+          Carbs lower cortisol, protein stabilizes blood sugar, and saturated fats 
+          support hormone balance. Energy basics returns your body to its natural 
+          state of warmth and vitality.
+        </p>
+      </div>
+    )}
+  </Card>
+
+
+  {/* STRESS PHYSIOLOGY */}
+  <Card className="p-5 rounded-xl">
+    <div className="flex items-center gap-3 mb-2">
+      <div className="h-8 w-8 rounded-full bg-yellow-200 text-yellow-800 flex items-center justify-center font-bold">
+        2
+      </div>
+      <div>
+        <h3 className="font-semibold text-gray-900">Stress Physiology</h3>
+        <p className="text-sm text-gray-500">Why You Feel the Way You Do</p>
+      </div>
+    </div>
+
+    <p className="text-gray-700 text-sm mb-3">
+      Learn why stress changes metabolism, warmth, digestion, and your ability 
+      to lose weight — and why tracking temperature and pulse matters.
+    </p>
+
+    <Button
+      onClick={() => setOpenSection(openSection === 'stress' ? null : 'stress')}
+      className="w-full text-sm"
+    >
+      {openSection === 'stress' ? "Hide" : "Learn More"}
+    </Button>
+
+    {openSection === 'stress' && (
+      <div className="mt-4 p-4 rounded-lg bg-gray-50 space-y-3">
+        <h4 className="font-semibold text-gray-900">How Stress Affects the Body</h4>
+        <p className="text-sm text-gray-700">
+          When your body experiences stress, adrenaline and cortisol rise. These 
+          hormones increase heart rate, steal energy from digestion, and make the 
+          body hold onto fat.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">Why Stress Lowers Warmth</h4>
+        <p className="text-sm text-gray-700">
+          Stress physiology shifts blood flow away from the gut and toward 
+          survival organs. This lowers warmth, slows metabolism, and makes you 
+          feel wired but tired.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">The Importance of Vitals</h4>
+        <p className="text-sm text-gray-700">
+          Tracking temperature and pulse helps you see in real time whether you 
+          are in a stressed or healing state — making it one of the most accurate 
+          healing tools available.
+        </p>
+      </div>
+    )}
+  </Card>
+
+
+  {/* FOOD FOUNDATIONS */}
+  <Card className="p-5 rounded-xl">
+    <div className="flex items-center gap-3 mb-2">
+      <div className="h-8 w-8 rounded-full bg-rose-200 text-rose-800 flex items-center justify-center font-bold">
+        3
+      </div>
+      <div>
+        <h3 className="font-semibold text-gray-900">Food Foundations</h3>
+        <p className="text-sm text-gray-500">Carbs · Protein · Fats</p>
+      </div>
+    </div>
+
+    <p className="text-gray-700 text-sm mb-3">
+      Understand why carbs are good, the best proteins for metabolic health, and 
+      how to avoid PUFAs while supporting your hormones.
+    </p>
+
+    <Button
+      onClick={() => setOpenSection(openSection === 'food' ? null : 'food')}
+      className="w-full text-sm"
+    >
+      {openSection === 'food' ? "Hide" : "Learn More"}
+    </Button>
+
+    {openSection === 'food' && (
+      <div className="mt-4 p-4 rounded-lg bg-gray-50 space-y-3">
+        <h4 className="font-semibold text-gray-900">Carbs Are Not the Enemy</h4>
+        <p className="text-sm text-gray-700">
+          Carbs lower cortisol and give the liver the fuel it needs to regulate 
+          hormones. Fruit, juice, sugar, and roots are central in the pro-metabolic 
+          approach.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">Protein for Hormone Health</h4>
+        <p className="text-sm text-gray-700">
+          Dairy proteins, eggs, gelatin, and shellfish support muscle, thyroid 
+          function, and detoxification.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">Fats That Heal</h4>
+        <p className="text-sm text-gray-700">
+          Saturated fats support metabolism. PUFAs suppress thyroid function and 
+          slow mitochondrial energy production.
+        </p>
+      </div>
+    )}
+  </Card>
+
+
+  {/* WARMTH & VITALS */}
+  <Card className="p-5 rounded-xl">
+    <div className="flex items-center gap-3 mb-2">
+      <div className="h-8 w-8 rounded-full bg-green-200 text-green-800 flex items-center justify-center font-bold">
+        4
+      </div>
+      <div>
+        <h3 className="font-semibold text-gray-900">Warmth & Vitals</h3>
+        <p className="text-sm text-gray-500">What Temp & Pulse Tell You</p>
+      </div>
+    </div>
+
+    <p className="text-gray-700 text-sm mb-3">
+      Learn why warmth, temperature, and pulse give you a real-time picture of 
+      whether your metabolism is healing or under stress.
+    </p>
+
+    <Button
+      onClick={() => setOpenSection(openSection === 'vitals' ? null : 'vitals')}
+      className="w-full text-sm"
+    >
+      {openSection === 'vitals' ? "Hide" : "Learn More"}
+    </Button>
+
+    {openSection === 'vitals' && (
+      <div className="mt-4 p-4 rounded-lg bg-gray-50 space-y-3">
+        <h4 className="font-semibold text-gray-900">Warmth as a Healing Marker</h4>
+        <p className="text-sm text-gray-700">
+          Warm hands, feet, and nose are signs your metabolism is producing enough 
+          energy and your thyroid is supported.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">What Pulse Shows</h4>
+        <p className="text-sm text-gray-700">
+          A healthy pulse (75–90 bpm) means your cells are using energy well. A 
+          low pulse can signal sluggish thyroid function or chronic stress.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">Temperature Patterns</h4>
+        <p className="text-sm text-gray-700">
+          Morning temperatures show thyroid baseline. Rising temperatures through 
+          the day show your metabolism is responding to food and movement.
+        </p>
+      </div>
+    )}
+  </Card>
+
+
+  {/* HEALING TOOLS */}
+  <Card className="p-5 rounded-xl">
+    <div className="flex items-center gap-3 mb-2">
+      <div className="h-8 w-8 rounded-full bg-violet-200 text-violet-800 flex items-center justify-center font-bold">
+        5
+      </div>
+      <div>
+        <h3 className="font-semibold text-gray-900">Healing Tools</h3>
+        <p className="text-sm text-gray-500">The Core 5 Experiments</p>
+      </div>
+    </div>
+
+    <p className="text-gray-700 text-sm mb-3">
+      Explore the 5 core Lighter tools that help lower stress, improve digestion, 
+      and restore metabolic function.
+    </p>
+
+    <Button
+      onClick={() => setOpenSection(openSection === 'tools' ? null : 'tools')}
+      className="w-full text-sm"
+    >
+      {openSection === 'tools' ? "Hide" : "Learn More"}
+    </Button>
+
+    {openSection === 'tools' && (
+      <div className="mt-4 p-4 rounded-lg bg-gray-50 space-y-3">
+        <h4 className="font-semibold text-gray-900">Carrot Salad</h4>
+        <p className="text-sm text-gray-700">
+          Daily raw carrot salad binds estrogen and endotoxin, reduces bloating, 
+          and lowers stress burden.
+        </p>
+
+        <h4 className="font-semibold text-gray-900">White Button Mushrooms</h4>
+        <p className="text-sm text-gray-700">
+          Mushrooms lower aromatase, reduce estrogen burden, and support immune 
+          and gut balance.
+        </p>
+
+        <h
