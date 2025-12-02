@@ -278,14 +278,6 @@ export default function Track() {
           </p>
         </div>
 
-        <div className="p-4 rounded-lg bg-primary/10 border border-primary/20 space-y-2">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-primary">QuickStart Guide</h2>
-            <span className="text-xs font-medium text-primary/70">30 seconds</span>
-          </div>
-          <p className="text-xs text-foreground/70">Take your temperature, pulse, and note how you slept. That's it.</p>
-        </div>
-
         <form onSubmit={handleSubmit} className="space-y-6">
 
           <Card className="p-6 space-y-6">
