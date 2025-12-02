@@ -1,0 +1,108 @@
+**“Update ONLY the Track page.
+DO NOT modify any Dashboard, Essentials, Experiments, or Learn page code.
+DO NOT change any backend logic, data models, save function behavior, or mobile layout.
+Only add styling + stress/mood inputs to the Track page.
+
+GOAL 1 — Make the Track page match the Dashboard styling
+
+Apply the same visual design used on the Dashboard:
+
+Use the same container wrapper:
+
+<div className='max-w-4xl mx-auto px-4 md:px-6'>
+
+
+Wrap each section (Vitals, How You Feel, Food Log, Daily Checklist) inside the same type of soft card component used on the Dashboard:
+
+light background
+
+rounded corners
+
+padding
+
+subtle shadow or border if used on Dashboard
+
+Use the same typography classes (headers, section titles, etc.)
+
+Use the same colors already used on the Dashboard.
+
+Use consistent spacing with Tailwind classes:
+
+space-y-6 between section blocks
+
+md:grid md:grid-cols-2 md:gap-6 ONLY for desktop layout
+
+Keep ALL mobile behavior unchanged.
+Do not alter any mobile-first styles.
+Only apply md: classes for desktop formatting.
+
+GOAL 2 — Add Stress Tracking + Mood Tracking to the Track page
+
+Insert a new section BELOW “How You Feel” and ABOVE the Food Log:
+
+Stress Level
+
+Label: “Stress Level (1–10)”
+
+Use either:
+
+<input type="number" min="1" max="10" />
+
+
+or
+
+<input type="range" min="1" max="10" />
+
+
+Add small anchor text underneath:
+“Calm” on the left, “Overwhelmed” on the right.
+
+Mood Rating
+
+Label: “Mood Today”
+
+Use either:
+
+<input type="number" min="1" max="10" />
+
+
+or
+a dropdown: “Good”, “Okay”, “Bad”
+
+Add a textarea: “Mood Notes (optional)”
+
+GOAL 3 — Link the Stress + Mood fields to the Dashboard
+
+When the user taps Save Today’s Data, include these fields in the same saved object:
+
+stress → number
+
+mood → number or string (match the dashboard format)
+
+moodNotes → string
+
+Make sure the saved data is identical to what the Dashboard already expects so the Stress Trend and Mood Tracker immediately populate with real data.
+
+GOAL 4 — Do NOT break mobile mode
+
+Only apply md: prefixes for desktop changes
+
+Do not change flex direction, spacing, or stacking on screens <768px
+
+Mobile must look exactly the same as before
+
+GOAL 5 — DO NOT change anything else in the app
+
+No routing changes
+
+No backend changes
+
+No rename of components
+
+No Dashboard edits
+
+No global styling overrides
+
+No color changes outside the Track page
+
+Only update the Track page’s UI and add the new fields.”**

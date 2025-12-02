@@ -57,6 +57,9 @@ export const dailyLogs = pgTable("daily_logs", {
   energy: integer("energy").notNull(), // 1-10
   sleep: integer("sleep").notNull(), // 1-10
   digestion: text("digestion").notNull(), // 'good' | 'okay' | 'poor'
+  stress: integer("stress"), // 1-10 stress level
+  mood: text("mood"), // 'good' | 'okay' | 'bad'
+  moodNotes: text("mood_notes"), // Optional mood notes
   howYouFeelNotes: text("how_you_feel_notes"),
   digestionNotes: text("digestion_notes"),
   notes: text("notes"),
@@ -79,6 +82,9 @@ export const insertDailyLogSchema = createInsertSchema(dailyLogs).omit({
   energy: z.number().min(1).max(10),
   sleep: z.number().min(1).max(10),
   digestion: z.enum(['good', 'okay', 'poor']),
+  stress: z.number().min(1).max(10).optional(),
+  mood: z.enum(['good', 'okay', 'bad']).optional(),
+  moodNotes: z.string().optional(),
 });
 
 export type InsertDailyLog = z.infer<typeof insertDailyLogSchema>;
