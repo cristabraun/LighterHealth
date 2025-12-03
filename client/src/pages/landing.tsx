@@ -109,11 +109,11 @@ export default function Landing() {
               <div className="flex flex-col items-center gap-4" data-testid="section-pricing">
                 <div className="space-y-2">
                   <p className="text-muted-foreground">Your metabolic healing guide for</p>
-                  <span className="text-4xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
+                  <span className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">$19/month</span>
                 </div>
                 <Button 
                   onClick={() => window.location.href = '/api/login'}
-                  className="h-14 px-8 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
+                  className="h-16 px-12 text-xl bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
                   data-testid="button-get-started"
                 >
                   Start Your 3-Day Trial
