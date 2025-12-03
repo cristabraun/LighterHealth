@@ -28,6 +28,7 @@ export default function Experiments() {
   const [selectedExperiment, setSelectedExperiment] = useState<ExperimentTemplate | null>(null);
   const [expandedExperiments, setExpandedExperiments] = useState<Set<string>>(new Set());
   const [filter, setFilter] = useState<string>("all");
+  const [introExpanded, setIntroExpanded] = useState(false);
 
   useEffect(() => {
     const experiments = localStorage.getItem("lighter_active_experiments");
@@ -184,26 +185,52 @@ export default function Experiments() {
               are responding day-by-day. Treat them like gentle discovery tools—not strict rules.
             </p>
 
-            <p>
-              <strong>1. Daily Raw Carrot Salad</strong><br />
-              Supports digestion, lowers endotoxin, and helps calm the system.
-            </p>
+            {!introExpanded && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIntroExpanded(true)}
+                className="text-violet-600 dark:text-violet-400 hover:text-violet-800 dark:hover:text-violet-200 p-0 h-auto font-medium"
+                data-testid="button-read-more"
+              >
+                Read more <ChevronDown className="w-4 h-4 ml-1" />
+              </Button>
+            )}
 
-            <p>
-              <strong>2. Temperature Before & After Meals</strong><br />
-              In addition to the morning temperature and pulse you track on the Track page,
-              try checking them before and after eating.<br />
-              — If warmth and pulse rise: your body is converting food into energy well.<br />
-              — If they drop: the meal likely slowed digestion or added stress.
-            </p>
+            {introExpanded && (
+              <>
+                <p>
+                  <strong>1. Daily Raw Carrot Salad</strong><br />
+                  Supports digestion, lowers endotoxin, and helps calm the system.
+                </p>
 
-            <p>
-              <strong>3. Remove PUFA Oils</strong><br />
-              Reducing polyunsaturated fats helps support cellular energy, hormonal balance,
-              and digestion. Many people feel warmer and more stable as they lower PUFAs.
-            </p>
+                <p>
+                  <strong>2. Temperature Before & After Meals</strong><br />
+                  In addition to the morning temperature and pulse you track on the Track page,
+                  try checking them before and after eating.<br />
+                  — If warmth and pulse rise: your body is converting food into energy well.<br />
+                  — If they drop: the meal likely slowed digestion or added stress.
+                </p>
 
-            <p>These three experiments create a strong baseline. Your body will give you insight starting from here.</p>
+                <p>
+                  <strong>3. Remove PUFA Oils</strong><br />
+                  Reducing polyunsaturated fats helps support cellular energy, hormonal balance,
+                  and digestion. Many people feel warmer and more stable as they lower PUFAs.
+                </p>
+
+                <p>These three experiments create a strong baseline. Your body will give you insight starting from here.</p>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIntroExpanded(false)}
+                  className="text-violet-600 dark:text-violet-400 hover:text-violet-800 dark:hover:text-violet-200 p-0 h-auto font-medium"
+                  data-testid="button-read-less"
+                >
+                  Read less <ChevronUp className="w-4 h-4 ml-1" />
+                </Button>
+              </>
+            )}
           </div>
         </Card>
 
