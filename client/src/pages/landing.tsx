@@ -74,7 +74,7 @@ export default function Landing() {
               </h1>
               
               <p className="text-lg lg:text-xl font-medium text-foreground" data-testid="text-tagline">
-                Always tired, can't lose weight, constantly stressed? Your body is sending you signals. Lighter helps you decode them, calm your nervous system, and discover the simple shifts that restore your energy and make you feel like yourself again.
+                Exhausted all the time? Weight won't budge? Running on stress and caffeine? Your metabolism is struggling. Lighter shows you how to listen to your body, lower cortisol, and find what actually works to feel energized again.
               </p>
             </div>
 
