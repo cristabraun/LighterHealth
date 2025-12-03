@@ -74,7 +74,7 @@ export default function Landing() {
               </h1>
               
               <p className="text-lg lg:text-xl font-medium text-foreground" data-testid="text-tagline">
-                Understand your body, lower stress, and restore your energy through simple daily tracking and personalized insights inside the Lighter™ app.
+                Always tired, can't lose weight, constantly stressed? Your body is sending you signals. Lighter helps you decode them, calm your nervous system, and discover the simple shifts that restore your energy and make you feel like yourself again.
               </p>
             </div>
 
