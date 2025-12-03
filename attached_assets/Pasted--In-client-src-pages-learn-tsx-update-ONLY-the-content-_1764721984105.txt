@@ -1,0 +1,123 @@
+**"In client/src/pages/learn.tsx, update ONLY the content inside the AccordionContent for the 'Stress Physiology' section.
+
+Do NOT change the card layout, title, subtitle, number bubble, or the Learn More button.
+Replace ONLY the inside of the AccordionContent with the following text (preserve all paragraphs and line breaks):**
+
+Stress Isn’t Just a Feeling—It’s a Physical State
+When most people think about stress, they think it's just an emotion—feeling overwhelmed, anxious, or worried. But stress is actually a physiological state your entire body enters into.
+
+When you're stressed (physically, mentally, or emotionally), your body goes into survival mode. It thinks you're in danger—like you're being chased by a lion—even if you're just sitting at your desk worrying about work or skipping meals.
+
+Your body can't tell the difference between:
+• A real physical threat  
+• Emotional stress  
+• Metabolic stress (not eating enough, overexercising, poor sleep)
+
+To your body, stress = stress. And when you're stressed, your entire metabolism shifts.
+
+What Happens in Your Body When You're Stressed
+
+1. Cortisol Rises to Maintain Blood Sugar  
+Cortisol keeps your brain fueled by breaking down muscle and converting it into glucose. This is meant to be temporary, but in modern life, cortisol stays high chronically. Chronically elevated cortisol:  
+• Breaks down muscle  
+• Increases belly fat  
+• Suppresses the immune system  
+• Disrupts sleep  
+• Slows metabolism  
+
+High cortisol = your body thinks it’s in constant danger.
+
+2. Adrenaline Keeps You Going When You Should Be Resting  
+Adrenaline gives quick bursts of energy. It raises heart rate and puts your body on high alert. Many people run on adrenaline all day:  
+• Feeling wired, jittery, anxious  
+• Feeling “productive” but exhausted underneath  
+• Crashing later and needing caffeine or sugar  
+
+Adrenaline = borrowed energy that you eventually pay for.
+
+3. Your Thyroid Slows Down  
+Your thyroid is the gas pedal for metabolism. Under chronic stress, it slows down to conserve resources. Results:  
+• Feeling cold  
+• Low energy  
+• Hair shedding  
+• Slowed digestion  
+• Weight that won't move  
+• Feeling foggy and depressed  
+
+Low thyroid = low metabolic rate = survival mode.
+
+4. Your Cells Switch to “Stress Metabolism”  
+Instead of producing 32–38 units of energy from glucose, stressed cells switch to the backup system and make only 2 units. This creates lactic acid and makes you:  
+• Sore  
+• Tired  
+• Inflamed  
+• Foggy  
+• Low-energy  
+
+Stress metabolism = running on fumes.
+
+Why Modern Life Is More Stressful Than Ever  
+Our bodies were designed for short bursts of stress, followed by long periods of rest and plenty of food. Modern life is the opposite:  
+• Constant mental pressure  
+• Poor sleep  
+• Under-eating and dieting  
+• Overexercising  
+• Artificial light  
+• No true rest  
+
+Your body stays stuck in a stress response for months or years.
+
+Why Stress Makes Weight Loss So Hard  
+Stress physiology makes fat loss very difficult:  
+1. Cortisol promotes fat storage  
+2. Thyroid slows metabolism  
+3. Low energy reduces movement  
+4. Cravings increase  
+5. Muscle is broken down (slowing metabolism further)
+
+You can diet harder and train more—but your body will hold on because it thinks you're in danger.
+
+The Pro-Metabolic Approach to Lowering Stress  
+This approach helps your body feel safe again so it can return to efficient energy production.
+
+1. Eat Enough—Especially Carbs  
+Carbs stop cortisol from rising. Eat every 3–4 hours and avoid skipping breakfast.
+
+2. Minimize PUFA Oils  
+PUFAs suppress the thyroid and increase oxidative stress. Choose saturated fats instead.
+
+3. Lower Exercise Stress  
+Move gently. Walk more. Train strength without overexerting. Rest more.
+
+4. Improve Sleep  
+Good sleep lowers cortisol and supports metabolism.
+
+5. Support Your Thyroid  
+Carbs, protein, minerals, and sunlight all support thyroid function.
+
+6. Lower Emotional & Mental Stress  
+Your thoughts directly affect your physiology. Create calm wherever you can.
+
+What Lighter™ Teaches You About Stress  
+Lighter™ helps you understand and lower stress through:
+
+• Education on stress physiology  
+• Experiments to test what improves your energy  
+• Tracking temperature and pulse to see stress vs. healing  
+
+Why Temperature & Pulse Matter  
+Temperature shows metabolic rate.  
+Pulse shows how efficiently you're making energy.  
+
+Low temp/pulse = stressed, slowed metabolism  
+Rising temp/pulse = healing, safety, improved energy
+
+Your Body Isn’t Broken—It’s Protecting You  
+Your body slows down, stores fat, raises cortisol, and lowers thyroid function because it thinks resources are scarce. It's protecting you.
+
+When you nourish it, rest it, and remove stressors, your metabolism rises. Your energy returns. Your weight stabilizes. You heal.
+
+This is the bioenergetic approach. This is what Lighter™ supports.
+
+
+Do not modify any other section on the Learn page."

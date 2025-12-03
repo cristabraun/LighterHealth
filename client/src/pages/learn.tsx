@@ -227,26 +227,166 @@ export default function Learn() {
             </Button>
 
             {openSection === 'stress' && (
-              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-3">
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">How Stress Affects the Body</h4>
+              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Stress Isn't Just a Feeling—It's a Physical State</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  When your body experiences stress, adrenaline and cortisol rise. These 
-                  hormones increase heart rate, steal energy from digestion, and make the 
-                  body hold onto fat.
+                  When most people think about stress, they think it's just an emotion—feeling overwhelmed, anxious, or worried. But stress is actually a physiological state your entire body enters into.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When you're stressed (physically, mentally, or emotionally), your body goes into survival mode. It thinks you're in danger—like you're being chased by a lion—even if you're just sitting at your desk worrying about work or skipping meals.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Your body can't tell the difference between:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>A real physical threat</li>
+                  <li>Emotional stress</li>
+                  <li>Metabolic stress (not eating enough, overexercising, poor sleep)</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                  To your body, stress = stress. And when you're stressed, your entire metabolism shifts.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Why Stress Lowers Warmth</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">What Happens in Your Body When You're Stressed</h4>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">1. Cortisol Rises to Maintain Blood Sugar</h5>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Stress physiology shifts blood flow away from the gut and toward 
-                  survival organs. This lowers warmth, slows metabolism, and makes you 
-                  feel wired but tired.
+                  Cortisol keeps your brain fueled by breaking down muscle and converting it into glucose. This is meant to be temporary, but in modern life, cortisol stays high chronically. Chronically elevated cortisol:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Breaks down muscle</li>
+                  <li>Increases belly fat</li>
+                  <li>Suppresses the immune system</li>
+                  <li>Disrupts sleep</li>
+                  <li>Slows metabolism</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">High cortisol = your body thinks it's in constant danger.</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">2. Adrenaline Keeps You Going When You Should Be Resting</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Adrenaline gives quick bursts of energy. It raises heart rate and puts your body on high alert. Many people run on adrenaline all day:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Feeling wired, jittery, anxious</li>
+                  <li>Feeling "productive" but exhausted underneath</li>
+                  <li>Crashing later and needing caffeine or sugar</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">Adrenaline = borrowed energy that you eventually pay for.</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">3. Your Thyroid Slows Down</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Your thyroid is the gas pedal for metabolism. Under chronic stress, it slows down to conserve resources. Results:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Feeling cold</li>
+                  <li>Low energy</li>
+                  <li>Hair shedding</li>
+                  <li>Slowed digestion</li>
+                  <li>Weight that won't move</li>
+                  <li>Feeling foggy and depressed</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">Low thyroid = low metabolic rate = survival mode.</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">4. Your Cells Switch to "Stress Metabolism"</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Instead of producing 32–38 units of energy from glucose, stressed cells switch to the backup system and make only 2 units. This creates lactic acid and makes you:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Sore</li>
+                  <li>Tired</li>
+                  <li>Inflamed</li>
+                  <li>Foggy</li>
+                  <li>Low-energy</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">Stress metabolism = running on fumes.</p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Why Modern Life Is More Stressful Than Ever</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Our bodies were designed for short bursts of stress, followed by long periods of rest and plenty of food. Modern life is the opposite:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Constant mental pressure</li>
+                  <li>Poor sleep</li>
+                  <li>Under-eating and dieting</li>
+                  <li>Overexercising</li>
+                  <li>Artificial light</li>
+                  <li>No true rest</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Your body stays stuck in a stress response for months or years.</p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Why Stress Makes Weight Loss So Hard</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Stress physiology makes fat loss very difficult:</p>
+                <ol className="text-sm text-gray-700 dark:text-gray-300 list-decimal list-inside space-y-1">
+                  <li>Cortisol promotes fat storage</li>
+                  <li>Thyroid slows metabolism</li>
+                  <li>Low energy reduces movement</li>
+                  <li>Cravings increase</li>
+                  <li>Muscle is broken down (slowing metabolism further)</li>
+                </ol>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  You can diet harder and train more—but your body will hold on because it thinks you're in danger.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">The Importance of Vitals</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">The Pro-Metabolic Approach to Lowering Stress</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Tracking temperature and pulse helps you see in real time whether you 
-                  are in a stressed or healing state — making it one of the most accurate 
-                  healing tools available.
+                  This approach helps your body feel safe again so it can return to efficient energy production.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">1. Eat Enough—Especially Carbs</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Carbs stop cortisol from rising. Eat every 3–4 hours and avoid skipping breakfast.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">2. Minimize PUFA Oils</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  PUFAs suppress the thyroid and increase oxidative stress. Choose saturated fats instead.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">3. Lower Exercise Stress</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Move gently. Walk more. Train strength without overexerting. Rest more.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">4. Improve Sleep</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Good sleep lowers cortisol and supports metabolism.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">5. Support Your Thyroid</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Carbs, protein, minerals, and sunlight all support thyroid function.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">6. Lower Emotional & Mental Stress</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Your thoughts directly affect your physiology. Create calm wherever you can.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">What Lighter™ Teaches You About Stress</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Lighter™ helps you understand and lower stress through:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Education on stress physiology</li>
+                  <li>Experiments to test what improves your energy</li>
+                  <li>Tracking temperature and pulse to see stress vs. healing</li>
+                </ul>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Why Temperature & Pulse Matter</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Temperature shows metabolic rate.<br />
+                  Pulse shows how efficiently you're making energy.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Low temp/pulse = stressed, slowed metabolism<br />
+                  Rising temp/pulse = healing, safety, improved energy
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Your Body Isn't Broken—It's Protecting You</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Your body slows down, stores fat, raises cortisol, and lowers thyroid function because it thinks resources are scarce. It's protecting you.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When you nourish it, rest it, and remove stressors, your metabolism rises. Your energy returns. Your weight stabilizes. You heal.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                  This is the bioenergetic approach. This is what Lighter™ supports.
                 </p>
               </div>
             )}
