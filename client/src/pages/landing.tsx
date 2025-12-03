@@ -70,7 +70,7 @@ export default function Landing() {
           <div className="text-center space-y-8">
             <div className="space-y-5">
               <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1" data-testid="heading-hero">
-                Feel Good in Your Body Again.
+                Heal Your Metabolism.
               </h1>
               
               <p className="text-lg lg:text-xl font-medium text-foreground" data-testid="text-tagline">
