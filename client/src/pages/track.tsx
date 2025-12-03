@@ -270,7 +270,7 @@ export default function Track() {
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Greeting Card - Dashboard style */}
         <Card
-          className="p-6 space-y-3 bg-gradient-to-br from-orange-50 to-rose-50 dark:from-orange-950/20 dark:to-rose-950/20 border-primary/20"
+          className="mt-4 md:mt-6 p-6 space-y-3 bg-gradient-to-br from-orange-50 to-rose-50 dark:from-orange-950/20 dark:to-rose-950/20 border-primary/20"
           data-testid="card-track-greeting"
         >
           <div className="flex items-start justify-between">
