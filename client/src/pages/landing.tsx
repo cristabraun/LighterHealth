@@ -80,27 +80,27 @@ export default function Landing() {
 
             <div className="space-y-6 max-w-2xl mx-auto pt-8 border-t border-border/40" data-testid="section-benefits">
               <div className="text-center mb-2">
-                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide" data-testid="label-benefits">What Lighter™ Improves</p>
+                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide" data-testid="label-benefits">Lighter™ supports:</p>
               </div>
               <div className="flex gap-4 text-left">
                 <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-1" />
                 <div>
-                  <h3 className="text-base font-semibold text-foreground mb-0.5">Lower stress</h3>
-                  <p className="text-sm text-muted-foreground">Feel calmer and more grounded throughout the day.</p>
+                  <h3 className="text-base font-semibold text-foreground mb-0.5">Lowering stress so your body can begin healing.</h3>
+                  <p className="text-sm text-muted-foreground">When your nervous system calms down, your metabolism finally shifts out of survival mode and starts working the way it's meant to.</p>
                 </div>
               </div>
               <div className="flex gap-4 text-left">
                 <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-2" />
                 <div>
-                  <h3 className="text-base font-semibold text-foreground mb-0.5">Increase energy & wellbeing</h3>
-                  <p className="text-sm text-muted-foreground">Restore steady, natural energy without stimulants or burnout.</p>
+                  <h3 className="text-base font-semibold text-foreground mb-0.5">Giving your body what it needs to thrive.</h3>
+                  <p className="text-sm text-muted-foreground">Through simple experiments and daily tracking, you learn which foods, habits, and rhythms actually support your energy, digestion, and mood.</p>
                 </div>
               </div>
               <div className="flex gap-4 text-left">
                 <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-1" data-testid="icon-benefit-3" />
                 <div>
-                  <h3 className="text-base font-semibold text-foreground mb-0.5">Let weight come off gently</h3>
-                  <p className="text-sm text-muted-foreground">Support your metabolism so weight loss becomes effortless, not stressful.</p>
+                  <h3 className="text-base font-semibold text-foreground mb-0.5">Strengthening your metabolism so your weight can stabilize naturally.</h3>
+                  <p className="text-sm text-muted-foreground">When your body knows how to use energy efficiently again, weight loss becomes a side effect — not a struggle.</p>
                 </div>
               </div>
             </div>
