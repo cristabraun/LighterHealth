@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Thermometer, Heart, Zap, Moon, Apple, Utensils, Trash2, Plus, Check, Sparkles, Brain, Smile, Meh, Frown } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Sun, Apple, Utensils, Trash2, Plus, Check, Sparkles, Brain, Smile, Meh, Frown } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { InsertDailyLog, DailyLog, InsertFoodLog, FoodLog } from "@shared/schema";
@@ -18,6 +19,7 @@ import confetti from "canvas-confetti";
 export default function Track() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { theme, toggleTheme } = useTheme();
   const [temperature, setTemperature] = useState("");
   const [temperatureUnit, setTemperatureUnit] = useState<"F" | "C">("F");
   const [pulse, setPulse] = useState("");
@@ -268,9 +270,32 @@ export default function Track() {
   return (
     <div className="min-h-screen pb-20 bg-background">
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
+        {/* Theme Toggle - Top Right */}
+        <div className="flex justify-end" data-testid="section-theme-toggle-track">
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={toggleTheme}
+            className="gap-1"
+            data-testid="button-theme-toggle-track"
+          >
+            {theme === "light" ? (
+              <>
+                <Moon className="w-4 h-4" />
+                <span className="text-xs">Dark</span>
+              </>
+            ) : (
+              <>
+                <Sun className="w-4 h-4" />
+                <span className="text-xs">Light</span>
+              </>
+            )}
+          </Button>
+        </div>
+
         {/* Greeting Card - Dashboard style */}
         <Card
-          className="mt-4 md:mt-6 p-6 space-y-3 bg-gradient-to-br from-orange-50 to-rose-50 dark:from-orange-950/20 dark:to-rose-950/20 border-primary/20"
+          className="p-6 space-y-3 bg-gradient-to-br from-orange-50 to-rose-50 dark:from-orange-950/20 dark:to-rose-950/20 border-primary/20"
           data-testid="card-track-greeting"
         >
           <div className="flex items-start justify-between">

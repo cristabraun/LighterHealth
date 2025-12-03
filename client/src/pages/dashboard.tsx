@@ -346,7 +346,7 @@ export default function Dashboard() {
         {/* TOP (FULL WIDTH): Welcome Card */}
         {welcomeExpanded && (
           <Card
-            className="mt-4 md:mt-6 p-6 space-y-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20"
+            className="p-6 space-y-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20"
             data-testid="card-welcome-desktop"
           >
             <div className="flex items-start justify-between">
@@ -392,7 +392,7 @@ export default function Dashboard() {
         {!welcomeExpanded && (
           <button
             onClick={() => setWelcomeExpanded(true)}
-            className="mt-4 md:mt-6 flex items-center gap-2 p-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors text-left"
+            className="flex items-center gap-2 p-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors text-left"
             data-testid="button-expand-welcome-desktop"
           >
             <Sparkles className="w-4 h-4 text-primary" />
