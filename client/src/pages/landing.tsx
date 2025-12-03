@@ -66,7 +66,7 @@ export default function Landing() {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden border-b border-border/40">
-        <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto px-6 py-10 lg:py-14">
           <div className="text-center space-y-8">
             <div className="space-y-5">
               <h1 className="text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1" data-testid="heading-hero">
@@ -128,7 +128,7 @@ export default function Landing() {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-6xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-features">
+      <div className="max-w-6xl mx-auto px-6 py-8 border-b border-border/40" data-testid="section-features">
         <div className="bg-slate-50 dark:bg-slate-900/30 rounded-lg p-8">
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white dark:bg-background h-full" data-testid="card-feature-track">
@@ -159,7 +159,7 @@ export default function Landing() {
       </div>
 
       {/* Value Proposition Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-value">
+      <div className="max-w-4xl mx-auto px-6 py-8 border-b border-border/40" data-testid="section-value">
         <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
           <div>
             <h2 className="text-2xl font-bold text-center mb-3" data-testid="heading-value-context">Why Lighter™ Makes Sense</h2>
@@ -248,8 +248,8 @@ export default function Landing() {
       </div>
 
       {/* Screenshots Section */}
-      <div className="max-w-6xl mx-auto px-6 py-16" data-testid="section-screenshots">
-        <section className="mt-16">
+      <div className="max-w-6xl mx-auto px-6 py-8" data-testid="section-screenshots">
+        <section className="mt-8">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
             See Inside the App
           </h2>
@@ -275,7 +275,7 @@ export default function Landing() {
       </div>
 
       {/* Social Proof Section */}
-      <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-trust">
+      <div className="max-w-4xl mx-auto px-6 py-8 border-b border-border/40" data-testid="section-trust">
         <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
           <h2 className="text-3xl font-bold text-center" data-testid="heading-trust">Why You Can Trust Lighter™</h2>
           <div className="space-y-0">
@@ -305,7 +305,7 @@ export default function Landing() {
       </div>
 
       {/* Who Lighter Is For Section */}
-      <div className="max-w-4xl mx-auto px-6 py-20 border-b border-border/40" data-testid="section-who-is-for">
+      <div className="max-w-4xl mx-auto px-6 py-10 border-b border-border/40" data-testid="section-who-is-for">
         <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
           <h2 className="text-3xl font-bold text-center" data-testid="heading-who-is-for">Who Lighter™ Is For</h2>
           <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
@@ -350,7 +350,7 @@ export default function Landing() {
       </div>
 
       {/* About Me Section */}
-      <div className="max-w-4xl mx-auto px-6 py-20 border-b border-border/40" data-testid="section-about">
+      <div className="max-w-4xl mx-auto px-6 py-10 border-b border-border/40" data-testid="section-about">
         <Card className="p-12 space-y-6 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
           <div className="flex flex-col items-center gap-8">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/50 flex-shrink-0 shadow-md" data-testid="image-crista">
