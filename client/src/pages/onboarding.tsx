@@ -82,32 +82,16 @@ export default function Onboarding() {
 
           <Card className="p-6 space-y-6 text-left bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20">
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-foreground">
-                A softer way to heal your metabolism.
-              </h2>
+              <p className="text-lg font-semibold text-foreground leading-relaxed">
+                Your journey to a calmer, clearer, more energized body starts here.
+              </p>
               
               <p className="text-base text-foreground leading-relaxed">
-                This isn't a diet app. It's a calm, supportive space where your body finally gets to feel safe again.
+                Lighter is built to help you understand your metabolism, lower stress, and feel better from the inside out — gently, naturally, and without dieting.
               </p>
               
               <p className="text-base text-muted-foreground leading-relaxed">
-                When your body feels safe, everything becomes easier: you warm up, you digest better, your energy stabilizes, and weight loss stops being a battle.
-              </p>
-              
-              <div className="space-y-3 pt-2">
-                <p className="text-sm font-semibold text-foreground">
-                  Inside Lighter™, you'll learn how to:
-                </p>
-                <ul className="text-sm text-muted-foreground space-y-2 pl-4">
-                  <li>• Support your metabolism instead of fighting it</li>
-                  <li>• Lower stress physiology</li>
-                  <li>• Track what your body is telling you</li>
-                  <li>• Experiment gently to see what makes YOU feel better</li>
-                </ul>
-              </div>
-              
-              <p className="text-base font-medium text-foreground pt-2">
-                A lighter life starts here.
+                Before you start tracking, we'll take 60 seconds to get to know you so your experience is personalized and your dashboard reflects exactly what you want to improve.
               </p>
             </div>
 
