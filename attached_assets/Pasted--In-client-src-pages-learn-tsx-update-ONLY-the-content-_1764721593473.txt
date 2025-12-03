@@ -1,0 +1,88 @@
+**"In client/src/pages/learn.tsx, update ONLY the content inside the AccordionContent for the 'Energy Basics' / 'Energy Basics & Metabolism 101' section.
+
+Do NOT change the card layout, title, subtitle, number bubble, or the 'Learn More' button.
+
+Replace ONLY the text INSIDE the AccordionContent with the following (preserve all line breaks and spacing):**
+
+Energy Basics & Metabolism 101
+
+What Does "Good Metabolism" Actually Mean?
+Most people think metabolism is just about how fast you burn calories or whether you gain weight easily.
+But metabolism is actually about how well your body creates energy.
+
+Every single thing your body does—breathing, thinking, moving, digesting food, keeping you warm—requires energy. Your metabolism is the process of turning the food you eat into usable energy for all of this.
+
+When your metabolism is working well:
+• You feel warm (not cold all the time)
+• You have steady energy throughout the day
+• You sleep well and wake up refreshed
+• Your mood is calm and stable
+• You digest food easily
+• Your body naturally stays at a healthy weight
+
+When your metabolism is slow or “broken”:
+• You're always tired and cold
+• You can't sleep well
+• You feel anxious or moody
+• You can't lose weight even when eating very little
+• Your body is running on stress hormones just to keep going
+
+How Your Body Makes Energy: The Two Ways
+
+1. The Good Way (Efficient Energy)
+When your body has enough food (especially carbs), oxygen, and isn’t stressed out, your cells make energy efficiently.
+
+What happens:
+• Your cells burn food completely and cleanly
+• One molecule of glucose can produce 32–38 units of energy
+• Waste products are just CO₂ and water
+• You feel warm, energized, and grounded
+
+2. The Stress Way (Inefficient Energy)
+When you're stressed, under-eating, or inflamed, your cells switch to a backup system.
+
+What happens:
+• Only 2 units of energy are produced from the same glucose
+• Lactic acid builds up (making you tired, sore, and foggy)
+• Your body relies on stress hormones (adrenaline, cortisol)
+• You feel cold, exhausted, anxious, and stuck
+
+The Pro-Metabolic Goal
+Support your body so it can return to making energy the efficient way. That means:
+
+✓ Eating enough food—especially easy-to-digest carbs like fruit, juice, potatoes, rice  
+✓ Eating enough quality protein  
+✓ Avoiding inflammatory fats (PUFA seed oils)  
+✓ Lowering stress so your body doesn’t have to run on adrenaline  
+✓ Supporting the thyroid  
+✓ Eating regularly to stabilize blood sugar  
+
+This is metabolic healing.
+
+What Lighter™ Does to Help
+
+1. We Track the Right Things
+Instead of obsessing over calories, Lighter™ tracks the markers that show how well your metabolism is functioning:
+
+🌡️ Temperature — shows metabolic strength  
+❤️ Pulse — shows how efficiently your body uses energy  
+⚡ Energy — shows your stress load  
+😴 Sleep — reveals recovery  
+🧠 Mood — reflects your nervous system state  
+
+2. We Help You Experiment
+You test small changes and see what actually improves your energy, digestion, sleep, and warmth.
+
+3. We Show You Patterns
+The app highlights trends like:
+• “Your temperature rises on days you eat breakfast.”  
+• “Your sleep quality improves when you stop eating late.”  
+
+4. We Focus on Feeling Good First
+When your metabolism heals, weight naturally normalizes without restriction.
+
+The Simple Truth
+Your metabolism is your body’s energy system. When it’s strong, everything becomes easier—energy, sleep, mood, digestion, and long-term wellness. Lighter™ helps you create the conditions for your body to thrive again.
+
+
+Do NOT modify any other learn cards, buttons, or components on the page. Only replace the accordion text for Energy Basics."

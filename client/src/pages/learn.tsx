@@ -90,26 +90,111 @@ export default function Learn() {
             </Button>
 
             {openSection === 'energy' && (
-              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-3">
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">What Is Energy Production?</h4>
+              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">What Does "Good Metabolism" Actually Mean?</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Metabolism is simply how your body turns food into usable energy. When 
-                  energy production is strong, your body stays warm, digestion works well, 
-                  hormones stay balanced, and stress hormones stay low.
+                  Most people think metabolism is just about how fast you burn calories or whether you gain weight easily.
+                  But metabolism is actually about how well your body creates energy.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Every single thing your body does—breathing, thinking, moving, digesting food, keeping you warm—requires energy. Your metabolism is the process of turning the food you eat into usable energy for all of this.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Why PUFAs Lower Metabolism</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">When your metabolism is working well:</h4>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>You feel warm (not cold all the time)</li>
+                  <li>You have steady energy throughout the day</li>
+                  <li>You sleep well and wake up refreshed</li>
+                  <li>Your mood is calm and stable</li>
+                  <li>You digest food easily</li>
+                  <li>Your body naturally stays at a healthy weight</li>
+                </ul>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">When your metabolism is slow or "broken":</h4>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>You're always tired and cold</li>
+                  <li>You can't sleep well</li>
+                  <li>You feel anxious or moody</li>
+                  <li>You can't lose weight even when eating very little</li>
+                  <li>Your body is running on stress hormones just to keep going</li>
+                </ul>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">How Your Body Makes Energy: The Two Ways</h4>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">1. The Good Way (Efficient Energy)</h5>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Polyunsaturated fats slow thyroid function and reduce your cells' ability 
-                  to produce energy. This is why the pro-metabolic approach focuses on 
-                  saturated fats and minimizing PUFAs.
+                  When your body has enough food (especially carbs), oxygen, and isn't stressed out, your cells make energy efficiently.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">What happens:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Your cells burn food completely and cleanly</li>
+                  <li>One molecule of glucose can produce 32–38 units of energy</li>
+                  <li>Waste products are just CO₂ and water</li>
+                  <li>You feel warm, energized, and grounded</li>
+                </ul>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">2. The Stress Way (Inefficient Energy)</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When you're stressed, under-eating, or inflamed, your cells switch to a backup system.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">What happens:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Only 2 units of energy are produced from the same glucose</li>
+                  <li>Lactic acid builds up (making you tired, sore, and foggy)</li>
+                  <li>Your body relies on stress hormones (adrenaline, cortisol)</li>
+                  <li>You feel cold, exhausted, anxious, and stuck</li>
+                </ul>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">The Pro-Metabolic Goal</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Support your body so it can return to making energy the efficient way. That means:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>✓ Eating enough food—especially easy-to-digest carbs like fruit, juice, potatoes, rice</li>
+                  <li>✓ Eating enough quality protein</li>
+                  <li>✓ Avoiding inflammatory fats (PUFA seed oils)</li>
+                  <li>✓ Lowering stress so your body doesn't have to run on adrenaline</li>
+                  <li>✓ Supporting the thyroid</li>
+                  <li>✓ Eating regularly to stabilize blood sugar</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">
+                  This is metabolic healing.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Eating for Energy</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">What Lighter™ Does to Help</h4>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">1. We Track the Right Things</h5>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Carbs lower cortisol, protein stabilizes blood sugar, and saturated fats 
-                  support hormone balance. Energy basics returns your body to its natural 
-                  state of warmth and vitality.
+                  Instead of obsessing over calories, Lighter™ tracks the markers that show how well your metabolism is functioning:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>🌡️ Temperature — shows metabolic strength</li>
+                  <li>❤️ Pulse — shows how efficiently your body uses energy</li>
+                  <li>⚡ Energy — shows your stress load</li>
+                  <li>😴 Sleep — reveals recovery</li>
+                  <li>🧠 Mood — reflects your nervous system state</li>
+                </ul>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">2. We Help You Experiment</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  You test small changes and see what actually improves your energy, digestion, sleep, and warmth.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">3. We Show You Patterns</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">The app highlights trends like:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>"Your temperature rises on days you eat breakfast."</li>
+                  <li>"Your sleep quality improves when you stop eating late."</li>
+                </ul>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">4. We Focus on Feeling Good First</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When your metabolism heals, weight naturally normalizes without restriction.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">The Simple Truth</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Your metabolism is your body's energy system. When it's strong, everything becomes easier—energy, sleep, mood, digestion, and long-term wellness. Lighter™ helps you create the conditions for your body to thrive again.
                 </p>
               </div>
             )}
