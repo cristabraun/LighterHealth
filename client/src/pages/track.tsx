@@ -395,7 +395,7 @@ export default function Track() {
         <form onSubmit={handleSubmit} className="space-y-6">
 
           {/* Required Vitals Card - Dashboard style with gradient */}
-          <Card className="p-6 space-y-6 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border-primary/10">
+          <Card className="p-6 space-y-6 frosted-glass-warm">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
@@ -479,7 +479,7 @@ export default function Track() {
           </Card>
 
           {/* How You Feel Card - Dashboard style with gradient */}
-          <Card className="p-6 space-y-6 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/20 dark:to-purple-950/20 border-violet-200/50 dark:border-violet-800/30">
+          <Card className="p-6 space-y-6 frosted-glass-warm">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
@@ -588,7 +588,7 @@ export default function Track() {
           </Card>
 
           {/* NEW: Stress & Mood Card - Dashboard style with gradient */}
-          <Card className="p-6 space-y-6 bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950/20 dark:to-pink-950/20 border-rose-200/50 dark:border-rose-800/30" data-testid="card-stress-mood">
+          <Card className="p-6 space-y-6 frosted-glass-warm" data-testid="card-stress-mood">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
@@ -694,7 +694,7 @@ export default function Track() {
         {/* Food Log and Daily Checklist - Side by side on desktop */}
         <div className="md:grid md:grid-cols-2 md:gap-6 space-y-6 md:space-y-0">
           {/* Food Log Card - Dashboard style */}
-          <Card className="p-6 space-y-4 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-cyan-950/20 dark:to-teal-950/20 border-cyan-200/50 dark:border-cyan-800/30">
+          <Card className="p-6 space-y-4 frosted-glass-warm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center">
@@ -850,7 +850,7 @@ export default function Track() {
           </Card>
 
           {/* Daily Checklist Card - Dashboard style */}
-          <Card className="p-6 space-y-4 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/20 dark:to-green-950/20 border-emerald-200/50 dark:border-emerald-800/30" data-testid="card-daily-checklist">
+          <Card className="p-6 space-y-4 frosted-glass-warm" data-testid="card-daily-checklist">
             <div className="flex items-start gap-3 mb-4">
               <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
                 <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
