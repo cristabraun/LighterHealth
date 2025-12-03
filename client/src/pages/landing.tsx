@@ -247,6 +247,33 @@ export default function Landing() {
         </Card>
       </div>
 
+      {/* Screenshots Section */}
+      <div className="max-w-6xl mx-auto px-6 py-16" data-testid="section-screenshots">
+        <section className="mt-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
+            See Inside the App
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <div className="rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden" data-testid="image-dashboard-preview">
+              <img 
+                src="/dashboard.png" 
+                className="w-full h-auto" 
+                alt="Lighter dashboard preview"
+              />
+            </div>
+
+            <div className="rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden" data-testid="image-track-preview">
+              <img 
+                src="/track.png" 
+                className="w-full h-auto" 
+                alt="Lighter tracking preview"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
+
       {/* Social Proof Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 border-b border-border/40" data-testid="section-trust">
         <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
