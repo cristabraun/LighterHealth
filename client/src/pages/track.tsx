@@ -314,20 +314,20 @@ export default function Track() {
         </Card>
 
         {/* Quick Start Guide Card */}
-        <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-xl p-4 md:p-6 shadow-sm">
+        <div className="rounded-xl p-5 md:p-6 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 shadow-sm mt-4">
           <details className="group">
-            <summary className="cursor-pointer flex items-center justify-between text-green-800 dark:text-green-300 font-semibold text-lg">
+            <summary className="cursor-pointer flex items-center justify-between text-green-900 font-semibold text-lg md:text-xl tracking-tight">
               Quick Start Guide
-              <span className="text-green-600 dark:text-green-400 group-open:hidden">+</span>
-              <span className="text-green-600 dark:text-green-400 hidden group-open:inline">−</span>
+              <span className="text-green-600 group-open:hidden text-2xl leading-none">+</span>
+              <span className="text-green-600 hidden group-open:inline text-2xl leading-none">−</span>
             </summary>
 
-            <div className="mt-4 text-green-900 dark:text-green-200 space-y-3 text-sm md:text-base leading-relaxed">
-              <p>Here's where to begin if you're brand new to Lighter™.</p>
+            <div className="mt-4 text-green-900 space-y-4 text-sm md:text-base leading-relaxed">
+              <p className="font-medium">Here's where to begin if you're brand new to Lighter™:</p>
 
-              <ul className="list-disc ml-4 space-y-1">
+              <ul className="list-disc ml-5 space-y-2">
                 <li><strong>Step 1 – Take your morning temperature & pulse.</strong> This gives you a baseline of your metabolic function.</li>
-                <li><strong>Step 2 – Track your meals today.</strong> Notice how different foods affect your energy, temperature, and mood.</li>
+                <li><strong>Step 2 – Track your meals today.</strong> Log your food and calories if you'd like to see how they correlate with energy, mood, and vitals.</li>
                 <li><strong>Step 3 – Try one small experiment.</strong> Raw carrot salad, warm breakfast, or avoiding seed oils are great starters.</li>
                 <li><strong>Step 4 – Add a few notes.</strong> Write down anything that made you feel calm, energized, or stressed.</li>
                 <li><strong>Step 5 – Check your dashboard tonight.</strong> You'll begin to see patterns quickly.</li>
