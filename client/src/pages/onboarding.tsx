@@ -68,19 +68,15 @@ export default function Onboarding() {
   if (step === 1) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10 flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-4xl mx-auto px-4 md:px-6 space-y-8">
+        <div className="w-full max-w-3xl md:max-w-4xl mx-auto px-4 md:px-6 mt-10 md:mt-16 space-y-8">
           <div className="space-y-4 text-center">
-            <div className="flex justify-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 flex items-center justify-center">
-                <Sparkles className="w-10 h-10 text-white" />
-              </div>
-            </div>
-            <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">
+            <Sparkles className="h-14 w-14 text-primary mx-auto mb-4" />
+            <h1 className="text-2xl md:text-3xl font-bold text-center text-primary">
               Welcome to Lighter™
             </h1>
           </div>
 
-          <Card className="p-6 space-y-6 text-left bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20">
+          <Card className="p-8 md:p-10 space-y-6 text-left bg-gradient-to-br from-primary/10 to-chart-2/10 border border-primary/20 rounded-xl shadow-sm">
             <div className="space-y-4">
               <p className="text-lg font-semibold text-foreground leading-relaxed">
                 Your journey to a calmer, clearer, more energized body starts here.
