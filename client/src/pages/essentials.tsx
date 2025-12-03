@@ -25,7 +25,7 @@ export default function Essentials() {
         </div>
 
         {/* Coming Soon Card - Full width */}
-        <Card className="p-8 text-center space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5 border-primary/10">
+        <Card className="p-8 text-center space-y-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-primary/10">
           <div className="space-y-2">
             <Sparkles className="w-12 h-12 mx-auto text-primary/50" />
             <h2 className="text-2xl font-semibold text-foreground" data-testid="heading-coming-soon">Coming Soon</h2>
@@ -42,7 +42,7 @@ export default function Essentials() {
             {placeholderItems.map((item, index) => (
               <Card 
                 key={index} 
-                className="p-6 space-y-3 opacity-60 hover:opacity-80 transition-opacity"
+                className="p-6 space-y-3 opacity-60 hover:opacity-80 transition-opacity bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm"
                 data-testid={`card-essential-${index}`}
               >
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">

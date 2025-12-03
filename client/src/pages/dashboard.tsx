@@ -73,7 +73,7 @@ function StressTrendChart() {
   ).join(' ');
 
   return (
-    <Card className="p-5 space-y-4 bg-gradient-to-br from-orange-50 to-rose-50 dark:from-orange-950/20 dark:to-rose-950/20 border-primary/20" data-testid="card-stress-trend">
+    <Card className="p-5 space-y-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-primary/20" data-testid="card-stress-trend">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Stress Trend</h3>
         <Badge variant="secondary" className="text-xs bg-primary/10 text-primary">7 days</Badge>
@@ -128,7 +128,7 @@ function SleepQualityChart() {
   const maxSleep = 10;
   
   return (
-    <Card className="p-5 space-y-4 bg-gradient-to-br from-violet-50 to-blue-50 dark:from-violet-950/20 dark:to-blue-950/20 border-violet-200/50 dark:border-violet-800/30" data-testid="card-sleep-quality">
+    <Card className="p-5 space-y-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-violet-200/50 dark:border-violet-800/30" data-testid="card-sleep-quality">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Sleep Quality</h3>
         <Badge variant="secondary" className="text-xs bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300">7 days</Badge>
@@ -196,7 +196,7 @@ function ConsistencyMeter() {
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <Card className="p-5 space-y-4 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-950/20 dark:via-teal-950/20 dark:to-cyan-950/20 border-emerald-200/50 dark:border-emerald-800/30" data-testid="card-consistency">
+    <Card className="p-5 space-y-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-emerald-200/50 dark:border-emerald-800/30" data-testid="card-consistency">
       <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Weekly Consistency</h3>
       <div className="flex items-center justify-center">
         <div className="relative w-32 h-32">
@@ -346,7 +346,7 @@ export default function Dashboard() {
         {/* TOP (FULL WIDTH): Welcome Card */}
         {welcomeExpanded && (
           <Card
-            className="p-6 space-y-4 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20"
+            className="p-6 space-y-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-primary/20"
             data-testid="card-welcome-desktop"
           >
             <div className="flex items-start justify-between">
@@ -406,7 +406,7 @@ export default function Dashboard() {
           {/* LEFT COLUMN */}
           <div className="space-y-6">
             {/* Daily Snapshot with colorful metrics */}
-            <Card className="p-6 space-y-4 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/10 dark:to-orange-950/10 border-amber-200/30 dark:border-amber-800/20" data-testid="card-today-snapshot-desktop">
+            <Card className="p-6 space-y-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-amber-200/30 dark:border-amber-800/20" data-testid="card-today-snapshot-desktop">
               <h2 className="text-lg font-semibold" data-testid="heading-today-desktop">
                 Daily Snapshot
               </h2>

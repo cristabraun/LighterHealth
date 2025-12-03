@@ -131,7 +131,7 @@ export default function Landing() {
       <div className="max-w-6xl mx-auto px-6 py-8 border-b border-border/40" data-testid="section-features">
         <div className="bg-slate-50 dark:bg-slate-900/30 rounded-lg p-8">
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white dark:bg-background h-full" data-testid="card-feature-track">
+            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm h-full" data-testid="card-feature-track">
               <TrendingUp className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-track" />
               <h3 className="text-base font-bold text-foreground" data-testid="heading-track">Track Your Body's Signals</h3>
               <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-track">
@@ -139,7 +139,7 @@ export default function Landing() {
               </p>
             </Card>
 
-            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white dark:bg-background h-full" data-testid="card-feature-experiments">
+            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm h-full" data-testid="card-feature-experiments">
               <Beaker className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-experiments" />
               <h3 className="text-base font-bold text-foreground" data-testid="heading-experiments">Run Gentle Experiments</h3>
               <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-experiments">
@@ -147,7 +147,7 @@ export default function Landing() {
               </p>
             </Card>
 
-            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white dark:bg-background h-full" data-testid="card-feature-insights">
+            <Card className="flex flex-col gap-4 p-6 border-border/40 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm h-full" data-testid="card-feature-insights">
               <Lightbulb className="w-8 h-8 text-primary flex-shrink-0" data-testid="icon-insights" />
               <h3 className="text-base font-bold text-foreground" data-testid="heading-insights">Get Insights & Recommendations</h3>
               <p className="text-muted-foreground text-sm leading-relaxed" data-testid="text-insights">
@@ -160,7 +160,7 @@ export default function Landing() {
 
       {/* Value Proposition Section */}
       <div className="max-w-4xl mx-auto px-6 py-8 border-b border-border/40" data-testid="section-value">
-        <Card className="p-12 space-y-8 bg-slate-50 dark:bg-slate-900/30 border border-border/30">
+        <Card className="p-12 space-y-8 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border border-border/30">
           <div>
             <h2 className="text-2xl font-bold text-center mb-3" data-testid="heading-value-context">Why Lighter™ Makes Sense</h2>
             <p className="text-center text-base text-muted-foreground leading-relaxed" data-testid="text-value-intro">
