@@ -419,24 +419,162 @@ export default function Learn() {
             </Button>
 
             {openSection === 'food' && (
-              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-3">
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Carbs Are Not the Enemy</h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Carbs lower cortisol and give the liver the fuel it needs to regulate 
-                  hormones. Fruit, juice, sugar, and roots are central in the pro-metabolic 
-                  approach.
+              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-4">
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  A practical overview of nutrition principles designed to support optimal cellular energy production and hormonal balance.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Protein for Hormone Health</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">1. Why Simple Sugars Matter (Fruit Sugar, Honey, OJ)</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Dairy proteins, eggs, gelatin, and shellfish support muscle, thyroid 
-                  function, and detoxification.
+                  The pro-metabolic approach views easily digestible sugars as the cell's preferred fuel source. When glucose and fructose are readily available, your metabolism can function optimally without relying on stress hormones for energy.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Benefits of simple sugars:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Lower cortisol and adrenaline production</li>
+                  <li>Support liver glycogen storage (signaling metabolic "safety")</li>
+                  <li>Aid thyroid hormone conversion (T4 → T3)</li>
+                  <li>Promote stable body temperature, pulse, and mood</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When adequate sugar is available, the body shifts away from stress-based metabolism and produces more ATP, CO₂, and heat—hallmarks of efficient cellular respiration and energy generation.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Fats That Heal</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">2. Why Carbohydrates Are Metabolically Preferred</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Saturated fats support metabolism. PUFAs suppress thyroid function and 
-                  slow mitochondrial energy production.
+                  Your mitochondria function most efficiently when fueled by carbohydrates. Compared to fats or proteins, carbs generate energy with minimal metabolic stress and maximum efficiency.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Carbohydrates support:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Higher CO₂ production (a marker of efficient metabolism)</li>
+                  <li>Improved oxygen utilization</li>
+                  <li>Faster recovery and adaptation</li>
+                  <li>Balanced hormone production</li>
+                  <li>Stable body warmth and energy levels</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  This is why the pro-metabolic framework emphasizes easily digestible carbs from fruit, juice, honey, dairy sugars, squashes, potatoes, and similar sources—they provide clean fuel that supports rather than stresses your system.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">3. Fats to Avoid (PUFAs)</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  A cornerstone of the pro-metabolic approach is minimizing polyunsaturated fatty acids (PUFAs), primarily found in industrial seed oils.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Why avoid PUFAs?</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">PUFAs interfere with mitochondrial respiration and cellular function:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Suppress thyroid activity</li>
+                  <li>Increase systemic inflammation</li>
+                  <li>Elevate estrogen levels</li>
+                  <li>Promote accumulation of aging pigments (lipofuscin)</li>
+                  <li>Lower body temperature and energy production</li>
+                  <li>Create long-term metabolic slowdown</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">PUFA-heavy fats to minimize:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Canola, soy, corn, sunflower, safflower oils</li>
+                  <li>Most fish oils</li>
+                  <li>Nut and seed oils</li>
+                  <li>Commercial salad dressings and processed foods</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">Better fat choices:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Butter</li>
+                  <li>Coconut oil</li>
+                  <li>Beef tallow</li>
+                  <li>Dairy fats</li>
+                  <li>Cacao butter</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  These saturated fats are metabolically stable—they support energy production rather than interfere with it.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">4. Optimal Protein Sources</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  The pro-metabolic framework prioritizes proteins that are easy to digest, low in inflammatory compounds, and supportive of hormonal health.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Recommended proteins:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Dairy products (milk, cheese, Greek yogurt, cottage cheese)</li>
+                  <li>Gelatin and collagen (important for balancing muscle meat amino acids)</li>
+                  <li>Eggs (preferably well-cooked)</li>
+                  <li>Shellfish (especially oysters and shrimp—rich in minerals)</li>
+                  <li>Occasional well-sourced beef or lamb</li>
+                  <li>Organ meats like liver (1–2 times per week for concentrated nutrition)</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  These protein sources support thyroid function, progesterone production, and overall metabolic rate while being gentle on digestion.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">5. Best Carbohydrate Sources</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Ideal carbohydrates in this approach are easily digestible, low in anti-nutrients, mineral-rich, and supportive of liver glycogen storage.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Preferred carb sources:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Fresh fruit (especially citrus and tropical varieties)</li>
+                  <li>Orange juice (fresh-squeezed when possible)</li>
+                  <li>Raw honey</li>
+                  <li>Dairy sugars (lactose from milk and yogurt)</li>
+                  <li>Well-cooked white potatoes</li>
+                  <li>White rice (easier on the digestive system)</li>
+                  <li>Cooked root vegetables (winter squash, carrots, beets)</li>
+                  <li>Ripe papaya, pineapple, and berries</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  The key principle: carbohydrates should leave you feeling energized and light, not heavy or sluggish.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">6. Alcohol Considerations</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When consuming alcohol, the pro-metabolic approach favors dry red wine in moderation.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Why dry red wine?</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Lower residual sugar reduces fermentation byproducts</li>
+                  <li>Contains beneficial polyphenols and antioxidants</li>
+                  <li>Generally lower in histamine than sweet wines</li>
+                  <li>May support circulation when consumed lightly</li>
+                  <li>Provides nervous system relaxation without severely compromising metabolism</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  The approach isn't anti-alcohol—it simply recognizes that quality and quantity matter significantly.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  If choosing to drink: Dry red wine over sweet wines, beer, or distilled spirits.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">7. The Central Importance of Avoiding PUFAs</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  This point bears repeating due to its foundational importance in the pro-metabolic framework.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">How PUFAs undermine metabolism:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Directly suppress thyroid hormone activity</li>
+                  <li>Slow overall metabolic rate</li>
+                  <li>Increase cellular oxidative stress</li>
+                  <li>Promote estrogen dominance</li>
+                  <li>Make cell membranes fragile and prone to inflammation</li>
+                  <li>Interfere with glucose oxidation pathways</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  The pro-metabolic view holds that PUFA accumulation in tissues is a primary driver of modern chronic issues: persistent fatigue, stubborn weight gain, hormonal imbalances, PMS, and accelerated aging.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                  Avoiding PUFAs supports: Restored energy levels, improved body temperature regulation, and balanced hormone production.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Summary: The Pro-Metabolic Food Foundation</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">The core principles in brief:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                  <li>✓ Use easily digestible sugars to reduce stress hormone dependence</li>
+                  <li>✓ Choose stable saturated fats for cellular integrity</li>
+                  <li>✓ Select gentle, bioavailable proteins for tissue repair</li>
+                  <li>✓ Strictly avoid PUFAs that interfere with mitochondrial function</li>
+                  <li>✓ Emphasize carbohydrates that digest smoothly and support glycogen stores</li>
+                  <li>✓ Approach alcohol thoughtfully when desired</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                  This framework is fundamentally about supporting your body's natural energy production systems—prioritizing cellular respiration, hormonal balance, and metabolic efficiency through strategic food choices.
                 </p>
               </div>
             )}
