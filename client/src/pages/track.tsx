@@ -314,15 +314,15 @@ export default function Track() {
         </Card>
 
         {/* Quick Start Guide Card */}
-        <div className="rounded-xl p-5 md:p-6 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 shadow-sm mt-4">
+        <div className="rounded-xl p-5 md:p-6 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/20 dark:to-purple-950/20 border border-violet-200/50 dark:border-violet-800/30 shadow-sm mt-4">
           <details className="group">
-            <summary className="cursor-pointer flex items-center justify-between text-green-900 font-semibold text-lg md:text-xl tracking-tight">
+            <summary className="cursor-pointer flex items-center justify-between text-violet-900 dark:text-violet-200 font-semibold text-lg md:text-xl tracking-tight">
               Quick Start Guide
-              <span className="text-green-600 group-open:hidden text-2xl leading-none">+</span>
-              <span className="text-green-600 hidden group-open:inline text-2xl leading-none">−</span>
+              <span className="text-violet-600 dark:text-violet-400 group-open:hidden text-2xl leading-none">+</span>
+              <span className="text-violet-600 dark:text-violet-400 hidden group-open:inline text-2xl leading-none">−</span>
             </summary>
 
-            <div className="mt-4 text-green-900 space-y-4 text-sm md:text-base leading-relaxed">
+            <div className="mt-4 text-violet-900 dark:text-violet-200 space-y-4 text-sm md:text-base leading-relaxed">
               <p className="font-medium">If you're just getting started, here's exactly what to do today. This whole routine takes 2–3 minutes and gives you everything you need to begin supporting your metabolism.</p>
 
               <div className="space-y-3">
@@ -384,7 +384,7 @@ export default function Track() {
                 </div>
               </div>
 
-              <div className="border-t border-green-200 pt-4 mt-4">
+              <div className="border-t border-violet-200 dark:border-violet-800/30 pt-4 mt-4">
                 <p className="font-semibold mb-2">Bottom Line</p>
                 <p>Track your vitals, feelings, food, and stress for a few minutes each day. Lighter™ will reveal the patterns — and your body will show you what's helping you feel better.</p>
               </div>
