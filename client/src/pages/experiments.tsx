@@ -16,7 +16,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { Beaker, Clock, ChevronDown, ChevronUp, CheckCircle2, XCircle } from "lucide-react";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -175,48 +174,38 @@ export default function Experiments() {
           </p>
         </div>
 
-        <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-experiments-intro">
-          <h2 className="text-lg font-semibold" data-testid="heading-how-to-use">How to Use the Experiments Page</h2>
+        <Card className="p-6 space-y-4 bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-950/30 dark:to-purple-950/30 border-violet-200/50 dark:border-violet-800/30" data-testid="card-experiments-intro">
+          <h2 className="text-lg font-semibold text-violet-800 dark:text-violet-300" data-testid="heading-how-to-use">How to Use the Experiments Page</h2>
+          
+          <div className="text-sm text-violet-700 dark:text-violet-300/90 space-y-4">
+            <p>
+              Before exploring all of the experiments, begin with these three foundations.
+              They give you the clearest picture of how your metabolism and nervous system
+              are responding day-by-day. Treat them like gentle discovery tools—not strict rules.
+            </p>
+
+            <p>
+              <strong>1. Daily Raw Carrot Salad</strong><br />
+              Supports digestion, lowers endotoxin, and helps calm the system.
+            </p>
+
+            <p>
+              <strong>2. Temperature Before & After Meals</strong><br />
+              In addition to the morning temperature and pulse you track on the Track page,
+              try checking them before and after eating.<br />
+              — If warmth and pulse rise: your body is converting food into energy well.<br />
+              — If they drop: the meal likely slowed digestion or added stress.
+            </p>
+
+            <p>
+              <strong>3. Remove PUFA Oils</strong><br />
+              Reducing polyunsaturated fats helps support cellular energy, hormonal balance,
+              and digestion. Many people feel warmer and more stable as they lower PUFAs.
+            </p>
+
+            <p>These three experiments create a strong baseline. Your body will give you insight starting from here.</p>
+          </div>
         </Card>
-
-        <div className="mt-4">
-          <Accordion type="single" collapsible>
-            <AccordionItem value="start-here">
-              <AccordionTrigger className="text-base font-medium bg-violet-100 text-violet-700 px-4 py-2 rounded-lg hover:bg-violet-200 transition dark:bg-violet-900/30 dark:text-violet-300 dark:hover:bg-violet-900/50">
-                Start Here
-              </AccordionTrigger>
-
-              <AccordionContent className="text-sm text-gray-700 dark:text-gray-300 space-y-4 bg-white dark:bg-card p-4 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm mt-2">
-                <p>
-                  Before exploring all of the experiments, begin with these three foundations.
-                  They give you the clearest picture of how your metabolism and nervous system
-                  are responding day-by-day. Treat them like gentle discovery tools—not strict rules.
-                </p>
-
-                <p>
-                  <strong>1. Daily Raw Carrot Salad</strong><br />
-                  Supports digestion, lowers endotoxin, and helps calm the system.
-                </p>
-
-                <p>
-                  <strong>2. Temperature Before & After Meals</strong><br />
-                  In addition to the morning temperature and pulse you track on the Track page,
-                  try checking them before and after eating.<br />
-                  — If warmth and pulse rise: your body is converting food into energy well.<br />
-                  — If they drop: the meal likely slowed digestion or added stress.
-                </p>
-
-                <p>
-                  <strong>3. Remove PUFA Oils</strong><br />
-                  Reducing polyunsaturated fats helps support cellular energy, hormonal balance,
-                  and digestion. Many people feel warmer and more stable as they lower PUFAs.
-                </p>
-
-                <p>These three experiments create a strong baseline. Your body will give you insight starting from here.</p>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
 
         {/* Active Experiments Section - 2-column grid on desktop */}
         {activeExperiments.filter(e => !e.completed).length > 0 && (
