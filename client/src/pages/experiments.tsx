@@ -365,10 +365,16 @@ export default function Experiments() {
 
             {/* Experiment Library Cards - 2-column grid on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
-              {filteredExperiments.map(experiment => (
+              {filteredExperiments.map(experiment => {
+                const isFoundational = ["temp-before-after-meals", "raw-carrot-salad", "low-pufa-week"].includes(experiment.id);
+                return (
                 <Card 
                   key={experiment.id} 
-                  className="p-6 space-y-4 border-l-4 border-l-primary/20 hover:border-l-primary transition-colors"
+                  className={`p-6 space-y-4 border-l-4 transition-colors ${
+                    isFoundational 
+                      ? "bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-950/30 dark:to-purple-950/30 border-l-violet-500 hover:border-l-violet-600" 
+                      : "border-l-primary/20 hover:border-l-primary"
+                  }`}
                 >
                   <div className="space-y-3">
                     <div className="flex items-start justify-between gap-4">
@@ -400,7 +406,8 @@ export default function Experiments() {
                     Learn More
                   </Button>
                 </Card>
-              ))}
+              );
+              })}
             </div>
           </TabsContent>
 

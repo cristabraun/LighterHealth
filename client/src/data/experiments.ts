@@ -1,32 +1,33 @@
 import type { ExperimentTemplate } from "@shared/schema";
 
 export const EXPERIMENTS: ExperimentTemplate[] = [
-  // FOUNDATIONAL 5 — Start Here
+  // TOP 3 FOUNDATIONAL EXPERIMENTS — Start Here
   {
-    id: "morning-vs-afternoon-temp",
-    title: "Morning vs Afternoon Temp/Pulse",
+    id: "temp-before-after-meals",
+    title: "Temperature Before + After Meals",
     duration: 30,
     category: "Temperature & Pulse",
-    why: "Morning is when metabolism is lowest. Afternoon should be highest. If this pattern is reversed (high AM, low PM), it indicates cortisol dominance - your body is running on stress hormones rather than efficient energy production.",
+    why: "Your body's temperature response to food reveals how well you're converting food into energy. If a meal raises temp/pulse → metabolism is strong. If it drops → low thyroid or high cortisol response. This is one of Ray Peat's foundational metabolic tracking methods.",
     how: [
-      "Take temperature and pulse immediately upon waking (before getting out of bed)",
-      "Take temperature and pulse again mid-afternoon (2-4 PM)",
-      "Track the difference between AM and PM readings",
-      "Note: afternoon should be warmer with stable pulse (70-90)"
+      "Take temperature and pulse before eating",
+      "Eat a normal, balanced meal",
+      "Measure temperature and pulse again 30–60 minutes later",
+      "Record the changes in your notes",
+      "Track how you feel (warmer, calmer, energized, or opposite)"
     ],
-    when: "Daily tracking for 30 days. Consistency is key to identifying patterns.",
+    when: "Choose one meal per day (ideally the same meal each day) to track consistently.",
     whatToExpect: [
-      { day: "Days 1-7", description: "Establishing baseline. You may notice your AM temp is quite low." },
-      { day: "Days 8-20", description: "Patterns become clear - healthy pattern shows rising temp throughout day." },
-      { day: "Days 21-30", description: "Deep insights into your circadian rhythm. If reversed pattern persists, focus on reducing stress and supporting nutrition." }
+      { day: "Days 1-7", description: "Learning your baseline. You may notice that some meals warm you up while others don't." },
+      { day: "Days 8-20", description: "Patterns emerge - certain foods consistently raise or lower your temperature." },
+      { day: "Days 21-30", description: "Deep understanding of which meals support your metabolism. You can confidently adjust your diet." }
     ],
-    dailyChecklist: ["Measured temp/pulse upon waking", "Measured temp/pulse mid-afternoon", "Noted warmth, calmness, hunger"],
-    alternatives: ["If pulse tracking feels stressful, only track temperature and warmth"],
+    dailyChecklist: ["Measured temp/pulse before meal", "Measured temp/pulse 30-60 min after", "Noted warmth and mood changes"],
+    alternatives: ["If tracking numbers feels overwhelming, just track: Warmer/Cooler/Same and Calmer/Anxious/Same"],
     inputs: [
-      { id: "morningTemp", label: "Morning Temperature (upon waking)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
-      { id: "morningPulse", label: "Morning Pulse (upon waking)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
-      { id: "afternoonTemp", label: "Afternoon Temperature (2-4 PM)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
-      { id: "afternoonPulse", label: "Afternoon Pulse (2-4 PM)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
+      { id: "beforeTemp", label: "Temperature Before Meal", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "beforePulse", label: "Pulse Before Meal", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
+      { id: "afterTemp", label: "Temperature After Meal (30-60 min)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "afterPulse", label: "Pulse After Meal (30-60 min)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
     ]
   },
   {
@@ -73,6 +74,35 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
     dailyChecklist: ["Avoided all seed oils", "Used only butter/coconut oil/ghee", "Tracked skin, energy, warmth"],
     alternatives: ["If you can't fully avoid PUFA, start by replacing just one meal per day with clean fats"]
   },
+
+  // OTHER FOUNDATIONAL EXPERIMENTS
+  {
+    id: "morning-vs-afternoon-temp",
+    title: "Morning vs Afternoon Temp/Pulse",
+    duration: 30,
+    category: "Temperature & Pulse",
+    why: "Morning is when metabolism is lowest. Afternoon should be highest. If this pattern is reversed (high AM, low PM), it indicates cortisol dominance - your body is running on stress hormones rather than efficient energy production.",
+    how: [
+      "Take temperature and pulse immediately upon waking (before getting out of bed)",
+      "Take temperature and pulse again mid-afternoon (2-4 PM)",
+      "Track the difference between AM and PM readings",
+      "Note: afternoon should be warmer with stable pulse (70-90)"
+    ],
+    when: "Daily tracking for 30 days. Consistency is key to identifying patterns.",
+    whatToExpect: [
+      { day: "Days 1-7", description: "Establishing baseline. You may notice your AM temp is quite low." },
+      { day: "Days 8-20", description: "Patterns become clear - healthy pattern shows rising temp throughout day." },
+      { day: "Days 21-30", description: "Deep insights into your circadian rhythm. If reversed pattern persists, focus on reducing stress and supporting nutrition." }
+    ],
+    dailyChecklist: ["Measured temp/pulse upon waking", "Measured temp/pulse mid-afternoon", "Noted warmth, calmness, hunger"],
+    alternatives: ["If pulse tracking feels stressful, only track temperature and warmth"],
+    inputs: [
+      { id: "morningTemp", label: "Morning Temperature (upon waking)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "morningPulse", label: "Morning Pulse (upon waking)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
+      { id: "afternoonTemp", label: "Afternoon Temperature (2-4 PM)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
+      { id: "afternoonPulse", label: "Afternoon Pulse (2-4 PM)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
+    ]
+  },
   {
     id: "oj-before-coffee",
     title: "No Coffee on an Empty Stomach",
@@ -118,34 +148,6 @@ export const EXPERIMENTS: ExperimentTemplate[] = [
   },
 
   // MODULE SET 1 — Temperature & Pulse Experiments
-  {
-    id: "temp-before-after-meals",
-    title: "Temperature Before + After Meals",
-    duration: 30,
-    category: "Temperature & Pulse",
-    why: "Your body's temperature response to food reveals how well you're converting food into energy. If a meal raises temp/pulse → metabolism is strong. If it drops → low thyroid or high cortisol response. This is one of Ray Peat's foundational metabolic tracking methods.",
-    how: [
-      "Take temperature and pulse before eating",
-      "Eat a normal, balanced meal",
-      "Measure temperature and pulse again 30–60 minutes later",
-      "Record the changes in your notes",
-      "Track how you feel (warmer, calmer, energized, or opposite)"
-    ],
-    when: "Choose one meal per day (ideally the same meal each day) to track consistently.",
-    whatToExpect: [
-      { day: "Days 1-7", description: "Learning your baseline. You may notice that some meals warm you up while others don't." },
-      { day: "Days 8-20", description: "Patterns emerge - certain foods consistently raise or lower your temperature." },
-      { day: "Days 21-30", description: "Deep understanding of which meals support your metabolism. You can confidently adjust your diet." }
-    ],
-    dailyChecklist: ["Measured temp/pulse before meal", "Measured temp/pulse 30-60 min after", "Noted warmth and mood changes"],
-    alternatives: ["If tracking numbers feels overwhelming, just track: Warmer/Cooler/Same and Calmer/Anxious/Same"],
-    inputs: [
-      { id: "beforeTemp", label: "Temperature Before Meal", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
-      { id: "beforePulse", label: "Pulse Before Meal", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 },
-      { id: "afterTemp", label: "Temperature After Meal (30-60 min)", unit: "°F", type: "number" as const, min: 94, max: 102, step: 0.1 },
-      { id: "afterPulse", label: "Pulse After Meal (30-60 min)", unit: "bpm", type: "number" as const, min: 40, max: 150, step: 1 }
-    ]
-  },
   {
     id: "warm-vs-cold-foods",
     title: "Warm vs Cold Foods",
