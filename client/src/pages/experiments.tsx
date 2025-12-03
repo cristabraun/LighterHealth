@@ -17,10 +17,9 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Beaker, Clock, ChevronDown, ChevronUp, CheckCircle2, XCircle, Volume2 } from "lucide-react";
+import { Beaker, Clock, ChevronDown, ChevronUp, CheckCircle2, XCircle } from "lucide-react";
 import { EXPERIMENTS } from "@/data/experiments";
 import type { ActiveExperiment, ExperimentTemplate, DailyMeasurements } from "@shared/schema";
-import experimentsAudio from "@assets/Five Foundational Metabolic Experiments_1764467246426.wav?url";
 
 export default function Experiments() {
   const { toast } = useToast();
@@ -176,18 +175,7 @@ export default function Experiments() {
         </div>
 
         <Card className="p-6 space-y-4 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-experiments-intro">
-          <div className="flex items-center gap-3">
-            <Volume2 className="w-5 h-5 text-primary" data-testid="icon-volume" />
-            <h2 className="text-lg font-semibold" data-testid="heading-how-to-use">How to Use the Experiments Page</h2>
-          </div>
-          <audio 
-            controls 
-            className="w-full rounded-md"
-            data-testid="audio-experiments-guide"
-          >
-            <source src={experimentsAudio} type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
+          <h2 className="text-lg font-semibold" data-testid="heading-how-to-use">How to Use the Experiments Page</h2>
         </Card>
 
         {/* Active Experiments Section - 2-column grid on desktop */}
