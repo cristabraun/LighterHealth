@@ -68,8 +68,8 @@ export default function Onboarding() {
   if (step === 1) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10 flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-md space-y-8 text-center">
-          <div className="space-y-4">
+        <div className="w-full max-w-4xl mx-auto px-4 md:px-6 space-y-8">
+          <div className="space-y-4 text-center">
             <div className="flex justify-center">
               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-chart-2 flex items-center justify-center">
                 <Sparkles className="w-10 h-10 text-white" />
@@ -78,33 +78,36 @@ export default function Onboarding() {
             <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">
               Welcome to Lighter™
             </h1>
-            <p className="text-xl text-foreground font-medium">
-              Become Lighter™
-            </p>
-            <div className="flex items-center justify-center gap-6 text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Heart className="w-5 h-5 text-primary" />
-                <span className="text-sm">Emotionally</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-5 h-5 text-primary" />
-                <span className="text-sm">Energetically</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <ThermometerSun className="w-5 h-5 text-primary" />
-                <span className="text-sm">Physically</span>
-              </div>
-            </div>
           </div>
 
-          <Card className="p-8 space-y-6 text-left">
-            <div className="space-y-3">
-              <h2 className="text-lg font-semibold">This is NOT a diet app</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                We track energy first. Weight loss is just a side effect of a healthy, healed metabolism.
+          <Card className="p-6 space-y-6 text-left bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-foreground">
+                A softer way to heal your metabolism.
+              </h2>
+              
+              <p className="text-base text-foreground leading-relaxed">
+                This isn't a diet app. It's a calm, supportive space where your body finally gets to feel safe again.
               </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Your body knows what it needs. We help you discover it through personalized experiments and tracking what makes YOU feel lighter.
+              
+              <p className="text-base text-muted-foreground leading-relaxed">
+                When your body feels safe, everything becomes easier: you warm up, you digest better, your energy stabilizes, and weight loss stops being a battle.
+              </p>
+              
+              <div className="space-y-3 pt-2">
+                <p className="text-sm font-semibold text-foreground">
+                  Inside Lighter™, you'll learn how to:
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-2 pl-4">
+                  <li>• Support your metabolism instead of fighting it</li>
+                  <li>• Lower stress physiology</li>
+                  <li>• Track what your body is telling you</li>
+                  <li>• Experiment gently to see what makes YOU feel better</li>
+                </ul>
+              </div>
+              
+              <p className="text-base font-medium text-foreground pt-2">
+                A lighter life starts here.
               </p>
             </div>
 
@@ -125,13 +128,13 @@ export default function Onboarding() {
   if (step === 2) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10 flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-4xl mx-auto px-4 md:px-6 space-y-6">
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-bold">What should we call you?</h2>
             <p className="text-muted-foreground">Let's personalize your experience</p>
           </div>
 
-          <Card className="p-8 space-y-6">
+          <Card className="p-6 space-y-6 bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20">
             <div className="space-y-3">
               <Label htmlFor="name" className="text-base">Your Name</Label>
               <Input
@@ -166,7 +169,7 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-chart-2/10 flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-md space-y-6">
+      <div className="w-full max-w-4xl mx-auto px-4 md:px-6 space-y-6">
         <div className="text-center space-y-2">
           <h2 className="text-2xl font-bold">Quick Metabolic Assessment</h2>
           <p className="text-muted-foreground">
@@ -174,7 +177,7 @@ export default function Onboarding() {
           </p>
         </div>
 
-        <Card className="p-6 space-y-6 max-h-[600px] overflow-y-auto">
+        <Card className="p-6 space-y-6 max-h-[600px] overflow-y-auto bg-gradient-to-br from-primary/10 to-chart-2/10 border-primary/20">
           <div className="space-y-4">
             {SYMPTOMS.map((symptom) => (
               <div key={symptom} className="flex items-start space-x-3 p-3 rounded-lg hover-elevate">
