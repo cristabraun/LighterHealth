@@ -287,7 +287,11 @@
   }
 }
 
-/* Frosted Glass / Glassmorphism Effect */
+/* ============================================================
+   LIGHTER™ DESIGN SYSTEM - GLOBAL UTILITIES
+   ============================================================ */
+
+/* FROSTED GLASS / GLASSMORPHISM EFFECT */
 .frosted-glass {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
@@ -319,6 +323,96 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   TYPOGRAPHY SYSTEM
+   ============================================================ */
+.page-title {
+  @apply text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent pb-1;
+}
+
+.page-subtitle {
+  @apply text-lg md:text-xl text-muted-foreground font-normal leading-relaxed;
+}
+
+.section-title {
+  @apply text-2xl md:text-3xl font-bold text-foreground;
+}
+
+.section-subtitle {
+  @apply text-base md:text-lg text-muted-foreground;
+}
+
+.card-title {
+  @apply text-lg font-semibold text-foreground;
+}
+
+.card-subtitle {
+  @apply text-sm text-muted-foreground;
+}
+
+/* ============================================================
+   SPACING SYSTEM
+   ============================================================ */
+.page-container {
+  @apply max-w-6xl mx-auto px-6;
+}
+
+.section-padding {
+  @apply py-8 md:py-12;
+}
+
+.section-spacing {
+  @apply space-y-8 md:space-y-12;
+}
+
+.card-padding {
+  @apply p-4 md:p-6;
+}
+
+.card-spacing {
+  @apply space-y-3 md:space-y-4;
+}
+
+/* ============================================================
+   CARD SYSTEM - Standard reusable card base
+   ============================================================ */
+.card-base {
+  @apply frosted-glass-warm rounded-xl;
+}
+
+.card-interactive {
+  @apply card-base hover-elevate cursor-pointer transition-all;
+}
+
+/* ============================================================
+   SECTION CONTAINERS
+   ============================================================ */
+.page-section {
+  @apply section-padding border-b border-border/40;
+}
+
+.page-section-last {
+  @apply section-padding;
+}
+
+/* ============================================================
+   GRID SYSTEMS
+   ============================================================ */
+.grid-responsive-2 {
+  @apply grid md:grid-cols-2 gap-6 md:gap-8;
+}
+
+.grid-responsive-3 {
+  @apply grid md:grid-cols-3 gap-6 md:gap-8;
+}
+
+/* ============================================================
+   UTILITY OVERLAYS & HEADERS
+   ============================================================ */
+.header-frosted {
+  @apply border-b border-border/40 bg-white/50 dark:bg-background/50 backdrop-blur-sm sticky top-0 z-40;
 }
 
 /* Hide Replit branding */
