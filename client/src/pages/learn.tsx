@@ -29,7 +29,7 @@ export default function Learn() {
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-8">
 
         {/* --- START HERE SECTION --- */}
-        <Card className="p-5 md:p-6 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border border-rose-100 dark:border-rose-800/30 rounded-xl">
+        <Card className="p-5 md:p-6 bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/30 rounded-xl">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
             Start Here
           </h2>
@@ -41,7 +41,7 @@ export default function Learn() {
         </Card>
 
         {/* --- AUDIO PLAYER --- */}
-        <Card className="p-4 rounded-xl shadow-sm bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm">
+        <Card className="p-4 rounded-xl shadow-sm bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border-white/20 dark:border-slate-700/30">
           <div className="flex items-center gap-2 mb-2">
             <Volume2 className="w-4 h-4 text-primary" />
             <p className="text-gray-700 dark:text-gray-300 font-medium">Play Welcome Audio</p>
@@ -65,7 +65,7 @@ export default function Learn() {
         <div className="space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
 
           {/* ENERGY BASICS */}
-          <Card className="p-5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm" data-testid="card-energy-basics">
+          <Card className="p-5 rounded-xl bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border-white/20 dark:border-slate-700/30" data-testid="card-energy-basics">
             <div className="flex items-center gap-3 mb-2">
               <div className="h-8 w-8 rounded-full bg-orange-200 dark:bg-orange-900/50 text-orange-800 dark:text-orange-200 flex items-center justify-center font-bold">
                 1
@@ -202,7 +202,7 @@ export default function Learn() {
 
 
           {/* STRESS PHYSIOLOGY */}
-          <Card className="p-5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm" data-testid="card-stress-physiology">
+          <Card className="p-5 rounded-xl bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border-white/20 dark:border-slate-700/30" data-testid="card-stress-physiology">
             <div className="flex items-center gap-3 mb-2">
               <div className="h-8 w-8 rounded-full bg-yellow-200 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 flex items-center justify-center font-bold">
                 2
@@ -394,7 +394,7 @@ export default function Learn() {
 
 
           {/* FOOD FOUNDATIONS */}
-          <Card className="p-5 rounded-xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm" data-testid="card-food-foundations">
+          <Card className="p-5 rounded-xl bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border-white/20 dark:border-slate-700/30" data-testid="card-food-foundations">
             <div className="flex items-center gap-3 mb-2">
               <div className="h-8 w-8 rounded-full bg-rose-200 dark:bg-rose-900/50 text-rose-800 dark:text-rose-200 flex items-center justify-center font-bold">
                 3

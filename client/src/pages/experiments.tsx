@@ -175,7 +175,7 @@ export default function Experiments() {
           </p>
         </div>
 
-        <Card className="p-6 space-y-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm border-violet-200/50 dark:border-violet-800/30" data-testid="card-experiments-intro">
+        <Card className="p-6 space-y-4 bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border-white/20 dark:border-slate-700/30" data-testid="card-experiments-intro">
           <h2 className="text-lg font-semibold text-violet-800 dark:text-violet-300" data-testid="heading-how-to-use">How to Use the Experiments Page</h2>
           
           <div className="text-sm text-violet-700 dark:text-violet-300/90 space-y-4">
@@ -262,7 +262,7 @@ export default function Experiments() {
                   return (
                     <Card
                       key={active.id}
-                      className="p-4 space-y-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm"
+                      className="p-4 space-y-3 bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border-white/20 dark:border-slate-700/30"
                       data-testid={`card-active-${active.id}`}
                     >
                       <div className="flex items-start justify-between gap-2">
