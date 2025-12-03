@@ -607,23 +607,171 @@ export default function Learn() {
             </Button>
 
             {openSection === 'vitals' && (
-              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-3">
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Warmth as a Healing Marker</h4>
+              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">1. Warmth = High Metabolic Function</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Warm hands, feet, and nose are signs your metabolism is producing enough 
-                  energy and your thyroid is supported.
+                  In the pro-metabolic framework, body warmth is a direct indicator of cellular energy production. When your cells efficiently generate ATP, CO₂, and heat, you experience natural warmth, mental clarity, and emotional stability.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">A warm body signals:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Active thyroid function</li>
+                  <li>Low stress hormone production</li>
+                  <li>Efficient mitochondrial energy generation</li>
+                  <li>Optimal digestion and stable mood</li>
+                  <li>Strong metabolic resilience</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">Cold extremities indicate low energy output:</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Cold hands, cold feet, or a persistently cold nose aren't just discomforts—they're signs that your cells aren't producing adequate energy. Your body prioritizes warming vital organs first, so cold extremities reveal that your metabolism is operating below optimal capacity.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  Warmth isn't merely about comfort—it's a real-time window into how efficiently your cells are converting fuel into usable energy.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">What Pulse Shows</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">2. Pulse = Your Metabolic Fuel Source Indicator</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  A healthy pulse (75–90 bpm) means your cells are using energy well. A 
-                  low pulse can signal sluggish thyroid function or chronic stress.
+                  Your resting pulse rate provides immediate feedback about whether your body is running on sustainable cellular energy or compensating with stress hormones.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">A healthy pro-metabolic pulse:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Rests between 75–90 beats per minute during the day</li>
+                  <li>Feels strong and steady, not racing or pounding</li>
+                  <li>Accompanies a warm body temperature</li>
+                  <li>Remains relatively stable throughout the day</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">A chronically low pulse often indicates:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Suppressed thyroid activity</li>
+                  <li>Elevated serotonin or cortisol</li>
+                  <li>Low blood sugar availability</li>
+                  <li>Metabolic "hibernation" mode</li>
+                  <li>Slowed cellular respiration</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">A high pulse with cold body temperature signals:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Heavy reliance on adrenaline for energy</li>
+                  <li>Insufficient ATP production at the cellular level</li>
+                  <li>Compensation rather than true vitality</li>
+                  <li>Stress-driven metabolism rather than sugar-driven</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  Your pulse reveals what type of energy your body is running on—sustainable cellular fuel or emergency stress hormones.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Temperature Patterns</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">3. Body Temperature Reflects Thyroid and Energy Production</h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Morning temperatures show thyroid baseline. Rising temperatures through 
-                  the day show your metabolism is responding to food and movement.
+                  Your thyroid gland orchestrates how your cells use oxygen and glucose to produce heat and energy. Body temperature is therefore one of the most reliable indicators of metabolic rate.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Optimal daytime temperature range:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>97.8–98.6°F (measured orally or under the arm)</li>
+                  <li>Consistent throughout the day</li>
+                  <li>Accompanied by warm hands and feet</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">Low body temperature indicates:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Reduced metabolic rate</li>
+                  <li>Possible thyroid insufficiency</li>
+                  <li>Cellular energy production below optimal levels</li>
+                  <li>The overlap between stress physiology and aging physiology</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  Think of body temperature as your metabolism's fuel gauge—it shows how much energy your cells are actually generating, not just how much fuel you're consuming.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">4. These Vitals Reveal Whether You're in Energy Mode or Stress Mode</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Tracking temperature and pulse together creates a complete picture of your metabolic state. These simple measurements show whether your body is operating from a place of abundance or scarcity.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium text-green-700 dark:text-green-400">Energy Mode (Optimal Metabolism):</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Warm body and extremities</li>
+                  <li>Steady, appropriate pulse rate</li>
+                  <li>Stable, positive mood</li>
+                  <li>Efficient digestion</li>
+                  <li>Low cortisol and balanced stress response</li>
+                  <li>Hormonal balance and regular cycles</li>
+                  <li>Restful, uninterrupted sleep</li>
+                  <li>Mental clarity and focus</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium text-red-700 dark:text-red-400 mt-2">Stress Mode (Compromised Metabolism):</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Cold hands, feet, or overall body</li>
+                  <li>Low, erratic, or compensatory high pulse</li>
+                  <li>Persistent fatigue despite rest</li>
+                  <li>Irritability or mood swings</li>
+                  <li>Pronounced PMS or hormonal symptoms</li>
+                  <li>Digestive issues (bloating, constipation)</li>
+                  <li>Waking frequently during the night</li>
+                  <li>Brain fog and difficulty concentrating</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">The fundamental principle:</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When cellular energy production is abundant, all body systems function smoothly. When energy generation is blocked or insufficient, the body shifts into stress-compensation mode, and symptoms cascade across multiple systems.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  Your vitals show you which metabolic world your body currently inhabits.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">5. Why Self-Tracking Creates Healing Awareness</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  The pro-metabolic approach strongly encourages regular tracking of key metrics because patterns reveal what supports versus undermines your energy production.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">What to track:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Morning and afternoon body temperature</li>
+                  <li>Resting pulse at multiple times of day</li>
+                  <li>Physical symptoms and their timing</li>
+                  <li>Sleep quality and interruptions</li>
+                  <li>Responses to different foods and meals</li>
+                  <li>Mood and energy fluctuations</li>
+                  <li>Menstrual cycle changes (if applicable)</li>
+                  <li>Stress levels and recovery capacity</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">What patterns reveal:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Which foods consistently increase warmth and energy</li>
+                  <li>Which meals cause pulse crashes or temperature drops</li>
+                  <li>Whether stress is accumulating or resolving</li>
+                  <li>How your metabolism adapts over time</li>
+                  <li>Whether your interventions are actually working</li>
+                  <li>Your body's unique metabolic rhythms</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Self-tracking transforms your body from a confusing mystery into an intelligible feedback system. You gain the ability to make informed adjustments based on objective data rather than guesswork or generic advice.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">The tracking mindset shift:</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Instead of following rigid protocols blindly, you learn to read your body's signals and adjust accordingly. This creates a dynamic, personalized approach to metabolic healing where you become the expert on your own physiology.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Why These Markers Matter So Much</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Warmth, temperature, and pulse are powerful because they provide simple, accessible, real-time indicators of:
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li><span className="font-medium">Thyroid function</span> – How well your master metabolic regulator is working</li>
+                  <li><span className="font-medium">Stress load</span> – Whether you're running on cellular energy or stress hormones</li>
+                  <li><span className="font-medium">Energy production</span> – How efficiently your mitochondria are generating ATP</li>
+                  <li><span className="font-medium">Metabolic resilience</span> – Your capacity to handle physical and emotional demands</li>
+                  <li><span className="font-medium">Overall vitality</span> – The foundational health that supports everything else</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  These measurements show how effectively you're producing energy—and energy production is the foundation of metabolic health.
+                </p>
+
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-4">The core insight:</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Healing your metabolism isn't about following complicated protocols or restricting yourself into wellness. It's about understanding what supports your body's natural energy-generating capacity and providing the right conditions for that energy to flourish.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                  <span className="text-green-700 dark:text-green-400">Warm body, steady pulse, stable energy</span> = cells producing abundant ATP = metabolism functioning as designed.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  <span className="text-red-700 dark:text-red-400">Cold body, erratic pulse, persistent fatigue</span> = cells struggling to produce energy = metabolism in stress compensation mode.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic mt-2">
+                  These simple vitals give you immediate, honest feedback about whether your current approach is genuinely healing your metabolism or just masking symptoms while the underlying energy crisis continues.
                 </p>
               </div>
             )}
