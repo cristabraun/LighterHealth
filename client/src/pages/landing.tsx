@@ -105,16 +105,6 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="space-y-8 pt-8 border-t border-border/40">
-              <div className="max-w-2xl mx-auto text-center space-y-4">
-                <p className="text-base text-foreground leading-relaxed">Lighter™ helps you see what's really been happening beneath the surface.</p>
-                <p className="text-base text-muted-foreground leading-relaxed">Your body is always speaking through signals most apps ignore—sleep, temperature, pulse, mood, cravings.</p>
-                <p className="text-base text-muted-foreground leading-relaxed">These reveal where stress is hiding and slowing your metabolism down.</p>
-                <p className="text-base text-muted-foreground leading-relaxed">The things most diets never taught you to notice.</p>
-                <p className="text-base text-foreground font-medium leading-relaxed">Finally understand what your body has been trying to tell you.</p>
-              </div>
-            </div>
-
             <div className="space-y-6 pt-4">
               <div className="flex flex-col items-center gap-4" data-testid="section-pricing">
                 <div className="space-y-2">
@@ -409,8 +399,14 @@ export default function Landing() {
 
       {/* CTA Section */}
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-24 text-center" data-testid="section-cta">
-        <h2 className="text-3xl font-bold mb-4" data-testid="heading-cta">Ready to Feel Lighter?</h2>
-        <p className="text-base text-muted-foreground mb-8" data-testid="subheading-cta">Start tracking, understanding, and healing your metabolism today.</p>
+        <h2 className="text-3xl font-bold mb-8" data-testid="heading-cta">Ready to Feel Lighter?</h2>
+        <div className="space-y-4 mb-8">
+          <p className="text-base text-foreground leading-relaxed">Lighter™ helps you see what's really been happening beneath the surface.</p>
+          <p className="text-base text-muted-foreground leading-relaxed">Your body is always speaking through signals most apps ignore—sleep, temperature, pulse, mood, cravings.</p>
+          <p className="text-base text-muted-foreground leading-relaxed">These reveal where stress is hiding and slowing your metabolism down.</p>
+          <p className="text-base text-muted-foreground leading-relaxed">The things most diets never taught you to notice.</p>
+          <p className="text-base text-foreground font-medium leading-relaxed">Finally understand what your body has been trying to tell you.</p>
+        </div>
         <Button 
           onClick={() => window.location.href = '/api/login'}
           className="h-16 px-10 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
