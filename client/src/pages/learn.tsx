@@ -804,36 +804,239 @@ export default function Learn() {
             </Button>
 
             {openSection === 'tools' && (
-              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-3">
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Carrot Salad</h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Daily raw carrot salad binds estrogen and endotoxin, reduces bloating, 
-                  and lowers stress burden.
+              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-4">
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                  Simple, measurable practices based on pro-metabolic principles to restore energy, warmth, and vitality.
                 </p>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">White Button Mushrooms</h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Mushrooms lower aromatase, reduce estrogen burden, and support immune 
-                  and gut balance.
-                </p>
+                {/* Experiment 1: Temperature Tracking */}
+                <div className="border-l-4 border-orange-400 pl-4">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Experiment 1: Track Your Temperature Daily</h4>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">What it is:</span> Measure your body temperature 2–3 times per day to understand your baseline metabolic function and track improvements over time.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">How to do it:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Take your temperature upon waking (before getting out of bed)</li>
+                    <li>Take it again mid-morning (around 10–11 AM)</li>
+                    <li>Take it once more in the afternoon (around 2–4 PM)</li>
+                    <li>Use an oral or underarm thermometer</li>
+                    <li>Log your readings in the Lighter app along with how you feel</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">Why it matters:</span> Temperature is your metabolism's fuel gauge. It shows whether your thyroid is active and your cells are producing adequate energy. Tracking creates awareness and reveals patterns—you'll see which foods, activities, and lifestyle choices raise your temperature (meaning they support your metabolism) and which ones lower it (meaning they create metabolic stress).
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">What you're looking for:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Gradual upward trends toward 97.8–98.6°F</li>
+                    <li>More consistent readings throughout the day</li>
+                    <li>Correlation between warmer temps and better energy/mood</li>
+                    <li>Warm hands and feet accompanying higher readings</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 italic mt-2">
+                    The healing insight: When you see your temperature rise consistently, you're witnessing cellular energy production improve in real time. This isn't subjective—it's measurable metabolic healing.
+                  </p>
+                </div>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Orange Juice</h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Fresh OJ provides easy-to-digest sugar, potassium, and vitamin C that 
-                  support liver and thyroid function.
-                </p>
+                {/* Experiment 2: Carrot Salad */}
+                <div className="border-l-4 border-orange-400 pl-4">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Experiment 2: Eat a Daily Carrot Salad</h4>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">What it is:</span> One raw carrot salad per day, designed to gently cleanse excess estrogen, endotoxins, and inflammatory compounds from your digestive system.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">How to make it:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>1 large raw carrot, shredded or grated</li>
+                    <li>1–2 tablespoons coconut oil or olive oil</li>
+                    <li>1 tablespoon vinegar (apple cider or white)</li>
+                    <li>Pinch of salt</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                    Mix and eat, preferably between meals or before dinner.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">Why it matters:</span> Raw carrots contain unique insoluble fibers that bind to excess estrogen, bacterial endotoxins, and bile acids in your intestines, helping your body eliminate them before they're reabsorbed. This reduces the toxic load on your liver, lowers systemic inflammation, and helps rebalance hormones—all of which support better thyroid function and metabolic rate.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">What you might notice:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Improved digestion and regularity</li>
+                    <li>Reduced bloating</li>
+                    <li>Better mood and less PMS</li>
+                    <li>Clearer skin</li>
+                    <li>More stable energy</li>
+                    <li>Gradual reduction in stress-related symptoms</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 italic mt-2">
+                    The healing insight: Your gut health directly impacts your metabolic health. By reducing endotoxin and estrogen recirculation, you're removing metabolic brakes that have been slowing down your thyroid and energy production. This simple daily practice creates space for your metabolism to function more efficiently.
+                  </p>
+                </div>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Gelatin & Bone Broth</h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Glycine-rich foods balance amino acids, support gut healing, and improve 
-                  sleep quality.
-                </p>
+                {/* Experiment 3: Eliminate PUFAs */}
+                <div className="border-l-4 border-orange-400 pl-4">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Experiment 3: Eliminate PUFAs (Polyunsaturated Fats)</h4>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">What it is:</span> Systematically remove seed oils and PUFA-rich foods from your diet and replace them with stable, metabolism-supporting fats.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">Foods/oils to eliminate:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Canola, soybean, corn, sunflower, safflower oils</li>
+                    <li>Vegetable oil and "blended" oils</li>
+                    <li>Most restaurant and packaged foods (read labels carefully)</li>
+                    <li>Margarine and industrial spreads</li>
+                    <li>Most nuts and seeds (especially in large quantities)</li>
+                    <li>Conventional chicken and pork (high in PUFA from feed)</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">Replace with:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Butter (grass-fed when possible)</li>
+                    <li>Coconut oil</li>
+                    <li>Olive oil (in moderation, not heated)</li>
+                    <li>Beef tallow or lamb fat</li>
+                    <li>Dairy fats (cream, cheese, whole milk)</li>
+                    <li>Cacao butter</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">Why it matters:</span> PUFAs are chemically unstable and easily oxidize in your body, where they accumulate in cell membranes and interfere with mitochondrial respiration. They directly suppress thyroid function, block glucose metabolism, promote inflammation, and increase estrogen dominance. Removing them is often the single most powerful metabolic intervention you can make.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">What you might notice:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Increased body warmth (especially in hands and feet)</li>
+                    <li>More stable energy without crashes</li>
+                    <li>Reduced inflammation and pain</li>
+                    <li>Better hormone balance</li>
+                    <li>Improved sleep quality</li>
+                    <li>Weight loss or easier weight management</li>
+                    <li>Clearer thinking</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 italic mt-2">
+                    The healing insight: PUFAs have accumulated in your tissues over years or decades. As you stop consuming them and they gradually clear from your system, your mitochondria can finally produce energy efficiently again. This experiment often creates the most dramatic and sustained improvements because you're removing a fundamental metabolic blocker.
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                    Timeline note: Full PUFA clearance can take 2–4 years, but most people notice significant improvements within weeks to months.
+                  </p>
+                </div>
 
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">Salt & Hydration</h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Proper sodium intake supports adrenal function, blood pressure regulation, 
-                  and reduces stress hormones.
-                </p>
+                {/* Experiment 4: Sunlight */}
+                <div className="border-l-4 border-orange-400 pl-4">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Experiment 4: Get Sunlight Daily</h4>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">What it is:</span> Expose your skin and eyes to natural sunlight every day, prioritizing morning and midday light.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">How to do it:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Get outside within 30–60 minutes of waking</li>
+                    <li>Aim for 10–30 minutes of direct sunlight on your skin (arms, legs, face)</li>
+                    <li>Don't wear sunglasses during safe morning/evening light</li>
+                    <li>Take a midday sun break when possible (even 5–10 minutes helps)</li>
+                    <li>If you work indoors, eat lunch outside or take walking breaks</li>
+                    <li>In winter or low-light climates, maximize whatever light exposure you can get</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">Why it matters:</span> Sunlight does far more than produce vitamin D. Morning light sets your circadian rhythm, which regulates cortisol, melatonin, thyroid function, and metabolic rate. UV exposure supports steroid hormone production (including progesterone and pregnenolone), reduces inflammation, improves mitochondrial function, and directly supports cellular energy production. Red and near-infrared wavelengths penetrate deep into tissues and enhance ATP generation.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">What you might notice:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Better sleep quality and easier waking</li>
+                    <li>Improved mood and reduced anxiety</li>
+                    <li>More consistent energy throughout the day</li>
+                    <li>Reduced inflammation and pain</li>
+                    <li>Better stress resilience</li>
+                    <li>Improved body temperature regulation</li>
+                    <li>Enhanced sense of vitality</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 italic mt-2">
+                    The healing insight: Your body is designed to interact with natural light. Modern indoor living has disconnected us from this fundamental metabolic signal. Sunlight exposure recalibrates your hormonal and circadian systems, allowing your metabolism to function according to its natural design. Light is information—and your metabolism needs that information to heal.
+                  </p>
+                </div>
+
+                {/* Experiment 5: Joy & Presence */}
+                <div className="border-l-4 border-orange-400 pl-4">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Experiment 5: Do Something You Love Daily & Come Home to Your Body</h4>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">What it is:</span> Intentionally engage in an activity that brings you genuine joy, relaxation, or fulfillment every single day—and practice being fully present in your body while doing it.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">Choose activities that genuinely nourish you:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Creative pursuits (painting, music, writing, crafting)</li>
+                    <li>Gentle movement you enjoy (walking, dancing, swimming, stretching)</li>
+                    <li>Social connection (calling a friend, quality time with loved ones)</li>
+                    <li>Being in nature (gardening, hiking, sitting outside)</li>
+                    <li>Reading, listening to music, cooking a beautiful meal</li>
+                    <li>Any hobby or practice that makes you feel alive and peaceful</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">The "coming home" practice:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>While doing your chosen activity, actively relax your shoulders, jaw, and belly</li>
+                    <li>Breathe slowly and fully</li>
+                    <li>Notice sensations in your body without judgment</li>
+                    <li>Let go of rushing or productivity pressure</li>
+                    <li>Give yourself full permission to simply be rather than constantly do</li>
+                    <li>Practice feeling safe in your body</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                    <span className="font-medium">Why it matters:</span> Chronic stress and nervous system dysregulation suppress metabolism just as powerfully as poor nutrition. When you're constantly in fight-or-flight mode—rushing, worrying, pushing, never feeling safe or satisfied—your body produces cortisol and adrenaline instead of thyroid hormone and progesterone. True metabolic healing requires nervous system healing.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    Joy, presence, and embodied relaxation signal to your body that it's safe to produce energy, digest food properly, balance hormones, and invest in healing rather than survival.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">What you might notice:</p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Decreased anxiety and mental tension</li>
+                    <li>Better digestion (especially when you eat in a relaxed state)</li>
+                    <li>Improved sleep</li>
+                    <li>More stable mood and emotional resilience</li>
+                    <li>Reduced pain and inflammation</li>
+                    <li>Higher body temperature and steadier pulse</li>
+                    <li>A sense of finally feeling "like yourself" again</li>
+                  </ul>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 italic mt-2">
+                    The healing insight: Your metabolism cannot fully heal while your nervous system remains in chronic stress mode. Doing what you love isn't selfish or indulgent—it's a metabolic necessity. When you come home to your body through presence and joy, you're literally signaling your cells that it's safe to shift from stress-based survival metabolism to energy-abundant, regenerative metabolism.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                    This experiment recognizes that you are not a machine to be optimized—you're a living being whose energy and healing capacity flourish in conditions of safety, pleasure, and genuine self-care.
+                  </p>
+                </div>
+
+                {/* How to Use These Experiments */}
+                <div className="mt-6 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">How to Use These Experiments on Lighter</h4>
+                  
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-3">Start with tracking:</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    Temperature tracking (Experiment 1) gives you objective data to measure whether the other experiments are working for your unique body.
+                  </p>
+                  
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-3">Add experiments gradually:</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    You don't need to do all five perfectly from day one. Start with one or two, establish consistency, then add more. Track your temperature, symptoms, and how you feel throughout.
+                  </p>
+                  
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-3">Look for patterns:</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    Use the Lighter app to log your experiments and notice:
+                  </p>
+                  <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                    <li>Which combinations increase your temperature most</li>
+                    <li>How your energy and mood shift over time</li>
+                    <li>What creates the biggest improvements in your specific symptoms</li>
+                  </ul>
+                  
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-3">Trust the process:</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    Metabolic healing isn't linear. You may have ups and downs, but consistent practice of these experiments creates the conditions for your body to restore its natural energy-producing capacity.
+                  </p>
+                </div>
+
+                {/* The Fundamental Truth */}
+                <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">The fundamental truth:</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                    These aren't restrictions or punishments—they're invitations to provide your body with what it's been missing: stable fuel sources, reduced toxic load, natural light, nervous system safety, and the conditions for cellular energy to flourish.
+                  </p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-medium italic mt-2">
+                    When you give your body these things consistently, your metabolism remembers how to heal.
+                  </p>
+                </div>
               </div>
             )}
           </Card>
