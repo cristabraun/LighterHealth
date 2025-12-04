@@ -262,6 +262,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get('/api/food-logs/:date', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { date } = req.params;
+      const foodLogs = await storage.getFoodLogs(userId, date);
+      res.json(foodLogs);
+    } catch (error) {
+      console.error("Error fetching food logs:", error);
+      res.status(500).json({ message: "Failed to fetch food logs" });
+    }
+  });
+
+  // Legacy query parameter support (for backwards compatibility)
   app.get('/api/food-logs', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
