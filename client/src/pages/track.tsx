@@ -351,83 +351,17 @@ export default function Track() {
           </div>
         </Card>
 
-        {/* Quick Start Guide Card */}
-        <div className="rounded-xl p-5 md:p-6 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/20 dark:to-purple-950/20 border border-violet-200/50 dark:border-violet-800/30 shadow-sm mt-4">
-          <details className="group">
-            <summary className="cursor-pointer flex items-center justify-between text-violet-900 dark:text-violet-200 font-semibold text-lg md:text-xl tracking-tight">
-              Quick Start Guide
-              <span className="text-violet-600 dark:text-violet-400 group-open:hidden text-2xl leading-none">+</span>
-              <span className="text-violet-600 dark:text-violet-400 hidden group-open:inline text-2xl leading-none">−</span>
-            </summary>
-
-            <div className="mt-4 text-violet-900 dark:text-violet-200 space-y-4 text-sm md:text-base leading-relaxed">
-              <p className="font-medium">If you're just getting started, here's exactly what to do today. This whole routine takes 2–3 minutes and gives you everything you need to begin supporting your metabolism.</p>
-
-              <div className="space-y-3">
-                <div>
-                  <p className="font-semibold">1. Track Your Morning Vitals</p>
-                  <p>Take your temperature and pulse first thing in the morning. These two numbers show how well your metabolism is working.</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">2. Track How You Feel Throughout the Day</p>
-                  <p className="mb-2">Record each day:</p>
-                  <ul className="list-disc ml-5 space-y-1">
-                    <li>Energy</li>
-                    <li>Sleep quality</li>
-                    <li>Digestion</li>
-                    <li>Optional notes (anything that felt good, heavy, stressful, or calming)</li>
-                  </ul>
-                  <p className="mt-2">Over time, you'll see patterns — what supports you and what drains you.</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">3. Track Your Stress & Mood</p>
-                  <ul className="list-disc ml-5 space-y-1">
-                    <li>Rate your stress</li>
-                    <li>Rate your mood</li>
-                    <li>Add a note if anything felt different</li>
-                  </ul>
-                  <p className="mt-2">This helps you understand how your inner world affects your metabolism.</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">4. Log Your Food</p>
-                  <p>Add what you eat throughout the day. Just observing patterns helps you understand how food affects your temperature, energy, and digestion.</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">5. Use the Daily Checklist</p>
-                  <p>Inside the Track page, check off anything you completed today. It's a gentle guide — not pressure.</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">6. Explore the Experiments Page</p>
-                  <p className="mb-2">Start with the first three experiments:</p>
-                  <ul className="list-disc ml-5 space-y-1">
-                    <li>Raw carrot salad daily</li>
-                    <li>Temperature before & after meals</li>
-                    <li>Removing polyunsaturated fats</li>
-                  </ul>
-                  <p className="mt-2">Try one at a time and notice how your body responds.</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold">7. Learn More Anytime</p>
-                  <ul className="list-disc ml-5 space-y-1">
-                    <li>Visit the Learn page for deeper understanding</li>
-                    <li>Use the Ask the Lighter™ AI Coach on the Learn page</li>
-                    <li>Or message me through the Dashboard if you have questions</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="border-t border-violet-200 dark:border-violet-800/30 pt-4 mt-4">
-                <p className="font-semibold mb-2">Bottom Line</p>
-                <p>Track your vitals, feelings, food, and stress for a few minutes each day. Lighter™ will reveal the patterns — and your body will show you what's helping you feel better.</p>
-              </div>
-            </div>
-          </details>
+        {/* Subtle Tutorial Link */}
+        <div className="flex justify-center">
+          <a
+            href="https://www.youtube.com/watch?v=placeholder"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            data-testid="link-how-to-use"
+          >
+            New Here? Watch How To Use Lighter
+          </a>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
