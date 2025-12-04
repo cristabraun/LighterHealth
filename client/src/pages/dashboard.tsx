@@ -90,7 +90,9 @@ function StressTrendChart({ recentLogs = [] }: StressTrendChartProps) {
     : 'stable';
   
   const points = stressData.map((value, index) => ({
-    x: padding + (index * ((chartWidth - padding * 2) / (stressData.length - 1))),
+    x: stressData.length > 1 
+      ? padding + (index * ((chartWidth - padding * 2) / (stressData.length - 1)))
+      : chartWidth / 2,
     y: chartHeight - padding - ((value / maxStress) * (chartHeight - padding * 2))
   }));
   
@@ -175,7 +177,7 @@ function SleepQualityChart({ recentLogs = [] }: SleepQualityChartProps) {
     return date.toLocaleDateString('en-US', { weekday: 'short' });
   };
 
-  const days = sleepData.map((_, i) => getDayLabel(i));
+  const days = sleepData.length > 0 ? sleepData.map((_, i) => getDayLabel(i)) : [];
   const maxSleep = 10;
   
   const avgSleep = sleepData.length > 0

@@ -124,6 +124,19 @@ export default function Track() {
       queryClient.invalidateQueries({ queryKey: ["/api/logs"] });
       queryClient.invalidateQueries({ queryKey: ["/api/logs", today] });
 
+      // Reset form fields
+      setTemperature("");
+      setPulse("");
+      setEnergy([7]);
+      setSleep([7]);
+      setDigestion("good");
+      setHowYouFeelNotes("");
+      setDigestionNotes("");
+      setChecklistCompleted([]);
+      setStress([5]);
+      setMood("okay");
+      setMoodNotes("");
+
       const tempNum = variables.temperature;
       if (tempNum >= 98 && !sessionStorage.getItem("confetti_shown_today")) {
         confetti({
