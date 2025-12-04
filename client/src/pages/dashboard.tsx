@@ -156,31 +156,82 @@ function SleepQualityChart() {
 }
 
 // Mood Card Component
-function MoodCard() {
+interface MoodCardProps {
+  todayLog: DailyLog | undefined;
+  yesterdayLog: DailyLog | undefined;
+  recentLogs: DailyLog[];
+}
+
+function MoodCard({ todayLog, yesterdayLog, recentLogs }: MoodCardProps) {
+  const getMoodIcon = (mood: string | null | undefined) => {
+    switch (mood) {
+      case "good":
+        return <Smile className="w-8 h-8 mx-auto text-amber-500" />;
+      case "okay":
+        return <Meh className="w-8 h-8 mx-auto text-violet-500" />;
+      case "bad":
+        return <Frown className="w-8 h-8 mx-auto text-red-500" />;
+      default:
+        return <Meh className="w-8 h-8 mx-auto text-gray-400" />;
+    }
+  };
+
+  const getMoodColor = (mood: string | null | undefined) => {
+    switch (mood) {
+      case "good":
+        return "from-amber-100 to-yellow-100 dark:from-amber-900/30 dark:to-yellow-900/30";
+      case "okay":
+        return "from-violet-100 to-purple-100 dark:from-violet-900/30 dark:to-purple-900/30";
+      case "bad":
+        return "from-red-100 to-pink-100 dark:from-red-900/30 dark:to-pink-900/30";
+      default:
+        return "from-gray-100 to-gray-200 dark:from-gray-900/30 dark:to-gray-900/30";
+    }
+  };
+
+  // Calculate mood trend
+  const moodTrend = recentLogs.length >= 2
+    ? recentLogs[0]?.mood === "good" && recentLogs[1]?.mood !== "good"
+      ? "improving"
+      : recentLogs[0]?.mood === "bad" && recentLogs[1]?.mood !== "bad"
+      ? "improving"
+      : "stable"
+    : "stable";
+
   return (
     <Card className="p-5 space-y-4" data-testid="card-mood">
       <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Mood Tracker</h3>
       <div className="grid grid-cols-3 gap-3">
-        <div className="p-4 rounded-xl bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-900/30 dark:to-purple-900/30 text-center space-y-2">
-          <p className="text-[10px] font-medium text-violet-600 dark:text-violet-300 uppercase tracking-wide">Yesterday</p>
+        <div className={`p-4 rounded-xl bg-gradient-to-br ${getMoodColor(yesterdayLog?.mood)} text-center space-y-2`} data-testid="mood-yesterday">
+          <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Yesterday</p>
           <div className="text-3xl">
-            <Meh className="w-8 h-8 mx-auto text-violet-500" />
+            {getMoodIcon(yesterdayLog?.mood)}
           </div>
-          <p className="text-xs font-medium text-violet-700 dark:text-violet-300">Okay</p>
+          <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{yesterdayLog?.mood || "—"}</p>
+          {yesterdayLog?.moodNotes && (
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{yesterdayLog.moodNotes}</p>
+          )}
         </div>
-        <div className="p-4 rounded-xl bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/30 dark:to-yellow-900/30 text-center space-y-2">
-          <p className="text-[10px] font-medium text-amber-600 dark:text-amber-300 uppercase tracking-wide">Today</p>
+        <div className={`p-4 rounded-xl bg-gradient-to-br ${getMoodColor(todayLog?.mood)} text-center space-y-2`} data-testid="mood-today">
+          <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Today</p>
           <div className="text-3xl">
-            <Smile className="w-8 h-8 mx-auto text-amber-500" />
+            {getMoodIcon(todayLog?.mood)}
           </div>
-          <p className="text-xs font-medium text-amber-700 dark:text-amber-300">Good</p>
+          <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{todayLog?.mood || "—"}</p>
+          {todayLog?.moodNotes && (
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{todayLog.moodNotes}</p>
+          )}
         </div>
-        <div className="p-4 rounded-xl bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-900/30 dark:to-pink-900/30 text-center space-y-2">
+        <div className="p-4 rounded-xl bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-900/30 dark:to-pink-900/30 text-center space-y-2" data-testid="mood-trend">
           <p className="text-[10px] font-medium text-rose-600 dark:text-rose-300 uppercase tracking-wide">Trend</p>
           <div className="text-3xl">
-            <TrendingUp className="w-8 h-8 mx-auto text-rose-500" />
+            {moodTrend === "improving" ? (
+              <TrendingUp className="w-8 h-8 mx-auto text-rose-500" />
+            ) : (
+              <TrendingDown className="w-8 h-8 mx-auto text-rose-500" />
+            )}
           </div>
-          <p className="text-xs font-medium text-rose-700 dark:text-rose-300">Rising</p>
+          <p className="text-xs font-medium text-rose-700 dark:text-rose-300 capitalize">{moodTrend}</p>
         </div>
       </div>
     </Card>
@@ -284,6 +335,13 @@ export default function Dashboard() {
 
   const today = new Date().toISOString().split("T")[0];
   const todayLog = logs.find((log) => log.date === today);
+  
+  // Calculate yesterday
+  const yesterdayDate = new Date();
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  const yesterday = yesterdayDate.toISOString().split("T")[0];
+  const yesterdayLog = logs.find((log) => log.date === yesterday);
+  
   const recentLogs = logs.slice(0, 7);
 
   // Calculate averages
@@ -485,7 +543,7 @@ export default function Dashboard() {
             </div>
 
             {/* Mood Card */}
-            <MoodCard />
+            <MoodCard todayLog={todayLog} yesterdayLog={yesterdayLog} recentLogs={recentLogs} />
 
             {/* Consistency Meter */}
             <ConsistencyMeter />
