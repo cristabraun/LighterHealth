@@ -416,6 +416,120 @@ RESPONSE GUIDELINES:
     }
   });
 
+  // GitHub export endpoint - integrates with Replit GitHub connector
+  app.post('/api/github/export', async (req, res) => {
+    try {
+      const { repoName } = req.body;
+      const finalRepoName = repoName || 'LighterHealth';
+
+      // Get GitHub access token via Replit connector
+      const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME;
+      const xReplitToken = process.env.REPL_IDENTITY 
+        ? 'repl ' + process.env.REPL_IDENTITY 
+        : process.env.WEB_REPL_RENEWAL 
+        ? 'depl ' + process.env.WEB_REPL_RENEWAL 
+        : null;
+
+      if (!xReplitToken || !hostname) {
+        return res.status(500).json({ message: "GitHub connector not properly configured" });
+      }
+
+      const connectionSettings = await fetch(
+        'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=github',
+        {
+          headers: {
+            'Accept': 'application/json',
+            'X_REPLIT_TOKEN': xReplitToken
+          }
+        }
+      ).then(r => r.json()).then(data => data.items?.[0]);
+
+      const accessToken = connectionSettings?.settings?.access_token || connectionSettings?.settings?.oauth?.credentials?.access_token;
+
+      if (!accessToken) {
+        return res.status(500).json({ message: "Unable to access GitHub token" });
+      }
+
+      // Dynamically import Octokit
+      const { Octokit } = await import('@octokit/rest');
+      const octokit = new Octokit({ auth: accessToken });
+
+      // Get authenticated user
+      const { data: user } = await octokit.rest.users.getAuthenticated();
+      const owner = user.login;
+
+      // Create new repository
+      const { data: repo } = await octokit.rest.repos.createForAuthenticatedUser({
+        name: finalRepoName,
+        description: 'LighterHealth - Pro-Metabolic Health Tracking App',
+        private: false,
+        auto_init: false
+      }).catch(async (err: any) => {
+        // If repo already exists, get it instead
+        if (err.status === 422) {
+          return await octokit.rest.repos.get({ owner, repo: finalRepoName });
+        }
+        throw err;
+      });
+
+      // Initialize git if needed and push
+      const { execSync } = await import('child_process');
+      const projectRoot = process.cwd();
+
+      try {
+        // Check if git is initialized
+        execSync('git rev-parse --git-dir', { cwd: projectRoot, stdio: 'ignore' });
+      } catch {
+        // Git not initialized, initialize it
+        execSync('git init', { cwd: projectRoot });
+      }
+
+      // Always ensure git config is set (globally and locally)
+      execSync('git config --global user.email "dev@lighter.app"', { cwd: projectRoot });
+      execSync('git config --global user.name "LighterHealth App"', { cwd: projectRoot });
+      execSync('git config user.email "dev@lighter.app"', { cwd: projectRoot });
+      execSync('git config user.name "LighterHealth App"', { cwd: projectRoot });
+
+      // Set remote
+      try {
+        execSync('git remote remove origin', { cwd: projectRoot, stdio: 'ignore' });
+      } catch {
+        // Remote doesn't exist yet, that's fine
+      }
+
+      execSync(`git remote add origin https://${accessToken}@github.com/${owner}/${finalRepoName}.git`, { cwd: projectRoot });
+
+      // Stage all files
+      execSync('git add .', { cwd: projectRoot });
+
+      // Check if there are changes to commit
+      try {
+        execSync('git diff --cached --exit-code', { cwd: projectRoot, stdio: 'ignore' });
+      } catch {
+        // Changes exist, create commit
+        execSync('git commit -m "Initial export of LighterHealth app"', { cwd: projectRoot });
+
+        // Push to GitHub
+        execSync('git push -u origin main', { cwd: projectRoot }).catch(() => {
+          // If main doesn't exist, try master
+          execSync('git push -u origin master', { cwd: projectRoot });
+        });
+      }
+
+      res.json({
+        success: true,
+        repoUrl: `https://github.com/${owner}/${finalRepoName}`,
+        message: `Repository created and code pushed successfully to ${finalRepoName}`
+      });
+    } catch (error: any) {
+      console.error("Error exporting to GitHub:", error);
+      res.status(500).json({ 
+        message: "Failed to export to GitHub",
+        error: error.message 
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
