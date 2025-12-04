@@ -209,8 +209,8 @@ export default function ExperimentDetail() {
 
   if (!experimentTemplate) {
     return (
-      <div className="min-h-screen pb-24 bg-gradient-to-b from-background via-background to-primary/5">
-        <div className="max-w-md mx-auto p-6 space-y-6">
+      <div className="min-h-screen pb-20 bg-background">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
           <Link href="/experiments">
             <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-to-experiments">
               <ArrowLeft className="w-4 h-4" />
@@ -241,8 +241,8 @@ export default function ExperimentDetail() {
   }
 
   return (
-    <div className="min-h-screen pb-24 bg-gradient-to-b from-background via-background to-primary/5">
-      <div className="max-w-md mx-auto p-6 space-y-6">
+    <div className="min-h-screen pb-20 bg-background">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
         
         {/* Back Button */}
         <Link href="/experiments">
@@ -253,7 +253,7 @@ export default function ExperimentDetail() {
         </Link>
 
         {/* Experiment Overview */}
-        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5 space-y-4" data-testid="card-experiment-overview">
+        <Card className="p-6 frosted-glass-warm space-y-4" data-testid="card-experiment-overview">
           <div>
             <h1 className="text-3xl font-bold text-foreground" data-testid="heading-overview-title">
               {experimentTemplate.title}
@@ -275,7 +275,7 @@ export default function ExperimentDetail() {
         </Card>
 
         {/* Recipe/Instructions Section */}
-        <Card className="p-6 bg-white/50 dark:bg-slate-900/50" data-testid="card-recipe">
+        <Card className="p-6 frosted-glass-warm" data-testid="card-recipe">
           <h2 className="font-semibold text-foreground mb-3" data-testid="heading-recipe">
             How to Do This
           </h2>
@@ -302,7 +302,7 @@ export default function ExperimentDetail() {
 
         {/* Header Container (only show when active) */}
         {isActive && (
-        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5 space-y-4" data-testid="card-experiment-header">
+        <Card className="p-6 frosted-glass-warm space-y-4" data-testid="card-experiment-header">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1">
               <h2 className="text-lg font-semibold" data-testid="heading-progress-title">
@@ -332,7 +332,7 @@ export default function ExperimentDetail() {
 
         {/* Experiment Status Section (only show when active) */}
         {isActive && (
-        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-experiment-status">
+        <Card className="p-6 frosted-glass-warm" data-testid="card-experiment-status">
           <h2 className="font-semibold text-foreground mb-3" data-testid="heading-status">
             Experiment Status
           </h2>
@@ -344,7 +344,7 @@ export default function ExperimentDetail() {
 
         {/* Logs Section (only show when active) */}
         {isActive && (
-        <Card className="p-6 bg-gradient-to-br from-primary/5 to-chart-2/5" data-testid="card-logs">
+        <Card className="p-6 frosted-glass-warm" data-testid="card-logs">
           <div className="space-y-3">
             <h2 className="font-semibold text-foreground" data-testid="heading-logs">
               Logs
@@ -464,7 +464,7 @@ export default function ExperimentDetail() {
 
         {/* AI Insights Section (only show when active) */}
         {isActive && (
-        <Card className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-chart-2/10 border border-primary/20 rounded-lg shadow-sm" data-testid="card-ai-insights">
+        <Card className="p-6 frosted-glass-warm" data-testid="card-ai-insights">
           <div className="flex items-center gap-2 mb-4">
             <Zap className="w-5 h-5 text-primary" data-testid="icon-ai-zap" />
             <h2 className="font-semibold text-foreground" data-testid="heading-ai-insights">
@@ -506,7 +506,7 @@ export default function ExperimentDetail() {
 
         {/* Suggested Habits Section (only show when active) */}
         {isActive && logs.length > 0 && (
-          <Card className="p-6 bg-gradient-to-br from-chart-2/10 via-primary/5 to-primary/10 border border-chart-2/20 rounded-lg shadow-sm" data-testid="card-habits">
+          <Card className="p-6 frosted-glass-warm" data-testid="card-habits">
             <div className="flex items-center gap-2 mb-4">
               <Lightbulb className="w-5 h-5 text-chart-2" data-testid="icon-habit-lightbulb" />
               <h2 className="font-semibold text-foreground" data-testid="heading-habits">
