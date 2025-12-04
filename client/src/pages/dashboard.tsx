@@ -55,6 +55,83 @@ function getTodayAffirmation(): string {
   return DAILY_AFFIRMATIONS[dayOfYear % DAILY_AFFIRMATIONS.length];
 }
 
+// Generate dynamic insights based on actual user data
+function generateInsights(recentLogs: DailyLog[]): string {
+  if (recentLogs.length === 0) {
+    return "Start tracking your vitals to unlock personalized insights about your metabolic healing journey.";
+  }
+
+  const insights: string[] = [];
+  
+  // Temperature analysis
+  if (recentLogs.length >= 2) {
+    const todayTemp = recentLogs[0]?.temperature || 0;
+    const avgOlderTemp = recentLogs.slice(1).reduce((sum, log) => sum + log.temperature, 0) / (recentLogs.length - 1);
+    if (todayTemp > avgOlderTemp) {
+      insights.push("Your temperature is rising—a sign of improved metabolic function.");
+    } else if (todayTemp < avgOlderTemp - 0.5) {
+      insights.push("Your temperature dipped today. Focus on consistent nourishment and movement.");
+    }
+  }
+
+  // Energy analysis
+  const avgEnergy = recentLogs.reduce((sum, log) => sum + log.energy, 0) / recentLogs.length;
+  if (avgEnergy >= 8) {
+    insights.push("Your energy is thriving—you're nourishing your body well.");
+  } else if (avgEnergy < 5) {
+    insights.push("Consider boosting your nourishment—your energy levels could use some support.");
+  }
+
+  // Sleep analysis
+  const avgSleep = recentLogs.reduce((sum, log) => sum + log.sleep, 0) / recentLogs.length;
+  if (avgSleep >= 8) {
+    insights.push("Excellent sleep quality! Rest is crucial for metabolic healing.");
+  } else if (avgSleep < 6) {
+    insights.push("Your sleep quality is low. Prioritize rest and create a calm evening routine.");
+  }
+
+  // Stress analysis
+  const avgStress = recentLogs.reduce((sum, log) => sum + log.stress, 0) / recentLogs.length;
+  if (avgStress <= 4) {
+    insights.push("Your stress levels are beautifully low—keep up this calm momentum.");
+  } else if (avgStress >= 7) {
+    insights.push("Stress is high. Try movement, breathing, or time in nature to find relief.");
+  }
+
+  // Consistency analysis
+  const consistencyDays = recentLogs.length;
+  if (consistencyDays === 7) {
+    insights.push("Perfect week of tracking! Your consistency is building powerful metabolic insights.");
+  } else if (consistencyDays >= 5) {
+    insights.push("You're tracking consistently—this dedication is revealing your body's patterns.");
+  }
+
+  // Mood analysis
+  const goodMoodDays = recentLogs.filter(log => log.mood === "good").length;
+  const moodPercent = (goodMoodDays / recentLogs.length) * 100;
+  if (moodPercent >= 70) {
+    insights.push("Your mood has been predominantly positive—that's a win for your overall wellness.");
+  } else if (moodPercent < 30) {
+    insights.push("Your mood has been challenging. Check if stress or nutrition patterns correlate.");
+  }
+
+  // Digestion analysis
+  const goodDigestionDays = recentLogs.filter(log => log.digestion === "good").length;
+  if (goodDigestionDays >= recentLogs.length * 0.7) {
+    insights.push("Your digestion is strong—this is foundational for metabolic healing.");
+  } else if (goodDigestionDays < recentLogs.length * 0.3) {
+    insights.push("Your digestion has been sluggish. Consider the Carrot Salad Experiment or adjusting meal timing.");
+  }
+
+  // Return most relevant insight
+  if (insights.length === 0) {
+    return "Keep tracking consistently—patterns emerge with time.";
+  }
+
+  // Return the first two most impactful insights
+  return insights.slice(0, 2).join(" ");
+}
+
 // Stress Trend Line Chart Component
 interface StressTrendChartProps {
   recentLogs?: DailyLog[];
@@ -846,7 +923,7 @@ export default function Dashboard() {
               <div className="flex gap-3">
                 <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-insight-desktop">
-                  Your pulse is rising—a sign of improved metabolic function. Keep nourishing your body consistently.
+                  {generateInsights(recentLogs)}
                 </p>
               </div>
             </Card>
