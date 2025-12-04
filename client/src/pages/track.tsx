@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Thermometer, Heart, Zap, Moon, Sun, Apple, Utensils, Trash2, Plus, Check, Sparkles, Brain, Smile, Meh, Frown } from "lucide-react";
+import { Thermometer, Heart, Zap, Moon, Sun, Apple, Utensils, Trash2, Plus, Check, Sparkles, Brain, Smile, Meh, Frown, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -41,17 +41,42 @@ export default function Track() {
   const [foodItem, setFoodItem] = useState("");
   const [energyIntake, setEnergyIntake] = useState("");
   const [foodNotes, setFoodNotes] = useState("");
+  const [selectedDate, setSelectedDate] = useState<string>(() => new Date().toISOString().split('T')[0]);
 
   const today = new Date().toISOString().split('T')[0];
+  
+  const goToPreviousDay = () => {
+    const date = new Date(selectedDate);
+    date.setDate(date.getDate() - 1);
+    setSelectedDate(date.toISOString().split('T')[0]);
+  };
+  
+  const goToNextDay = () => {
+    const date = new Date(selectedDate);
+    date.setDate(date.getDate() + 1);
+    if (date.toISOString().split('T')[0] <= today) {
+      setSelectedDate(date.toISOString().split('T')[0]);
+    }
+  };
+  
+  const goToToday = () => {
+    setSelectedDate(today);
+  };
+  
+  const formatDateDisplay = (dateStr: string) => {
+    const date = new Date(dateStr + 'T00:00:00');
+    const options: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
 
   // Fetch today's log
   const { data: todaysLog } = useQuery<DailyLog>({
     queryKey: ["/api/logs", today],
   });
 
-  // Fetch today's food logs
+  // Fetch food logs for selected date
   const { data: foodLogs = [] } = useQuery<FoodLog[]>({
-    queryKey: ['/api/food-logs', today],
+    queryKey: ['/api/food-logs', selectedDate],
   });
 
   // Pre-fill form with existing data
@@ -139,7 +164,7 @@ export default function Track() {
       return await res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/food-logs', today] });
+      queryClient.invalidateQueries({ queryKey: ['/api/food-logs', selectedDate] });
       setFoodItem("");
       setEnergyIntake("");
       setFoodNotes("");
@@ -164,7 +189,7 @@ export default function Track() {
       return await res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/food-logs', today] });
+      queryClient.invalidateQueries({ queryKey: ['/api/food-logs', selectedDate] });
       toast({
         title: "Deleted",
         description: "Food log removed",
@@ -702,7 +727,19 @@ export default function Track() {
                 </div>
                 <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Food Log</h2>
               </div>
-              {!showFoodForm && (
+              {selectedDate !== today && (
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={goToToday}
+                  className="gap-1 text-xs"
+                  data-testid="button-go-to-today-food"
+                >
+                  Back to Today
+                </Button>
+              )}
+              {selectedDate === today && !showFoodForm && (
                 <Button
                   size="sm"
                   onClick={() => setShowFoodForm(true)}
@@ -712,6 +749,40 @@ export default function Track() {
                   Add Food
                 </Button>
               )}
+            </div>
+
+            {/* Date Navigation */}
+            <div className="flex items-center justify-between gap-2 p-3 bg-white/30 dark:bg-black/20 rounded-lg" data-testid="section-date-navigation-food">
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                onClick={goToPreviousDay}
+                className="h-8 w-8"
+                data-testid="button-previous-day-food"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <div className="flex items-center justify-center gap-2 flex-1">
+                <Calendar className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium" data-testid="text-selected-date-food">
+                  {formatDateDisplay(selectedDate)}
+                </span>
+                {selectedDate === today && (
+                  <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium">Today</span>
+                )}
+              </div>
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                onClick={goToNextDay}
+                className="h-8 w-8"
+                disabled={selectedDate === today}
+                data-testid="button-next-day-food"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
             </div>
 
             {showFoodForm && (
@@ -803,7 +874,7 @@ export default function Track() {
                     {foodLogs.reduce((sum, log) => sum + (log.energyIntake || 0), 0)} cal
                   </p>
                 </div>
-                <p className="text-sm text-muted-foreground">Today's meals:</p>
+                <p className="text-sm text-muted-foreground">{formatDateDisplay(selectedDate)}'s meals:</p>
                 {foodLogs.map((log) => (
                   <div
                     key={log.id}
@@ -843,7 +914,10 @@ export default function Track() {
             ) : (
               !showFoodForm && (
                 <p className="text-sm text-muted-foreground text-center py-4">
-                  No food logged yet today. Track what you eat to see how it affects your energy and vitals.
+                  {selectedDate === today 
+                    ? "No food logged yet today. Track what you eat to see how it affects your energy and vitals."
+                    : `No food logged on ${formatDateDisplay(selectedDate)}.`
+                  }
                 </p>
               )
             )}
