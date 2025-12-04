@@ -387,9 +387,13 @@ export default function Track() {
                       <Button
                         type="button"
                         size="sm"
-                        variant={temperatureUnit === "F" ? "default" : "outline"}
+                        variant="outline"
                         onClick={() => setTemperatureUnit("F")}
-                        className="h-7 px-2 text-xs"
+                        className={`h-7 px-2 text-xs transition-colors ${
+                          temperatureUnit === "F"
+                            ? "bg-blue-500 text-white border-blue-500 hover:bg-blue-600"
+                            : ""
+                        }`}
                         data-testid="button-temp-fahrenheit"
                       >
                         °F
@@ -397,9 +401,13 @@ export default function Track() {
                       <Button
                         type="button"
                         size="sm"
-                        variant={temperatureUnit === "C" ? "default" : "outline"}
+                        variant="outline"
                         onClick={() => setTemperatureUnit("C")}
-                        className="h-7 px-2 text-xs"
+                        className={`h-7 px-2 text-xs transition-colors ${
+                          temperatureUnit === "C"
+                            ? "bg-blue-500 text-white border-blue-500 hover:bg-blue-600"
+                            : ""
+                        }`}
                         data-testid="button-temp-celsius"
                       >
                         °C
