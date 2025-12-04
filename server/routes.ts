@@ -510,10 +510,12 @@ RESPONSE GUIDELINES:
         execSync('git commit -m "Initial export of LighterHealth app"', { cwd: projectRoot });
 
         // Push to GitHub
-        execSync('git push -u origin main', { cwd: projectRoot }).catch(() => {
+        try {
+          execSync('git push -u origin main', { cwd: projectRoot });
+        } catch {
           // If main doesn't exist, try master
           execSync('git push -u origin master', { cwd: projectRoot });
-        });
+        }
       }
 
       res.json({
