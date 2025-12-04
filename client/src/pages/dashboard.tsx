@@ -55,13 +55,39 @@ function getTodayAffirmation(): string {
 }
 
 // Stress Trend Line Chart Component
-function StressTrendChart() {
-  const stressData = [4, 6, 5, 7, 4, 3, 5];
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+interface StressTrendChartProps {
+  recentLogs?: DailyLog[];
+}
+
+function StressTrendChart({ recentLogs = [] }: StressTrendChartProps) {
+  const stressData = recentLogs.length > 0 
+    ? recentLogs.map(log => log.stress || 5).reverse()
+    : [4, 6, 5, 7, 4, 3, 5];
+    
+  const getDayLabel = (index: number) => {
+    if (recentLogs.length === 0) {
+      return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index];
+    }
+    const date = new Date();
+    date.setDate(date.getDate() - (recentLogs.length - 1 - index));
+    return date.toLocaleDateString('en-US', { weekday: 'short' });
+  };
+
+  const days = stressData.map((_, i) => getDayLabel(i));
   const maxStress = 10;
   const chartHeight = 120;
   const chartWidth = 280;
   const padding = 20;
+  
+  const avgStress = stressData.length > 0 
+    ? (stressData.reduce((a, b) => a + b, 0) / stressData.length).toFixed(1)
+    : '4.9';
+    
+  const stressTrend = stressData.length >= 2 
+    ? stressData[stressData.length - 1] < stressData[0]
+      ? 'improving'
+      : 'increasing'
+    : 'stable';
   
   const points = stressData.map((value, index) => ({
     x: padding + (index * ((chartWidth - padding * 2) / (stressData.length - 1))),
@@ -76,7 +102,7 @@ function StressTrendChart() {
     <Card className="p-5 space-y-4 frosted-glass-warm" data-testid="card-stress-trend">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Stress Trend</h3>
-        <Badge variant="secondary" className="text-xs bg-primary/10 text-primary">7 days</Badge>
+        <Badge variant="secondary" className="text-xs bg-primary/10 text-primary">{stressData.length} days</Badge>
       </div>
       <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-32">
         <defs>
@@ -111,10 +137,19 @@ function StressTrendChart() {
         ))}
       </svg>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-muted-foreground">Avg: 4.9/10</span>
-        <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
-          <TrendingDown className="w-3 h-3" />
-          <span>12% lower</span>
+        <span className="text-muted-foreground" data-testid="stress-avg">Avg: {avgStress}/10</span>
+        <div className="flex items-center gap-1 text-green-600 dark:text-green-400" data-testid="stress-trend">
+          {stressTrend === 'improving' ? (
+            <>
+              <TrendingDown className="w-3 h-3" />
+              <span>Improving</span>
+            </>
+          ) : (
+            <>
+              <TrendingUp className="w-3 h-3" />
+              <span>Increasing</span>
+            </>
+          )}
         </div>
       </div>
     </Card>
@@ -122,33 +157,68 @@ function StressTrendChart() {
 }
 
 // Sleep Quality Chart Component
-function SleepQualityChart() {
-  const sleepData = [7.5, 6.8, 8.2, 7.0, 6.5, 8.5, 7.8];
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+interface SleepQualityChartProps {
+  recentLogs?: DailyLog[];
+}
+
+function SleepQualityChart({ recentLogs = [] }: SleepQualityChartProps) {
+  const sleepData = recentLogs.length > 0 
+    ? recentLogs.map(log => log.sleep || 7).reverse()
+    : [7.5, 6.8, 8.2, 7.0, 6.5, 8.5, 7.8];
+    
+  const getDayLabel = (index: number) => {
+    if (recentLogs.length === 0) {
+      return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index];
+    }
+    const date = new Date();
+    date.setDate(date.getDate() - (recentLogs.length - 1 - index));
+    return date.toLocaleDateString('en-US', { weekday: 'short' });
+  };
+
+  const days = sleepData.map((_, i) => getDayLabel(i));
   const maxSleep = 10;
+  
+  const avgSleep = sleepData.length > 0
+    ? (sleepData.reduce((a, b) => a + b, 0) / sleepData.length).toFixed(1)
+    : '7.5';
+
+  const sleepTrend = sleepData.length >= 2
+    ? sleepData[sleepData.length - 1] > sleepData[0]
+      ? 'improving'
+      : 'declining'
+    : 'stable';
   
   return (
     <Card className="p-5 space-y-4 frosted-glass-warm" data-testid="card-sleep-quality">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Sleep Quality</h3>
-        <Badge variant="secondary" className="text-xs bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300">7 days</Badge>
+        <Badge variant="secondary" className="text-xs bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300">{sleepData.length} days</Badge>
       </div>
       <div className="flex items-end justify-between gap-2 h-24">
-        {sleepData.map((hours, index) => (
+        {sleepData.map((quality, index) => (
           <div key={index} className="flex flex-col items-center flex-1">
             <div 
               className="w-full rounded-t-md bg-gradient-to-t from-violet-400 to-blue-300 dark:from-violet-600 dark:to-blue-500 transition-all duration-300 hover:opacity-80"
-              style={{ height: `${(hours / maxSleep) * 100}%`, minHeight: '20px' }}
+              style={{ height: `${(quality / maxSleep) * 100}%`, minHeight: '20px' }}
             />
             <span className="text-[10px] text-muted-foreground mt-1">{days[index]}</span>
           </div>
         ))}
       </div>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-muted-foreground">Avg: 7.5h</span>
-        <div className="flex items-center gap-1 text-violet-600 dark:text-violet-400">
-          <TrendingUp className="w-3 h-3" />
-          <span>8% better</span>
+        <span className="text-muted-foreground" data-testid="sleep-avg">Avg: {avgSleep}/10</span>
+        <div className="flex items-center gap-1 text-violet-600 dark:text-violet-400" data-testid="sleep-trend">
+          {sleepTrend === 'improving' ? (
+            <>
+              <TrendingUp className="w-3 h-3" />
+              <span>Improving</span>
+            </>
+          ) : (
+            <>
+              <TrendingDown className="w-3 h-3" />
+              <span>Declining</span>
+            </>
+          )}
         </div>
       </div>
     </Card>
@@ -679,10 +749,10 @@ export default function Dashboard() {
             </Card>
 
             {/* Stress Trend Chart */}
-            <StressTrendChart />
+            <StressTrendChart recentLogs={recentLogs} />
 
             {/* Sleep Quality Chart */}
-            <SleepQualityChart />
+            <SleepQualityChart recentLogs={recentLogs} />
 
             {/* Daily Reminder */}
             <div className="space-y-2" data-testid="section-affirmation-desktop">
