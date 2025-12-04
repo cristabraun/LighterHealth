@@ -29,6 +29,7 @@ import {
   Meh,
   Frown,
   Target,
+  Brain,
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
