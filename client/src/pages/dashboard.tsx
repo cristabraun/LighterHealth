@@ -368,6 +368,44 @@ export default function Dashboard() {
       ? (recentLogs.reduce((sum, log) => sum + log.energy, 0) / recentLogs.length).toFixed(1)
       : "7.0";
 
+  // Calculate Wellness Score (0-100)
+  const calculateWellnessScore = () => {
+    if (recentLogs.length === 0) return 0;
+
+    // 1. Temperature trend (20 points) - is it rising?
+    let tempScore = 0;
+    if (todayLog && recentLogs.length > 1) {
+      const avgOlderTemp =
+        recentLogs.slice(1).reduce((sum, log) => sum + log.temperature, 0) / (recentLogs.length - 1);
+      const tempDiff = todayLog.temperature - avgOlderTemp;
+      tempScore = Math.max(0, Math.min(20, 10 + tempDiff * 5)); // +5 points per degree rise
+    } else {
+      tempScore = 10;
+    }
+
+    // 2. Sleep Quality (20 points) - average of 1-10 scale
+    const sleepScore = (parseFloat(avgSleep) / 10) * 20;
+
+    // 3. Energy (20 points) - average of 1-10 scale
+    const energyScore = (parseFloat(avgEnergy) / 10) * 20;
+
+    // 4. Mood Consistency (20 points) - percentage of "good" mood days
+    const goodMoodDays = recentLogs.filter((log) => log.mood === "good").length;
+    const moodScore = (goodMoodDays / recentLogs.length) * 20;
+
+    // 5. Digestion Quality (10 points) - percentage of "good" digestion
+    const goodDigestionDays = recentLogs.filter((log) => log.digestion === "good").length;
+    const digestionScore = (goodDigestionDays / recentLogs.length) * 10;
+
+    // 6. Logging Consistency (10 points) - days logged out of 7
+    const consistencyScore = (recentLogs.length / 7) * 10;
+
+    const totalScore = tempScore + sleepScore + energyScore + moodScore + digestionScore + consistencyScore;
+    return Math.round(Math.min(100, Math.max(0, totalScore)));
+  };
+
+  const wellnessScore = calculateWellnessScore();
+
   // Get active foundational experiments
   const foundationalIds = [
     "morning-vs-afternoon-temp",
@@ -623,14 +661,20 @@ export default function Dashboard() {
                 </div>
                 <div className="text-right">
                   <p className="text-4xl font-bold text-primary" data-testid="text-score-value-desktop">
-                    74
+                    {wellnessScore}
                   </p>
                   <p className="text-xs text-muted-foreground" data-testid="text-score-max-desktop">/100</p>
                 </div>
               </div>
-              <Progress value={74} className="h-3" data-testid="progress-score-desktop" />
+              <Progress value={wellnessScore} className="h-3" data-testid="progress-score-desktop" />
               <p className="text-xs text-muted-foreground" data-testid="text-score-status-desktop">
-                Keep building consistency—you're on a great path
+                {wellnessScore >= 80
+                  ? "Excellent! You're thriving."
+                  : wellnessScore >= 60
+                  ? "Great progress! Keep building consistency."
+                  : wellnessScore >= 40
+                  ? "You're on the right path—keep tracking."
+                  : "Start logging to see your wellness score."}
               </p>
             </Card>
 
