@@ -282,9 +282,6 @@ function MoodCard({ todayLog, yesterdayLog, recentLogs }: MoodCardProps) {
               {getMoodIcon(yesterdayLog?.mood)}
             </div>
             <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{yesterdayLog?.mood || "—"}</p>
-            {yesterdayLog?.moodNotes && (
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{yesterdayLog.moodNotes}</p>
-            )}
           </div>
           <div className={`p-4 rounded-xl bg-gradient-to-br ${getMoodColor(todayLog?.mood)} text-center space-y-2`} data-testid="mood-today">
             <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Today</p>
@@ -292,9 +289,6 @@ function MoodCard({ todayLog, yesterdayLog, recentLogs }: MoodCardProps) {
               {getMoodIcon(todayLog?.mood)}
             </div>
             <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{todayLog?.mood || "—"}</p>
-            {todayLog?.moodNotes && (
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{todayLog.moodNotes}</p>
-            )}
           </div>
           <div className="p-4 rounded-xl bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-900/30 dark:to-pink-900/30 text-center space-y-2" data-testid="mood-trend">
             <p className="text-[10px] font-medium text-rose-600 dark:text-rose-300 uppercase tracking-wide">Trend</p>
