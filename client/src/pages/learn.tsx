@@ -58,7 +58,7 @@ export default function Learn() {
         </h2>
 
         <p className="text-gray-600 dark:text-gray-400 -mt-4">
-          Follow these 5 steps to understand metabolic healing:
+          Follow these 6 steps to understand metabolic healing:
         </p>
 
         {/* --- LIGHTER LEARNING PATH CARDS WITH ACCORDION --- */}
@@ -1037,6 +1037,176 @@ export default function Learn() {
                     When you give your body these things consistently, your metabolism remembers how to heal.
                   </p>
                 </div>
+              </div>
+            )}
+          </Card>
+
+
+          {/* HEALING YOUR HORMONES */}
+          <Card className="p-5 rounded-xl frosted-glass-warm" data-testid="card-healing-hormones">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="h-8 w-8 rounded-full bg-purple-200 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 flex items-center justify-center font-bold">
+                6
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Healing Your Hormones</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Energy First, Hormones Follow</p>
+              </div>
+            </div>
+
+            <p className="text-gray-700 dark:text-gray-300 text-sm mb-3">
+              Understand how the pro-metabolic approach views hormones as downstream indicators of 
+              cellular energy production, and how to create the conditions for natural hormone balance.
+            </p>
+
+            <Button
+              onClick={() => setOpenSection(openSection === 'hormones' ? null : 'hormones')}
+              className="w-full text-sm"
+              data-testid="button-learn-hormones"
+            >
+              {openSection === 'hormones' ? "Hide" : "Learn More"}
+            </Button>
+
+            {openSection === 'hormones' && (
+              <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 space-y-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100">The Fundamental Principle: Energy First, Hormones Follow</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  The pro-metabolic approach views hormones very differently from mainstream medicine. Rather than treating hormones as isolated chemicals to be individually balanced, this framework sees them as downstream indicators of cellular energy production.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When your body produces energy efficiently at the mitochondrial level, protective hormones naturally rise and stress hormones naturally fall. It's not about forcing balance—it's about creating the metabolic conditions where balance emerges organically.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">The Two Hormone Classes</h4>
+                
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">1. Protective Hormones (The Good Ones)</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  These hormones support growth, fertility, calm, warmth, stable mood, and overall resilience. When abundant, they indicate your body is in a state of metabolic abundance.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">The big three:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Thyroid (especially T3) – Your metabolic master regulator that controls how efficiently every cell produces energy</li>
+                  <li>Progesterone – The anti-stress, pro-calm hormone that supports deep sleep, clear thinking, and emotional stability</li>
+                  <li>Pregnenolone – The "parent hormone" that supports memory, cognition, and stress resilience</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Other protective hormones include DHEA and testosterone, which support youthful energy, muscle maintenance, mood, strength, and confidence.</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">2. Stress Hormones (When Chronically Elevated, Destructive)</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  These hormones are essential for short-term survival but deeply destructive when chronically elevated.
+                </p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Cortisol – Breaks down muscle for emergency fuel; chronic elevation destroys metabolism</li>
+                  <li>Adrenaline – Provides quick energy but chronic elevation creates anxiety and burnout</li>
+                  <li>Prolactin – When high, suppresses progesterone and thyroid function</li>
+                  <li>Excess Estrogen (unopposed by progesterone) – Promotes water retention, inflammation, and emotional volatility</li>
+                </ul>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">The Cost of Chronic Stress Hormones</h4>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Accelerated aging at the cellular level</li>
+                  <li>Persistent fatigue despite rest</li>
+                  <li>Severe PMS and menstrual problems</li>
+                  <li>Infertility and reproductive issues</li>
+                  <li>Autoimmune conditions</li>
+                  <li>Stubborn weight gain and fluid retention</li>
+                  <li>Poor sleep quality and brain fog</li>
+                  <li>Anxiety and mood instability</li>
+                </ul>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Foods That Support Healthy Hormones</h4>
+                
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">1. Fruit Sugars & Honey</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When your liver has adequate glycogen stores, it signals metabolic safety to your endocrine system. This lowers cortisol production, supports thyroid hormone conversion, and stabilizes mood.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Best sources: Fresh orange juice, raw honey, ripe whole fruits, grapes, mango, pineapple, berries, melons</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">2. Dairy</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  High calcium content naturally lowers stress hormones. Dairy provides the perfect combination of easily digestible protein, natural sugars (lactose), and minerals that support progesterone and thyroid function.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Best forms: Whole milk, aged cheese, cottage cheese, Greek yogurt, kefir</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">3. Easy-to-Digest Proteins</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Amino acids are the raw materials for steroid hormone synthesis. Choose gentle, easily digestible forms.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Best sources: Dairy proteins, eggs (well-cooked), white fish, shellfish, organ meats 1-2 times weekly</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">4. Stable Saturated Fats (Not PUFAs)</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Saturated fats are metabolically stable and support thyroid function, reduce inflammation, and protect mitochondrial membranes.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Use: Butter (especially grass-fed), coconut oil, dairy fats, cacao butter, beef tallow</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">5. Eliminate PUFAs</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Polyunsaturated fatty acids (PUFAs) are chemically unstable and directly block thyroid hormone function, increase estrogen production, dramatically slow metabolism, and damage mitochondrial respiration. PUFA elimination is often the single most powerful hormone intervention.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Strictly avoid: Canola, soybean, corn, sunflower, safflower oils, all seed and nut oils, fish oil supplements</p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">Lifestyle Factors That Support Hormone Balance</h4>
+                
+                <h5 className="font-medium text-gray-800 dark:text-gray-200">1. Light Exposure</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Natural light directly impacts hormone production. Morning sunlight increases progesterone production, lowers excess estrogen, improves thyroid function, increases metabolic rate, and regulates cortisol patterns. Light is a direct energy nutrient for your cells and endocrine system.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">2. Maintain Warmth</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Body temperature is both an indicator and driver of hormone health: Warmth = efficient energy production = healthy hormones. Cold = stress compensation = hormone dysfunction.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Signs of good hormone function: Warm hands and feet, body temperature 97.8–98.6°F, resting pulse 75–90 bpm</p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">3. Eat Frequently (Every 3-4 Hours)</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Skipping meals or prolonged fasting triggers cortisol release. Regular eating maintains stable blood sugar, keeps liver glycogen full, prevents cortisol spikes, and signals metabolic safety to your endocrine system.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">4. Reduce All Forms of Stress</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Chronic stress—whether physical, emotional, mental, or metabolic—elevates stress hormones and suppresses protective hormones. The pro-metabolic approach emphasizes adequate warmth, sufficient nutrition, quality rest, activities that bring joy, daily sunlight, and meaningful connection.
+                </p>
+
+                <h5 className="font-medium text-gray-800 dark:text-gray-200 mt-3">5. Avoid Over-Exercise</h5>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Excessive cardiovascular exercise or high-intensity training raises cortisol while suppressing thyroid function. Better: Daily walking, moderate strength training, and movement that feels energizing rather than depleting.
+                </p>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">What Healthy Hormones Actually Mean</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">A metabolic state where your body is:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Warm and well-circulated</li>
+                  <li>Well-fed with adequate glycogen stores</li>
+                  <li>Low in stress hormones</li>
+                  <li>Producing ample CO2 (indicating efficient respiration)</li>
+                  <li>Oxidizing glucose efficiently in mitochondria</li>
+                </ul>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">This produces naturally:</p>
+                <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+                  <li>Stable, positive mood</li>
+                  <li>Easy, symptom-free menstrual cycles</li>
+                  <li>Healthy fertility</li>
+                  <li>Natural, healthy weight</li>
+                  <li>Physical and emotional resilience</li>
+                  <li>Deep, restorative sleep</li>
+                  <li>Low inflammation and mental clarity</li>
+                </ul>
+
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mt-4">The Fundamental Insight</h4>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Hormones don't balance themselves in isolation. You can't force hormone balance through supplementation alone. Hormones are messengers—they reflect the metabolic state of your cells.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium mt-2">
+                  Energy balance creates hormone balance.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  When your mitochondria produce energy efficiently, when your liver has adequate glycogen, when your thyroid converts and utilizes T3 properly, when your body feels metabolically safe—your hormones naturally organize themselves into healthy patterns.
+                </p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 italic mt-2">
+                  This is why the pro-metabolic approach focuses on creating the conditions for metabolic health rather than directly manipulating hormones. Fix the energy production, and the hormones follow.
+                </p>
               </div>
             )}
           </Card>
