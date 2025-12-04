@@ -391,7 +391,7 @@ export default function Track() {
                         onClick={() => setTemperatureUnit("F")}
                         className={`h-7 px-2 text-xs transition-colors ${
                           temperatureUnit === "F"
-                            ? "bg-blue-500 text-white border-blue-500 hover:bg-blue-600"
+                            ? "bg-cyan-600 text-white border-cyan-600 hover:bg-cyan-700"
                             : ""
                         }`}
                         data-testid="button-temp-fahrenheit"
@@ -405,7 +405,7 @@ export default function Track() {
                         onClick={() => setTemperatureUnit("C")}
                         className={`h-7 px-2 text-xs transition-colors ${
                           temperatureUnit === "C"
-                            ? "bg-blue-500 text-white border-blue-500 hover:bg-blue-600"
+                            ? "bg-cyan-600 text-white border-cyan-600 hover:bg-cyan-700"
                             : ""
                         }`}
                         data-testid="button-temp-celsius"
