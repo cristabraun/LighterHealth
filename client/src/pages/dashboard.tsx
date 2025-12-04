@@ -505,10 +505,10 @@ export default function Dashboard() {
                 <div className="p-4 rounded-xl bg-gradient-to-br from-blue-100/50 to-cyan-100/50 dark:from-blue-900/20 dark:to-cyan-900/20" data-testid="metric-sleep-desktop">
                   <div className="flex items-center gap-2 mb-2">
                     <Moon className="w-4 h-4 text-blue-500" />
-                    <p className="text-xs text-muted-foreground font-medium">Sleep</p>
+                    <p className="text-xs text-muted-foreground font-medium">Sleep Quality</p>
                   </div>
                   <p className="text-2xl font-bold" data-testid="value-sleep-desktop">
-                    {todayLog?.sleep || "—"}h
+                    {todayLog?.sleep || "—"}/10
                   </p>
                 </div>
               </div>
