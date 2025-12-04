@@ -77,6 +77,7 @@ export default function Track() {
   // Fetch food logs for selected date
   const { data: foodLogs = [] } = useQuery<FoodLog[]>({
     queryKey: ['/api/food-logs', selectedDate],
+    gcTime: 0, // Don't cache food logs
   });
 
   // Pre-fill form with existing data
