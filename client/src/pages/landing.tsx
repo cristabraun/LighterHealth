@@ -412,6 +412,7 @@ export default function Landing() {
                 src="https://www.loom.com/embed/e94966f984704a5a8d97b99db93371e9" 
                 frameBorder="0" 
                 allowFullScreen 
+                sandbox="allow-same-origin allow-scripts allow-presentation"
                 style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}
               ></iframe>
             </div>
