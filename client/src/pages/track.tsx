@@ -674,7 +674,7 @@ export default function Track() {
         {/* Food Log and Daily Checklist - Side by side on desktop */}
         <div className="md:grid md:grid-cols-2 md:gap-6 space-y-6 md:space-y-0">
           {/* Food Log Card - Dashboard style */}
-          <Card className="p-6 space-y-4 frosted-glass-warm">
+          <Card className="p-6 space-y-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 border-blue-200/50 dark:border-blue-800/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center">
