@@ -400,6 +400,24 @@ export default function Landing() {
       {/* CTA Section */}
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-24 text-center" data-testid="section-cta">
         <h2 className="text-3xl font-bold mb-8" data-testid="heading-cta">Ready to Feel Lighter?</h2>
+        
+        <div className="w-full flex flex-col items-center mt-10 mb-12 text-center">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+            Take a Peek Inside Lighter™
+          </h2>
+
+          <div className="w-full max-w-3xl aspect-video rounded-xl overflow-hidden shadow-lg">
+            <div style={{ position: 'relative', paddingBottom: '41.458333333333336%', height: '0' }}>
+              <iframe 
+                src="https://www.loom.com/embed/e94966f984704a5a8d97b99db93371e9" 
+                frameBorder="0" 
+                allowFullScreen 
+                style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
         <div className="space-y-4 mb-8">
           <p className="text-base text-foreground leading-relaxed">Lighter™ helps you see what's really been happening beneath the surface.</p>
           <p className="text-base text-muted-foreground leading-relaxed">Your body is always speaking through signals most apps ignore—sleep, temperature, pulse, mood, cravings.</p>
