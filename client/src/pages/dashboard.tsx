@@ -239,8 +239,12 @@ function MoodCard({ todayLog, yesterdayLog, recentLogs }: MoodCardProps) {
 }
 
 // Consistency Meter Component
-function ConsistencyMeter() {
-  const daysCompleted = 5;
+interface ConsistencyMeterProps {
+  recentLogs?: DailyLog[];
+}
+
+function ConsistencyMeter({ recentLogs = [] }: ConsistencyMeterProps) {
+  const daysCompleted = recentLogs.length;
   const totalDays = 7;
   const percentage = (daysCompleted / totalDays) * 100;
   const circumference = 2 * Math.PI * 45;
@@ -289,7 +293,9 @@ function ConsistencyMeter() {
       </div>
       <div className="flex items-center justify-center gap-2">
         <Target className="w-4 h-4 text-emerald-500" />
-        <span className="text-sm text-muted-foreground">Keep it up! You're on track</span>
+        <span className="text-sm text-muted-foreground">
+          {daysCompleted === 7 ? "Perfect week! 🔥" : daysCompleted >= 5 ? "Great consistency!" : "Keep going!"}
+        </span>
       </div>
     </Card>
   );
@@ -546,7 +552,7 @@ export default function Dashboard() {
             <MoodCard todayLog={todayLog} yesterdayLog={yesterdayLog} recentLogs={recentLogs} />
 
             {/* Consistency Meter */}
-            <ConsistencyMeter />
+            <ConsistencyMeter recentLogs={recentLogs} />
 
             {/* Recent Experiments */}
             <Card className="p-6 space-y-4 bg-gradient-to-br from-violet-50/30 to-purple-50/30 dark:from-violet-950/10 dark:to-purple-950/10 border-violet-200/30 dark:border-violet-800/20" data-testid="card-experiments-overview-desktop">
