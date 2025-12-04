@@ -1045,7 +1045,7 @@ export default function Learn() {
           {/* HEALING YOUR HORMONES */}
           <Card className="p-5 rounded-xl frosted-glass-warm" data-testid="card-healing-hormones">
             <div className="flex items-center gap-3 mb-2">
-              <div className="h-8 w-8 rounded-full bg-purple-200 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 flex items-center justify-center font-bold">
+              <div className="h-8 w-8 rounded-full bg-cyan-200 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 flex items-center justify-center font-bold">
                 6
               </div>
               <div>
