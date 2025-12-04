@@ -271,42 +271,74 @@ function MoodCard({ todayLog, yesterdayLog, recentLogs }: MoodCardProps) {
     : "stable";
 
   return (
-    <Card className="p-5 space-y-4" data-testid="card-mood">
-      <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Mood Tracker</h3>
-      <div className="grid grid-cols-3 gap-3">
-        <div className={`p-4 rounded-xl bg-gradient-to-br ${getMoodColor(yesterdayLog?.mood)} text-center space-y-2`} data-testid="mood-yesterday">
-          <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Yesterday</p>
-          <div className="text-3xl">
-            {getMoodIcon(yesterdayLog?.mood)}
-          </div>
-          <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{yesterdayLog?.mood || "—"}</p>
-          {yesterdayLog?.moodNotes && (
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{yesterdayLog.moodNotes}</p>
-          )}
-        </div>
-        <div className={`p-4 rounded-xl bg-gradient-to-br ${getMoodColor(todayLog?.mood)} text-center space-y-2`} data-testid="mood-today">
-          <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Today</p>
-          <div className="text-3xl">
-            {getMoodIcon(todayLog?.mood)}
-          </div>
-          <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{todayLog?.mood || "—"}</p>
-          {todayLog?.moodNotes && (
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{todayLog.moodNotes}</p>
-          )}
-        </div>
-        <div className="p-4 rounded-xl bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-900/30 dark:to-pink-900/30 text-center space-y-2" data-testid="mood-trend">
-          <p className="text-[10px] font-medium text-rose-600 dark:text-rose-300 uppercase tracking-wide">Trend</p>
-          <div className="text-3xl">
-            {moodTrend === "improving" ? (
-              <TrendingUp className="w-8 h-8 mx-auto text-rose-500" />
-            ) : (
-              <TrendingDown className="w-8 h-8 mx-auto text-rose-500" />
+    <div className="space-y-4">
+      <Card className="p-5 space-y-4" data-testid="card-mood">
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">Mood Tracker</h3>
+        <div className="grid grid-cols-3 gap-3">
+          <div className={`p-4 rounded-xl bg-gradient-to-br ${getMoodColor(yesterdayLog?.mood)} text-center space-y-2`} data-testid="mood-yesterday">
+            <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Yesterday</p>
+            <div className="text-3xl">
+              {getMoodIcon(yesterdayLog?.mood)}
+            </div>
+            <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{yesterdayLog?.mood || "—"}</p>
+            {yesterdayLog?.moodNotes && (
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{yesterdayLog.moodNotes}</p>
             )}
           </div>
-          <p className="text-xs font-medium text-rose-700 dark:text-rose-300 capitalize">{moodTrend}</p>
+          <div className={`p-4 rounded-xl bg-gradient-to-br ${getMoodColor(todayLog?.mood)} text-center space-y-2`} data-testid="mood-today">
+            <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">Today</p>
+            <div className="text-3xl">
+              {getMoodIcon(todayLog?.mood)}
+            </div>
+            <p className="text-xs font-medium text-gray-700 dark:text-gray-300 capitalize">{todayLog?.mood || "—"}</p>
+            {todayLog?.moodNotes && (
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{todayLog.moodNotes}</p>
+            )}
+          </div>
+          <div className="p-4 rounded-xl bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-900/30 dark:to-pink-900/30 text-center space-y-2" data-testid="mood-trend">
+            <p className="text-[10px] font-medium text-rose-600 dark:text-rose-300 uppercase tracking-wide">Trend</p>
+            <div className="text-3xl">
+              {moodTrend === "improving" ? (
+                <TrendingUp className="w-8 h-8 mx-auto text-rose-500" />
+              ) : (
+                <TrendingDown className="w-8 h-8 mx-auto text-rose-500" />
+              )}
+            </div>
+            <p className="text-xs font-medium text-rose-700 dark:text-rose-300 capitalize">{moodTrend}</p>
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+
+      {/* Today's Notes Section */}
+      {(todayLog?.moodNotes || todayLog?.digestionNotes || todayLog?.howYouFeelNotes) && (
+        <Card className="p-4 space-y-3 bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800/30" data-testid="card-today-notes">
+          <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100 flex items-center gap-2">
+            <Brain className="w-4 h-4" />
+            Today's Notes
+          </h3>
+          <div className="space-y-2 text-sm">
+            {todayLog?.moodNotes && (
+              <div className="p-2 rounded-lg bg-white dark:bg-gray-900/50" data-testid="note-mood">
+                <p className="text-xs font-medium text-blue-700 dark:text-blue-300 mb-1">Mood & Stress</p>
+                <p className="text-gray-700 dark:text-gray-300">{todayLog.moodNotes}</p>
+              </div>
+            )}
+            {todayLog?.digestionNotes && (
+              <div className="p-2 rounded-lg bg-white dark:bg-gray-900/50" data-testid="note-digestion">
+                <p className="text-xs font-medium text-blue-700 dark:text-blue-300 mb-1">Digestion</p>
+                <p className="text-gray-700 dark:text-gray-300">{todayLog.digestionNotes}</p>
+              </div>
+            )}
+            {todayLog?.howYouFeelNotes && (
+              <div className="p-2 rounded-lg bg-white dark:bg-gray-900/50" data-testid="note-feel">
+                <p className="text-xs font-medium text-blue-700 dark:text-blue-300 mb-1">How You Feel</p>
+                <p className="text-gray-700 dark:text-gray-300">{todayLog.howYouFeelNotes}</p>
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
+    </div>
   );
 }
 
