@@ -367,7 +367,7 @@ export default function Track() {
         <form onSubmit={handleSubmit} className="space-y-6">
 
           {/* Required Vitals Card - Dashboard style with gradient */}
-          <Card className="p-6 space-y-6 frosted-glass-warm">
+          <Card className="p-6 space-y-6 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 border-blue-200/50 dark:border-blue-800/30">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
