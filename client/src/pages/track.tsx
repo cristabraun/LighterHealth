@@ -106,7 +106,7 @@ export default function Track() {
       // Pre-fill stress and mood
       if (todaysLog.stress) setStress([todaysLog.stress]);
       if (todaysLog.mood) setMood(todaysLog.mood as "good" | "okay" | "bad");
-      if (todaysLog.moodNotes) setMoodNotes(todaysLog.moodNotes);
+      // Don't pre-fill mood notes - they clear after save
     }
   }, [todaysLog]);
 
@@ -308,7 +308,7 @@ export default function Track() {
     }
 
     const foodData: InsertFoodLog = {
-      date: today,
+      date: selectedDate,
       meal,
       foodItem: foodItem.trim(),
       energyIntake: energyIntake ? parseInt(energyIntake) : undefined,
