@@ -64,7 +64,8 @@ export default function Track() {
   };
   
   const formatDateDisplay = (dateStr: string) => {
-    const date = new Date(dateStr + 'T00:00:00');
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     const options: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
   };
@@ -356,7 +357,7 @@ export default function Track() {
         <div className="flex justify-center -my-4">
           <button
             type="button"
-            onClick={() => setLocation("/")}
+            onClick={() => window.open("https://www.loom.com/share/e990d45c6c004108a2811d0bbfe5a421", "_blank")}
             className="text-xs px-3 py-2 rounded-md bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-200 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors cursor-pointer border-0"
             data-testid="link-how-to-use"
           >
