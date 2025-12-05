@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { InsertDailyLog, DailyLog, InsertFoodLog, FoodLog } from "@shared/schema";
 import confetti from "canvas-confetti";
+import tutorialVideoUrl from "@assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1764905687606.mp4";
 
 export default function Track() {
   const [, setLocation] = useLocation();
@@ -367,7 +368,7 @@ export default function Track() {
         <div className="flex justify-center -my-4">
           <button
             type="button"
-            onClick={() => window.open("https://www.loom.com/share/e990d45c6c004108a2811d0bbfe5a421", "_blank")}
+            onClick={() => window.open(tutorialVideoUrl, "_blank")}
             className="text-xs px-3 py-2 rounded-md bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-200 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors cursor-pointer border-0"
             data-testid="link-how-to-use"
           >
