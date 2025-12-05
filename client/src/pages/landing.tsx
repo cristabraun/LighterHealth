@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Sparkles, Heart, Zap, ThermometerSun, TrendingUp, Calendar, Beaker, Lightbulb, Check, Menu, X } from "lucide-react";
 import cristaPhoto from "@assets/crista-profile-final.png";
 import lighterIcon from "@assets/ChatGPT Image Nov 30, 2025, 08_16_18 PM_1764551798966.png";
+import tutorialVideoUrl from "@assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1764905687606.mp4";
 
 export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -405,17 +406,15 @@ export default function Landing() {
           </h2>
 
           <div className="w-full max-w-3xl rounded-xl overflow-hidden shadow-lg">
-            <div style={{ position: 'relative', paddingBottom: '43.854166666666664%', height: '0' }}>
-              <iframe 
-                src="https://www.loom.com/embed/e990d45c6c004108a2811d0bbfe5a421" 
-                frameBorder="0" 
-                webkitAllowFullScreen
-                mozAllowFullScreen
-                allowFullScreen
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                data-testid="iframe-loom-demo"
-              ></iframe>
-            </div>
+            <video 
+              width="100%" 
+              controls 
+              data-testid="video-tutorial-demo"
+              className="w-full h-auto"
+            >
+              <source src={tutorialVideoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
 
