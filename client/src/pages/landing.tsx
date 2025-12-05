@@ -409,9 +409,10 @@ export default function Landing() {
               <iframe 
                 src="https://www.loom.com/embed/e990d45c6c004108a2811d0bbfe5a421" 
                 frameBorder="0" 
-                allowFullScreen 
-                sandbox="allow-same-origin allow-scripts allow-presentation"
-                style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}
+                webkitAllowFullScreen
+                mozAllowFullScreen
+                allowFullScreen
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                 data-testid="iframe-loom-demo"
               ></iframe>
             </div>
