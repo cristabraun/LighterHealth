@@ -76,9 +76,8 @@ export default function Track() {
   
   const formatDateDisplay = (dateStr: string) => {
     const [year, month, day] = dateStr.split('-').map(Number);
-    const date = new Date(Date.UTC(year, month - 1, day));
-    const options: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' };
-    return date.toLocaleDateString('en-US', options);
+    const options: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+    return new Date(year, month - 1, day).toLocaleDateString('en-US', options);
   };
 
   // Fetch today's log
