@@ -377,7 +377,7 @@ export default function Landing() {
             </p>
             
             <p data-testid="text-about-4">
-              I built Lighter™ because this is the app I desperately needed years ago. A softer, gentler, pro-metabolic way to actually heal your metabolism, lower stress, and feel good in your body again.
+              I created Lighter because it's the app I desperately wished existed when I needed it most. A softer, gentler, pro-metabolic approach to healing your metabolism and lowering the stress that's been keeping you stuck.
             </p>
             
             <p data-testid="text-about-5" className="font-medium text-foreground pt-4">
