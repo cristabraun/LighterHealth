@@ -41,21 +41,32 @@ export default function Track() {
   const [foodItem, setFoodItem] = useState("");
   const [energyIntake, setEnergyIntake] = useState("");
   const [foodNotes, setFoodNotes] = useState("");
-  const [selectedDate, setSelectedDate] = useState<string>(() => new Date().toISOString().split('T')[0]);
 
-  const today = new Date().toISOString().split('T')[0];
+  // Helper to get local date string (YYYY-MM-DD) in user's timezone
+  const getLocalDateString = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const [selectedDate, setSelectedDate] = useState<string>(() => getLocalDateString());
+  const today = getLocalDateString();
   
   const goToPreviousDay = () => {
-    const date = new Date(selectedDate);
-    date.setDate(date.getDate() - 1);
-    setSelectedDate(date.toISOString().split('T')[0]);
+    const [year, month, day] = selectedDate.split('-').map(Number);
+    const date = new Date(year, month - 1, day - 1);
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    setSelectedDate(dateStr);
   };
   
   const goToNextDay = () => {
-    const date = new Date(selectedDate);
-    date.setDate(date.getDate() + 1);
-    if (date.toISOString().split('T')[0] <= today) {
-      setSelectedDate(date.toISOString().split('T')[0]);
+    const [year, month, day] = selectedDate.split('-').map(Number);
+    const date = new Date(year, month - 1, day + 1);
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    if (dateStr <= today) {
+      setSelectedDate(dateStr);
     }
   };
   
