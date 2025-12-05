@@ -398,8 +398,8 @@ export default function Landing() {
       </div>
 
       {/* CTA Section */}
-      <div className="max-w-4xl mx-auto px-6 pt-16 pb-24 text-center" data-testid="section-cta">
-        <div className="w-full flex flex-col items-center mt-10 mb-12 text-center">
+      <div className="max-w-4xl mx-auto px-6 pt-6 pb-24 text-center" data-testid="section-cta">
+        <div className="w-full flex flex-col items-center mt-4 mb-12 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold mb-6">
             Take a Peek Inside Lighter™
           </h2>
