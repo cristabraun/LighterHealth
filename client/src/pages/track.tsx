@@ -354,15 +354,13 @@ export default function Track() {
 
         {/* Subtle Tutorial Link */}
         <div className="flex justify-center -my-4">
-          <a
-            href="https://www.youtube.com/watch?v=placeholder"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs px-3 py-2 rounded-md bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-200 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors"
+          <button
+            onClick={() => setLocation("/")}
+            className="text-xs px-3 py-2 rounded-md bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-200 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors cursor-pointer"
             data-testid="link-how-to-use"
           >
             New Here? Watch How To Use Lighter
-          </a>
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
