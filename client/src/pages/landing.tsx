@@ -361,33 +361,27 @@ export default function Landing() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <h2 className="text-3xl font-bold text-center" data-testid="heading-about">Hi, I'm Crista</h2>
+            <h2 className="text-3xl font-bold text-center" data-testid="heading-about">A Message From the Creator of Lighter™</h2>
           </div>
           <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
             <p data-testid="text-about-1">
-              I've been where you are — exhausted, anxious, trying to "be good" all day only to lose control at night. I spent years over-exercising, restricting, chasing every new diet trend, and wondering why my body kept fighting me.
+              Hi, I'm Crista. I know firsthand how frustrating it can be when you feel like you've tried everything and, still, your body isn't responding.
             </p>
             
-            <p data-testid="text-about-2" className="font-medium text-foreground">
-              It wasn't lack of discipline.
-              <br />
-              My metabolism was stressed and confused.
+            <p data-testid="text-about-2">
+              I did all the things women are told to do: diet harder, train more, fast longer, restrict anything that wasn't "perfect." All it did was exhaust me, raise my stress, wreck my sleep, and slow my metabolism down.
             </p>
             
             <p data-testid="text-about-3">
-              I know what it's like to wake up with anxiety, to feel wired and tired at the same time, to run on stress hormones instead of real energy. I ignored the signs for far too long.
+              If you're feeling low energy, wired but tired, stressed out, or gaining weight even when you're "being good"—it's not a lack of willpower and it's not just aging. It's your metabolism struggling, and your body asking for support, not more punishment.
             </p>
             
             <p data-testid="text-about-4">
-              When I discovered the pro-metabolic approach, everything clicked. My body wasn't broken — it just needed support, not punishment.
+              I built Lighter™ because this is the app I desperately needed years ago. A softer, gentler, pro-metabolic way to actually heal your metabolism, lower stress, and feel good in your body again.
             </p>
             
-            <p data-testid="text-about-5">
-              Lighter™ is everything I wish I had years ago: a simple, gentle way to understand your body, support your energy, and finally feel good again.
-            </p>
-            
-            <p data-testid="text-about-6" className="font-medium text-foreground pt-4">
-              You deserve to feel warm, rested, nourished, and alive. And you deserve a path that actually works — not one that breaks you.
+            <p data-testid="text-about-5" className="font-medium text-foreground pt-4">
+              You're not broken. You don't have to live in survival mode. There is a better way—and it starts by listening to your body instead of fighting it.
             </p>
             
             <p data-testid="text-about-signature" className="text-right pt-2 flex items-center justify-end gap-2" style={{ fontFamily: "'Architects Daughter', cursive", fontSize: '1.375rem', fontWeight: '400', letterSpacing: '0.08em' }}>
