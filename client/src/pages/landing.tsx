@@ -399,8 +399,6 @@ export default function Landing() {
 
       {/* CTA Section */}
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-24 text-center" data-testid="section-cta">
-        <h2 className="text-3xl font-bold mb-8" data-testid="heading-cta">Ready to Feel Lighter?</h2>
-        
         <div className="w-full flex flex-col items-center mt-10 mb-12 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold mb-6">
             Take a Peek Inside Lighter™
@@ -427,6 +425,7 @@ export default function Landing() {
           <p className="text-base text-muted-foreground leading-relaxed">The things most diets never taught you to notice.</p>
           <p className="text-base text-foreground font-medium leading-relaxed">Finally understand what your body has been trying to tell you.</p>
         </div>
+        <h2 className="text-3xl font-bold mb-8" data-testid="heading-cta">Ready to Feel Lighter?</h2>
         <Button 
           onClick={() => window.location.href = '/api/login'}
           className="h-16 px-10 text-lg bg-gradient-to-r from-primary to-chart-2 hover:opacity-90 transition-opacity"
