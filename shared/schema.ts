@@ -26,6 +26,11 @@ export const users = pgTable("users", {
   name: text("name"), // User's preferred name from onboarding
   onboardingCompleted: boolean("onboarding_completed").notNull().default(false),
   metabolicSymptoms: text("metabolic_symptoms").array(),
+  // Stripe fields
+  stripeCustomerId: varchar("stripe_customer_id"),
+  stripeSubscriptionId: varchar("stripe_subscription_id"),
+  subscriptionStatus: varchar("subscription_status"), // 'active', 'trialing', 'canceled', 'past_due'
+  trialEndsAt: timestamp("trial_ends_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
