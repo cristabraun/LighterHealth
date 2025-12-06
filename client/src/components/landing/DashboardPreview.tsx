@@ -25,35 +25,33 @@ export const DashboardPreview: React.FC<DashboardPreviewProps> = ({ onStartTrial
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 items-start justify-center max-w-4xl mx-auto">
           
           <Spotlight 
-            className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 ring-1 ring-white/5 bg-[#0E0E12] shadow-2xl shadow-black/50"
+            className="group relative overflow-hidden rounded-2xl border border-white/10 ring-1 ring-white/5 bg-[#0E0E12] shadow-2xl shadow-black/50"
             glowColor="rgba(245, 158, 11, 0.2)"
           >
-            <div className="aspect-[9/19] w-full relative">
+            <div className="w-full relative p-3">
               <img 
                 src={dashboardScreenshot}
                 alt="Lighter Dashboard" 
-                className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" 
+                className="w-full h-auto rounded-xl opacity-90 transition-transform duration-700 group-hover:scale-[1.02]" 
                 style={{ filter: 'brightness(0.95)' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
             </div>
           </Spotlight>
 
           <Spotlight 
-            className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 ring-1 ring-white/5 bg-[#0E0E12] shadow-2xl shadow-black/50"
+            className="group relative overflow-hidden rounded-2xl border border-white/10 ring-1 ring-white/5 bg-[#0E0E12] shadow-2xl shadow-black/50"
             glowColor="rgba(245, 158, 11, 0.2)"
           >
-            <div className="aspect-[9/19] w-full relative">
+            <div className="w-full relative p-3">
               <img 
                 src={trackingScreenshot}
                 alt="Lighter Daily Tracking" 
-                className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" 
+                className="w-full h-auto rounded-xl opacity-90 transition-transform duration-700 group-hover:scale-[1.02]" 
                 style={{ filter: 'brightness(0.95)' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
             </div>
           </Spotlight>
 
