@@ -1,0 +1,13 @@
+export { BackgroundEffects } from './BackgroundEffects';
+export { Navigation } from './Navigation';
+export { Hero } from './Hero';
+export { Features } from './Features';
+export { DashboardPreview } from './DashboardPreview';
+export { DetailedFeatures } from './DetailedFeatures';
+export { Comparison } from './Comparison';
+export { Testimonials } from './Testimonials';
+export { VideoPreview } from './VideoPreview';
+export { FinalCTA } from './FinalCTA';
+export { Footer } from './Footer';
+export { Spotlight } from './Spotlight';
+export { LightBeam } from './LightBeam';
