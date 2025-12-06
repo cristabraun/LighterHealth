@@ -7,8 +7,9 @@ const FeatureCard: React.FC<{
   title: string; 
   description: string; 
   imgSrc: string;
-}> = ({ icon, title, description, imgSrc }) => (
-  <Spotlight className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500">
+  testId?: string;
+}> = ({ icon, title, description, imgSrc, testId }) => (
+  <Spotlight className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500" data-testid={testId}>
     <div className="relative h-48 lg:h-52 overflow-hidden rounded-xl ring-1 ring-white/10 mb-6 z-20">
       <img 
         src={imgSrc} 
@@ -57,18 +58,21 @@ export const Features: React.FC = () => {
               title="Calm Your System"
               description="When your nervous system calms down, your metabolism finally shifts out of survival mode and starts working the way it's meant to."
               imgSrc="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800"
+              testId="card-feature-calm"
             />
             <FeatureCard 
               icon={<Zap size={18} />}
               title="Restore Your Energy"
               description="Through simple experiments and daily tracking, you learn which foods, habits, and rhythms actually support your energy, digestion, and mood."
               imgSrc="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=800"
+              testId="card-feature-energy"
             />
             <FeatureCard 
               icon={<Activity size={18} />}
               title="Renew Your Metabolism"
               description="When your body knows how to use energy efficiently again, weight loss becomes a side effect - not a struggle."
               imgSrc="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800"
+              testId="card-feature-metabolism"
             />
           </div>
         </div>

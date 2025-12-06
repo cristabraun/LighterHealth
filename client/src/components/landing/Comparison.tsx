@@ -26,14 +26,14 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
         <div className="flex justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl w-full">
             
-            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] border border-white/10 shadow-[inset_0_-16px_24px_rgba(255,255,255,0.05)]">
+            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] border border-white/10 shadow-[inset_0_-16px_24px_rgba(255,255,255,0.05)]" data-testid="card-pricing-gym">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 flex bg-white/5 border-white/20 border rounded-xl items-center justify-center">
                      <Dumbbell size={20} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-medium text-white tracking-tight leading-tight">Popular Weight Loss<br/>or Fitness Memberships</h3>
+                    <h3 className="text-xl font-medium text-white tracking-tight leading-tight" data-testid="text-pricing-gym-title">Popular Weight Loss<br/>or Fitness Memberships</h3>
                     <p className="text-xs text-neutral-500 mt-1">Gyms / Classes</p>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
               </ul>
             </div>
 
-            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] shadow-[inset_0_-16px_24px_rgba(255,255,255,0.25)] border-0 overflow-hidden transform lg:scale-105 z-10">
+            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] shadow-[inset_0_-16px_24px_rgba(255,255,255,0.25)] border-0 overflow-hidden transform lg:scale-105 z-10" data-testid="card-pricing-lighter">
               <div className="absolute inset-0 bg-gradient-to-br from-[#0E0E12] to-transparent z-0"></div>
               <div className="absolute top-0 right-0 w-[200%] h-32 bg-gradient-to-b from-orange-500/20 to-transparent blur-3xl transform -translate-y-1/2 translate-x-1/2 rotate-12"></div>
               <div className="absolute bottom-0 left-0 w-[200%] h-32 bg-gradient-to-t from-amber-500/20 to-transparent blur-3xl transform translate-y-1/2 -translate-x-1/2 -rotate-12"></div>
@@ -127,7 +127,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
               </div>
             </div>
 
-            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] border border-white/10 shadow-[inset_0_-16px_24px_rgba(255,255,255,0.05)]">
+            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] border border-white/10 shadow-[inset_0_-16px_24px_rgba(255,255,255,0.05)]" data-testid="card-pricing-specialist">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 flex bg-white/5 border-white/20 border rounded-xl items-center justify-center text-white text-lg">
@@ -136,7 +136,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
                      </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-medium text-white tracking-tight">Specialist</h3>
+                    <h3 className="text-xl font-medium text-white tracking-tight" data-testid="text-pricing-specialist-title">Specialist</h3>
                     <p className="text-xs text-neutral-500">Nutritionist / Coach</p>
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import { Activity } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative border-t border-white/10 bg-black/20 backdrop-blur-xl">
+    <footer className="relative border-t border-white/10 bg-black/20 backdrop-blur-xl" data-testid="section-footer">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           
@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-black">
                 <Activity size={18} />
               </div>
-              <span className="text-xl font-semibold tracking-tight text-white">Lighter</span>
+              <span className="text-xl font-semibold tracking-tight text-white" data-testid="text-footer-brand">Lighter</span>
             </div>
             <p className="text-white/60 leading-relaxed mb-6 max-w-md">
               Lighter shows you how to listen to your body, lower cortisol, and find what actually works to feel energized again.
@@ -21,19 +21,19 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold text-white mb-4">Product</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="#dashboard" className="text-white/60 hover:text-white transition-colors">Dashboard</a></li>
-              <li><a href="#features" className="text-white/60 hover:text-white transition-colors">Features</a></li>
-              <li><a href="#learn" className="text-white/60 hover:text-white transition-colors">Learn</a></li>
-              <li><a href="#pricing" className="text-white/60 hover:text-white transition-colors">Pricing</a></li>
+              <li><a href="#dashboard" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-dashboard">Dashboard</a></li>
+              <li><a href="#features" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-features">Features</a></li>
+              <li><a href="#learn" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-learn">Learn</a></li>
+              <li><a href="#pricing" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-pricing">Pricing</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-semibold text-white mb-4">Support</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="mailto:support@getlighterapp.com" className="text-white/60 hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Privacy</a></li>
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Terms</a></li>
+              <li><a href="mailto:support@getlighterapp.com" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-contact">Contact Us</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-privacy">Privacy</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-terms">Terms</a></li>
             </ul>
           </div>
         </div>

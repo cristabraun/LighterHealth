@@ -18,22 +18,22 @@ export const Testimonials: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500">
+          <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500" data-testid="card-testimonial-experience">
             <div className="mb-6">
               <div className="flex gap-1 text-amber-400 mb-4">
                  {[1,2,3,4,5].map(i => <div key={i} className="h-1 w-8 rounded-full bg-amber-500/50"></div>)}
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">Over 15 years in health and fitness</h3>
+              <h3 className="text-xl font-bold text-white mb-4" data-testid="text-testimonial-title">Over 15 years in health and fitness</h3>
               <p className="text-white/80 leading-relaxed mb-6">
                 With over 15 years in the health and fitness world, coaching and studying real women's struggles up close, I learned that true transformation happens when you focus on rebuilding the body from the inside out - not chasing symptoms, but healing the root cause.
               </p>
             </div>
           </div>
 
-          <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500 flex flex-col justify-between">
+          <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500 flex flex-col justify-between" data-testid="card-testimonial-quote">
             <Quote className="absolute top-8 right-8 text-white/10 w-12 h-12" />
             <div className="relative z-10">
-              <blockquote className="text-white/90 text-lg leading-relaxed italic mb-8">
+              <blockquote className="text-white/90 text-lg leading-relaxed italic mb-8" data-testid="text-testimonial-quote">
                 "I created Lighter because I saw too many people stuck in stress-driven habits and diet cycles that break the body down instead of healing it. This app is the calm, clear roadmap I wish existed when I needed it most."
               </blockquote>
             </div>
