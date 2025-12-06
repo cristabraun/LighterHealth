@@ -1,0 +1,1446 @@
+# Create directories
+mkdir -p components/ui hooks
+
+# Create index.tsx
+cat > index.tsx << 'EOF'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error("Could not find root element to mount to");
+}
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+EOF
+
+# Create metadata.json
+cat > metadata.json << 'EOF'
+{
+  "name": "Lighter™",
+  "description": "A high-end metabolic health tracking and coaching application designed to help women heal their metabolism through data-driven experiments and stress reduction."
+}
+EOF
+
+# Create index.html
+cat > index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lighter™ | Heal Your Metabolism</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              geist: ['Geist', 'sans-serif'],
+              display: ['Geist', 'sans-serif'],
+            },
+            colors: {
+              background: "#0f0f11", /* Slightly lighter, warm charcoal */
+              glass: "rgba(255, 255, 255, 0.05)",
+              border: "rgba(255, 255, 255, 0.1)",
+              text: {
+                primary: "#ffffff",
+                secondary: "rgba(255, 255, 255, 0.7)",
+                muted: "rgba(255, 255, 255, 0.5)",
+              }
+            },
+            backgroundImage: {
+              'glow-gradient': 'radial-gradient(circle at center, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
+              'card-gradient': 'linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04))',
+            },
+            animation: {
+              'float': 'float 10s ease-in-out infinite',
+              'float-delayed': 'float 14s ease-in-out infinite 2s',
+              'float-slow': 'float 18s ease-in-out infinite 4s',
+              'spotlight-pulse': 'spotlight 3s ease-in-out infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0) scale(1)' },
+                '33%': { transform: 'translateY(-20px) scale(1.05)' },
+                '66%': { transform: 'translateY(10px) scale(0.95)' },
+              },
+              spotlight: {
+                '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+                '50%': { opacity: '0.6', transform: 'scale(0.98)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --mouse-x: 50%;
+        --mouse-y: 50%;
+      }
+      body {
+        /* Warmer, slightly lighter dark background */
+        background-color: #0f0f11;
+        color: #ffffff;
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      .font-display { font-family: 'Geist', Inter, ui-sans-serif, system-ui; }
+      .font-text { font-family: 'Inter', ui-sans-serif, system-ui; }
+
+      /* Animation classes */
+      .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+      .animate-slide-up { animation: slideUp 0.8s ease-out forwards; }
+      .animate-blur-in { animation: blurIn 1s ease-out forwards; }
+      .animate-slide-left { animation: slideLeft 0.8s ease-out forwards; }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes slideLeft {
+        from { opacity: 0; transform: translateX(20px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes blurIn {
+        from { opacity: 0; filter: blur(10px); }
+        to { opacity: 1; filter: blur(0); }
+      }
+
+      /* Staggered delays */
+      .delay-0 { animation-delay: 0ms; }
+      .delay-100 { animation-delay: 100ms; }
+      .delay-200 { animation-delay: 200ms; }
+      .delay-300 { animation-delay: 300ms; }
+      .delay-500 { animation-delay: 500ms; }
+      .delay-700 { animation-delay: 700ms; }
+      .delay-900 { animation-delay: 900ms; }
+      .delay-1100 { animation-delay: 1100ms; }
+      .delay-1300 { animation-delay: 1300ms; }
+
+      /* Initially hidden */
+      [class*="animate-"] { opacity: 0; }
+
+      /* Scroll triggered animations */
+      .scroll-animate {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+      }
+      .scroll-animate.in-view {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Pink glow animation for middle card */
+      @keyframes rotate {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+      
+      /* Glowing light effect */
+      @keyframes glow-float {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      }
+      
+      .glow-light {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(245, 158, 11, 0.6) 0%, rgba(255, 255, 255, 0.4) 30%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(20px);
+        animation: glow-float 4s ease-in-out infinite;
+        top: 30%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: screen;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+    "lucide-react": "https://esm.sh/lucide-react@0.344.0",
+    "recharts": "https://esm.sh/recharts@2.12.0",
+    "react/": "https://esm.sh/react@19.0.0/",
+    "react": "https://esm.sh/react@19.0.0"
+  }
+}
+</script>
+</head>
+  <body class="h-full bg-[#0f0f11] text-white antialiased font-text overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>
+EOF
+
+# Create hooks/useScrollReveal.ts
+cat > hooks/useScrollReveal.ts << 'EOF'
+import { useEffect, useRef } from 'react';
+
+export const useScrollReveal = () => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      },
+      {
+        threshold: 0.1, 
+        rootMargin: "0px 0px -50px 0px"
+      }
+    );
+
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
+  return ref;
+};
+EOF
+
+# Create components/ui/Button.tsx
+cat > components/ui/Button.tsx << 'EOF'
+import React from 'react';
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  fullWidth?: boolean;
+}
+
+export const Button: React.FC<ButtonProps> = ({ 
+  children, 
+  variant = 'primary', 
+  size = 'md', 
+  fullWidth = false,
+  className = '',
+  ...props 
+}) => {
+  const baseStyles = "inline-flex items-center justify-center rounded-2xl font-semibold transition-all duration-300 ease-out active:scale-95";
+  
+  const variants = {
+    primary: "bg-white text-black shadow-[0_10px_15px_-3px_rgba(255,255,255,0.2)] hover:opacity-90 hover:scale-[1.02]",
+    secondary: "bg-white/5 text-white/90 border border-white/10 backdrop-blur-md hover:bg-white/10 hover:border-white/20",
+    outline: "bg-transparent text-white border border-white/20 hover:bg-white/5"
+  };
+
+  const sizes = {
+    sm: "px-4 py-2 text-sm",
+    md: "px-6 py-3 text-base",
+    lg: "px-8 py-4 text-lg"
+  };
+
+  return (
+    <button 
+      className={`
+        ${baseStyles} 
+        ${variants[variant]} 
+        ${sizes[size]} 
+        ${fullWidth ? 'w-full' : ''} 
+        ${className}
+      `}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+EOF
+
+# Create components/Navigation.tsx
+cat > components/Navigation.tsx << 'EOF'
+import React, { useState } from 'react';
+import { Menu, X, Activity } from 'lucide-react';
+
+export const Navigation: React.FC = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: 'Dashboard', href: '#dashboard' },
+    { name: 'Learn', href: '#learn' },
+    { name: 'Track', href: '#track' },
+    { name: 'Experiments', href: '#experiments' },
+    { name: 'Pricing', href: '#pricing' },
+  ];
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 animate-fade-in delay-0 backdrop-blur-xl bg-black/20 border-b border-white/10" style={{ animationPlayState: 'running' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex lg:py-6 pt-4 pb-4 items-center justify-between">
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="relative flex items-center justify-center w-9 h-9 rounded-full bg-white text-black">
+              <Activity size={20} />
+            </div>
+            <span className="text-xl font-display font-semibold tracking-tight">Lighter™</span>
+          </a>
+          
+          <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                className="px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200" 
+                href={link.href}
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+          
+          <div className="flex items-center gap-2">
+            <button className="hidden sm:inline-flex h-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white/90 hover:bg-white/10 hover:border-white/20 transition-all duration-200 backdrop-blur-xl">
+              Log In
+            </button>
+            <button className="group relative inline-flex h-10 items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-black hover:bg-white/90 transition-all duration-200 shadow-lg shadow-white/20">
+              <span className="relative z-10">Get Started</span>
+              <div className="absolute inset-0 rounded-xl bg-white opacity-0 blur-lg group-hover:opacity-20 transition-opacity"></div>
+            </button>
+            <button 
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 p-6 flex flex-col gap-4 animate-fade-in shadow-2xl">
+          {navLinks.map((link) => (
+            <a 
+              key={link.name} 
+              href={link.href}
+              className="text-lg text-white/80 hover:text-white py-2 font-medium"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+            </a>
+          ))}
+          <div className="h-px bg-white/10 my-2" />
+          <button className="w-full h-12 rounded-xl border border-white/10 bg-white/5 font-medium">Log In</button>
+          <button className="w-full h-12 rounded-xl bg-white text-black font-semibold">Get Started</button>
+        </div>
+      )}
+    </header>
+  );
+};
+EOF
+
+# Create components/Hero.tsx
+cat > components/Hero.tsx << 'EOF'
+import React, { useEffect, useRef, useState } from 'react';
+import { ChevronRight } from 'lucide-react';
+import { LightBeam } from './LightBeam';
+import { Spotlight } from './ui/Spotlight';
+
+const Counter: React.FC<{ target: number; suffix?: string; label: string }> = ({ target, suffix = '', label }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          let start = 0;
+          const duration = 2000;
+          const increment = target / (duration / 16);
+          const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(start));
+            }
+          }, 16);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target]);
+
+  return (
+    <div ref={ref}>
+      <div className="text-3xl sm:text-4xl text-white font-geist font-light tracking-tighter">
+        {count.toLocaleString()}{suffix}
+      </div>
+      <div className="text-sm sm:text-base text-white/60 mt-1">{label}</div>
+    </div>
+  );
+};
+
+export const Hero: React.FC = () => {
+  const scrollToDashboard = () => {
+    const dashboard = document.getElementById('dashboard');
+    if (dashboard) {
+      dashboard.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <section className="relative lg:pt-24 lg:pb-16 pt-24 pb-12 overflow-hidden">
+      {/* Light Beam Animation Background */}
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full h-[120vh] -z-10 opacity-60 pointer-events-none">
+        <LightBeam />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 xl:gap-16">
+          
+          {/* Content */}
+          <div className="relative z-10 lg:col-span-6 xl:col-span-6">
+            {/* Added local glow for text readability/lightness */}
+            <div className="absolute -top-32 -left-32 w-[150%] h-[150%] bg-amber-500/10 blur-[100px] -z-10 rounded-full pointer-events-none"></div>
+
+            {/* Simple Animated Amber Circle (Restored) */}
+            <div className="absolute -top-20 -left-20 w-72 h-72 bg-gradient-to-br from-amber-400 to-orange-600 rounded-full blur-[80px] opacity-60 animate-float mix-blend-screen -z-10"></div>
+
+            <div className="relative z-10">
+              <h1 className="animate-slide-up delay-300 text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] mb-6 font-geist font-light tracking-tighter">
+                Heal Your
+                <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-geist font-light tracking-tighter">
+                  Metabolism.
+                </span>
+              </h1>
+              
+              <p className="animate-slide-up delay-500 max-w-2xl text-lg sm:text-xl leading-relaxed text-white/70 mb-6">
+                Exhausted all the time? Weight won't budge? Running on stress and caffeine? The Lighter™ app shows you how to listen to your body, lower cortisol, and find what actually works to feel like you again.
+              </p>
+              
+              <div className="animate-slide-up delay-700 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <button className="group relative inline-flex items-center gap-3 rounded-2xl bg-white px-8 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20">
+                  <span>Start Your 3-Day Trial</span>
+                  <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl group-hover:opacity-25 transition-opacity"></div>
+                </button>
+                <button 
+                  onClick={scrollToDashboard}
+                  className="group inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-8 py-4 text-base font-medium text-white/90 hover:bg-white/10 hover:border-white/25 transition-all duration-300 backdrop-blur-xl"
+                >
+                  <span>See Inside</span>
+                </button>
+              </div>
+              
+              {/* Stats */}
+              <div className="animate-slide-up delay-900 grid grid-cols-2 sm:grid-cols-3 gap-8 mt-12 max-w-2xl">
+                <Counter target={5} suffix="" label="Daily Signals" />
+                <Counter target={10} suffix="+" label="Healing Experiments" />
+                <Counter target={365} suffix="" label="Days Tracking" />
+              </div>
+            </div>
+          </div>
+
+          {/* Visuals - Enlarged and Interactive */}
+          <div className="relative lg:col-span-6 xl:col-span-6 flex justify-center lg:justify-end mt-8 lg:mt-0">
+            {/* Main Visual with Spotlight Effect */}
+            <Spotlight 
+              className="animate-blur-in delay-500 relative aspect-square w-full max-w-xl overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/10 to-white/5 ring-1 ring-white/5 shadow-2xl shadow-black/40 group"
+              glowColor="rgba(245, 158, 11, 0.4)"
+            >
+              <img 
+                src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/2012f549-ddcb-4a4a-beb4-d602bbe116c2_1600w.jpg" 
+                alt="Ethereal Landscape" 
+                className="h-full w-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                style={{ filter: 'hue-rotate(135deg) saturate(1.5) brightness(1.1)' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+              
+              {/* Animated background glow */}
+              <div 
+                className="absolute inset-0 opacity-50 pointer-events-none mix-blend-screen"
+                style={{
+                  background: 'radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.2), transparent 70%)',
+                  animation: 'pulse 4s ease-in-out infinite'
+                }}
+              />
+            </Spotlight>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+EOF
+
+# Create components/Features.tsx
+cat > components/Features.tsx << 'EOF'
+import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { Heart, Zap, Activity } from 'lucide-react';
+import { Spotlight } from './ui/Spotlight';
+
+const FeatureCard: React.FC<{ 
+  icon: React.ReactNode; 
+  title: string; 
+  description: string; 
+  imgSrc: string;
+}> = ({ icon, title, description, imgSrc }) => (
+  <Spotlight className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500">
+    <div className="relative h-48 lg:h-52 overflow-hidden rounded-xl ring-1 ring-white/10 mb-6 z-20">
+      <img 
+        src={imgSrc} 
+        alt={title} 
+        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        style={{ filter: 'sepia(100%) hue-rotate(-15deg) saturate(1.5) contrast(1.1)' }} 
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+      <div className="absolute top-3 right-3">
+        <button className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/20 backdrop-blur-xl hover:bg-white/25 transition-colors text-white">
+          {icon}
+        </button>
+      </div>
+    </div>
+    <div className="relative z-20">
+      <h3 className="text-xl font-display font-semibold tracking-tight mb-3 text-white">{title}</h3>
+      <p className="text-white/70 leading-relaxed mb-6">{description}</p>
+    </div>
+  </Spotlight>
+);
+
+export const Features: React.FC = () => {
+  const ref = useScrollReveal();
+
+  return (
+    <section id="learn" className="relative py-16 lg:py-24">
+      <div ref={ref} className="scroll-animate mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-geist font-light tracking-tighter">
+            Lighter™
+            <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-geist font-light tracking-tighter">
+              Supports
+            </span>
+          </h2>
+          <p className="max-w-3xl mx-auto text-lg sm:text-xl text-white/70 leading-relaxed">
+            A comprehensive approach to feeling and looking your best by healing your metabolism and lowering stress.
+          </p>
+        </div>
+
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6 lg:p-8 ring-1 ring-white/5 shadow-2xl shadow-black/40 relative overflow-hidden">
+          {/* Subtle background glow for container */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-3xl bg-amber-500/5 blur-[100px] pointer-events-none" />
+          
+          <div className="grid grid-cols-1 gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3 relative z-10">
+            <FeatureCard 
+              icon={<Heart size={18} />}
+              title="Calm Your System"
+              description="When your nervous system calms down, your metabolism finally shifts out of survival mode and starts working the way it's meant to."
+              imgSrc="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/b535e27a-5611-40e0-a6fd-24d3fdc4aa08_800w.jpg"
+            />
+            <FeatureCard 
+              icon={<Zap size={18} />}
+              title="Restore Your Energy"
+              description="Through simple experiments and daily tracking, you learn which foods, habits, and rhythms actually support your energy, digestion, and mood."
+              imgSrc="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/8eb0f134-ad73-4767-934c-a816876c5a4c_800w.jpg"
+            />
+            <FeatureCard 
+              icon={<Activity size={18} />}
+              title="Renew Your Metabolism"
+              description="When your body knows how to use energy efficiently again, weight loss becomes a side effect — not a struggle."
+              imgSrc="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/b3f1ce1e-0214-4406-9122-f084f36f4fc8_800w.jpg"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+EOF
+
+# Create components/DashboardPreview.tsx
+cat > components/DashboardPreview.tsx << 'EOF'
+import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { Spotlight } from './ui/Spotlight';
+
+export const DashboardPreview: React.FC = () => {
+  const ref = useScrollReveal();
+
+  return (
+    <section id="dashboard" className="relative py-16 lg:py-24">
+      <div ref={ref} className="scroll-animate mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-geist font-light tracking-tighter">
+            See Inside
+            <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-geist font-light tracking-tighter">
+              The App
+            </span>
+          </h2>
+          <p className="max-w-2xl mx-auto text-lg text-white/70 leading-relaxed">
+            Lighter™ helps you see what's really been happening beneath the surface.
+          </p>
+        </div>
+
+        {/* Dual Screenshot Display */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start justify-center">
+          
+          {/* Screenshot 1 */}
+          <Spotlight 
+            className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 ring-1 ring-white/5 bg-[#0E0E12] shadow-2xl shadow-black/50"
+            glowColor="rgba(245, 158, 11, 0.2)"
+          >
+            {/* Placeholder for "Your Metabolic Dashboard" Screenshot */}
+            {/* REPLACE src WITH YOUR DASHBOARD SCREENSHOT URL */}
+            <div className="aspect-[9/19] w-full relative">
+              <img 
+                src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/8eb0f134-ad73-4767-934c-a816876c5a4c_800w.jpg" 
+                alt="Lighter Dashboard" 
+                className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" 
+                style={{ filter: 'brightness(0.9)' }}
+              />
+              {/* Overlay to hint at UI if image is abstract */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
+            </div>
+          </Spotlight>
+
+          {/* Screenshot 2 */}
+          <Spotlight 
+            className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 ring-1 ring-white/5 bg-[#0E0E12] shadow-2xl shadow-black/50"
+            glowColor="rgba(245, 158, 11, 0.2)"
+          >
+            {/* Placeholder for "Tracking" Screenshot */}
+            {/* REPLACE src WITH YOUR TRACKING SCREENSHOT URL */}
+            <div className="aspect-[9/19] w-full relative">
+              <img 
+                src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/b535e27a-5611-40e0-a6fd-24d3fdc4aa08_800w.jpg" 
+                alt="Lighter Tracking" 
+                className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                style={{ filter: 'brightness(0.9)' }}
+              />
+               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
+            </div>
+          </Spotlight>
+
+        </div>
+
+        <div className="text-center mt-16">
+          <button className="group inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-8 py-4 text-base font-medium text-white/90 hover:bg-white/10 hover:border-white/25 transition-all duration-300 backdrop-blur-xl">
+             Start Your 3-Day Trial
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+EOF
+
+# Create components/Comparison.tsx
+cat > components/Comparison.tsx << 'EOF'
+import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { Check, X, Dumbbell } from 'lucide-react';
+
+export const Comparison: React.FC = () => {
+  const ref = useScrollReveal();
+
+  return (
+    <section id="pricing" className="relative py-16 lg:py-24">
+      <div ref={ref} className="scroll-animate mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-geist font-light tracking-tighter">
+            Why Lighter™
+            <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-geist font-light tracking-tighter">
+              Makes Sense
+            </span>
+          </h2>
+          <p className="max-w-2xl mx-auto text-lg text-white/70 leading-relaxed">
+            For less than the price of a gym membership, get personalized metabolic health guidance every day.
+          </p>
+        </div>
+
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl w-full">
+            
+            {/* Fitness Memberships */}
+            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] border border-white/10 shadow-[inset_0_-16px_24px_rgba(255,255,255,0.05)]">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 flex bg-white/5 border-white/20 border rounded-xl items-center justify-center">
+                     <Dumbbell size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-medium text-white tracking-tight leading-tight">Popular Weight Loss<br/>or Fitness Memberships</h3>
+                    <p className="text-xs text-neutral-500 mt-1">Gyms / Classes</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl text-white font-geist font-light tracking-tighter">$40-$200</span>
+                  <span className="text-sm text-neutral-400">/month</span>
+                </div>
+                <p className="text-xs text-neutral-500 mt-1">Generic access only</p>
+              </div>
+
+              <ul className="space-y-3 text-sm text-neutral-300 mb-8">
+                <li className="flex items-start gap-3 opacity-50">
+                   <X size={16} className="mt-0.5" />
+                   Generic plans
+                </li>
+                <li className="flex items-start gap-3 opacity-50">
+                  <X size={16} className="mt-0.5" />
+                  No personalization
+                </li>
+                <li className="flex items-start gap-3 opacity-50">
+                  <X size={16} className="mt-0.5" />
+                  Do it yourself
+                </li>
+              </ul>
+            </div>
+
+            {/* Lighter Plan (Featured) */}
+            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] shadow-[inset_0_-16px_24px_rgba(255,255,255,0.25)] border-0 overflow-hidden transform scale-105 z-10">
+               {/* Background Glows */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0E0E12] to-transparent z-0"></div>
+              <div className="absolute top-0 right-0 w-[200%] h-32 bg-gradient-to-b from-orange-500/20 to-transparent blur-3xl transform -translate-y-1/2 translate-x-1/2 rotate-12"></div>
+              <div className="absolute bottom-0 left-0 w-[200%] h-32 bg-gradient-to-t from-amber-500/20 to-transparent blur-3xl transform translate-y-1/2 -translate-x-1/2 -rotate-12"></div>
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 flex bg-white/10 border-white/20 border rounded-xl items-center justify-center">
+                       <span className="text-lg">✨</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-medium text-white tracking-tight">Lighter™</h3>
+                      <p className="text-xs text-neutral-400">Daily Support</p>
+                    </div>
+                  </div>
+                  <div className="h-5 w-5 rounded-full border-2 border-amber-400 bg-amber-400/20"></div>
+                </div>
+
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-4xl text-white font-geist font-light tracking-tighter">$19</span>
+                    <span className="text-sm text-neutral-400">/month</span>
+                  </div>
+                  <p className="text-xs text-amber-400 mt-1">First 3 days free</p>
+                </div>
+
+                <ul className="space-y-3 text-sm text-neutral-200 mb-8">
+                  <li className="flex items-start gap-3">
+                    <div className="flex justify-center items-center w-4 h-4 bg-amber-500 rounded-full mt-0.5">
+                      <Check size={10} className="text-black" />
+                    </div>
+                    Daily vital tracking
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="flex justify-center items-center w-4 h-4 bg-amber-500 rounded-full mt-0.5">
+                      <Check size={10} className="text-black" />
+                    </div>
+                    Personalized experiments
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="flex justify-center items-center w-4 h-4 bg-amber-500 rounded-full mt-0.5">
+                      <Check size={10} className="text-black" />
+                    </div>
+                    Metabolic protocols
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="flex justify-center items-center w-4 h-4 bg-amber-500 rounded-full mt-0.5">
+                      <Check size={10} className="text-black" />
+                    </div>
+                    Direct messaging support
+                  </li>
+                </ul>
+
+                <button className="w-full inline-flex gap-2 hover:from-amber-600 hover:to-orange-600 transition-all duration-200 text-sm font-semibold text-black bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl py-3 px-6 shadow-lg items-center justify-center">
+                  Start Free Trial
+                </button>
+              </div>
+            </div>
+
+            {/* Specialist Plan */}
+            <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 bg-[#0E0E12] border border-white/10 shadow-[inset_0_-16px_24px_rgba(255,255,255,0.05)]">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 flex bg-white/5 border-white/20 border rounded-xl items-center justify-center">
+                     <span className="text-lg">👨‍⚕️</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-medium text-white tracking-tight">Specialist</h3>
+                    <p className="text-xs text-neutral-500">Nutritionist / Coach</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl text-white font-geist font-light tracking-tighter">$150+</span>
+                  <span className="text-sm text-neutral-400">/session</span>
+                </div>
+                <p className="text-xs text-neutral-500 mt-1">One-time consult</p>
+              </div>
+
+              <ul className="space-y-3 text-sm text-neutral-300 mb-8">
+                <li className="flex items-start gap-3">
+                  <Check size={16} className="mt-0.5 text-neutral-500" />
+                  Expert Advice
+                </li>
+                <li className="flex items-start gap-3 opacity-50">
+                  <X size={16} className="mt-0.5" />
+                  Expensive per hour
+                </li>
+                <li className="flex items-start gap-3 opacity-50">
+                   <X size={16} className="mt-0.5" />
+                   No daily tracking
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+EOF
+
+# Create components/Testimonials.tsx
+cat > components/Testimonials.tsx << 'EOF'
+import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { Quote } from 'lucide-react';
+
+export const Testimonials: React.FC = () => {
+  const ref = useScrollReveal();
+
+  return (
+    <section id="testimonials" className="relative py-16 lg:py-24">
+      <div ref={ref} className="scroll-animate mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-geist font-light tracking-tighter">
+            The Story Behind
+            <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-geist font-light tracking-tighter">
+              Lighter™
+            </span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Bio Card */}
+          <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500">
+            <div className="mb-6">
+              <div className="flex gap-1 text-amber-400 mb-4">
+                 {[1,2,3,4,5].map(i => <div key={i} className="h-1 w-8 rounded-full bg-amber-500/50"></div>)}
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">Over 15 years in health and fitness</h3>
+              <p className="text-white/80 leading-relaxed mb-6">
+                With over 15 years in the health and fitness world, coaching and studying real women’s struggles up close, I learned that true transformation happens when you focus on rebuilding the body from the inside out — not chasing symptoms, but healing the root cause.
+              </p>
+            </div>
+          </div>
+
+          {/* Quote Card */}
+          <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-8 backdrop-blur-xl hover:from-white/15 hover:to-white/10 transition-all duration-500 flex flex-col justify-between">
+            <Quote className="absolute top-8 right-8 text-white/10 w-12 h-12" />
+            <div className="relative z-10">
+              <blockquote className="text-white/90 text-lg leading-relaxed italic mb-8">
+                "I created Lighter™ because I saw too many people stuck in stress-driven habits and diet cycles that break the body down instead of healing it. This app is the calm, clear roadmap I wish existed when I needed it most."
+              </blockquote>
+            </div>
+            
+            {/* Author Footer */}
+            <div className="flex items-center gap-4 border-t border-white/10 pt-6 mt-auto">
+               <div className="h-14 w-14 rounded-full bg-white/10 ring-2 ring-white/10 overflow-hidden flex-shrink-0">
+                  {/* PLACEHOLDER IMAGE: Replace the src below with your uploaded image URL */}
+                  <img 
+                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" 
+                    alt="Crista" 
+                    className="h-full w-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+               </div>
+               <div>
+                 <div className="text-white font-medium text-lg">Crista</div>
+                 <div className="text-amber-400/80 text-sm">Creator of Lighter™</div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+EOF
+
+# Create components/Footer.tsx
+cat > components/Footer.tsx << 'EOF'
+import React from 'react';
+import { Activity } from 'lucide-react';
+
+export const Footer: React.FC = () => {
+  return (
+    <footer className="relative border-t border-white/10 bg-black/20 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          
+          {/* Company Info */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-black">
+                <Activity size={18} />
+              </div>
+              <span className="text-xl font-display font-semibold tracking-tight">Lighter™</span>
+            </div>
+            <p className="text-white/60 leading-relaxed mb-6 max-w-md">
+              Lighter™ shows you how to listen to your body, lower cortisol, and find what actually works to feel energized again.
+            </p>
+          </div>
+
+          {/* Links */}
+          <div>
+            <h4 className="font-semibold text-white mb-4">Product</h4>
+            <ul className="space-y-3 text-sm">
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Dashboard</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Experiments</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Tracking</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-white mb-4">Support</h4>
+            <ul className="space-y-3 text-sm">
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Help Center</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Contact Us</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Privacy</a></li>
+              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-white/60">© {new Date().getFullYear()} Lighter. All rights reserved.</p>
+          <div className="text-xs text-white/40 text-center md:text-right max-w-xs">
+            Lighter™ provides wellness and lifestyle guidance and does not provide medical advice.
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+EOF
+
+# Create components/DetailedFeatures.tsx
+cat > components/DetailedFeatures.tsx << 'EOF'
+import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { Activity, Beaker, BookOpen, MessageCircle, BarChart2, ShieldCheck } from 'lucide-react';
+import { Spotlight } from './ui/Spotlight';
+
+const DetailItem: React.FC<{ icon: React.ReactNode; title: string; desc: string }> = ({ icon, title, desc }) => (
+  <Spotlight className="group relative flex gap-4 items-start p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-300">
+    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0 text-white shadow-inner ring-1 ring-white/10 group-hover:bg-amber-500/20 group-hover:text-amber-200 transition-colors">
+      {icon}
+    </div>
+    <div>
+      <h4 className="text-lg font-medium text-white mb-2 group-hover:text-white transition-colors">{title}</h4>
+      <p className="text-white/60 text-sm leading-relaxed group-hover:text-white/80 transition-colors">{desc}</p>
+    </div>
+  </Spotlight>
+);
+
+export const DetailedFeatures: React.FC = () => {
+  const ref = useScrollReveal();
+
+  return (
+    <section className="py-16 lg:py-24 px-4 sm:px-6 relative overflow-hidden" id="what-you-get">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div ref={ref} className="scroll-animate">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-geist font-light tracking-tighter mb-4">
+              What you get with 
+              <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent ml-2">Lighter™</span>
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">Comprehensive tools designed for your metabolic journey, available daily.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <DetailItem 
+              icon={<Activity size={24} />}
+              title="Daily vital tracking"
+              desc="Understand your energy, stress, and metabolic patterns with simple daily check-ins."
+            />
+            <DetailItem 
+              icon={<Beaker size={24} />}
+              title="Personalized experiments"
+              desc="Find what works for your body with guided, gentle metabolic experiments."
+            />
+            <DetailItem 
+              icon={<ShieldCheck size={24} />}
+              title="Science-backed protocols"
+              desc="Follow simple, proven steps that support thyroid health, lower stress, and boost energy."
+            />
+            <DetailItem 
+              icon={<MessageCircle size={24} />}
+              title="Direct messaging"
+              desc="Get personalized support when you need clarity or encouragement."
+            />
+            <DetailItem 
+              icon={<BarChart2 size={24} />}
+              title="Beautiful progress charts"
+              desc="See your improvements over time so you stay motivated and confident."
+            />
+            <DetailItem 
+              icon={<BookOpen size={24} />}
+              title="Educational library"
+              desc="Learn the 'why' behind your symptoms, hunger, energy shifts, and mood changes."
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+EOF
+
+# Create components/FinalCTA.tsx
+cat > components/FinalCTA.tsx << 'EOF'
+import React from 'react';
+import { Button } from './ui/Button';
+
+export const FinalCTA: React.FC = () => {
+  return (
+    <section className="py-24 px-6 relative overflow-hidden">
+      {/* Background Image Texture */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen">
+        <img 
+          src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/8eb0f134-ad73-4767-934c-a816876c5a4c_800w.jpg" 
+          alt="Background Texture" 
+          className="w-full h-full object-cover"
+          style={{ filter: 'hue-rotate(135deg) saturate(1.5) brightness(0.8) blur(2px)' }}
+        />
+      </div>
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0f0f11]/80 to-[#0f0f11] pointer-events-none" />
+      
+      {/* Amber Bottom Glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/20 blur-[100px] rounded-full pointer-events-none" />
+
+      <div className="max-w-3xl mx-auto text-center relative z-10">
+        <h2 className="text-5xl sm:text-6xl font-light tracking-tighter mb-8">
+          Ready to Feel Lighter?
+        </h2>
+        <p className="text-xl text-text-secondary mb-10">
+          Join the community of women healing their metabolism today.
+        </p>
+        
+        <div className="flex flex-col items-center gap-4">
+          <Button size="lg" className="px-12 bg-white text-black hover:bg-white/90">Start Your 3-Day Trial</Button>
+          <p className="text-sm text-text-muted">Cancel anytime. No pressure.</p>
+        </div>
+      </div>
+    </section>
+  );
+};
+EOF
+
+# Create App.tsx
+cat > App.tsx << 'EOF'
+import React from 'react';
+import { Navigation } from './components/Navigation';
+import { Hero } from './components/Hero';
+import { Features } from './components/Features';
+import { DetailedFeatures } from './components/DetailedFeatures';
+import { DashboardPreview } from './components/DashboardPreview';
+import { Comparison } from './components/Comparison';
+import { VideoPreview } from './components/VideoPreview';
+import { Testimonials } from './components/Testimonials';
+import { Footer } from './components/Footer';
+import { FinalCTA } from './components/FinalCTA';
+import { BackgroundEffects } from './components/BackgroundEffects';
+
+function App() {
+  return (
+    <div className="min-h-screen bg-transparent text-text-primary font-sans selection:bg-white/20 selection:text-white overflow-x-hidden relative">
+      <BackgroundEffects />
+      <Navigation />
+      
+      <main>
+        <Hero />
+        <Features />
+        <DashboardPreview />
+        <DetailedFeatures />
+        <Testimonials />
+        <Comparison />
+        <VideoPreview />
+        <FinalCTA />
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
+EOF
+
+# Create components/BackgroundEffects.tsx
+cat > components/BackgroundEffects.tsx << 'EOF'
+import React, { useEffect, useRef } from 'react';
+
+export const BackgroundEffects: React.FC = () => {
+  // Refs for the wrapper elements that will receive parallax transform
+  const parallaxRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const winW = window.innerWidth;
+      const winH = window.innerHeight;
+
+      // Update CSS variables for global mouse position for the spotlight
+      document.documentElement.style.setProperty('--mouse-x', `${clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${clientY}px`);
+      
+      // Update CSS variables for percentage-based gradients
+      const pctX = (clientX / winW) * 100;
+      const pctY = (clientY / winH) * 100;
+      document.documentElement.style.setProperty('--mouse-x-pct', `${pctX}%`);
+      document.documentElement.style.setProperty('--mouse-y-pct', `${pctY}%`);
+
+      // Parallax effect on wrappers
+      parallaxRefs.current.forEach((wrapper, index) => {
+        if (!wrapper) return;
+        
+        // Subtle parallax effect: blobs further away (lower index) move slower
+        // Index 0: Background (slowest) -> 0.02
+        // Index 2: Foreground (fastest) -> 0.06
+        const depthFactor = (index + 1) * 0.02; 
+        
+        // Move opposite to mouse direction
+        const x = (centerX - clientX) * depthFactor;
+        const y = (centerY - clientY) * depthFactor;
+        
+        // Apply transform directly for 1:1 responsiveness (no lag)
+        wrapper.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      });
+    };
+
+    // Initialize variables
+    document.documentElement.style.setProperty('--mouse-x', `${window.innerWidth / 2}px`);
+    document.documentElement.style.setProperty('--mouse-y', `${window.innerHeight / 2}px`);
+    document.documentElement.style.setProperty('--mouse-x-pct', '50%');
+    document.documentElement.style.setProperty('--mouse-y-pct', '50%');
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+      {/* 1. Global Gradient Base - Dynamic Mouse Reaction */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          background: `
+            radial-gradient(
+              circle 1400px at var(--mouse-x-pct, 50%) -10%,
+              rgba(180, 83, 9, 0.15),
+              transparent 60%
+            ),
+            radial-gradient(
+              circle 800px at var(--mouse-x-pct, 50%) var(--mouse-y-pct, 50%),
+              rgba(245, 158, 11, 0.05),
+              transparent 40%
+            ),
+            linear-gradient(to bottom, rgba(15, 15, 17, 1), #0f0f11)
+          `,
+          backgroundColor: '#0f0f11'
+        }}
+      />
+
+      {/* 2. CSS Grid Pattern */}
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.07]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(245, 158, 11, 0.4) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(245, 158, 11, 0.4) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+          maskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)'
+        }}
+      />
+
+      {/* 3. Top Orange Glow (The "Light") */}
+      <div 
+        className="absolute top-0 left-0 w-full h-[900px] bg-gradient-to-b from-amber-300/20 via-orange-500/10 to-transparent blur-3xl z-0 transition-transform duration-500 ease-out" 
+        style={{
+            transform: 'translateX(calc((var(--mouse-x-pct, 50%) - 50%) * 0.1))'
+        }}
+      />
+      
+      {/* 3b. Extra Top Highlight for "Lightness" */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90%] h-[500px] bg-amber-100/10 blur-[120px] z-0" />
+
+      {/* 4. Dynamic Mouse Follower Spotlight */}
+      <div 
+        className="absolute inset-0 z-0 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(251, 191, 36, 0.08), transparent 40%)`
+        }}
+      />
+
+      {/* 5. Floating Orbs Container */}
+      <div className="absolute top-0 left-0 w-full h-full z-0">
+        
+        {/* Blob 1 Wrapper - Top Left (Background - Slowest) */}
+        <div 
+          ref={(el) => { parallaxRefs.current[0] = el; }}
+          className="absolute -top-[10%] -left-[10%] w-[70vw] h-[70vw] will-change-transform"
+        >
+          {/* Inner Blob - Orange */}
+          <div className="w-full h-full rounded-full bg-orange-600/20 blur-[120px] mix-blend-screen animate-float" />
+        </div>
+        
+        {/* Blob 2 Wrapper - Center Right (Midground - Medium) */}
+        <div 
+          ref={(el) => { parallaxRefs.current[1] = el; }}
+          className="absolute top-[10%] -right-[20%] w-[60vw] h-[60vw] will-change-transform"
+        >
+          {/* Inner Blob - Amber */}
+          <div className="w-full h-full rounded-full bg-amber-600/20 blur-[120px] mix-blend-screen animate-float-delayed" />
+        </div>
+        
+        {/* Blob 3 Wrapper - Bottom Left (Foreground - Fastest) */}
+        <div 
+          ref={(el) => { parallaxRefs.current[2] = el; }}
+          className="absolute -bottom-[20%] left-[0%] w-[50vw] h-[50vw] will-change-transform"
+        >
+          {/* Inner Blob - Yellow */}
+          <div className="w-full h-full rounded-full bg-yellow-500/15 blur-[100px] mix-blend-screen animate-float-slow" />
+        </div>
+
+      </div>
+      
+      {/* 6. Noise Texture Overlay */}
+      <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    </div>
+  );
+};
+EOF
+
+# Create components/ui/Spotlight.tsx
+cat > components/ui/Spotlight.tsx << 'EOF'
+import React, { useRef, useState } from 'react';
+
+interface SpotlightProps {
+  children: React.ReactNode;
+  className?: string;
+  glowColor?: string;
+}
+
+export const Spotlight: React.FC<SpotlightProps> = ({ 
+  children, 
+  className = "",
+  glowColor = "rgba(255, 255, 255, 0.15)" 
+}) => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current) return;
+
+    const rect = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleMouseEnter = () => {
+    setOpacity(1);
+  };
+
+  const handleMouseLeave = () => {
+    setOpacity(0);
+  };
+
+  return (
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px transition duration-300 z-10"
+        style={{
+          opacity,
+        }}
+      >
+        <div 
+          className={`w-full h-full ${opacity === 1 ? 'animate-spotlight-pulse' : ''}`}
+          style={{
+            background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${glowColor}, transparent 40%)`
+          }}
+        />
+      </div>
+      {children}
+    </div>
+  );
+};
+EOF
+
+# Create components/LightBeam.tsx
+cat > components/LightBeam.tsx << 'EOF'
+import React from 'react';
+
+export const LightBeam: React.FC = () => {
+  return (
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-end">
+      {/* Core Beam */}
+      <div className="relative w-full h-full max-w-lg flex justify-center items-end">
+        <div className="w-2 h-full bg-gradient-to-t from-amber-200 via-orange-500 to-transparent opacity-0 animate-beam-core blur-sm" />
+        <div className="absolute bottom-0 w-32 h-[80%] bg-gradient-to-t from-amber-500/20 via-orange-500/10 to-transparent blur-3xl opacity-0 animate-beam-glow" />
+        <div className="absolute bottom-0 w-64 h-[60%] bg-gradient-to-t from-yellow-500/10 via-transparent to-transparent blur-3xl opacity-0 animate-beam-wide" />
+        
+        {/* Particles */}
+        <div className="absolute inset-0">
+          <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-white rounded-full animate-particle-1 opacity-0" />
+          <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-white rounded-full animate-particle-2 opacity-0" />
+          <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-white rounded-full animate-particle-3 opacity-0" />
+        </div>
+      </div>
+      
+      <style>{`
+        @keyframes beam-core {
+          0%, 100% { opacity: 0.3; height: 0%; }
+          50% { opacity: 0.8; height: 100%; }
+        }
+        @keyframes beam-glow {
+          0%, 100% { opacity: 0.1; height: 20%; }
+          50% { opacity: 0.5; height: 90%; }
+        }
+        @keyframes beam-wide {
+          0%, 100% { opacity: 0; transform: scaleX(0.5); }
+          50% { opacity: 0.3; transform: scaleX(1.5); }
+        }
+        @keyframes particle-1 {
+          0% { transform: translate(-50%, 0) scale(0); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translate(-20px, -60vh) scale(1); opacity: 0; }
+        }
+        @keyframes particle-2 {
+          0% { transform: translate(-50%, 0) scale(0); opacity: 0; }
+          40% { opacity: 1; }
+          100% { transform: translate(20px, -50vh) scale(0.5); opacity: 0; }
+        }
+        @keyframes particle-3 {
+          0% { transform: translate(-50%, 0) scale(0); opacity: 0; }
+          60% { opacity: 1; }
+          100% { transform: translate(0px, -70vh) scale(1.5); opacity: 0; }
+        }
+        
+        .animate-beam-core { animation: beam-core 4s ease-in-out infinite; }
+        .animate-beam-glow { animation: beam-glow 4s ease-in-out infinite; }
+        .animate-beam-wide { animation: beam-wide 4s ease-in-out infinite; }
+        .animate-particle-1 { animation: particle-1 3s ease-out infinite 0.5s; }
+        .animate-particle-2 { animation: particle-2 3.5s ease-out infinite 1s; }
+        .animate-particle-3 { animation: particle-3 4s ease-out infinite 1.5s; }
+      `}</style>
+    </div>
+  );
+};
+EOF
+
+# Create components/VideoPreview.tsx
+cat > components/VideoPreview.tsx << 'EOF'
+import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { Spotlight } from './ui/Spotlight';
+
+export const VideoPreview: React.FC = () => {
+  const ref = useScrollReveal();
+
+  return (
+    <section className="relative py-16 lg:py-24">
+      <div ref={ref} className="scroll-animate mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-geist font-light tracking-tighter">
+            Take a Peek
+            <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-geist font-light tracking-tighter">
+              Inside the App
+            </span>
+          </h2>
+        </div>
+
+        {/* Video Container */}
+        <Spotlight 
+          className="group relative w-full aspect-video overflow-hidden rounded-[2rem] border border-white/10 bg-[#0E0E12] shadow-2xl shadow-black/50 ring-1 ring-white/5"
+          glowColor="rgba(245, 158, 11, 0.25)"
+        >
+          <video 
+            className="w-full h-full object-cover rounded-[2rem]"
+            controls
+            playsInline
+            poster="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/905eec03-e9d1-4c06-ac00-75f4081ef1b6_800w.jpg"
+          >
+            {/* PASTE YOUR VIDEO URL IN THE SRC ATTRIBUTE BELOW */}
+            <source src="" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </Spotlight>
+      </div>
+    </section>
+  );
+};
+EOF
