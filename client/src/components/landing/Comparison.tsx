@@ -13,7 +13,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
       <div ref={ref} className="scroll-animate mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-light tracking-tighter text-white">
-            Why Lighter
+            Why Lighter™
             <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-light tracking-tighter">
               Makes Sense
             </span>
@@ -75,7 +75,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
                        <Activity size={20} className="text-amber-400" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-medium text-white tracking-tight">Lighter</h3>
+                      <h3 className="text-xl font-medium text-white tracking-tight">Lighter™</h3>
                       <p className="text-xs text-neutral-400">Daily Support</p>
                     </div>
                   </div>

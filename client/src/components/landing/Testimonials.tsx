@@ -12,7 +12,7 @@ export const Testimonials: React.FC = () => {
           <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-light tracking-tighter text-white">
             The Story Behind
             <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-light tracking-tighter">
-              Lighter
+              Lighter™
             </span>
           </h2>
         </div>
@@ -48,7 +48,7 @@ export const Testimonials: React.FC = () => {
                </div>
                <div>
                  <div className="text-white font-medium text-lg">Crista</div>
-                 <div className="text-amber-400/80 text-sm">Creator of Lighter</div>
+                 <div className="text-amber-400/80 text-sm">Creator of Lighter™</div>
                </div>
             </div>
           </div>

@@ -24,7 +24,7 @@ export const DetailedFeatures: React.FC = () => {
           <div className="text-center mb-12">
             <h2 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tighter mb-4 text-white">
               What you get with 
-              <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent ml-2">Lighter</span>
+              <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent ml-2">Lighter™</span>
             </h2>
             <p className="text-white/60 max-w-2xl mx-auto">Comprehensive tools designed for your metabolic journey, available daily.</p>
           </div>

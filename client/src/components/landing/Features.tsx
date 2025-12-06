@@ -39,7 +39,7 @@ export const Features: React.FC = () => {
       <div ref={ref} className="scroll-animate mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-5xl sm:text-6xl lg:text-7xl mb-6 font-light tracking-tighter text-white">
-            Lighter
+            Lighter™
             <span className="block bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent font-light tracking-tighter">
               Supports
             </span>

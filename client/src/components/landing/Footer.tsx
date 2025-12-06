@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-black">
                 <Activity size={18} />
               </div>
-              <span className="text-xl font-semibold tracking-tight text-white" data-testid="text-footer-brand">Lighter</span>
+              <span className="text-xl font-semibold tracking-tight text-white" data-testid="text-footer-brand">Lighter™</span>
             </div>
             <p className="text-white/60 leading-relaxed mb-6 max-w-md">
               Lighter shows you how to listen to your body, lower cortisol, and find what actually works to feel energized again.
