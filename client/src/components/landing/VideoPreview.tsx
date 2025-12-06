@@ -26,7 +26,7 @@ export const VideoPreview: React.FC = () => {
             playsInline
             poster="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&q=80&w=1200"
           >
-            <source src="/attached_assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1764905687606.mp4" type="video/mp4" />
+            <source src="/attached_assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1765005788388.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </Spotlight>
