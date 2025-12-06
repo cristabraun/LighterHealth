@@ -110,20 +110,30 @@ export const Hero: React.FC<HeroProps> = ({ onStartTrial }) => {
           <div className="relative lg:col-span-6 xl:col-span-6 flex justify-center lg:justify-end mt-8 lg:mt-0">
             <Spotlight 
               className="animate-blur-in relative aspect-square w-full max-w-xl overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/10 to-white/5 ring-1 ring-white/5 shadow-2xl shadow-black/40 group"
-              glowColor="rgba(245, 158, 11, 0.4)"
+              glowColor="rgba(245, 158, 11, 0.5)"
             >
-              <img 
-                src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&q=80&w=1200" 
-                alt="Warm sunlight through nature" 
-                className="h-full w-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
-                style={{ filter: 'hue-rotate(10deg) saturate(1.2) brightness(1.1)' }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-orange-900/20 to-transparent"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative w-48 h-48">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/30 to-orange-500/20 blur-2xl animate-pulse"></div>
+                  <div className="absolute inset-4 rounded-full bg-gradient-to-br from-amber-300/40 to-orange-400/30 blur-xl animate-float"></div>
+                  <div className="absolute inset-8 rounded-full bg-gradient-to-br from-amber-200/50 to-yellow-400/40 blur-lg"></div>
+                  <div className="absolute inset-12 rounded-full bg-gradient-to-br from-white/60 to-amber-100/50 blur-md"></div>
+                </div>
+              </div>
+              
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-amber-300/60 rounded-full animate-float-particle-1"></div>
+                <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-orange-300/50 rounded-full animate-float-particle-2"></div>
+                <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-yellow-300/70 rounded-full animate-float-particle-3"></div>
+                <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-amber-200/40 rounded-full animate-float-particle-4"></div>
+              </div>
               
               <div 
-                className="absolute inset-0 opacity-50 pointer-events-none mix-blend-screen"
+                className="absolute inset-0 opacity-60 pointer-events-none mix-blend-screen transition-opacity duration-500 group-hover:opacity-80"
                 style={{
-                  background: 'radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.2), transparent 70%)',
+                  background: 'radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.3), transparent 60%)',
                 }}
               />
             </Spotlight>
