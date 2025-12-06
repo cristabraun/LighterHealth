@@ -12,6 +12,9 @@ import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClie
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve public folder for PWA assets (manifest, service worker, icons, etc.)
   app.use(express.static(path.resolve(import.meta.dirname, "..", "public")));
+  
+  // Serve attached_assets folder for videos and other media
+  app.use('/attached_assets', express.static(path.resolve(import.meta.dirname, "..", "attached_assets")));
 
   // Setup authentication
   await setupAuth(app);
