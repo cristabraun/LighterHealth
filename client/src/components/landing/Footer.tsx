@@ -32,8 +32,8 @@ export const Footer: React.FC = () => {
             <h4 className="font-semibold text-white mb-4">Support</h4>
             <ul className="space-y-3 text-sm">
               <li><a href="mailto:support@getlighterapp.com" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-contact">Contact Us</a></li>
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-privacy">Privacy</a></li>
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-terms">Terms</a></li>
+              <li><a href="/privacy" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-privacy">Privacy</a></li>
+              <li><a href="/terms" className="text-white/60 hover:text-white transition-colors" data-testid="link-footer-terms">Terms</a></li>
             </ul>
           </div>
         </div>

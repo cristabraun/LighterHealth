@@ -29,6 +29,8 @@ import ExperimentSummary from "@/pages/experiments/summary";
 import Messages from "@/pages/messages";
 import Essentials from "@/pages/essentials";
 import AdminMessages from "@/pages/admin-messages";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -45,7 +47,13 @@ function Router() {
 
   // Show landing page if not authenticated
   if (!isAuthenticated) {
-    return <Landing />;
+    return (
+      <Switch>
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/terms" component={Terms} />
+        <Route component={Landing} />
+      </Switch>
+    );
   }
 
   // Show onboarding if user hasn't completed it
