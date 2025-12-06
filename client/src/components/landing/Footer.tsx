@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/60">{new Date().getFullYear()} Lighter. All rights reserved.</p>
+          <p className="text-sm text-white/60">{new Date().getFullYear()} Lighter™. All rights reserved.</p>
           <div className="text-xs text-white/40 text-center md:text-right max-w-xs">
             Lighter provides wellness and lifestyle guidance and does not provide medical advice.
           </div>
