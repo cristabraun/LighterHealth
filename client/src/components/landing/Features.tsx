@@ -15,7 +15,7 @@ const FeatureCard: React.FC<{
         src={imgSrc} 
         alt={title} 
         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        style={{ filter: 'sepia(40%) hue-rotate(-15deg) saturate(1.3) contrast(1.1)' }} 
+        style={{ filter: 'sepia(100%) hue-rotate(-15deg) saturate(1.5) contrast(1.1)' }} 
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
       <div className="absolute top-3 right-3">
@@ -57,21 +57,21 @@ export const Features: React.FC = () => {
               icon={<Heart size={18} />}
               title="Calm Your System"
               description="When your nervous system calms down, your metabolism finally shifts out of survival mode and starts working the way it's meant to."
-              imgSrc="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800"
+              imgSrc="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/b535e27a-5611-40e0-a6fd-24d3fdc4aa08_800w.jpg"
               testId="card-feature-calm"
             />
             <FeatureCard 
               icon={<Zap size={18} />}
               title="Restore Your Energy"
               description="Through simple experiments and daily tracking, you learn which foods, habits, and rhythms actually support your energy, digestion, and mood."
-              imgSrc="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=800"
+              imgSrc="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/8eb0f134-ad73-4767-934c-a816876c5a4c_800w.jpg"
               testId="card-feature-energy"
             />
             <FeatureCard 
               icon={<Activity size={18} />}
               title="Renew Your Metabolism"
-              description="When your body knows how to use energy efficiently again, weight loss becomes a side effect - not a struggle."
-              imgSrc="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800"
+              description="When your body knows how to use energy efficiently again, weight loss becomes a side effect — not a struggle."
+              imgSrc="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/b3f1ce1e-0214-4406-9122-f084f36f4fc8_800w.jpg"
               testId="card-feature-metabolism"
             />
           </div>
