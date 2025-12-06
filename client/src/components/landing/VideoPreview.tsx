@@ -24,7 +24,7 @@ export const VideoPreview: React.FC = () => {
             className="w-full h-full object-cover rounded-[2rem]"
             controls
             playsInline
-            poster="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&q=80&w=1200"
+            preload="metadata"
           >
             <source src="/attached_assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1765005788388.mp4" type="video/mp4" />
             Your browser does not support the video tag.
