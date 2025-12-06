@@ -1,6 +1,7 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Spotlight } from './Spotlight';
-import dashboardScreenshot from '@assets/generated_images/lighter_app_tracking_dashboard_screenshot.png';
+import dashboardScreenshot from '@assets/Screenshot_2025-12-03_at_12.01.50_AM_1765005506223.png';
+import trackingScreenshot from '@assets/Screenshot_2025-12-03_at_12.05.48_AM_1765005506229.png';
 
 interface DashboardPreviewProps {
   onStartTrial: () => void;
@@ -45,18 +46,13 @@ export const DashboardPreview: React.FC<DashboardPreviewProps> = ({ onStartTrial
             className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 ring-1 ring-white/5 bg-[#0E0E12] shadow-2xl shadow-black/50"
             glowColor="rgba(245, 158, 11, 0.2)"
           >
-            <div className="aspect-[9/19] w-full relative bg-gradient-to-br from-amber-900/20 to-orange-900/20">
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-6 shadow-lg shadow-amber-500/30">
-                  <svg className="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-semibold text-white mb-3">Daily Tracking</h3>
-                <p className="text-white/60 text-sm leading-relaxed max-w-xs">
-                  Track your temperature, pulse, energy levels, sleep quality, and mood every day to uncover your metabolic patterns.
-                </p>
-              </div>
+            <div className="aspect-[9/19] w-full relative">
+              <img 
+                src={trackingScreenshot}
+                alt="Lighter Daily Tracking" 
+                className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" 
+                style={{ filter: 'brightness(0.95)' }}
+              />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
             </div>
           </Spotlight>
