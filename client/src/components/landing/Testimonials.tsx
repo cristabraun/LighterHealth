@@ -1,6 +1,6 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Quote } from 'lucide-react';
-import cristaProfile from '@assets/#F5B89D_(1)_1765006643720.png';
+import cristaProfile from '@assets/crista-orange-bg.png';
 
 export const Testimonials: React.FC = () => {
   const ref = useScrollReveal();
