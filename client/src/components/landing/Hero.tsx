@@ -48,6 +48,17 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onStartTrial }) => {
+  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    setMousePosition({ x, y });
+  };
+
   const scrollToDashboard = () => {
     const dashboard = document.getElementById('dashboard');
     if (dashboard) {
@@ -56,7 +67,39 @@ export const Hero: React.FC<HeroProps> = ({ onStartTrial }) => {
   };
 
   return (
-    <section className="relative lg:pt-32 lg:pb-16 pt-28 pb-12 overflow-hidden">
+    <section 
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      className="relative lg:pt-32 lg:pb-16 pt-28 pb-12 overflow-hidden"
+    >
+      {/* Mouse-responsive orange glow */}
+      <div 
+        className="absolute inset-0 pointer-events-none transition-all duration-500 ease-out z-0"
+        style={{
+          background: `radial-gradient(900px circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(251, 146, 60, 0.12), transparent 50%)`,
+        }}
+      />
+      
+      {/* Secondary floating glow that follows mouse */}
+      <div 
+        className="absolute pointer-events-none transition-all duration-700 ease-out rounded-full blur-[150px] z-0"
+        style={{
+          width: '600px',
+          height: '600px',
+          left: `calc(${mousePosition.x * 100}% - 300px)`,
+          top: `calc(${mousePosition.y * 100}% - 300px)`,
+          background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(234, 88, 12, 0.08) 50%, transparent 70%)',
+        }}
+      />
+
+      {/* Subtle animated particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute w-2 h-2 bg-amber-400/20 rounded-full animate-pulse" style={{ top: '15%', left: '10%', animationDelay: '0s' }} />
+        <div className="absolute w-1.5 h-1.5 bg-orange-400/15 rounded-full animate-pulse" style={{ top: '70%', left: '85%', animationDelay: '0.5s' }} />
+        <div className="absolute w-1 h-1 bg-yellow-400/15 rounded-full animate-pulse" style={{ top: '80%', left: '20%', animationDelay: '1s' }} />
+        <div className="absolute w-2 h-2 bg-amber-500/15 rounded-full animate-pulse" style={{ top: '25%', left: '75%', animationDelay: '1.5s' }} />
+      </div>
+
       <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full h-[120vh] -z-10 opacity-60 pointer-events-none">
         <LightBeam />
       </div>
