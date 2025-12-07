@@ -1,5 +1,4 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-import { Spotlight } from './Spotlight';
 
 export const VideoPreview: React.FC = () => {
   const ref = useScrollReveal();
@@ -16,21 +15,18 @@ export const VideoPreview: React.FC = () => {
           </h2>
         </div>
 
-        <Spotlight 
-          className="group relative w-full aspect-video overflow-hidden rounded-[2rem] border border-white/10 bg-[#0E0E12] shadow-2xl shadow-black/50 ring-1 ring-white/5"
-          glowColor="rgba(245, 158, 11, 0.25)"
-        >
+        <div className="relative w-full aspect-video overflow-hidden rounded-[2rem] border border-white/10 bg-[#0E0E12] shadow-2xl shadow-black/50 ring-1 ring-white/5">
           <video 
-            className="relative z-20 w-full h-full object-cover rounded-[2rem]"
+            className="w-full h-full object-cover rounded-[2rem]"
             controls
             playsInline
             preload="auto"
-            poster=""
+            data-testid="video-app-preview"
           >
-            <source src="/attached_assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1765129677748.mp4" type="video/mp4" />
+            <source src="/app-preview.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        </Spotlight>
+        </div>
       </div>
     </section>
   );
