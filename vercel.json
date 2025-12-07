@@ -2,6 +2,11 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "server/**,shared/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
