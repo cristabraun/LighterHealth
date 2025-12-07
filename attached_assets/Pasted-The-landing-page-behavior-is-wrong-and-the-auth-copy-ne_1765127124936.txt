@@ -1,0 +1,46 @@
+The landing page behavior is wrong and the auth copy needs to be conditional. Fix both using the existing Stripe setup.
+
+**Goal**
+
+1. On the landing page, the **“Start Your 3-Day Trial”** button should open a **Stripe checkout page for a $19 purchase**, NOT send people back to the sign-up page.
+2. On the auth page, the heading **“Welcome back”** should only appear for returning/logged-in users (login mode), not for brand-new signups.
+
+**What to do**
+
+1. **Fix the trial CTA → Stripe Checkout**
+
+   * Open `client/src/pages/landing.tsx`.
+   * Find the primary CTA button labeled `"Start Your 3-Day Trial"` (currently navigating back to the sign-up/auth page).
+   * Change its click behavior so that:
+
+     * It calls our existing Stripe checkout logic (re-use whatever Stripe integration already exists in this project, don’t invent new env vars if there is already a price/plan defined).
+     * It redirects the user to a Stripe Checkout session for a **$19 trial offer** (one-time $19 or the existing $19 plan, whichever is already wired up in the backend).
+   * Make sure:
+
+     * The button now **opens the Stripe checkout page in the same tab** (standard checkout redirect pattern).
+     * Error states are handled gracefully (e.g., show a toast or inline error if creating the checkout session fails).
+     * You don’t break any other landing page styling or animations.
+
+2. **Make “Welcome back” conditional on login vs signup**
+
+   * Open `client/src/pages/auth.tsx`.
+   * There is a heading that currently always says something like `"Welcome back"` even for first-time users.
+   * Use the existing auth state (e.g., a boolean like `isLogin` / `mode === "login"` / “signIn vs signUp” toggle). Implement:
+
+     * If the page is in **login / returning user** mode → keep `"Welcome back"` (or equivalent) as the heading.
+     * If the page is in **signup / create account** mode → change the heading to something like `"Create your Lighter™ account"` or `"Join Lighter™"` and **do not** show “Welcome back.”
+   * Do not change any auth logic, form fields, validation, or routing—this is just a UI/text and conditional-rendering change.
+
+3. **Verify**
+
+   * Run the app locally.
+   * On the landing page:
+
+     * Click **“Start Your 3-Day Trial”** and confirm it goes straight to **Stripe checkout for $19**, not to `/auth` or a sign-up page.
+   * On the auth flow:
+
+     * In signup mode, confirm the heading is **not** “Welcome back.”
+     * In login/returning-user mode, confirm the heading **is** “Welcome back.”
+   * Make sure responsive layout and dark Lighter™ theme styling are preserved on both pages.
+
+Implement these changes and leave the rest of the app untouched.

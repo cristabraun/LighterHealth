@@ -383,6 +383,49 @@ async function initializeRoutes() {
     }
   });
 
+  // Guest checkout - no auth required (for landing page CTA)
+  app.post("/api/create-guest-checkout", async (req, res) => {
+    try {
+      const stripe = await getUncachableStripeClient();
+      if (!stripe) {
+        return res.status(500).json({ message: "Stripe is not configured" });
+      }
+      
+      const origin = req.headers.origin || req.headers.referer?.replace(/\/$/, '') || 'https://getlighterapp.com';
+      
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: [
+          {
+            price_data: {
+              currency: "usd",
+              product_data: {
+                name: "Lighter™ Premium",
+                description: "Full access to all metabolic healing features",
+              },
+              unit_amount: 1900,
+              recurring: {
+                interval: "month",
+              },
+            },
+            quantity: 1,
+          },
+        ],
+        mode: "subscription",
+        success_url: `${origin}/auth?success=true`,
+        cancel_url: `${origin}/?canceled=true`,
+        subscription_data: {
+          trial_period_days: 3,
+        },
+      });
+
+      res.json({ url: session.url });
+    } catch (error) {
+      console.error("Error creating guest checkout session:", error);
+      res.status(500).json({ message: "Failed to create checkout session" });
+    }
+  });
+
   // AI Coach routes
   app.post('/api/coach/message', isAuthenticated, async (req: any, res) => {
     try {
