@@ -77,12 +77,13 @@ export async function setupAuth(app: Express) {
         passwordHash: password,
       });
 
-      const token = generateToken({
+      const tokenPayload: Omit<JWTPayload, 'iat' | 'exp'> = {
         sub: userId,
         email,
-        firstName,
-        lastName,
-      });
+      };
+      if (firstName) tokenPayload.firstName = firstName;
+      if (lastName) tokenPayload.lastName = lastName;
+      const token = generateToken(tokenPayload);
 
       setAuthCookie(res, token);
 
@@ -112,12 +113,13 @@ export async function setupAuth(app: Express) {
         return res.status(401).json({ message: "Invalid email or password" });
       }
 
-      const token = generateToken({
+      const loginPayload: Omit<JWTPayload, 'iat' | 'exp'> = {
         sub: user.id,
         email: user.email!,
-        firstName: user.firstName || undefined,
-        lastName: user.lastName || undefined,
-      });
+      };
+      if (user.firstName) loginPayload.firstName = user.firstName;
+      if (user.lastName) loginPayload.lastName = user.lastName;
+      const token = generateToken(loginPayload);
 
       setAuthCookie(res, token);
 
