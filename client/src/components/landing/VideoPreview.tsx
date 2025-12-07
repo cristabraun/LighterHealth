@@ -27,7 +27,7 @@ export const VideoPreview: React.FC = () => {
             preload="auto"
             poster=""
           >
-            <source src="/attached_assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1765005788388.mp4" type="video/mp4" />
+            <source src="/attached_assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1765129677748.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </Spotlight>
