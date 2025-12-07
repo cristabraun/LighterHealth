@@ -1,13 +1,11 @@
 import { useState, FormEvent } from 'react';
 import { useLocation } from 'wouter';
 import { useMutation } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
-import { ArrowLeft, Sparkles, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, Sparkles, Eye, EyeOff, ChevronRight } from 'lucide-react';
 
 export default function Auth() {
   const [, setLocation] = useLocation();
@@ -113,9 +111,31 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen bg-[#0f0f11] text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-orange-500/20 to-amber-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-amber-500/15 to-orange-500/15 rounded-full blur-3xl" />
+      {/* Background effects matching landing page */}
+      <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            background: `
+              radial-gradient(
+                circle 1400px at 50% -10%,
+                rgba(180, 83, 9, 0.15),
+                transparent 60%
+              ),
+              radial-gradient(
+                circle 800px at 50% 50%,
+                rgba(245, 158, 11, 0.05),
+                transparent 40%
+              ),
+              linear-gradient(to bottom, rgba(15, 15, 17, 1), #0f0f11)
+            `,
+            backgroundColor: '#0f0f11'
+          }}
+        />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90%] h-[500px] bg-amber-100/10 blur-[120px] z-0" />
+        <div className="absolute -top-[10%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-orange-600/20 blur-[120px] mix-blend-screen" />
+        <div className="absolute top-[10%] -right-[20%] w-[60vw] h-[60vw] rounded-full bg-amber-600/20 blur-[120px] mix-blend-screen" />
+        <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
       </div>
 
       <div className="w-full max-w-md z-10">
@@ -129,24 +149,27 @@ export default function Auth() {
         </button>
 
         <div className="flex items-center gap-2 mb-8">
-          <Sparkles className="w-8 h-8 text-orange-500" />
-          <span className="text-2xl font-semibold bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent">
+          <Sparkles className="w-8 h-8 text-amber-400" />
+          <span className="text-2xl font-light tracking-tight bg-gradient-to-r from-amber-300 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
             Lighter™
           </span>
         </div>
 
-        <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-white">
-              {mode === 'login' ? 'Welcome back' : 'Create your account'}
-            </CardTitle>
-            <CardDescription className="text-white/60">
-              {mode === 'login'
-                ? 'Sign in to continue your metabolic healing journey'
-                : 'Start your 3-day free trial today'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        {/* Frosted glass card matching landing page */}
+        <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl p-8 ring-1 ring-white/5 shadow-2xl shadow-black/40 relative overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-xl bg-amber-500/5 blur-[80px] pointer-events-none" />
+          
+          <div className="relative z-10">
+            <div className="mb-6">
+              <h2 className="text-2xl font-light tracking-tight text-white mb-2">
+                {mode === 'login' ? 'Welcome back' : 'Create your account'}
+              </h2>
+              <p className="text-white/60 text-base">
+                {mode === 'login'
+                  ? 'Sign in to continue your metabolic healing journey'
+                  : 'Start your 3-day free trial today'}
+              </p>
+            </div>
             {mode === 'login' ? (
               <form onSubmit={handleLoginSubmit} className="space-y-4">
                 <div className="space-y-2">
@@ -185,14 +208,16 @@ export default function Auth() {
                   </div>
                   {errors.loginPassword && <p className="text-red-400 text-sm">{errors.loginPassword}</p>}
                 </div>
-                <Button
+                <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-medium"
                   disabled={loginMutation.isPending}
+                  className="group relative w-full inline-flex items-center justify-center gap-3 rounded-2xl bg-white px-8 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                   data-testid="button-login"
                 >
-                  {loginMutation.isPending ? 'Signing in...' : 'Sign in'}
-                </Button>
+                  <span>{loginMutation.isPending ? 'Signing in...' : 'Sign in'}</span>
+                  <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl group-hover:opacity-25 transition-opacity" />
+                </button>
               </form>
             ) : (
               <form onSubmit={handleRegisterSubmit} className="space-y-4">
@@ -269,14 +294,16 @@ export default function Auth() {
                   />
                   {errors.registerConfirmPassword && <p className="text-red-400 text-sm">{errors.registerConfirmPassword}</p>}
                 </div>
-                <Button
+                <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-medium"
                   disabled={registerMutation.isPending}
+                  className="group relative w-full inline-flex items-center justify-center gap-3 rounded-2xl bg-white px-8 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                   data-testid="button-register"
                 >
-                  {registerMutation.isPending ? 'Creating account...' : 'Start free trial'}
-                </Button>
+                  <span>{registerMutation.isPending ? 'Creating account...' : 'Start free trial'}</span>
+                  <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl group-hover:opacity-25 transition-opacity" />
+                </button>
               </form>
             )}
 
@@ -286,7 +313,7 @@ export default function Auth() {
                   Don't have an account?{' '}
                   <button
                     onClick={() => { setMode('register'); setErrors({}); }}
-                    className="text-orange-400 hover:text-orange-300 font-medium"
+                    className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
                     data-testid="button-switch-to-register"
                   >
                     Sign up
@@ -297,7 +324,7 @@ export default function Auth() {
                   Already have an account?{' '}
                   <button
                     onClick={() => { setMode('login'); setErrors({}); }}
-                    className="text-orange-400 hover:text-orange-300 font-medium"
+                    className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
                     data-testid="button-switch-to-login"
                   >
                     Sign in
@@ -305,14 +332,14 @@ export default function Auth() {
                 </p>
               )}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         <p className="text-center text-white/40 text-xs mt-6">
           By continuing, you agree to our{' '}
-          <a href="/terms" className="text-orange-400/80 hover:text-orange-300">Terms</a>
+          <a href="/terms" className="text-amber-400/80 hover:text-amber-300 transition-colors">Terms</a>
           {' '}and{' '}
-          <a href="/privacy" className="text-orange-400/80 hover:text-orange-300">Privacy Policy</a>
+          <a href="/privacy" className="text-amber-400/80 hover:text-amber-300 transition-colors">Privacy Policy</a>
         </p>
       </div>
     </div>
