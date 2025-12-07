@@ -31,6 +31,7 @@ import Essentials from "@/pages/essentials";
 import AdminMessages from "@/pages/admin-messages";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
+import Auth from "@/pages/auth";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -51,6 +52,7 @@ function Router() {
       <Switch>
         <Route path="/privacy" component={Privacy} />
         <Route path="/terms" component={Terms} />
+        <Route path="/auth" component={Auth} />
         <Route component={Landing} />
       </Switch>
     );

@@ -17,12 +17,22 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc, sql } from "drizzle-orm";
+import bcrypt from "bcryptjs";
+
+export type SafeUser = Omit<User, 'passwordHash'>;
+
+export function toSafeUser(user: User): SafeUser {
+  const { passwordHash: _, ...safeUser } = user;
+  return safeUser;
+}
 
 // Interface for storage operations
 export interface IStorage {
-  // User operations (required for Replit Auth)
+  // User operations
   getUser(id: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
+  verifyPassword(userId: string, password: string): Promise<boolean>;
   updateUserOnboarding(userId: string, name: string, symptoms: string[]): Promise<User>;
   
   // Daily log operations
@@ -55,7 +65,7 @@ export interface IStorage {
     stripeSubscriptionId?: string;
     subscriptionStatus?: string;
     trialEndsAt?: Date;
-  }): Promise<User>;
+  }): Promise<SafeUser>;
   getProduct(productId: string): Promise<any>;
   listProducts(active?: boolean, limit?: number, offset?: number): Promise<any[]>;
   listProductsWithPrices(active?: boolean, limit?: number, offset?: number): Promise<any[]>;
@@ -72,14 +82,32 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async verifyPassword(userId: string, password: string): Promise<boolean> {
+    const user = await this.getUser(userId);
+    if (!user?.passwordHash) return false;
+    return bcrypt.compare(password, user.passwordHash);
+  }
+
   async upsertUser(userData: UpsertUser): Promise<User> {
+    let dataToInsert = { ...userData };
+    
+    if (userData.passwordHash) {
+      const hashedPassword = await bcrypt.hash(userData.passwordHash, 10);
+      dataToInsert.passwordHash = hashedPassword;
+    }
+    
     const [user] = await db
       .insert(users)
-      .values(userData)
+      .values(dataToInsert)
       .onConflictDoUpdate({
         target: users.id,
         set: {
-          ...userData,
+          ...dataToInsert,
           updatedAt: new Date(),
         },
       })
@@ -299,7 +327,7 @@ export class DatabaseStorage implements IStorage {
     stripeSubscriptionId?: string;
     subscriptionStatus?: string;
     trialEndsAt?: Date;
-  }): Promise<User> {
+  }): Promise<SafeUser> {
     const [user] = await db
       .update(users)
       .set({
@@ -308,7 +336,7 @@ export class DatabaseStorage implements IStorage {
       })
       .where(eq(users.id, userId))
       .returning();
-    return user;
+    return toSafeUser(user);
   }
 
   async getProduct(productId: string): Promise<any> {

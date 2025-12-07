@@ -14,15 +14,15 @@ import {
 
 export default function Landing() {
   const handleLogin = () => {
-    window.location.href = '/api/login';
+    window.location.href = '/auth';
   };
 
   const handleGetStarted = () => {
-    window.location.href = '/api/login';
+    window.location.href = '/auth';
   };
 
   const handleStartTrial = () => {
-    window.location.href = '/api/login';
+    window.location.href = '/auth';
   };
 
   return (

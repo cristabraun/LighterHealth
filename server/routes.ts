@@ -2,8 +2,9 @@ import type { Express } from "express";
 import express from "express";
 import path from "path";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { storage, toSafeUser } from "./storage";
+import { setupAuth, isAuthenticated } from "./jwtAuth";
+import cookieParser from "cookie-parser";
 import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
 import OpenAI from "openai";
@@ -16,6 +17,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve attached_assets folder for videos and other media
   app.use('/attached_assets', express.static(path.resolve(import.meta.dirname, "..", "attached_assets")));
 
+  // Add cookie parser for JWT auth
+  app.use(cookieParser());
+
   // Setup authentication
   await setupAuth(app);
 
@@ -27,7 +31,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      res.json(user);
+      res.json(toSafeUser(user));
     } catch (error) {
       console.error("Error fetching user:", error);
       res.status(500).json({ message: "Failed to fetch user" });
@@ -49,7 +53,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         name,
         Array.isArray(symptoms) ? symptoms : []
       );
-      res.json(user);
+      if (user) {
+        res.json(toSafeUser(user));
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
     } catch (error) {
       console.error("Error updating onboarding:", error);
       res.status(500).json({ message: "Failed to complete onboarding" });

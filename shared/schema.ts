@@ -14,11 +14,12 @@ export const sessions = pgTable(
   (table) => [index("IDX_session_expire").on(table.expire)],
 );
 
-// User Profile (updated for Replit Auth)
+// User Profile
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  // Replit Auth fields
+  // Auth fields
   email: varchar("email").unique(),
+  passwordHash: varchar("password_hash"),
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
@@ -43,13 +44,14 @@ export const insertUserSchema = createInsertSchema(users).omit({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
-// Upsert user type for Replit Auth
+// Upsert user type for authentication
 export type UpsertUser = {
   id: string;
   email: string | null;
   firstName: string | null;
   lastName: string | null;
   profileImageUrl: string | null;
+  passwordHash?: string;
 };
 
 // Daily Logs

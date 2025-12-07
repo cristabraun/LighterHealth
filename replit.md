@@ -10,6 +10,19 @@ The application emphasizes a warm, encouraging design approach inspired by welln
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (December 7, 2025)
+
+**Major Update: Authentication System Refactor for Vercel Deployment**
+- Replaced Replit Auth with custom JWT-based authentication for Vercel compatibility
+- Added email/password registration and login flows
+- Implemented JWT token storage in httpOnly cookies for security
+- Created new auth page (client/src/pages/auth.tsx) with login/register forms
+- Added passwordHash field to users table for secure password storage
+- Created centralized `toSafeUser()` helper to strip sensitive fields from API responses
+- Security: All user-returning API endpoints now properly sanitize data
+- Added Vercel configuration (vercel.json) with proper rewrites and build settings
+- Updated Stripe client to work with both Replit connectors and direct environment variables
+
 ## Recent Changes (November 23, 2025)
 
 **Latest Updates: "My Metabolism" Dashboard Redesign**
@@ -94,10 +107,11 @@ Preferred communication style: Simple, everyday language.
 - Development server with Vite integration for HMR
 
 **Authentication System**:
-- Replit Auth via OpenID Connect (passport.js)
-- PostgreSQL session storage (connect-pg-simple)
-- Token refresh handling for long-lived sessions
-- Automatic user upsert on login
+- JWT-based authentication with httpOnly cookies (for Vercel compatibility)
+- Email/password registration and login
+- Centralized `toSafeUser()` helper strips passwordHash from all API responses
+- Automatic user creation on registration
+- Fallback to Replit Auth in development environment
 
 **Data Storage**:
 - PostgreSQL database (Neon) with DatabaseStorage class
