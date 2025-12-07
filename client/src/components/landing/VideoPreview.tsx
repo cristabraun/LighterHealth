@@ -21,10 +21,11 @@ export const VideoPreview: React.FC = () => {
           glowColor="rgba(245, 158, 11, 0.25)"
         >
           <video 
-            className="w-full h-full object-cover rounded-[2rem]"
+            className="relative z-20 w-full h-full object-cover rounded-[2rem]"
             controls
             playsInline
-            preload="metadata"
+            preload="auto"
+            poster=""
           >
             <source src="/attached_assets/Exploring_the_Lighter_App__Your_Guide_to_Stress_Healing_and_Me_1765005788388.mp4" type="video/mp4" />
             Your browser does not support the video tag.
