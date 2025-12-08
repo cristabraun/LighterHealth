@@ -1,0 +1,65 @@
+You are working in my Replit project **LighterHealth**.
+
+Goal:
+The **onboarding / welcome page** (the “Welcome to Lighter™” screen with the big peach card and “Get Started” button) still uses a light, peach background and doesn’t match the dark, amber branding of the main landing page.
+
+I want you to:
+- Update this onboarding page so it visually matches the **dark Lighter™ theme** used on the landing page (client/src/pages/landing.tsx):
+  - Dark background with warm amber/orange gradient, just like the hero section on the landing page.
+  - Use the same font sizes, weights, and general spacing system as the landing page.
+  - Use the same primary button style (dark background + bright orange/amber gradient or glow) as the “Start Your Free 30-Day Beta” button on the landing page.
+
+Implementation details:
+
+1. **Find the onboarding page**
+   - Locate the page file that renders the “Welcome to Lighter™” screen. It should be something like:
+     - `client/src/pages/onboarding.tsx`
+   - Confirm it’s the one that shows:
+     - “Welcome to Lighter™”
+     - “Your journey to a calmer, clearer, more energized body starts here.”
+     - A large light card with the orange “Get Started” button.
+
+2. **Update the background + layout to dark theme**
+   - Replace the current light/peach gradient background with the same dark gradient look as the landing hero.
+   - You can copy the outer container styles from `client/src/pages/landing.tsx` (hero section) for consistency, then adapt them.
+   - The whole page should feel like an extension of the landing page:
+     - Dark background
+     - Soft amber/orange glow
+     - Rounded, slightly translucent card on top (if you keep the card), but NOT white/peach that clashes with the rest.
+
+3. **Restyle the card + typography**
+   - Keep the content text (headings and paragraphs) but restyle it:
+     - Title “Welcome to Lighter™” should use the same heading style as the landing hero title (font weight, size, color).
+     - Subheading “Your journey to a calmer, clearer, more energized body starts here.” should be medium/semibold and use a soft light color (e.g. `text-amber-100` / `text-slate-100` equivalent).
+     - Body copy should be a subtle light gray, not dark text on a light card.
+   - The card container should:
+     - Use a dark, slightly translucent background (e.g. `bg-white/5` or a dark neutral with opacity) with a soft border or subtle inner glow to match the Lighter aesthetic.
+     - Have generous padding and rounded corners to feel premium and consistent with the rest of the site.
+
+4. **Button styling**
+   - The “Get Started” button should look like the main CTA button on the landing page:
+     - Same background gradient or color.
+     - Same hover state (slight glow or brightness increase).
+     - Same border-radius and font styling.
+   - If there is any secondary text below the button, ensure contrast is readable on the dark theme.
+
+5. **Responsive behavior**
+   - Make sure the new layout looks good on:
+     - Desktop: centered content, max-width container, good breathing space.
+     - Mobile: stacked layout, full-width button, comfortable padding.
+   - Use the same responsive breakpoints and patterns used in the landing page file.
+
+6. **Do NOT change logic**
+   - Do **not** modify any business logic:
+     - Don’t change navigation, hooks, or state.
+     - Don’t alter how “Get Started” works, only its styling / layout.
+   - Only update JSX structure and Tailwind / CSS classes so the visuals match the brand.
+
+7. **Final check**
+   - Run the dev server and visually confirm that:
+     - The onboarding page now feels like part of the dark Lighter™ experience.
+     - Colors, fonts, and button style match the landing hero.
+   - Once it looks consistent, format the file and leave a short comment at the top like:
+     - `// Onboarding page updated to match the dark Lighter™ landing page theme.`
+
+Please implement these changes now.
