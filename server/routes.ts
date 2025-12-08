@@ -23,7 +23,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   await setupAuth(app);
 
-  // Auth routes
+  // Beta expiry check middleware - checks if authenticated user's beta has expired
+  const checkBetaAccess = async (req: any, res: any, next: any) => {
+    try {
+      if (!req.user?.claims?.sub) {
+        return next(); // Let isAuthenticated handle unauthenticated users
+      }
+      
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return next(); // User not found, let other middleware handle
+      }
+      
+      // Skip beta check for users with active subscriptions
+      if (user.subscriptionStatus === 'active') {
+        return next();
+      }
+      
+      // Check if beta has expired
+      if (user.isBetaUser && user.betaExpiresAt) {
+        const expiresAt = new Date(user.betaExpiresAt);
+        if (expiresAt < new Date()) {
+          return res.status(403).json({ 
+            message: "Beta period expired",
+            code: "BETA_EXPIRED",
+            expiresAt: user.betaExpiresAt
+          });
+        }
+      }
+      
+      next();
+    } catch (error) {
+      console.error("Error checking beta access:", error);
+      next(); // Don't block on error, let other middleware handle
+    }
+  };
+
+  // Auth routes - don't apply beta check to /api/auth/user so frontend can check expiry
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
@@ -64,8 +102,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Daily log routes
-  app.get('/api/logs', isAuthenticated, async (req: any, res) => {
+  // Daily log routes - protected with beta access check
+  app.get('/api/logs', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const logs = await storage.getDailyLogs(userId);
@@ -76,7 +114,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/logs/:date', isAuthenticated, async (req: any, res) => {
+  app.get('/api/logs/:date', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const { date } = req.params;
@@ -91,7 +129,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch('/api/logs/:date/checklist', isAuthenticated, async (req: any, res) => {
+  app.patch('/api/logs/:date/checklist', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const { date } = req.params;
@@ -112,7 +150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/logs', isAuthenticated, async (req: any, res) => {
+  app.post('/api/logs', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const validatedData = insertDailyLogSchema.parse(req.body);
@@ -128,8 +166,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Active experiment routes
-  app.get('/api/experiments', isAuthenticated, async (req: any, res) => {
+  // Active experiment routes - protected with beta access check
+  app.get('/api/experiments', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const experiments = await storage.getActiveExperiments(userId);
@@ -140,7 +178,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/experiments', isAuthenticated, async (req: any, res) => {
+  app.post('/api/experiments', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const validatedData = insertActiveExperimentSchema.parse(req.body);
@@ -156,7 +194,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch('/api/experiments/:id', isAuthenticated, async (req: any, res) => {
+  app.patch('/api/experiments/:id', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const { id } = req.params;
@@ -169,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/experiments/:id', isAuthenticated, async (req: any, res) => {
+  app.delete('/api/experiments/:id', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const { id } = req.params;
@@ -202,8 +240,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ isAdmin: isUserAdmin });
   });
 
-  // Message routes
-  app.post('/api/messages', isAuthenticated, async (req: any, res) => {
+  // Message routes - protected with beta access check
+  app.post('/api/messages', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const validatedData = insertMessageSchema.parse(req.body);
@@ -219,7 +257,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/messages', isAuthenticated, async (req: any, res) => {
+  app.get('/api/messages', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const messages = await storage.getUserMessages(userId);
@@ -290,8 +328,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Food log routes
-  app.post('/api/food-logs', isAuthenticated, async (req: any, res) => {
+  // Food log routes - protected with beta access check
+  app.post('/api/food-logs', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const validatedData = insertFoodLogSchema.parse(req.body);
@@ -307,7 +345,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/food-logs/:date', isAuthenticated, async (req: any, res) => {
+  app.get('/api/food-logs/:date', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const { date } = req.params;
@@ -320,7 +358,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Legacy query parameter support (for backwards compatibility)
-  app.get('/api/food-logs', isAuthenticated, async (req: any, res) => {
+  app.get('/api/food-logs', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const date = req.query.date as string | undefined;
@@ -332,7 +370,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/food-logs/:id', isAuthenticated, async (req: any, res) => {
+  app.delete('/api/food-logs/:id', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const { id } = req.params;
