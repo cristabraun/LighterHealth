@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Card } from "@/components/ui/card";
@@ -667,34 +667,11 @@ export default function Dashboard() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [welcomeExpanded, setWelcomeExpanded] = useState(true);
-  const [activeExperiments, setActiveExperiments] = useState<ActiveExperiment[]>([]);
 
-  // Load active experiments from localStorage and listen for changes
-  useEffect(() => {
-    const loadExperiments = () => {
-      const experimentsData = localStorage.getItem("lighter_active_experiments");
-      if (experimentsData) {
-        try {
-          const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
-          setActiveExperiments(experiments);
-        } catch {
-          setActiveExperiments([]);
-        }
-      }
-    };
-
-    loadExperiments();
-
-    // Listen for visibility changes (when returning to this tab)
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        loadExperiments();
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, []);
+  // Fetch active experiments from API
+  const { data: activeExperiments = [] } = useQuery<ActiveExperiment[]>({
+    queryKey: ["/api/experiments"],
+  });
 
   // Fetch daily logs
   const { data: logs = [] } = useQuery<DailyLog[]>({

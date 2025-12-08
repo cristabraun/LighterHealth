@@ -253,8 +253,12 @@ export class DatabaseStorage implements IStorage {
           energy: log.energy,
           sleep: log.sleep,
           digestion: log.digestion,
+          stress: log.stress,
+          mood: log.mood,
+          moodNotes: log.moodNotes,
           howYouFeelNotes: log.howYouFeelNotes,
           digestionNotes: log.digestionNotes,
+          checklistCompleted: log.checklistCompleted,
           notes: log.notes,
         },
       })
