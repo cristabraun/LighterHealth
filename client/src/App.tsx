@@ -32,6 +32,8 @@ import AdminMessages from "@/pages/admin-messages";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import Auth from "@/pages/auth";
+import ResetPasswordRequest from "@/pages/reset-password-request";
+import ResetPassword from "@/pages/reset-password";
 import Upgrade from "@/pages/upgrade";
 import NotFound from "@/pages/not-found";
 
@@ -75,6 +77,8 @@ function Router() {
         <Route path="/privacy" component={Privacy} />
         <Route path="/terms" component={Terms} />
         <Route path="/auth" component={Auth} />
+        <Route path="/auth/reset-request" component={ResetPasswordRequest} />
+        <Route path="/auth/reset-password" component={ResetPassword} />
         <Route path="/upgrade" component={Upgrade} />
         <Route component={Landing} />
       </Switch>

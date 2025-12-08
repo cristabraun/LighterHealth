@@ -23,6 +23,9 @@ export const users = pgTable("users", {
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
+  // Password reset fields
+  passwordResetToken: varchar("password_reset_token"),
+  passwordResetExpires: timestamp("password_reset_expires"),
   // Lighter app fields
   name: text("name"), // User's preferred name from onboarding
   onboardingCompleted: boolean("onboarding_completed").notNull().default(false),

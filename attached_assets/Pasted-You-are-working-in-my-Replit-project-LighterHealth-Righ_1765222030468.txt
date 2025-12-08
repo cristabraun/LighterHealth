@@ -1,0 +1,197 @@
+You are working in my Replit project **LighterHealth**.
+
+Right now auth has a few problems:
+
+* If I try to register with an email that already exists, I correctly get: **“An account with this email already exists. Please sign in instead.”**
+* But when I go to **“Already have an account? Sign in”** and try to log in with that same email + password, login **fails** and I end up with an error / failed page instead of being logged in.
+* I also get logged out whenever I leave or close the page.
+* There is no way for users to reset their password if they forget it.
+
+I need you to fix **login**, implement a **30-day sliding session**, and add a **password reset flow**.
+
+---
+
+## 1. Fix LOGIN so existing users can sign in
+
+1. Find the login API handler (for `POST /api/auth/login`) in `api/index.ts` or wherever it lives.
+2. Inspect what it does:
+
+   * It should:
+
+     * Look up the user by email in the database.
+     * Compare the submitted password with the stored hashed password (likely bcrypt).
+     * On success, create the auth token / cookie and return the user.
+3. Use logs/console to reproduce the current login error using a valid registered email + password and identify the **exact** cause (bad query, wrong field, missing hash comparison, etc.) and fix it.
+4. Open `client/src/pages/auth.tsx`:
+
+   * Confirm that:
+
+     * In **register** mode it calls the registration endpoint (e.g. `POST /api/auth/register`).
+     * In **login** mode it calls the **login** endpoint (`POST /api/auth/login`), not register.
+   * Improve error handling:
+
+     * For invalid credentials, show a friendly message like **“Incorrect email or password”** instead of a generic error or a broken screen.
+5. After fixing:
+
+   * Create a user via **Register**.
+   * Log out / clear session.
+   * Use **Sign in** with the same credentials and confirm:
+
+     * The API call succeeds.
+     * The client stores the session correctly.
+     * I’m redirected to the Dashboard page.
+
+---
+
+## 2. Keep users logged in with a 30-day SLIDING session
+
+I do **not** want users logged out every time they close the tab. For this app, usability matters more than aggressive security. Here’s what I want:
+
+> Sessions should last **up to 30 days of inactivity**, and every time the user uses the app, the session should be extended another 30 days.
+
+Implementation:
+
+1. Find where the auth token / cookie is created (likely in the login + register handlers in `api/index.ts`).
+2. If you are using JWT:
+
+   * Set the expiry to **30 days**: e.g. `expiresIn: "30d"` or the equivalent.
+3. If using an HTTP-only cookie:
+
+   * Set `maxAge` to **30 days in milliseconds** (`30 * 24 * 60 * 60 * 1000`).
+4. Implement **sliding behavior**:
+
+   * In the endpoint that validates sessions (likely `GET /api/auth/user` or auth middleware), when a request comes in with a valid, non-expired token:
+
+     * Refresh the cookie/token expiry back to 30 more days.
+     * This means active users never get logged out; only **30+ days of inactivity** should force a login.
+5. On the client side:
+
+   * Ensure that on app load, it calls `/api/auth/user` (or equivalent) to check for an existing valid session.
+   * If the session is valid, auto-log the user in and send them to **Dashboard**.
+   * Only send them to the login/register UI if there is **no valid session**.
+
+End result:
+
+* If someone uses the app daily, they basically stay signed in.
+* If they disappear for 30+ days, the session expires and they must log in again.
+* They can still manually log out from a settings/logout option if they want.
+
+---
+
+## 3. Add “Forgot password?” + password reset flow
+
+I need a basic but fully working password reset:
+
+### 3a. Frontend UI
+
+1. In `client/src/pages/auth.tsx`:
+
+   * In **login** mode, add a **“Forgot your password?”** link below the password field.
+   * Clicking it should go to a new route like `/auth/reset-request`.
+
+2. Create a new page, e.g. `client/src/pages/reset-password-request.tsx`:
+
+   * Simple form:
+
+     * Title: “Reset your password”
+     * Email input
+     * Submit button: “Send reset link”
+   * On submit:
+
+     * Call `POST /api/auth/request-password-reset` with `{ email }`.
+     * Always show a generic success message, e.g.:
+
+       * “If an account exists for this email, we’ve sent a reset link.”
+
+3. Create another page, e.g. `client/src/pages/reset-password.tsx`:
+
+   * This will be opened from email links, like: `/auth/reset-password?token=...`
+   * Form:
+
+     * New password
+     * Confirm password
+     * Submit: “Reset password”
+   * On submit:
+
+     * Call `POST /api/auth/reset-password` with `{ token, newPassword }`.
+     * On success, show a success message and redirect back to the login view.
+
+### 3b. Backend endpoints
+
+In `api/index.ts` (or wherever your API lives), add:
+
+1. `POST /api/auth/request-password-reset`
+
+   * Input: `{ email }`.
+   * Behavior:
+
+     * Look up user by email.
+     * If no user: do nothing but still return success (to avoid leaking existence).
+     * If user exists:
+
+       * Generate a secure random token (`crypto.randomBytes`).
+       * Hash the token and store it on the user record along with an expiry timestamp, e.g. `password_reset_token` and `password_reset_expires` (about **1 hour** from now).
+       * Build a reset URL like:
+
+         * `https://getlighterapp.com/auth/reset-password?token=RAW_TOKEN`
+       * Send an email to the user with that link. Use existing email infrastructure or configure nodemailer with ENV vars (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`).
+       * For development, also `console.log` the reset URL so I can test without a real email account.
+
+2. `POST /api/auth/reset-password`
+
+   * Input: `{ token, newPassword }`.
+   * Behavior:
+
+     * Hash the incoming raw token using the same method as when storing it.
+     * Find a user whose `password_reset_token` matches and `password_reset_expires` is still in the future.
+     * If no match: respond 400 with a clear message (“Reset link is invalid or has expired.”).
+     * If match:
+
+       * Hash the new password (bcrypt).
+       * Update the user’s password hash.
+       * Clear `password_reset_token` and `password_reset_expires`.
+       * Optionally log them in immediately by issuing a new 30-day session token/cookie.
+
+3. If necessary, update the DB schema:
+
+   * Add these nullable fields to the users table (or equivalent):
+
+     * `password_reset_token` (string)
+     * `password_reset_expires` (datetime)
+   * Run whatever migration or schema command your project uses so production DB matches.
+
+### 3c. Testing checklist
+
+* **Login:**
+
+  * Register a user.
+  * Log out.
+  * Log in via “Already have an account? Sign in” with correct credentials.
+  * Confirm you get taken to Dashboard with no errors.
+
+* **30-day sliding session (basic dev check):**
+
+  * Log in.
+  * Refresh the page multiple times and confirm you stay logged in.
+  * Inspect the auth cookie/token to ensure it has a long (30-day) expiry and that requests to `/api/auth/user` refresh/update it.
+
+* **Password reset:**
+
+  * Use the “Forgot your password?” link for an existing email.
+  * Grab the reset URL from logs (if email isn’t fully wired).
+  * Open that URL in the browser, set a new password, then log in with the new password.
+  * Confirm old password no longer works.
+
+---
+
+**Important:**
+
+* Do **not** change any Stripe or beta-mode logic.
+* Only touch auth-related code (login, register, session handling, and reset password endpoints + UI).
+* Keep types and error handling clean and explicit.
+
+Once everything works, format the changed files and commit with a clear message like:
+
+> "Fix login, add 30-day sliding sessions, and implement password reset"
+
+Then stop.

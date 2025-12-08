@@ -1,10 +1,12 @@
 import type { Express, RequestHandler, Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 // NOTE: Vercel serverless ESM requires .js extensions for local imports
 import { storage, toSafeUser } from "./storage.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || "lighter-app-secret-key";
-const JWT_EXPIRES_IN = "7d";
+const JWT_EXPIRES_IN = "30d"; // 30-day session
+const COOKIE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
 
 export interface JWTPayload {
   sub: string;
@@ -37,9 +39,22 @@ function setAuthCookie(res: Response, token: string) {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? 'none' : 'lax',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: COOKIE_MAX_AGE, // 30-day sliding session
     path: '/',
   });
+}
+
+// Refresh the session token (for sliding session behavior)
+function refreshSession(res: Response, payload: JWTPayload) {
+  const newPayload: Omit<JWTPayload, 'iat' | 'exp'> = {
+    sub: payload.sub,
+    email: payload.email,
+  };
+  if (payload.firstName) newPayload.firstName = payload.firstName;
+  if (payload.lastName) newPayload.lastName = payload.lastName;
+  
+  const newToken = generateToken(newPayload);
+  setAuthCookie(res, newToken);
 }
 
 function clearAuthCookie(res: Response) {
@@ -172,6 +187,105 @@ export async function setupAuth(app: Express) {
   app.get("/api/login", (req: Request, res: Response) => {
     res.redirect('/');
   });
+
+  // Password Reset - Request reset link
+  app.post('/api/auth/request-password-reset', async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+      }
+
+      const user = await storage.getUserByEmail(email);
+      
+      // Always return success to prevent email enumeration
+      if (!user) {
+        console.log("[PasswordReset] No user found for email, returning success anyway");
+        return res.json({ message: "If an account exists for this email, we've sent a reset link." });
+      }
+
+      // Generate a secure random token
+      const rawToken = crypto.randomBytes(32).toString('hex');
+      const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+      
+      // Token expires in 1 hour
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+      
+      // Store hashed token in database
+      await storage.setPasswordResetToken(user.id, hashedToken, expiresAt);
+      
+      // Build reset URL
+      const baseUrl = process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}`
+        : process.env.REPLIT_DOMAINS?.split(',')[0]
+          ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
+          : 'http://localhost:5000';
+      
+      const resetUrl = `${baseUrl}/auth/reset-password?token=${rawToken}`;
+      
+      // Log the reset URL for development testing
+      console.log("[PasswordReset] Reset URL for", email.substring(0, 3) + "***:", resetUrl);
+      
+      // TODO: Send email when SMTP is configured
+      // For now, we just log the URL
+      
+      res.json({ message: "If an account exists for this email, we've sent a reset link." });
+    } catch (error) {
+      console.error("[PasswordReset] Error:", error);
+      res.status(500).json({ message: "Failed to process password reset request" });
+    }
+  });
+
+  // Password Reset - Reset password with token
+  app.post('/api/auth/reset-password', async (req: Request, res: Response) => {
+    try {
+      const { token, newPassword } = req.body;
+
+      if (!token || !newPassword) {
+        return res.status(400).json({ message: "Token and new password are required" });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ message: "Password must be at least 6 characters" });
+      }
+
+      // Hash the incoming token ONCE to compare with stored hash
+      const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+      
+      // Find user with valid token (storage.getUserByResetToken expects the hashed token)
+      const user = await storage.getUserByResetToken(hashedToken);
+      
+      if (!user) {
+        return res.status(400).json({ message: "Reset link is invalid or has expired." });
+      }
+
+      // Hash the new password with bcrypt
+      const bcrypt = await import('bcryptjs');
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      
+      // Update password (storage.updatePassword stores the hash directly, no re-hashing)
+      // and clear reset token
+      await storage.updatePasswordDirect(user.id, hashedPassword);
+      await storage.clearPasswordResetToken(user.id);
+      
+      // Log them in immediately by issuing a new session
+      const loginPayload: Omit<JWTPayload, 'iat' | 'exp'> = {
+        sub: user.id,
+        email: user.email!,
+      };
+      if (user.firstName) loginPayload.firstName = user.firstName;
+      if (user.lastName) loginPayload.lastName = user.lastName;
+      const authToken = generateToken(loginPayload);
+      setAuthCookie(res, authToken);
+
+      console.log("[PasswordReset] Password reset successful for user:", user.id);
+      res.json({ message: "Password has been reset successfully. You are now logged in." });
+    } catch (error) {
+      console.error("[PasswordReset] Error:", error);
+      res.status(500).json({ message: "Failed to reset password" });
+    }
+  });
 }
 
 export const isAuthenticated: RequestHandler = async (req: any, res: Response, next: NextFunction) => {
@@ -186,6 +300,10 @@ export const isAuthenticated: RequestHandler = async (req: any, res: Response, n
     clearAuthCookie(res);
     return res.status(401).json({ message: "Unauthorized" });
   }
+
+  // Sliding session: refresh the token on each valid request
+  // This extends the session by another 30 days on every use
+  refreshSession(res, payload);
 
   (req as any).user = { claims: payload };
   next();

@@ -38,6 +38,12 @@ export interface IStorage {
   updateUserOnboarding(userId: string, name: string, symptoms: string[]): Promise<User>;
   extendBetaPeriod(userId: string, days: number): Promise<User | undefined>;
   getAllBetaUsers(): Promise<User[]>;
+  // Password reset operations
+  setPasswordResetToken(userId: string, hashedToken: string, expiresAt: Date): Promise<void>;
+  getUserByResetToken(hashedToken: string): Promise<User | undefined>;
+  updatePassword(userId: string, hashedPassword: string): Promise<void>;
+  updatePasswordDirect(userId: string, hashedPassword: string): Promise<void>; // Stores hash directly without re-hashing
+  clearPasswordResetToken(userId: string): Promise<void>;
   
   // Daily log operations
   createDailyLog(userId: string, log: InsertDailyLog): Promise<DailyLog>;
@@ -153,6 +159,63 @@ export class DatabaseStorage implements IStorage {
       .from(users)
       .where(eq(users.isBetaUser, true))
       .orderBy(desc(users.createdAt));
+  }
+
+  // Password reset operations
+  async setPasswordResetToken(userId: string, hashedToken: string, expiresAt: Date): Promise<void> {
+    await db
+      .update(users)
+      .set({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: expiresAt,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
+  }
+
+  async getUserByResetToken(hashedToken: string): Promise<User | undefined> {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(
+        and(
+          eq(users.passwordResetToken, hashedToken),
+          sql`${users.passwordResetExpires} > NOW()`
+        )
+      );
+    return user;
+  }
+
+  async updatePassword(userId: string, hashedPassword: string): Promise<void> {
+    await db
+      .update(users)
+      .set({
+        passwordHash: hashedPassword,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
+  }
+
+  // Stores the already-hashed password directly without re-hashing (for password reset)
+  async updatePasswordDirect(userId: string, hashedPassword: string): Promise<void> {
+    await db
+      .update(users)
+      .set({
+        passwordHash: hashedPassword,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
+  }
+
+  async clearPasswordResetToken(userId: string): Promise<void> {
+    await db
+      .update(users)
+      .set({
+        passwordResetToken: null,
+        passwordResetExpires: null,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
   }
 
   async updateUserOnboarding(userId: string, name: string, symptoms: string[]): Promise<User> {

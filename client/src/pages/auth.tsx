@@ -217,6 +217,16 @@ export default function Auth() {
                     </button>
                   </div>
                   {errors.loginPassword && <p className="text-red-400 text-sm">{errors.loginPassword}</p>}
+                  <div className="text-right">
+                    <button
+                      type="button"
+                      onClick={() => setLocation('/auth/reset-request')}
+                      className="text-sm text-amber-400/80 hover:text-amber-300 transition-colors"
+                      data-testid="link-forgot-password"
+                    >
+                      Forgot your password?
+                    </button>
+                  </div>
                 </div>
                 <button
                   type="submit"
