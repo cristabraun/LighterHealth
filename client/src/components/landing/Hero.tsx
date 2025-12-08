@@ -123,16 +123,19 @@ export const Hero: React.FC<HeroProps> = ({ onStartTrial }) => {
                 Exhausted all the time? Weight won't budge? Running on stress and caffeine? The Lighter app shows you how to listen to your body, lower cortisol, and find what actually works to feel like you again.
               </p>
               
-              <div className="animate-slide-up flex flex-col sm:flex-row items-start sm:items-center gap-4" style={{ animationDelay: '400ms' }}>
-                <button 
-                  onClick={onStartTrial}
-                  className="group relative inline-flex items-center gap-3 rounded-2xl bg-white px-8 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20"
-                  data-testid="button-hero-trial"
-                >
-                  <span>Join the Free 30-Day Beta</span>
-                  <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl group-hover:opacity-25 transition-opacity"></div>
-                </button>
+              <div className="animate-slide-up flex flex-col sm:flex-row items-start gap-4" style={{ animationDelay: '400ms' }}>
+                <div className="flex flex-col">
+                  <button 
+                    onClick={onStartTrial}
+                    className="group relative inline-flex items-center gap-3 rounded-2xl bg-white px-8 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20"
+                    data-testid="button-hero-trial"
+                  >
+                    <span>Join the Free 30-Day Beta</span>
+                    <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl group-hover:opacity-25 transition-opacity"></div>
+                  </button>
+                  <p className="text-xs text-white/50 mt-2 text-center">Normally $19/month after launch</p>
+                </div>
                 <button 
                   onClick={scrollToDashboard}
                   className="group inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-8 py-4 text-base font-medium text-white/90 hover:bg-white/10 hover:border-white/25 transition-all duration-300 backdrop-blur-xl"

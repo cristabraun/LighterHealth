@@ -58,13 +58,16 @@ export const DashboardPreview: React.FC<DashboardPreviewProps> = ({ onStartTrial
         </div>
 
         <div className="text-center mt-16">
-          <button 
-            onClick={onStartTrial}
-            className="group inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-8 py-4 text-base font-medium text-white/90 hover:bg-white/10 hover:border-white/25 transition-all duration-300 backdrop-blur-xl"
-            data-testid="button-dashboard-trial"
-          >
-             Join the Free 30-Day Beta
-          </button>
+          <div className="flex flex-col items-center">
+            <button 
+              onClick={onStartTrial}
+              className="group inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-8 py-4 text-base font-medium text-white/90 hover:bg-white/10 hover:border-white/25 transition-all duration-300 backdrop-blur-xl"
+              data-testid="button-dashboard-trial"
+            >
+               Join the Free 30-Day Beta
+            </button>
+            <p className="text-xs text-white/50 mt-2">Normally $19/month after launch</p>
+          </div>
         </div>
       </div>
     </section>
