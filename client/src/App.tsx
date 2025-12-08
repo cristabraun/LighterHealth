@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -32,10 +32,32 @@ import AdminMessages from "@/pages/admin-messages";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import Auth from "@/pages/auth";
+import Upgrade from "@/pages/upgrade";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
+  const [location, setLocation] = useLocation();
+
+  // Check if beta has expired
+  const isBetaExpired = () => {
+    if (!user) return false;
+    // If user has an active subscription, they're not in beta mode
+    if (user.subscriptionStatus === 'active') return false;
+    // Check if beta user and beta has expired
+    if (user.isBetaUser && user.betaExpiresAt) {
+      const expiresAt = new Date(user.betaExpiresAt);
+      return expiresAt < new Date();
+    }
+    return false;
+  };
+
+  // Redirect to upgrade page if beta expired (but not if already on upgrade page)
+  useEffect(() => {
+    if (isAuthenticated && user && isBetaExpired() && location !== '/upgrade') {
+      setLocation('/upgrade');
+    }
+  }, [isAuthenticated, user, location]);
 
   // Show loading spinner while checking auth
   if (isLoading) {
@@ -53,9 +75,15 @@ function Router() {
         <Route path="/privacy" component={Privacy} />
         <Route path="/terms" component={Terms} />
         <Route path="/auth" component={Auth} />
+        <Route path="/upgrade" component={Upgrade} />
         <Route component={Landing} />
       </Switch>
     );
+  }
+
+  // Show upgrade page if beta expired
+  if (isBetaExpired()) {
+    return <Upgrade />;
   }
 
   // Show onboarding if user hasn't completed it

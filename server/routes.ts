@@ -257,6 +257,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin beta management routes
+  app.get('/api/admin/beta-users', isAuthenticated, isAdmin, async (req: any, res) => {
+    try {
+      const betaUsers = await storage.getAllBetaUsers();
+      res.json(betaUsers.map(toSafeUser));
+    } catch (error) {
+      console.error("Error fetching beta users:", error);
+      res.status(500).json({ message: "Failed to fetch beta users" });
+    }
+  });
+
+  app.post('/api/admin/extend-beta', isAuthenticated, isAdmin, async (req: any, res) => {
+    try {
+      const { userId, days } = req.body;
+      
+      if (!userId || typeof userId !== 'string') {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+      if (!days || typeof days !== 'number' || days < 1) {
+        return res.status(400).json({ message: "Days must be a positive number" });
+      }
+
+      const user = await storage.extendBetaPeriod(userId, days);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.json(toSafeUser(user));
+    } catch (error) {
+      console.error("Error extending beta period:", error);
+      res.status(500).json({ message: "Failed to extend beta period" });
+    }
+  });
+
   // Food log routes
   app.post('/api/food-logs', isAuthenticated, async (req: any, res) => {
     try {
