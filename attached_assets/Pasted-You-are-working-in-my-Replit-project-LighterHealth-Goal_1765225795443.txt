@@ -1,0 +1,127 @@
+You are working in my Replit project **LighterHealth**.
+
+Goal:
+On the **Dashboard**, directly **below the Daily Snapshot**, I want to show:
+
+* A **small 30-day Pulse trend line**
+* A **small 30-day Temperature trend line**
+
+These should be **minimal, compact, and visually clean** — just enough for users to instantly see if things are improving over time.
+
+Do **not** add any additional trends (energy, sleep, stress, etc.).
+Only **Pulse + Temperature**.
+
+---
+
+## 1. Data source (important)
+
+Use the same stored vitals data that already powers:
+
+* Pulse tracking
+* Temperature tracking
+* The 7-day stress chart
+
+You must:
+
+* Fetch the **last 30 days** of:
+
+  * `pulse`
+  * `temperature`
+* Sort by date ascending
+* Ignore days with missing data
+
+---
+
+## 2. UI placement
+
+In `client/src/pages/dashboard.tsx`:
+
+Place the new section:
+
+✅ **Directly below the “Daily Snapshot” card**
+✅ **Above any existing insights or experiment sections**
+
+Add a small section title:
+
+**“30-Day Metabolic Trends”**
+
+Then show **two small line charts side-by-side**:
+
+* Left: **Pulse (bpm)**
+* Right: **Temperature (°F)**
+
+Each chart should have:
+
+* No heavy grid
+* No legends
+* No numbers on every point
+* Just:
+
+  * a faint baseline
+  * a smooth, soft line
+  * subtle glow using the same amber / coral accent used elsewhere
+
+---
+
+## 3. Visual style requirements
+
+Match existing dark dashboard styling:
+
+* Background: same dark glassy card look as Daily Snapshot
+* Line color:
+
+  * Pulse → soft coral / peach
+  * Temperature → warm amber / gold
+* Rounded corners
+* Subtle gradient glow behind each line
+
+These trends should feel:
+
+* calming
+* premium
+* not “clinical”
+
+---
+
+## 4. Behavior
+
+* These charts must:
+
+  * Automatically update when the user logs new pulse or temp data
+  * Persist after refresh
+* If fewer than 5 data points exist:
+
+  * Show a soft placeholder message like:
+    “Trend will appear after a few days of logging.”
+
+---
+
+## 5. Do NOT change:
+
+* The Daily Snapshot layout
+* The Track page
+* The Stress / Sleep / Energy charts elsewhere
+* Experiments
+* Any backend logic unrelated to fetching vitals history
+
+This is a **UI + data fetch addition only** for the Dashboard.
+
+---
+
+## 6. Testing
+
+After implementing:
+
+1. Log pulse + temp for multiple days.
+2. Confirm:
+
+   * Trends render correctly.
+   * Trend lines move as expected.
+   * Refresh does NOT wipe them.
+3. Confirm mobile layout stacks the two trends vertically instead of squeezing them.
+
+---
+
+Commit message after completion:
+
+**“Add 30-day pulse and temperature mini trend charts to dashboard”**

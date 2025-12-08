@@ -414,6 +414,192 @@ function MoodCard({ todayLog, yesterdayLog, recentLogs }: MoodCardProps) {
   );
 }
 
+// 30-Day Mini Trend Chart Component
+interface MiniTrendChartProps {
+  data: number[];
+  label: string;
+  unit: string;
+  color: "pulse" | "temperature";
+  icon: typeof Heart;
+}
+
+function MiniTrendChart({ data, label, unit, color, icon: Icon }: MiniTrendChartProps) {
+  const chartHeight = 60;
+  const chartWidth = 140;
+  const padding = 8;
+  
+  const colorStyles = {
+    pulse: {
+      stroke: "rgba(251, 113, 133, 0.9)",
+      fill: "rgba(251, 113, 133, 0.15)",
+      glow: "rgba(251, 113, 133, 0.4)",
+      iconColor: "text-rose-400",
+      bgGradient: "from-rose-900/20 to-pink-900/10",
+    },
+    temperature: {
+      stroke: "rgba(251, 191, 36, 0.9)",
+      fill: "rgba(251, 191, 36, 0.15)", 
+      glow: "rgba(251, 191, 36, 0.4)",
+      iconColor: "text-amber-400",
+      bgGradient: "from-amber-900/20 to-orange-900/10",
+    },
+  };
+
+  const style = colorStyles[color];
+  
+  if (data.length < 5) {
+    return (
+      <div className={`p-4 rounded-xl bg-gradient-to-br ${style.bgGradient} border border-white/5`} data-testid={`mini-trend-${color}`}>
+        <div className="flex items-center gap-2 mb-2">
+          <Icon className={`w-4 h-4 ${style.iconColor}`} />
+          <span className="text-xs font-medium text-muted-foreground">{label}</span>
+        </div>
+        <p className="text-xs text-muted-foreground/70 italic">
+          Trend will appear after a few days of logging.
+        </p>
+      </div>
+    );
+  }
+
+  const minVal = Math.min(...data) - 1;
+  const maxVal = Math.max(...data) + 1;
+  const range = maxVal - minVal || 1;
+
+  const points = data.map((value, index) => ({
+    x: padding + (index * ((chartWidth - padding * 2) / (data.length - 1))),
+    y: chartHeight - padding - ((value - minVal) / range) * (chartHeight - padding * 2)
+  }));
+
+  const linePath = points.map((p, i) => (i === 0 ? `M ${p.x},${p.y}` : `L ${p.x},${p.y}`)).join(' ');
+  const areaPath = `${linePath} L ${points[points.length - 1].x},${chartHeight - padding} L ${padding},${chartHeight - padding} Z`;
+
+  const currentValue = data[data.length - 1];
+  const trend = data.length >= 2 
+    ? data[data.length - 1] > data[0] ? "up" : data[data.length - 1] < data[0] ? "down" : "stable"
+    : "stable";
+
+  return (
+    <div className={`p-4 rounded-xl bg-gradient-to-br ${style.bgGradient} border border-white/5`} data-testid={`mini-trend-${color}`}>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <Icon className={`w-4 h-4 ${style.iconColor}`} />
+          <span className="text-xs font-medium text-muted-foreground">{label}</span>
+        </div>
+        <span className="text-sm font-semibold text-foreground">
+          {currentValue.toFixed(color === "temperature" ? 1 : 0)}{unit}
+        </span>
+      </div>
+      
+      <svg 
+        width="100%" 
+        height={chartHeight} 
+        viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+        preserveAspectRatio="none"
+        className="overflow-visible"
+      >
+        <defs>
+          <linearGradient id={`gradient-${color}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={style.fill} />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+          <filter id={`glow-${color}`} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        
+        <line 
+          x1={padding} 
+          y1={chartHeight / 2} 
+          x2={chartWidth - padding} 
+          y2={chartHeight / 2} 
+          stroke="rgba(255,255,255,0.1)" 
+          strokeDasharray="2,2" 
+        />
+        
+        <path
+          d={areaPath}
+          fill={`url(#gradient-${color})`}
+        />
+        
+        <path
+          d={linePath}
+          fill="none"
+          stroke={style.stroke}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          filter={`url(#glow-${color})`}
+        />
+        
+        <circle
+          cx={points[points.length - 1].x}
+          cy={points[points.length - 1].y}
+          r="3"
+          fill={style.stroke}
+          filter={`url(#glow-${color})`}
+        />
+      </svg>
+      
+      <div className="flex items-center justify-between mt-1">
+        <span className="text-[10px] text-muted-foreground/60">30 days</span>
+        <div className="flex items-center gap-1">
+          {trend === "up" && <TrendingUp className="w-3 h-3 text-emerald-400" />}
+          {trend === "down" && <TrendingDown className="w-3 h-3 text-rose-400" />}
+          <span className="text-[10px] text-muted-foreground/60 capitalize">{trend}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 30-Day Metabolic Trends Section
+interface MetabolicTrendsProps {
+  logs: DailyLog[];
+}
+
+function MetabolicTrends({ logs }: MetabolicTrendsProps) {
+  const last30Days = logs
+    .filter(log => log.pulse > 0 || log.temperature > 0)
+    .slice(0, 30)
+    .reverse();
+
+  const pulseData = last30Days
+    .filter(log => log.pulse > 0)
+    .map(log => log.pulse);
+    
+  const tempData = last30Days
+    .filter(log => log.temperature > 0)
+    .map(log => log.temperature);
+
+  return (
+    <Card className="p-5 space-y-4 frosted-glass-warm" data-testid="card-30day-trends">
+      <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+        30-Day Metabolic Trends
+      </h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <MiniTrendChart
+          data={pulseData}
+          label="Pulse"
+          unit=" bpm"
+          color="pulse"
+          icon={Heart}
+        />
+        <MiniTrendChart
+          data={tempData}
+          label="Temperature"
+          unit="°F"
+          color="temperature"
+          icon={Thermometer}
+        />
+      </div>
+    </Card>
+  );
+}
+
 // Consistency Meter Component
 interface ConsistencyMeterProps {
   recentLogs?: DailyLog[];
@@ -727,6 +913,9 @@ export default function Dashboard() {
                 </div>
               </div>
             </Card>
+
+            {/* 30-Day Metabolic Trends */}
+            <MetabolicTrends logs={logs} />
 
             {/* Quick Links Buttons with colorful accents */}
             <div className="grid grid-cols-3 gap-3" data-testid="section-quick-links-desktop">
