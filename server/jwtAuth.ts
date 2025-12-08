@@ -57,25 +57,58 @@ export async function setupAuth(app: Express) {
     try {
       const { email, firstName, lastName, password } = req.body;
 
+      console.log("[Register] Attempting registration for email:", email ? email.substring(0, 3) + '***' : 'undefined');
+
       if (!email || !password) {
+        console.log("[Register] Missing email or password");
         return res.status(400).json({ message: "Email and password are required" });
       }
 
-      const existingUser = await storage.getUserByEmail(email);
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        console.log("[Register] Invalid email format");
+        return res.status(400).json({ message: "Please enter a valid email address" });
+      }
+
+      // Validate password length
+      if (password.length < 6) {
+        console.log("[Register] Password too short");
+        return res.status(400).json({ message: "Password must be at least 6 characters" });
+      }
+
+      let existingUser;
+      try {
+        existingUser = await storage.getUserByEmail(email);
+      } catch (dbError: any) {
+        console.error("[Register] Database error checking existing user:", dbError?.message || dbError);
+        return res.status(500).json({ message: "Database connection error. Please try again." });
+      }
+
       if (existingUser) {
-        return res.status(400).json({ message: "User already exists" });
+        console.log("[Register] User already exists");
+        return res.status(400).json({ message: "An account with this email already exists. Please sign in instead." });
       }
 
       const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      console.log("[Register] Creating user with ID:", userId);
       
-      await storage.upsertUser({
-        id: userId,
-        email,
-        firstName: firstName || null,
-        lastName: lastName || null,
-        profileImageUrl: null,
-        passwordHash: password,
-      });
+      let newUser;
+      try {
+        newUser = await storage.upsertUser({
+          id: userId,
+          email,
+          firstName: firstName || null,
+          lastName: lastName || null,
+          profileImageUrl: null,
+          passwordHash: password,
+        });
+        console.log("[Register] User created successfully");
+      } catch (dbError: any) {
+        console.error("[Register] Database error creating user:", dbError?.message || dbError);
+        console.error("[Register] Full error:", JSON.stringify(dbError, Object.getOwnPropertyNames(dbError)));
+        return res.status(500).json({ message: "Failed to create account. Please try again." });
+      }
 
       const tokenPayload: Omit<JWTPayload, 'iat' | 'exp'> = {
         sub: userId,
@@ -87,11 +120,11 @@ export async function setupAuth(app: Express) {
 
       setAuthCookie(res, token);
 
-      const user = await storage.getUser(userId);
-      res.json(toSafeUser(user!));
-    } catch (error) {
-      console.error("Error registering user:", error);
-      res.status(500).json({ message: "Failed to register user" });
+      res.json(toSafeUser(newUser));
+    } catch (error: any) {
+      console.error("[Register] Unexpected error:", error?.message || error);
+      console.error("[Register] Stack:", error?.stack);
+      res.status(500).json({ message: "Registration failed. Please try again." });
     }
   });
 

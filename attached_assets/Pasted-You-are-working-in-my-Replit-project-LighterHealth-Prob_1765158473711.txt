@@ -1,0 +1,77 @@
+You are working in my Replit project **LighterHealth**.
+
+Problem:
+When I try to register a new user on the “Join the Free Beta” form, I get this error banner:
+
+“Registration failed
+500: A server error has occurred
+FUNCTION_INVOCATION_FAILED iad1::h68qs-1765157954795-9a12dcf717a1”
+
+This happens both when I run the app in Replit and when it’s deployed. The form submits, then the server throws a 500 instead of creating the user.
+
+Context:
+- Tech stack: React/Vite client + Node/Express (or similar) backend in this Replit project.
+- You recently added FREE 30-DAY BETA MODE:
+  - New fields: isBetaUser, betaStartDate, betaExpiresAt
+  - Updated storage and auth logic in files like:
+    - shared/schema.ts
+    - server/storage.ts
+    - server/routes.ts (auth routes, beta middleware)
+  - Registration now auto-sets beta fields for new users.
+- The registration UI shows “Join the Free Beta” and calls the registration endpoint, which then fails with a 500.
+
+Your tasks:
+1. **Reproduce & inspect logs**
+   - Run the app in Replit.
+   - Use the Preview to go through the registration flow exactly like a user (fill out the form and click “Join the Free Beta”).
+   - While doing this, keep the Logs/Console open and capture the full error stack trace that corresponds to the 500 FUNCTION_INVOCATION_FAILED.
+   - Identify the **exact** line and function where the error originates (for example, inside an auth route, in upsertUser, or in a DB call).
+
+2. **Find the root cause**
+   Focus on:
+   - The registration route in server/routes.ts (or whichever file handles user registration).
+   - Any beta-related logic in server/storage.ts and shared/schema.ts.
+   - The database layer (table/columns) to ensure that the schema deployed to the actual DB matches the code.
+
+   Specifically check for:
+   - Columns defined in code but missing in the DB (isBetaUser, betaStartDate, betaExpiresAt, etc.).
+   - NOT NULL columns that don’t have defaults when inserting a new user.
+   - Any assumptions about fields that might be undefined (e.g., missing email, name, or password handling).
+   - Any missing or misconfigured env vars that the register flow relies on (JWT secret, DB URL, etc.).
+
+3. **Fix whatever is actually causing the 500**
+   - If the issue is a schema mismatch:
+     - Update the schema file(s) (shared/schema.ts or whichever ORM/schema is used).
+     - Run the appropriate migration/db push command (for this project) so the DB structure matches the code.
+   - If the issue is bad logic in server/storage.ts or server/routes.ts:
+     - Fix the code so that registration always succeeds when inputs are valid, and returns a clean 4xx error when inputs are invalid instead of a 500.
+   - If the error is about beta fields:
+     - Make sure default values and types are safe.
+     - Ensure registration always sets valid values for isBetaUser, betaStartDate, betaExpiresAt.
+
+4. **Harden the registration endpoint**
+   - Wrap the registration handler in robust error handling:
+     - Validate input (email, password, optional name).
+     - Catch and log internal errors, then return a friendly JSON error instead of throwing.
+   - Ensure that if something fails (e.g., duplicate email), the user gets a clear message (like “Email already in use”) and NOT a generic 500.
+
+5. **Verify end-to-end**
+   - After making the fixes and running any migrations, restart the app.
+   - Go to the landing page, click “Join the Free 30-Day Beta,” submit the form with a brand-new email, and verify:
+     - Registration succeeds (no red 500 banner).
+     - The new user is created in the DB with:
+       - isBetaUser = true
+       - betaStartDate = current date/time
+       - betaExpiresAt ≈ 30 days from now
+   - Also try signing in with that new account to confirm the beta flow works end-to-end.
+
+6. **Report back**
+   - Summarize:
+     - The exact root cause of the 500 error (include the original stack trace excerpt).
+     - All files you changed.
+     - The key code changes you made (in short bullet points).
+     - Any commands you ran (e.g., db migrations).
+     - Anything I should know about deploying this to Vercel so the fix works there too.
+
+Goal:
+After your changes, registering for the free beta should **not** throw a 500. It should create the user correctly with the beta fields set, and I should be able to log in and use the app.
