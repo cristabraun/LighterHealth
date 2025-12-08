@@ -6,7 +6,8 @@ import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
-import { storage } from "./storage";
+// NOTE: Vercel serverless ESM requires .js extensions for local imports
+import { storage } from "./storage.js";
 
 const getOidcConfig = memoize(
   async () => {

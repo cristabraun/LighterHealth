@@ -2,13 +2,14 @@ import type { Express } from "express";
 import express from "express";
 import path from "path";
 import { createServer, type Server } from "http";
-import { storage, toSafeUser } from "./storage";
-import { setupAuth, isAuthenticated } from "./jwtAuth";
+// NOTE: Vercel serverless ESM requires .js extensions and relative paths (no path aliases)
+import { storage, toSafeUser } from "./storage.js";
+import { setupAuth, isAuthenticated } from "./jwtAuth.js";
 import cookieParser from "cookie-parser";
-import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "@shared/schema";
+import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "../shared/schema.js";
 import { fromZodError } from "zod-validation-error";
 import OpenAI from "openai";
-import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
+import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve public folder for PWA assets (manifest, service worker, icons, etc.)

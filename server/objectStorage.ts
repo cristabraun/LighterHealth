@@ -1,13 +1,14 @@
 import { Storage, File } from "@google-cloud/storage";
 import { Response } from "express";
 import { randomUUID } from "crypto";
+// NOTE: Vercel serverless ESM requires .js extensions for local imports
 import {
   ObjectAclPolicy,
   ObjectPermission,
   canAccessObject,
   getObjectAclPolicy,
   setObjectAclPolicy,
-} from "./objectAcl";
+} from "./objectAcl.js";
 
 const REPLIT_SIDECAR_ENDPOINT = "http://127.0.0.1:1106";
 

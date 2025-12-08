@@ -1,4 +1,5 @@
-import { getStripeSync } from './stripeClient';
+// NOTE: Vercel serverless ESM requires .js extensions for local imports
+import { getStripeSync } from './stripeClient.js';
 
 export class WebhookHandlers {
   static async processWebhook(payload: Buffer, signature: string, uuid: string): Promise<void> {

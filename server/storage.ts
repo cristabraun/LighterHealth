@@ -1,3 +1,5 @@
+// NOTE: Vercel serverless ESM requires .js extensions and relative paths (no path aliases)
+// Fix for ERR_MODULE_NOT_FOUND: @shared/schema path alias doesn't work in Vercel serverless
 import {
   users,
   dailyLogs,
@@ -14,8 +16,7 @@ import {
   type Message,
   type InsertFoodLog,
   type FoodLog,
-} from "@shared/schema";
-// NOTE: Vercel serverless ESM requires .js extensions for local imports
+} from "../shared/schema.js";
 import { db } from "./db.js";
 import { eq, and, desc, sql } from "drizzle-orm";
 import bcrypt from "bcryptjs";

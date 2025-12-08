@@ -1,9 +1,10 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { runMigrations } from 'stripe-replit-sync';
-import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
-import { getStripeSync } from "./stripeClient";
-import { WebhookHandlers } from "./webhookHandlers";
+// NOTE: Vercel serverless ESM requires .js extensions for local imports
+import { registerRoutes } from "./routes.js";
+import { setupVite, serveStatic, log } from "./vite.js";
+import { getStripeSync } from "./stripeClient.js";
+import { WebhookHandlers } from "./webhookHandlers.js";
 
 const app = express();
 
