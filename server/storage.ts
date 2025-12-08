@@ -15,7 +15,8 @@ import {
   type InsertFoodLog,
   type FoodLog,
 } from "@shared/schema";
-import { db } from "./db";
+// NOTE: Vercel serverless ESM requires .js extensions for local imports
+import { db } from "./db.js";
 import { eq, and, desc, sql } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 

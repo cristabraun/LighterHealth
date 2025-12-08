@@ -1,12 +1,14 @@
 import express, { type Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
-import { storage, toSafeUser } from "../server/storage";
-import { setupAuth, isAuthenticated } from "../server/jwtAuth";
-import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "../shared/schema";
+// NOTE: Vercel serverless ESM requires .js extensions for local imports
+// Fix for ERR_MODULE_NOT_FOUND: Cannot find module 'server/storage'
+import { storage, toSafeUser } from "../server/storage.js";
+import { setupAuth, isAuthenticated } from "../server/jwtAuth.js";
+import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "../shared/schema.js";
 import { fromZodError } from "zod-validation-error";
 import OpenAI from "openai";
-import { getUncachableStripeClient, getStripePublishableKey } from "../server/stripeClient";
+import { getUncachableStripeClient, getStripePublishableKey } from "../server/stripeClient.js";
 
 const app = express();
 

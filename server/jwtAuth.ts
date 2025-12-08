@@ -1,6 +1,7 @@
 import type { Express, RequestHandler, Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { storage, toSafeUser } from "./storage";
+// NOTE: Vercel serverless ESM requires .js extensions for local imports
+import { storage, toSafeUser } from "./storage.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || "lighter-app-secret-key";
 const JWT_EXPIRES_IN = "7d";
