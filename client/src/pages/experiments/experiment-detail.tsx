@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useLocation } from "wouter";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,10 +8,12 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Loader2, Zap, Lightbulb, Clock } from "lucide-react";
-import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
+import type { ActiveExperiment, ExperimentTemplate, ExperimentLogEntry } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
 import { generateAIInsight } from "@/lib/ai";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export interface LogEntry {
   date: string;
@@ -24,13 +27,11 @@ interface AIInsight {
   date: string;
 }
 
-// Helper function to generate habit suggestions based on log patterns
 function generateHabitSuggestions(logs: LogEntry[]): string[] {
   const suggestions: string[] = [];
 
   if (logs.length === 0) return suggestions;
 
-  // Analyze temperature patterns
   const temps = logs.filter(log => log.temp !== null).map(log => log.temp as number);
   if (temps.length > 0) {
     const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
@@ -39,7 +40,6 @@ function generateHabitSuggestions(logs: LogEntry[]): string[] {
     }
   }
 
-  // Analyze pulse patterns
   const pulses = logs.filter(log => log.pulse !== null).map(log => log.pulse as number);
   if (pulses.length > 0) {
     const avgPulse = pulses.reduce((a, b) => a + b, 0) / pulses.length;
@@ -48,7 +48,6 @@ function generateHabitSuggestions(logs: LogEntry[]): string[] {
     }
   }
 
-  // Analyze notes patterns
   const emptyNotes = logs.filter(log => !log.notes || log.notes.trim().length === 0).length;
   const emptyNotesRatio = emptyNotes / logs.length;
   if (emptyNotesRatio > 0.5) {
@@ -62,45 +61,124 @@ export default function ExperimentDetail() {
   const params = useParams();
   const experimentId = params.id as string;
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
   
-  const [currentExperiment, setCurrentExperiment] = useState<ActiveExperiment | null>(null);
-  const [experimentTemplate, setExperimentTemplate] = useState<ExperimentTemplate | null>(null);
-  const [logs, setLogs] = useState<LogEntry[]>([]);
   const [formTemp, setFormTemp] = useState<string>("");
   const [temperatureUnit, setTemperatureUnit] = useState<"F" | "C">("F");
   const [formPulse, setFormPulse] = useState<string>("");
   const [formNotes, setFormNotes] = useState<string>("");
   const [aiInsights, setAiInsights] = useState<AIInsight[]>([]);
   const [aiLoading, setAiLoading] = useState<boolean>(false);
+  const [insightFetched, setInsightFetched] = useState<boolean>(false);
 
-  useEffect(() => {
-    // Find the experiment template from the static list
-    const template = EXPERIMENTS.find(e => e.id === experimentId);
-    setExperimentTemplate(template || null);
+  const experimentTemplate = EXPERIMENTS.find(e => e.id === experimentId);
 
-    // Load the active experiment instance from localStorage
-    const experimentsData = localStorage.getItem("lighter_active_experiments");
-    if (experimentsData) {
-      const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
-      const active = experiments.find(e => e.experimentId === experimentId && !e.completed);
-      if (active) {
-        setCurrentExperiment(active);
-        // Load logs from the experiment
-        try {
-          const experimentLogs = (active as any).logs || [];
-          setLogs(experimentLogs);
-        } catch {
-          setLogs([]);
+  const { data: currentExperiment, isLoading: experimentLoading, refetch: refetchExperiment } = useQuery<ActiveExperiment | null>({
+    queryKey: ['/api/experiments/by-template', experimentId],
+    queryFn: async () => {
+      try {
+        const response = await fetch(`/api/experiments/by-template/${experimentId}`, {
+          credentials: 'include'
+        });
+        if (response.status === 404) {
+          return null;
         }
+        if (!response.ok) {
+          throw new Error('Failed to fetch experiment');
+        }
+        return response.json();
+      } catch {
+        return null;
       }
-    }
-  }, [experimentId]);
+    },
+  });
 
-  // Fetch AI insights when logs change and logs exist
+  const logs: LogEntry[] = currentExperiment?.logs ? JSON.parse(currentExperiment.logs) : [];
+
+  const startExperimentMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest('POST', '/api/experiments', {
+        experimentId,
+        startDate: new Date().toISOString().split('T')[0],
+        currentDay: 0,
+        completed: false,
+        notes: [],
+        checklist: [],
+        measurements: '{}',
+        logs: '[]',
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Experiment Started!",
+        description: "Track your progress daily and see what makes you feel lighter",
+      });
+      refetchExperiment();
+      queryClient.invalidateQueries({ queryKey: ['/api/experiments'] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to start experiment. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const addLogMutation = useMutation({
+    mutationFn: async (logData: { date: string; temp: number | null; pulse: number | null; notes: string }) => {
+      const response = await apiRequest('POST', `/api/experiments/${experimentId}/log`, logData);
+      return response.json();
+    },
+    onSuccess: (updatedExperiment) => {
+      toast({
+        title: "Data Logged!",
+        description: `Day ${updatedExperiment.currentDay} of ${experimentTemplate?.duration || 30} completed`,
+      });
+      refetchExperiment();
+      queryClient.invalidateQueries({ queryKey: ['/api/experiments'] });
+      setFormTemp("");
+      setFormPulse("");
+      setFormNotes("");
+      setInsightFetched(false);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to log data. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const completeExperimentMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest('POST', `/api/experiments/${experimentId}/complete`, {});
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Experiment Completed!",
+        description: "Great work! Check your progress to see the results",
+      });
+      setLocation(`/experiments/summary?experimentId=${experimentId}`);
+      queryClient.invalidateQueries({ queryKey: ['/api/experiments'] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to complete experiment. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   useEffect(() => {
-    if (logs.length > 0 && experimentTemplate && currentExperiment) {
+    if (logs.length > 0 && experimentTemplate && currentExperiment && !insightFetched) {
       const fetchInsight = async () => {
         setAiLoading(true);
+        setInsightFetched(true);
         const insight = await generateAIInsight({
           experimentId: currentExperiment.experimentId,
           experimentTitle: experimentTemplate.title,
@@ -112,15 +190,15 @@ export default function ExperimentDetail() {
             text: insight,
             date: new Date().toISOString()
           },
-          ...prev
+          ...prev.slice(0, 4)
         ]);
         setAiLoading(false);
       };
       fetchInsight();
     }
-  }, [logs, experimentTemplate, currentExperiment]);
+  }, [logs.length, experimentTemplate, currentExperiment?.id, insightFetched]);
 
-  const isTempPulseExperiment = experimentId === "morning-vs-afternoon-temp";
+  const isTempPulseExperiment = experimentId === "morning-vs-afternoon-temp" || experimentId === "temp-before-after-meals";
 
   const handleLogData = () => {
     if (!currentExperiment) return;
@@ -128,83 +206,23 @@ export default function ExperimentDetail() {
     let tempNum: number | null = null;
     if (isTempPulseExperiment && formTemp) {
       const parsedTemp = parseFloat(formTemp);
-      // Convert Celsius to Fahrenheit for storage if needed
       tempNum = temperatureUnit === "C" ? (parsedTemp * 9/5) + 32 : parsedTemp;
     }
 
-    const newLog: LogEntry = {
+    addLogMutation.mutate({
       date: new Date().toISOString(),
       temp: tempNum,
       pulse: isTempPulseExperiment && formPulse ? parseFloat(formPulse) : null,
       notes: formNotes,
-    };
-
-    const updatedLogs = [...logs, newLog];
-    setLogs(updatedLogs);
-
-    // Update the experiment in localStorage
-    const experimentsData = localStorage.getItem("lighter_active_experiments");
-    if (experimentsData) {
-      const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
-      const updated = experiments.map(e =>
-        e.id === currentExperiment.id
-          ? { ...e, logs: updatedLogs }
-          : e
-      );
-      localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
-    }
-
-    // Clear the form inputs
-    setFormTemp("");
-    setFormPulse("");
-    setFormNotes("");
+    });
   };
 
   const handleStartExperiment = () => {
-    if (!experimentTemplate) return;
-
-    const newExperiment: ActiveExperiment = {
-      id: `active_${Date.now()}`,
-      userId: 'local',
-      experimentId,
-      startDate: new Date().toISOString().split('T')[0],
-      currentDay: 1,
-      completed: false,
-      notes: [],
-      checklist: [],
-      measurements: '{}',
-      logs: [],
-    };
-
-    const experimentsData = localStorage.getItem("lighter_active_experiments");
-    const existing: ActiveExperiment[] = experimentsData ? JSON.parse(experimentsData) : [];
-    const updated = [...existing, newExperiment];
-    localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
-
-    setCurrentExperiment(newExperiment);
+    startExperimentMutation.mutate();
   };
 
   const handleFinishExperiment = () => {
-    if (!currentExperiment) return;
-
-    // Update the experiment in localStorage
-    const experimentsData = localStorage.getItem("lighter_active_experiments");
-    if (experimentsData) {
-      const experiments: ActiveExperiment[] = JSON.parse(experimentsData);
-      const updated = experiments.map(e =>
-        e.id === currentExperiment.id
-          ? { 
-              ...e, 
-              completed: true, 
-              completedAt: new Date().toISOString() 
-            }
-          : e
-      );
-      localStorage.setItem("lighter_active_experiments", JSON.stringify(updated));
-    }
-
-    // Navigate to experiment summary page
-    setLocation(`/experiments/summary?experimentId=${currentExperiment.experimentId}`);
+    completeExperimentMutation.mutate();
   };
 
   if (!experimentTemplate) {
@@ -225,26 +243,24 @@ export default function ExperimentDetail() {
     );
   }
 
-  // Calculate day counter and progress for active experiments
-  let currentDay = 1;
-  let progress = 0;
-  const isActive = currentExperiment && !currentExperiment.completed;
-  
-  if (currentExperiment) {
-    const startDate = new Date(currentExperiment.startDate);
-    const today = new Date();
-    const daysPassed = Math.floor(
-      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-    ) + 1;
-    currentDay = Math.max(1, daysPassed);
-    progress = (currentDay / experimentTemplate.duration) * 100;
+  if (experimentLoading) {
+    return (
+      <div className="min-h-screen pb-20 bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
   }
+
+  const completedDays = currentExperiment?.currentDay || 0;
+  const duration = experimentTemplate.duration;
+  const progress = (completedDays / duration) * 100;
+  const isActive = currentExperiment && !currentExperiment.completed;
+  const displayDay = completedDays + 1;
 
   return (
     <div className="min-h-screen pb-20 bg-background">
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
         
-        {/* Back Button */}
         <Link href="/experiments">
           <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-to-experiments">
             <ArrowLeft className="w-4 h-4" />
@@ -252,7 +268,6 @@ export default function ExperimentDetail() {
           </Button>
         </Link>
 
-        {/* Experiment Overview */}
         <Card className="p-6 frosted-glass-warm space-y-4" data-testid="card-experiment-overview">
           <div>
             <h1 className="text-3xl font-bold text-foreground" data-testid="heading-overview-title">
@@ -274,7 +289,6 @@ export default function ExperimentDetail() {
           </div>
         </Card>
 
-        {/* Recipe/Instructions Section */}
         <Card className="p-6 frosted-glass-warm" data-testid="card-recipe">
           <h2 className="font-semibold text-foreground mb-3" data-testid="heading-recipe">
             How to Do This
@@ -289,18 +303,24 @@ export default function ExperimentDetail() {
           </ul>
         </Card>
 
-        {/* Start Experiment Button (only show when not started) */}
         {!currentExperiment && (
           <Button 
             onClick={handleStartExperiment}
+            disabled={startExperimentMutation.isPending}
             className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground text-base font-semibold py-3"
             data-testid="button-start-experiment"
           >
-            Start Experiment
+            {startExperimentMutation.isPending ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Starting...
+              </>
+            ) : (
+              "Start Experiment"
+            )}
           </Button>
         )}
 
-        {/* Header Container (only show when active) */}
         {isActive && (
         <Card className="p-6 frosted-glass-warm space-y-4" data-testid="card-experiment-header">
           <div className="flex items-start justify-between gap-3">
@@ -315,14 +335,13 @@ export default function ExperimentDetail() {
             <Badge data-testid="badge-experiment-status">Active</Badge>
           </div>
 
-          {/* Day Counter and Progress */}
           <div className="space-y-3 pt-2">
             <div className="flex items-baseline justify-between">
               <p className="text-sm font-semibold text-foreground" data-testid="text-day-counter">
-                Day {currentDay} of {experimentTemplate.duration}
+                Day {displayDay} of {duration}
               </p>
               <span className="text-xs text-muted-foreground" data-testid="text-progress-percentage">
-                {Math.round(Math.min(progress, 100))}%
+                {completedDays} day{completedDays !== 1 ? 's' : ''} logged
               </span>
             </div>
             <Progress value={Math.min(progress, 100)} data-testid="progress-experiment" />
@@ -330,24 +349,11 @@ export default function ExperimentDetail() {
         </Card>
         )}
 
-        {/* Experiment Status Section (only show when active) */}
-        {isActive && (
-        <Card className="p-6 frosted-glass-warm" data-testid="card-experiment-status">
-          <h2 className="font-semibold text-foreground mb-3" data-testid="heading-status">
-            Experiment Status
-          </h2>
-          <p className="text-muted-foreground text-sm" data-testid="text-status-placeholder">
-            Started on {new Date(currentExperiment.startDate).toLocaleDateString()}. Ongoing tracking across all metrics.
-          </p>
-        </Card>
-        )}
-
-        {/* Logs Section (only show when active) */}
         {isActive && (
         <Card className="p-6 frosted-glass-warm" data-testid="card-logs">
           <div className="space-y-3">
             <h2 className="font-semibold text-foreground" data-testid="heading-logs">
-              Logs
+              Logs ({logs.length} entries)
             </h2>
             
             {logs.length === 0 ? (
@@ -355,15 +361,17 @@ export default function ExperimentDetail() {
                 No logs yet. Click the button below to log your first entry.
               </p>
             ) : (
-              <div className="space-y-2" data-testid="logs-list">
-                {logs.map((log, idx) => (
+              <div className="space-y-2 max-h-60 overflow-y-auto" data-testid="logs-list">
+                {[...logs].reverse().slice(0, 5).map((log, idx) => (
                   <div key={idx} className="p-3 bg-muted/50 rounded-lg" data-testid={`log-entry-${idx}`}>
                     <p className="text-xs text-muted-foreground" data-testid={`log-date-${idx}`}>
                       {new Date(log.date).toLocaleString()}
                     </p>
-                    {isTempPulseExperiment && (
-                      <p className="text-sm text-foreground mt-1" data-testid={`log-notes-${idx}`}>
-                        Temp: {log.temp || "-"} | Pulse: {log.pulse || "-"}
+                    {isTempPulseExperiment && (log.temp || log.pulse) && (
+                      <p className="text-sm text-foreground mt-1" data-testid={`log-vitals-${idx}`}>
+                        {log.temp ? `Temp: ${log.temp.toFixed(1)}°F` : ''} 
+                        {log.temp && log.pulse ? ' | ' : ''}
+                        {log.pulse ? `Pulse: ${log.pulse} bpm` : ''}
                       </p>
                     )}
                     {log.notes && (
@@ -373,10 +381,14 @@ export default function ExperimentDetail() {
                     )}
                   </div>
                 ))}
+                {logs.length > 5 && (
+                  <p className="text-xs text-muted-foreground text-center">
+                    + {logs.length - 5} more entries
+                  </p>
+                )}
               </div>
             )}
 
-            {/* Log Form Inputs */}
             <div className="space-y-3 pt-4 border-t" data-testid="section-log-form">
               {isTempPulseExperiment && (
                 <div className="space-y-3">
@@ -451,18 +463,25 @@ export default function ExperimentDetail() {
 
               <Button 
                 onClick={handleLogData}
+                disabled={addLogMutation.isPending}
                 variant="outline" 
                 className="w-full" 
                 data-testid="button-log-data"
               >
-                Log Today's Data
+                {addLogMutation.isPending ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Logging...
+                  </>
+                ) : (
+                  "Log Today's Data"
+                )}
               </Button>
             </div>
           </div>
         </Card>
         )}
 
-        {/* AI Insights Section (only show when active) */}
         {isActive && (
         <Card className="p-6 frosted-glass-warm" data-testid="card-ai-insights">
           <div className="flex items-center gap-2 mb-4">
@@ -474,7 +493,7 @@ export default function ExperimentDetail() {
 
           {logs.length === 0 ? (
             <p className="text-muted-foreground text-sm" data-testid="text-ai-insights-empty">
-              AI insights will appear once you log data.
+              Log your first entry to receive personalized metabolic insights.
             </p>
           ) : aiLoading ? (
             <div className="flex items-center gap-2" data-testid="section-ai-loading">
@@ -497,14 +516,13 @@ export default function ExperimentDetail() {
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground text-sm" data-testid="text-ai-generating">
-              Generating insights…
+            <p className="text-muted-foreground text-sm" data-testid="text-ai-waiting">
+              Add more logs to receive metabolic insights based on your patterns.
             </p>
           )}
         </Card>
         )}
 
-        {/* Suggested Habits Section (only show when active) */}
         {isActive && logs.length > 0 && (
           <Card className="p-6 frosted-glass-warm" data-testid="card-habits">
             <div className="flex items-center gap-2 mb-4">
@@ -534,14 +552,21 @@ export default function ExperimentDetail() {
           </Card>
         )}
 
-        {/* Finish Experiment Button (only show when active) */}
         {isActive && (
         <Button 
           onClick={handleFinishExperiment}
+          disabled={completeExperimentMutation.isPending}
           className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
           data-testid="button-finish-experiment"
         >
-          Finish Experiment
+          {completeExperimentMutation.isPending ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Completing...
+            </>
+          ) : (
+            "Finish Experiment"
+          )}
         </Button>
         )}
 

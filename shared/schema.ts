@@ -112,9 +112,11 @@ export const activeExperiments = pgTable("active_experiments", {
   startDate: text("start_date").notNull(), // YYYY-MM-DD
   currentDay: integer("current_day").notNull().default(1),
   completed: boolean("completed").notNull().default(false),
+  completedAt: text("completed_at"), // ISO timestamp when completed
   notes: text("notes").array(),
   checklist: text("checklist").array(), // daily checklist items completed
   measurements: text("measurements").notNull().default('{}'), // JSONB stored as text: { "1": { "morningTemp": { "value": 97.2, "unit": "°F", "timestamp": "..." }, ... }, "2": { ... } }
+  logs: text("logs").notNull().default('[]'), // JSON array of log entries: [{ date, temp, pulse, notes }, ...]
 });
 
 export const insertActiveExperimentSchema = createInsertSchema(activeExperiments).omit({ 
@@ -124,6 +126,14 @@ export const insertActiveExperimentSchema = createInsertSchema(activeExperiments
 
 export type InsertActiveExperiment = z.infer<typeof insertActiveExperimentSchema>;
 export type ActiveExperiment = typeof activeExperiments.$inferSelect;
+
+// Experiment Log Entry type (stored in logs field as JSON array)
+export type ExperimentLogEntry = {
+  date: string; // ISO timestamp
+  temp: number | null;
+  pulse: number | null;
+  notes: string;
+};
 
 // User Messages (for direct Q&A with coach)
 export const messages = pgTable("messages", {

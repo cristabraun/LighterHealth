@@ -55,7 +55,10 @@ export interface IStorage {
   createActiveExperiment(userId: string, experiment: InsertActiveExperiment): Promise<ActiveExperiment>;
   getActiveExperiments(userId: string): Promise<ActiveExperiment[]>;
   getActiveExperiment(userId: string, experimentId: string): Promise<ActiveExperiment | undefined>;
+  getActiveExperimentById(userId: string, id: string): Promise<ActiveExperiment | undefined>;
   updateActiveExperiment(userId: string, experimentId: string, updates: Partial<InsertActiveExperiment>): Promise<ActiveExperiment>;
+  updateActiveExperimentById(userId: string, id: string, updates: Partial<InsertActiveExperiment>): Promise<ActiveExperiment>;
+  addExperimentLog(userId: string, experimentId: string, log: { date: string; temp: number | null; pulse: number | null; notes: string }): Promise<ActiveExperiment>;
   deleteActiveExperiment(userId: string, experimentId: string): Promise<void>;
   
   // Message operations
@@ -344,6 +347,69 @@ export class DatabaseStorage implements IStorage {
           eq(activeExperiments.id, experimentId)
         )
       );
+  }
+
+  async getActiveExperimentById(userId: string, id: string): Promise<ActiveExperiment | undefined> {
+    const [experiment] = await db
+      .select()
+      .from(activeExperiments)
+      .where(
+        and(
+          eq(activeExperiments.userId, userId),
+          eq(activeExperiments.id, id)
+        )
+      );
+    return experiment;
+  }
+
+  async updateActiveExperimentById(
+    userId: string,
+    id: string,
+    updates: Partial<InsertActiveExperiment>
+  ): Promise<ActiveExperiment> {
+    const [updated] = await db
+      .update(activeExperiments)
+      .set(updates)
+      .where(
+        and(
+          eq(activeExperiments.userId, userId),
+          eq(activeExperiments.id, id)
+        )
+      )
+      .returning();
+    return updated;
+  }
+
+  async addExperimentLog(
+    userId: string,
+    experimentId: string,
+    log: { date: string; temp: number | null; pulse: number | null; notes: string }
+  ): Promise<ActiveExperiment> {
+    const experiment = await this.getActiveExperiment(userId, experimentId);
+    if (!experiment) {
+      throw new Error("Experiment not found");
+    }
+
+    const existingLogs = experiment.logs ? JSON.parse(experiment.logs) : [];
+    const updatedLogs = [...existingLogs, log];
+    
+    const uniqueDates = new Set(updatedLogs.map((l: any) => l.date.split('T')[0]));
+    const completedDays = uniqueDates.size;
+
+    const [updated] = await db
+      .update(activeExperiments)
+      .set({
+        logs: JSON.stringify(updatedLogs),
+        currentDay: completedDays,
+      })
+      .where(
+        and(
+          eq(activeExperiments.userId, userId),
+          eq(activeExperiments.experimentId, experimentId)
+        )
+      )
+      .returning();
+    return updated;
   }
 
   // Message operations

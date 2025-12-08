@@ -1,0 +1,255 @@
+You are working in my Replit project **LighterHealth**.
+
+I need you to fix the **Experiments** feature in two ways:
+
+1. **Daily progress tracking** – each time a user taps **“Log Today’s Data”**, it should count as **one completed day** for that experiment and show clear progress (e.g. “Day 3 of 30”).
+2. **Metabolic insight errors** – right now, when I log today’s data:
+
+   * I often get a message like **“Can’t give you a metabolic insight right now.”**
+   * When I go back, it sometimes says the **“experiment doesn’t exist”** even though I just started it.
+     So the user experiment instance + logs + insight logic are not wired up correctly.
+
+Please trace and fix the full flow: **start experiment → log day → update progress → show insight**, and make sure it works on the desktop preview.
+
+---
+
+## 1. Understand the current Experiments implementation
+
+1. Find the relevant frontend files:
+
+   * `client/src/pages/experiments.tsx` (Experiments list & “Current Experiments”)
+   * Experiment detail page(s), e.g. something like:
+
+     * `client/src/pages/experiments/[slug].tsx`
+     * or any specific experiment file (e.g. temp-before-after-meals).
+   * Locate the handler for **“Start Experiment”** and **“Log Today’s Data”**.
+
+2. Find the backend/API code in `api/index.ts` (or any experiment-related modules) for:
+
+   * Creating/starting an experiment for a user.
+   * Logging daily data for an experiment.
+   * Fetching metabolic insights (the part that returns “can’t give you a metabolic insight right now”).
+   * Any “experiment doesn’t exist” error message.
+
+3. Identify the data models used:
+
+   * Static experiment definition (id/slug, title, description, etc.).
+   * **User experiment instance** (for a specific user running that experiment).
+   * **Daily experiment log** (data recorded each day).
+
+Add brief comments where helpful to document what each model/route is supposed to represent.
+
+---
+
+## 2. Fix “experiment doesn’t exist” and no-insight errors
+
+Right now, after pressing **Start Experiment** and logging data:
+
+* The insight API often responds with “can’t give you a metabolic insight right now.”
+* Navigating back can show “experiment doesn’t exist.”
+
+This means the backend either:
+
+* isn’t creating a user-specific experiment instance properly, or
+* the log/insight endpoints can’t find that instance or its logs.
+
+Fix this as follows:
+
+1. **Start Experiment flow**
+
+   * When a user taps **“Start Experiment”** on an experiment card:
+
+     * Ensure the frontend calls an API endpoint like `POST /api/experiments/start` (or whatever exists) with:
+
+       * the experiment identifier (id or slug).
+     * On the backend:
+
+       * Look up the static experiment definition.
+       * Create or reuse a **userExperiment** record tied to:
+
+         * the current user id (from auth),
+         * the experiment id/slug,
+         * `status = "active"`,
+         * `startedAt = now`, if newly created.
+       * Return the `userExperiment` id and any relevant metadata.
+   * The frontend should store/use this **userExperiment id** (or be able to refetch it easily) so later logs and insights are tied to the right instance.
+
+2. **Log Today’s Data flow**
+
+   * On the experiment detail page, when **“Log Today’s Data”** is pressed:
+
+     * Confirm the frontend is calling a log endpoint like `POST /api/experiments/log` (names may vary).
+     * The payload must include:
+
+       * the experiment identifier (id/slug),
+       * OPTIONAL: the userExperiment id (if available),
+       * the date (today, in a consistent format),
+       * the data that the experiment uses (e.g. temp/pulse before/after, mood, notes).
+   * On the backend log endpoint:
+
+     * Use the current user id + experiment id/slug to find the active **userExperiment**.
+
+       * If none exists yet, either:
+
+         * automatically create one, or
+         * return a clear error telling the frontend to start the experiment first.
+     * Create a **daily log record** attached to that userExperiment:
+
+       * `userExperimentId`
+       * `logDate` (e.g. `YYYY-MM-DD` in a normalized timezone)
+       * logged data fields.
+   * Do **not** throw “experiment doesn’t exist” if a valid userExperiment exists. Only use that message if the user truly has no active or completed instance for that experiment.
+
+3. **Metabolic Insight endpoint**
+
+   * Find the code that returns the message **“Can’t give you a metabolic insight right now.”**
+   * Update it so that it:
+
+     * Locates the correct **userExperiment** for the current user + experiment.
+     * Fetches all relevant logs (at least today’s log; possibly multiple days, depending on the insight logic).
+     * If there is genuinely not enough data:
+
+       * Return a **clear, accurate message**, like:
+
+         * “We need at least X days of logs before we can give you an insight for this experiment.”
+     * Otherwise, compute and return a real insight using the experiment’s rules.
+
+4. Test on the desktop preview:
+
+   * Start an experiment.
+   * Log today’s data.
+   * Confirm:
+
+     * No “experiment doesn’t exist” error.
+     * Insight endpoint behaves correctly: either a proper insight or a clear “need more data” message based on real conditions.
+   * Navigate away and back to the experiment:
+
+     * The experiment should still be active.
+     * Logs should be found without errors.
+
+---
+
+## 3. Add simple daily progress tracking (“Day X of Y”)
+
+I want a **straightforward progress tracker** for each experiment:
+
+* Each experiment has a **duration** in days (e.g. 30 days).
+* **Each day the user logs “today’s data”** counts as one completed day.
+* The UI should show something like:
+
+  * **“Day 3 of 30”** for that experiment.
+
+Implementation:
+
+1. **Add duration to experiment definitions**
+
+   * In the static experiment config (where experiments are defined), add a `durationDays` field to each experiment.
+   * For now, if you need a default, use:
+
+     * 30 days for longer foundational experiments (like temp before/after meals),
+     * 7–14 days for shorter ones if desired.
+
+2. **Compute completed days from logs**
+
+   * Use the daily logs for each userExperiment as the source of truth.
+   * For a given userExperiment:
+
+     * Query all logs for that instance.
+     * Compute the number of **distinct dates** with at least one log.
+
+       * Call this `completedDays`.
+   * Don’t allow more than `durationDays`; if there are more logs than duration, cap the displayed progress at duration.
+
+3. **Expose progress in the API**
+
+   * When fetching a user’s current experiment(s) (e.g. via `/api/user-experiments` or similar), include:
+
+     * `durationDays`
+     * `completedDays`
+   * Optionally, include:
+
+     * `isCompleted` (true if `completedDays >= durationDays` or status is `"completed"`).
+
+4. **Update the experiment detail page UI**
+
+   * On the detail page for an active experiment, show a clear progress line:
+
+     * e.g. **“Day {completedDays + 1} of {durationDays}”** if they haven’t finished.
+     * If they have completed the full duration:
+
+       * Show **“Completed — {completedDays} of {durationDays} days”** and mark as finished.
+   * Every time **Log Today’s Data** succeeds:
+
+     * Refetch the userExperiment/progress from the server OR update the local state to increment `completedDays` if today wasn’t already counted.
+     * The progress displayed should reflect the new completed day immediately.
+
+5. **Update the Experiments list (“Current Experiments”)**
+
+   * In `client/src/pages/experiments.tsx`, for each current/active experiment:
+
+     * Display a short progress line, e.g.:
+
+       * “Day 4 of 30”
+       * or “3/30 days completed”.
+   * Clicking the experiment still navigates to its detail page.
+
+6. **Finishing or completing an experiment**
+
+   * If a **Finish Experiment** button already exists:
+
+     * When pressed, set `status = "completed"` and `completedAt = now` for that userExperiment.
+   * When the experiment is `completed`:
+
+     * Remove it from the **Current Experiments** section.
+     * If you have/plan a “Completed Experiments” list, it can appear there; if not, it’s enough that it disappears from “Current” for now.
+
+---
+
+## 4. Testing checklist
+
+In the Replit dev preview:
+
+1. Start an experiment (e.g. the “Temp Before & After Meals” experiment you’re currently viewing).
+2. Verify:
+
+   * A userExperiment record is created for the current user.
+3. Press **Log Today’s Data** and submit:
+
+   * Confirm:
+
+     * A log row is created for **today**.
+     * No “experiment doesn’t exist” errors.
+     * The “Your Metabolic Insight” card shows either:
+
+       * a meaningful insight, OR
+       * a clear “we need more data” message *only if* there truly isn’t enough data.
+   * Confirm progress now shows:
+
+     * “Day 1 of 30” (or whatever duration you configured).
+4. Press **Log Today’s Data** again on another day (you can simulate different dates if needed):
+
+   * Confirm **completedDays** increments and the UI shows “Day 2 of 30”, etc.
+5. Use **Finish Experiment** (if present):
+
+   * Confirm:
+
+     * The experiment’s status becomes `"completed"`.
+     * It is no longer listed under “Current Experiments”.
+6. Refresh the page and navigate back:
+
+   * Experiments and progress should persist correctly.
+   * No “experiment doesn’t exist” messages should appear on a normal active experiment.
+
+---
+
+Keep the changes narrowly focused on:
+
+* experiment start / log / insight routes,
+* experiment progress data,
+* related UI on the experiments pages.
+
+Do **not** change Stripe, auth, or unrelated parts of the app.
+
+When you’re done, format the touched files and commit with a message like:
+
+> "Fix experiment instance & insight flow and add daily progress tracking (Day X of Y)"

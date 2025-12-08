@@ -220,6 +220,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get experiment by experimentId (template ID like "temp-before-after-meals")
+  app.get('/api/experiments/by-template/:experimentId', isAuthenticated, checkBetaAccess, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { experimentId } = req.params;
+      const experiment = await storage.getActiveExperiment(userId, experimentId);
+      if (!experiment) {
+        return res.status(404).json({ message: "No active experiment found for this template" });
+      }
+      res.json(experiment);
+    } catch (error) {
+      console.error("Error fetching experiment by template:", error);
+      res.status(500).json({ message: "Failed to fetch experiment" });
+    }
+  });
+
+  // Add log entry to an experiment (by experimentId/template ID)
+  app.post('/api/experiments/:experimentId/log', isAuthenticated, checkBetaAccess, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { experimentId } = req.params;
+      const { date, temp, pulse, notes } = req.body;
+
+      if (!date) {
+        return res.status(400).json({ message: "Date is required" });
+      }
+
+      const experiment = await storage.addExperimentLog(userId, experimentId, {
+        date,
+        temp: temp !== undefined ? parseFloat(temp) : null,
+        pulse: pulse !== undefined ? parseInt(pulse, 10) : null,
+        notes: notes || "",
+      });
+
+      res.json(experiment);
+    } catch (error: any) {
+      console.error("Error adding experiment log:", error);
+      if (error.message === "Experiment not found") {
+        return res.status(404).json({ message: "Experiment not found. Please start the experiment first." });
+      }
+      res.status(500).json({ message: "Failed to add experiment log" });
+    }
+  });
+
+  // Complete an experiment
+  app.post('/api/experiments/:experimentId/complete', isAuthenticated, checkBetaAccess, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { experimentId } = req.params;
+      
+      const experiment = await storage.getActiveExperiment(userId, experimentId);
+      if (!experiment) {
+        return res.status(404).json({ message: "Experiment not found" });
+      }
+
+      const updated = await storage.updateActiveExperimentById(userId, experiment.id, {
+        completed: true,
+        completedAt: new Date().toISOString(),
+      });
+
+      res.json(updated);
+    } catch (error) {
+      console.error("Error completing experiment:", error);
+      res.status(500).json({ message: "Failed to complete experiment" });
+    }
+  });
+
   // Admin middleware - check if user email is in admin list
   const isAdmin = (req: any, res: any, next: any) => {
     const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
