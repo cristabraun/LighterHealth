@@ -34,6 +34,8 @@ export interface IStorage {
   upsertUser(user: UpsertUser): Promise<User>;
   verifyPassword(userId: string, password: string): Promise<boolean>;
   updateUserOnboarding(userId: string, name: string, symptoms: string[]): Promise<User>;
+  extendBetaPeriod(userId: string, days: number): Promise<User | undefined>;
+  getAllBetaUsers(): Promise<User[]>;
   
   // Daily log operations
   createDailyLog(userId: string, log: InsertDailyLog): Promise<DailyLog>;
@@ -94,12 +96,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
-    let dataToInsert = { ...userData };
+    let dataToInsert: any = { ...userData };
     
     if (userData.passwordHash) {
       const hashedPassword = await bcrypt.hash(userData.passwordHash, 10);
       dataToInsert.passwordHash = hashedPassword;
     }
+    
+    // Set beta fields for new users (30-day beta period)
+    const now = new Date();
+    const betaExpiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
+    dataToInsert.isBetaUser = true;
+    dataToInsert.betaStartDate = now;
+    dataToInsert.betaExpiresAt = betaExpiresAt;
     
     const [user] = await db
       .insert(users)
@@ -113,6 +122,35 @@ export class DatabaseStorage implements IStorage {
       })
       .returning();
     return user;
+  }
+  
+  async extendBetaPeriod(userId: string, days: number): Promise<User | undefined> {
+    const user = await this.getUser(userId);
+    if (!user) return undefined;
+    
+    // Calculate new expiration from current expiration or from now if expired
+    const currentExpires = user.betaExpiresAt ? new Date(user.betaExpiresAt) : new Date();
+    const baseDate = currentExpires > new Date() ? currentExpires : new Date();
+    const newExpiresAt = new Date(baseDate.getTime() + days * 24 * 60 * 60 * 1000);
+    
+    const [updated] = await db
+      .update(users)
+      .set({
+        betaExpiresAt: newExpiresAt,
+        isBetaUser: true, // Ensure they're marked as beta user
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    return updated;
+  }
+  
+  async getAllBetaUsers(): Promise<User[]> {
+    return await db
+      .select()
+      .from(users)
+      .where(eq(users.isBetaUser, true))
+      .orderBy(desc(users.createdAt));
   }
 
   async updateUserOnboarding(userId: string, name: string, symptoms: string[]): Promise<User> {

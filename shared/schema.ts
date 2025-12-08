@@ -27,6 +27,10 @@ export const users = pgTable("users", {
   name: text("name"), // User's preferred name from onboarding
   onboardingCompleted: boolean("onboarding_completed").notNull().default(false),
   metabolicSymptoms: text("metabolic_symptoms").array(),
+  // Beta mode fields
+  isBetaUser: boolean("is_beta_user").notNull().default(true), // All new users are beta users
+  betaStartDate: timestamp("beta_start_date"),
+  betaExpiresAt: timestamp("beta_expires_at"),
   // Stripe fields
   stripeCustomerId: varchar("stripe_customer_id"),
   stripeSubscriptionId: varchar("stripe_subscription_id"),

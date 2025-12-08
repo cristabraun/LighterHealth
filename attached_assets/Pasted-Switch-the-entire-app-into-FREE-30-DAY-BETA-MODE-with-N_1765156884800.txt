@@ -1,0 +1,82 @@
+Switch the entire app into FREE 30-DAY BETA MODE with NO payments required. Implement the following changes exactly:
+
+1. LANDING PAGE CTA:
+
+* Replace all instances of “Start 3-Day Trial” with:
+  “Join the Free 30-Day Beta”
+* The button must route directly to the SIGN UP page (not Stripe, not checkout).
+* Ensure this applies to desktop and mobile layouts.
+
+2. DISABLE STRIPE COMPLETELY:
+
+* Disable all Stripe checkout redirects.
+* Do NOT collect any payment information.
+* Do NOT require cards during beta.
+* Leave Stripe code intact but bypass it entirely while beta mode is active.
+
+3. BETA USER TAGGING:
+
+* On user signup, automatically assign:
+
+  * isBetaUser = true
+  * betaStartDate = current timestamp
+  * betaExpiresAt = current timestamp + 30 days
+* Store this on the user record in the database.
+
+4. AUTOMATIC 30-DAY LOCKOUT:
+
+* On EVERY login and on EVERY protected route:
+
+  * If isBetaUser === true AND current date > betaExpiresAt:
+
+    * Immediately block access
+    * Redirect to /upgrade
+* Create an /upgrade page that:
+
+  * Explains the beta has ended
+  * Displays “Continue with Lighter™ for $19/month”
+  * Contains the Stripe checkout button (but DO NOT activate Stripe yet)
+
+5. AUTH FLOW FIX:
+
+* Ensure:
+
+  * New users ALWAYS see “Create your free beta account”
+  * Existing users ONLY see “Welcome back”
+* Never send new users to a “Welcome back” screen.
+* Login and Register must be fully separated logically.
+
+6. ROUTING BEHAVIOR:
+
+* Approved beta users will:
+
+  * Click the public site button
+  * Be taken to SIGN UP
+  * After signup → routed into the app dashboard directly
+* No payment walls during beta.
+
+7. ADMIN SAFETY:
+
+* Add a simple admin override so I can manually extend beta time for any user later if needed.
+
+8. VISUAL CONSISTENCY:
+
+* All auth pages (login, signup, beta expired) must match the dark Lighter™ theme.
+* No white/light mode remnants anywhere.
+
+9. DO NOT:
+
+* Delete Stripe
+* Break existing payment code
+* Change pricing ($19/month remains visible on upgrade page only)
+
+10. FINAL STEP:
+
+* After implementation, clearly summarize:
+
+  * What changed
+  * What was disabled
+  * How beta expiration is enforced
+  * How Stripe will be reactivated later
+
+Implement this cleanly, safely, and without breaking existing accounts.
