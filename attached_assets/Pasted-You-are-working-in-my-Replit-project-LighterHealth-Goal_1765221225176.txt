@@ -1,0 +1,55 @@
+You are working in my Replit project **LighterHealth**.
+
+Goal:
+Right now, after a user logs in, the app flow and navigation treat the **Track** page as the primary page. I want to change this so that:
+
+1. **Dashboard is the main/first page** users land on after logging in or finishing onboarding.
+2. **Track becomes the second page** in the navigation (after Dashboard), not the first.
+
+Please update the routing and nav so the app feels “Dashboard-first”.
+
+Concrete requirements:
+
+1. **Change the default logged-in route to Dashboard**
+
+   * Find where the main routes are defined (likely in `client/src/App.tsx` or similar).
+   * Wherever the app currently redirects users after successful login/onboarding (for example to `/track` or `/start-here`), change it so they go to the **Dashboard** route instead (`/dashboard`).
+   * If there is a “home” route or root redirect (`/`), make sure that for authenticated users it ends up on **Dashboard**, not Track.
+
+2. **Update navigation order so Dashboard is first, Track second**
+
+   * Find the component(s) that define the primary navigation (sidebar, top nav, or tab bar). This might be:
+
+     * a `navItems` array, or
+     * a `MainLayout` / `AppShell` component, or
+     * any shared navigation component.
+   * Make sure the order is:
+
+     1. **Dashboard**
+     2. **Track**
+        (then whatever comes after: Experiments, Learn, Messages, etc.)
+   * If any icons or labels still visually highlight Track as the “main” page, update them so Dashboard looks like the primary section.
+
+3. **Make sure all “back home” / “start” links go to Dashboard**
+
+   * Search for any buttons or links whose intent is “go to the main app” or “start tracking” (for example labels like “Go to app”, “Start here”, “Continue”, “Back to home”).
+   * If they currently route to `/track` or some other page, update them so they route to `/dashboard` instead, unless they very specifically need to go to Track.
+   * The idea: after onboarding, login, or coming back from auth, the **first experience is Dashboard**.
+
+4. **Do NOT break the Track page**
+
+   * The Track page should still exist at its route (probably `/track`) and work exactly as before.
+   * Only change:
+
+     * The default landing route after login/onboarding.
+     * The order and target of navigation links.
+
+5. **Verify behavior**
+
+   * Run the app and test:
+
+     * Log in or register a new user: confirm you land on **Dashboard** first.
+     * Use the navigation to go to Track, Experiments, etc.: confirm Dashboard is first, Track is second.
+     * Use any “Back to home” or “Get started” buttons and confirm they go to Dashboard, not Track.
+
+Once you’ve confirmed it works, format any modified files.

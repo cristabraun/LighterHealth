@@ -91,13 +91,13 @@ function Router() {
     return <Onboarding />;
   }
 
-  // Show main app with bottom navigation
+  // Show main app with bottom navigation - Dashboard is the primary/home page
   return (
     <div className="min-h-screen">
       <Switch>
-        <Route path="/" component={Track} />
-        <Route path="/track" component={Track} />
+        <Route path="/" component={Dashboard} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
         <Route path="/experiments/:id" component={ExperimentDetail} />
         <Route path="/experiments/summary" component={ExperimentSummary} />
