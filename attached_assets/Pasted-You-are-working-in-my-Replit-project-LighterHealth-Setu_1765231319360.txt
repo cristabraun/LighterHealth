@@ -1,0 +1,237 @@
+You are working in my Replit project **LighterHealth**.
+
+Setup:
+
+* Code is developed here in Replit and pushed to **GitHub**.
+* **Vercel** deploys from GitHub to production (getlighterapp.com).
+* I need to know that the core flows are actually wired end-to-end and not just “looking” like they work.
+
+Your job:
+Do a **focused wiring audit** and fix issues for:
+
+1. **Auth & routing**
+
+   * Signup
+   * Login
+   * Session persistence
+
+2. **Dashboard**
+
+   * Daily Wellness Snapshot (today’s vitals)
+   * 30-day pulse + temperature trends
+   * Stress / mood trend
+   * Weekly sleep consistency / sleep quality
+   * Any “supports” / “what helped today” summary
+   * “Message Me” / contact card
+
+3. **Track page**
+
+   * Logging temp, pulse, stress, mood, sleep, and supports
+   * Date navigation (back/forward days)
+
+4. **Message Me / contact**
+
+   * Frontend button
+   * Backend endpoint
+   * Where the message goes (DB + email)
+
+This is not a redesign. Treat it as a **wiring + sanity check** and keep changes minimal but correct.
+
+---
+
+## 1. Map the core flows
+
+Identify the files and APIs used for:
+
+* Auth: `client/src/pages/auth.tsx`, any auth hooks, and login/register API routes in `api/index.ts` (or wherever server routes live).
+* Dashboard: `client/src/pages/dashboard.tsx` and any components it imports for:
+
+  * Daily snapshot
+  * Pulse/temperature trends
+  * Stress/mood
+  * Sleep/weekly consistency
+  * Supports summary
+* Track: `client/src/pages/track.tsx` and the APIs it calls to log vitals.
+* Contact / Message Me:
+
+  * The card on the Dashboard (or elsewhere) with “Message Me”
+  * The API route and DB table it uses, if any.
+
+Leave small comments in relevant files if helpful (but don’t spam).
+
+---
+
+## 2. Verify Track → DB → Dashboard for each vital
+
+For each of these: **temperature, pulse, stress/mood, sleep, supports**:
+
+1. Identify:
+
+   * Which API endpoint the Track page calls (e.g. `/api/vitals`, `/api/stress`, etc.).
+   * Which DB table and columns it writes to.
+   * How the date and user ID are stored.
+
+2. In `dashboard.tsx`, find where it reads data for:
+
+   * Daily snapshot (today’s vitals).
+   * Pulse/temperature trends (30 days).
+   * Stress/mood trend (7 days or whatever is implemented).
+   * Sleep/weekly consistency.
+   * Supports/“what helped you today” summaries.
+
+3. Fix any mismatches:
+
+   * Dashboard reading from different tables/fields than Track writes to.
+   * Wrong or missing user filters.
+   * Off-by-one date or timezone issues (e.g. today’s entry not showing until the next day).
+   * Trends using a different date key than Track uses.
+
+4. Make sure:
+
+   * Logging on Track **immediately** reflects on Dashboard for the same user and date.
+   * The 30-day pulse/temp trends use:
+
+     * only the current user’s data
+     * the last 30 days
+     * sorted by date ascending
+   * Stress/mood and sleep widgets use the same data Track writes.
+
+If a widget is currently just a placeholder and not wired to real data, either:
+
+* Wire it to the correct logs, OR
+* Show a clear “Start logging to see this section populate” message and document that in your final summary.
+
+---
+
+## 3. Check “Wellness Snapshot” and weekly consistency logic
+
+Specifically:
+
+1. Confirm what “Wellness Snapshot” actually represents (e.g. combined score from mood, sleep, supports, etc.).
+2. Make sure the calculation:
+
+   * Uses real data from the last day / week.
+   * Is not using stale or hard-coded values.
+3. Verify weekly consistency logic for sleep and/or stress:
+
+   * How many days in the last 7 have entries?
+   * Is the percentage/streak calculated correctly?
+
+Fix any incorrect aggregation or broken queries.
+
+---
+
+## 4. Verify “Message Me” / contact wiring
+
+1. Locate the “Message Me” card on the Dashboard:
+
+   * Confirm whether it opens:
+
+     * an internal form
+     * mailto link
+     * or nothing / placeholder.
+
+2. If it should use an internal form:
+
+   * Find or create an API route (e.g. `POST /api/messages` or `/api/contact`).
+   * Ensure it:
+
+     * Validates `{ name, email, message }` (or the actual fields used).
+     * Stores the message in a `Messages`/`ContactMessages` table with:
+
+       * id
+       * userId or email
+       * message text
+       * createdAt
+     * Sends an email notification to me (use `CONTACT_RECIPIENT_EMAIL` env var).
+
+3. If it should open a `mailto:`:
+
+   * Make sure the href uses my correct email address and is not broken.
+
+4. Confirm there is a way for me as admin to view messages:
+
+   * Use `client/src/pages/admin-messages.tsx` or similar as the admin view.
+   * Wire it to read from the messages table and display:
+
+     * date
+     * sender
+     * email
+     * message/body.
+   * Restrict access so only my account (e.g. by email) can view it.
+
+In your final summary, clearly state:
+
+* Which route handles messages.
+* Where they are stored.
+* Which email they are sent to.
+* Which URL path in the app shows them (e.g. `/admin-messages`).
+
+---
+
+## 5. Verify auth & session persistence
+
+1. Confirm that:
+
+   * New users can register and then log in successfully.
+   * Returning users can log in with existing email/password.
+   * Password reset flow works (if implemented).
+
+2. Check session behavior:
+
+   * User should **not** be logged out constantly.
+   * A normal “remember me” / session cookie lifetime is fine; avoid super short expiry that logs them out every visit.
+
+3. Make sure protected routes (Dashboard, Track, Experiments, etc.) all require a valid session and redirect to login if not authenticated.
+
+---
+
+## 6. Sanity test against production (Vercel deployment)
+
+1. Confirm which env vars need to be set on **Vercel** for production:
+
+   * DB connection string
+   * Any email provider config
+   * CONTACT_RECIPIENT_EMAIL
+   * Any base URLs used in auth.
+2. Run a short manual test against the live Vercel deployment (getlighterapp.com) with a test account:
+
+   * Sign up, log in.
+   * Log temp, pulse, stress, sleep, supports on the Track page.
+   * Check Dashboard:
+
+     * Daily snapshot
+     * 30-day pulse/temp trends
+     * Stress and sleep widgets
+     * Wellness snapshot.
+   * Use “Message Me” and confirm:
+
+     * Request is stored,
+     * And email is sent (or at least successfully attempted based on logs).
+
+Fix any discrepancies between dev and production caused by missing/incorrect env vars or build config.
+
+---
+
+## 7. Final summary for me (non-developer)
+
+When you’re done, provide a concise summary that answers:
+
+1. ✅ Which flows you tested (signup/login, Track → Dashboard, Message Me, etc.).
+2. ✅ What was broken and what you fixed (bullet points).
+3. ✅ The current status of:
+
+   * Daily snapshot
+   * 30-day pulse/temp trends
+   * Stress/mood trend
+   * Weekly sleep consistency
+   * Wellness snapshot
+4. ✅ How “Message Me” works end-to-end now:
+
+   * API route
+   * DB storage
+   * Email recipient
+   * Admin URL to see messages.
+
+Do **not** touch Stripe or billing in this task.
+Focus only on wiring and correctness of auth, vitals, Dashboard, and contact.
