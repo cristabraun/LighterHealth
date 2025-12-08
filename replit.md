@@ -1,14 +1,38 @@
-# Lighter - Pro-Metabolic Health Tracking App
+# Lighter™ - Pro-Metabolic Health Tracking App
 
 ## Overview
 
-Lighter is a React-based health tracking application designed to help women heal their metabolism through daily vital tracking, personalized experiments, and progress visualization. The app focuses on tracking energy, temperature, and pulse as primary metabolic indicators, while running structured experiments (like the 7-Day Carrot Salad or Daily Orange Juice Protocol) to identify what makes each user feel "lighter" - emotionally, energetically, and physically.
+Lighter™ is a React-based health tracking application designed to help women heal their metabolism through daily vital tracking, personalized experiments, and progress visualization. The app focuses on tracking energy, temperature, and pulse as primary metabolic indicators, while running structured experiments (like the 7-Day Carrot Salad or Daily Orange Juice Protocol) to identify what makes each user feel "lighter" - emotionally, energetically, and physically.
 
 The application emphasizes a warm, encouraging design approach inspired by wellness apps like Calm and Headspace, combined with clear data visualization. It is explicitly NOT a diet app - weight loss is positioned as a side effect of metabolic healing.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Recent Changes (December 8, 2025)
+
+**FREE 30-DAY BETA MODE Implementation**
+- Switched from paid subscription model to FREE 30-DAY BETA for launch
+- All new users automatically get 30-day free access (no credit card required)
+- Added beta user fields to database: isBetaUser, betaStartDate, betaExpiresAt
+- Landing page CTAs changed from "Start 3-Day Trial" to "Join the Free 30-Day Beta"
+- Auth page updated with beta-specific messaging ("Create your free beta account")
+- Created /upgrade page for expired beta users with future Stripe checkout option
+- Implemented beta expiration checking:
+  - Frontend: App.tsx redirects expired users to /upgrade page
+  - Backend: checkBetaAccess middleware blocks expired users from protected routes (403)
+- Added admin routes for managing beta periods:
+  - GET /api/admin/beta-users - List all beta users
+  - POST /api/admin/extend-beta - Extend a user's beta period by specified days
+- Stripe checkout is bypassed during beta - users go directly to signup
+- All branding now uses "Lighter™" (with trademark symbol)
+
+**Technical Notes:**
+- Beta users: isBetaUser=true, betaStartDate=now, betaExpiresAt=now+30days on registration
+- Admin access: Set ADMIN_EMAILS env var with comma-separated email addresses
+- Video deployment: app-preview.mp4 moved to client/public/ for Vite/Vercel builds
+- Required Vercel env vars: DATABASE_URL, JWT_SECRET, STRIPE_SECRET_KEY, VITE_STRIPE_PUBLISHABLE_KEY, OPENAI_API_KEY, ADMIN_EMAILS
 
 ## Recent Changes (December 7, 2025)
 
