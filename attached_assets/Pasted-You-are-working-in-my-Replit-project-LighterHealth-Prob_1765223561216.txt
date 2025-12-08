@@ -1,0 +1,174 @@
+You are working in my Replit project **LighterHealth**.
+
+Problem:
+On the **Track** page in the app:
+
+* In the Replit desktop preview, when I log food, it shows up under the “Food Log” card and I can scroll back and forward by date. This looks correct.
+* When I test on my **phone** (using the deployed site), the app says **“Food Logged! Your meal has been recorded”**, but the food entry does **not** appear in the Food Log list. It looks like the success toast is firing, but either:
+
+  * the data is not actually being saved, or
+  * the Track page is not fetching/displaying it correctly on that environment (date filter, user filter, or DB mismatch).
+
+I need you to **trace the full flow** and fix whatever is broken so that food entries are reliably saved and visible on both desktop and mobile, in both dev and production.
+
+---
+
+## 1. Find the food log API and data model
+
+1. In `api/index.ts` (or wherever API routes are defined), locate:
+
+   * The endpoint used to **create** a food log (likely `POST /api/food`, `/api/food-log`, or similar).
+   * The endpoint used to **fetch** food logs for the Track page (likely `GET /api/food` with a date and/or user filter).
+2. Identify:
+
+   * Which **table** (and columns) in the database stores food logs.
+   * How a food log is associated with:
+
+     * a **user** (user id / email / auth id)
+     * a **date** (what column and what timezone)
+
+Make note of:
+
+* exact table name
+* key columns (id, user_id, date, description, calories, etc.)
+
+---
+
+## 2. Confirm that logging actually writes to the DB
+
+1. Temporarily add **server-side logging** in the POST food endpoint:
+
+   * Log:
+
+     * incoming request body
+     * the user id used
+     * the date being stored
+   * Log the DB insert result or any errors.
+2. In the Replit preview (desktop), log a food item and confirm:
+
+   * The insert succeeds.
+   * The new row appears in the database.
+3. Now repeat the same with the **production/deployed** version (getlighterapp.com or the Replit “Production” URL):
+
+   * Log a distinct food item from your phone (for example, “TEST_PHONE_ORANGE_JUICE 123 cal”).
+   * Confirm in the logs that:
+
+     * the POST endpoint is being hit,
+     * which **database connection string** it’s using,
+     * and whether the insert succeeds or throws.
+
+If the production insert is failing or going to a different DB, identify and fix that (see step 3).
+
+---
+
+## 3. Verify DB configuration for dev vs production
+
+There might be a mismatch where:
+
+* dev (Replit preview) writes to one DB,
+* production (Vercel / Replit autoscale) talks to another or fails silently.
+
+Do this:
+
+1. Check environment variables used for DB connection in both:
+
+   * Replit dev
+   * Production deployment (Vercel or Replit Autoscale)
+2. Make sure the **same database URL and credentials** are used in both environments (unless you intentionally want separate DBs).
+3. If production is missing DB env vars or using wrong ones, fix that:
+
+   * Update `DATABASE_URL` (or equivalent) in the deployment settings.
+   * Redeploy so food logs actually persist.
+
+---
+
+## 4. Check the Track page fetch logic and date filtering
+
+Open `client/src/pages/track.tsx` and find where it:
+
+* calls the API to fetch logged food for the current day, and
+* maps the response into the “Food Log” UI.
+
+Specifically verify:
+
+1. **User filter**
+
+   * The fetch only asks for entries that belong to the **current logged-in user** (good).
+   * The server uses the same user id that was used on insert.
+   * There is no mismatch between auth ID in dev vs production.
+
+2. **Date filter / timezone**
+
+   * Look at how “today’s date” is computed on the client and/or server.
+   * Make sure the same format/timezone is used in:
+
+     * the insert date for the food log, and
+     * the query that fetches logs.
+   * If you are filtering by date (e.g. `WHERE date = '2025-12-08'`):
+
+     * Check that the mobile browser’s timezone is not causing the entry to be saved as one date and fetched as another.
+   * If necessary, normalize to **UTC midnight** or store dates in a standard format and adjust in queries.
+
+3. **Pagination / date navigation**
+
+   * Confirm that when you go back/forward by day, the fetch uses consistent date parameters and actually returns the logged items for that date.
+
+---
+
+## 5. Fix whatever breaks the mobile/production path
+
+Based on what you find:
+
+* If the POST request is **not** writing rows in production:
+
+  * Fix the DB config or insert logic.
+* If rows are written but **not returned**:
+
+  * Fix the GET query filters (user id, date, or both).
+* If everything is correct but the React state is not updating:
+
+  * Fix the client-side state update in `track.tsx` to:
+
+    * append the newly logged entry to the local state, and/or
+    * correctly re-fetch after a successful POST.
+
+Make sure success toasts only show when the insert really succeeds.
+
+---
+
+## 6. End-to-end tests (desktop + phone)
+
+Do these explicit tests:
+
+1. In production from desktop:
+
+   * Log “DESKTOP_TEST 111 cal”.
+   * Ensure it appears immediately in the Food Log for today.
+   * Refresh the page and confirm it persists.
+
+2. In production from **phone**:
+
+   * Log “PHONE_TEST 222 cal”.
+   * Confirm:
+
+     * The POST endpoint logs the request and insert.
+     * The item appears in the Food Log for today.
+     * After refreshing the page or navigating away and back to Track, it still shows.
+
+3. In Replit dev preview:
+
+   * Repeat a quick log to ensure dev behavior is still correct.
+
+Only when all three work should you remove or tone down the temporary server logs.
+
+---
+
+## 7. Summarize changes
+
+When you’re done, leave a short summary in a comment or commit message like:
+
+* what the root cause was (e.g., wrong DB URL in production, date filter off by timezone, missing user filter, etc.),
+* what files you changed (API routes, DB config, Track page fetching),
+* what tests you ran to confirm that **food is genuinely saved and visible across devices**.
+
+Do **not** touch Stripe or auth beyond what’s necessary to correctly identify the current user for food logs.

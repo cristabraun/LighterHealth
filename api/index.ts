@@ -170,6 +170,20 @@ async function initializeRoutes() {
   });
 
   // Food log routes
+  // GET with date as path parameter (used by queryClient.join("/"))
+  app.get('/api/food-logs/:date', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { date } = req.params;
+      const logs = await storage.getFoodLogs(userId, date);
+      res.json(logs);
+    } catch (error) {
+      console.error("Error fetching food logs:", error);
+      res.status(500).json({ message: "Failed to fetch food logs" });
+    }
+  });
+
+  // GET with optional date as query parameter (legacy)
   app.get('/api/food-logs', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
