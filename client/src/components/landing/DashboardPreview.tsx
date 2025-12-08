@@ -63,7 +63,7 @@ export const DashboardPreview: React.FC<DashboardPreviewProps> = ({ onStartTrial
             className="group inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-8 py-4 text-base font-medium text-white/90 hover:bg-white/10 hover:border-white/25 transition-all duration-300 backdrop-blur-xl"
             data-testid="button-dashboard-trial"
           >
-             Start Your 3-Day Trial
+             Join the Free 30-Day Beta
           </button>
         </div>
       </div>

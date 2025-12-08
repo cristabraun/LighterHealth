@@ -129,7 +129,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartTrial }) => {
                   className="group relative inline-flex items-center gap-3 rounded-2xl bg-white px-8 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20"
                   data-testid="button-hero-trial"
                 >
-                  <span>Start Your 3-Day Trial</span>
+                  <span>Join the Free 30-Day Beta</span>
                   <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl group-hover:opacity-25 transition-opacity"></div>
                 </button>
