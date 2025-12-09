@@ -103,8 +103,8 @@ function Router() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/track" component={Track} />
         <Route path="/experiments" component={Experiments} />
-        <Route path="/experiments/:id" component={ExperimentDetail} />
         <Route path="/experiments/summary" component={ExperimentSummary} />
+        <Route path="/experiments/:id" component={ExperimentDetail} />
         <Route path="/learn" component={Learn} />
         <Route path="/learn-energy-basics" component={LearnEnergyBasics} />
         <Route path="/learn-stress-physiology" component={LearnStressPhysiology} />
