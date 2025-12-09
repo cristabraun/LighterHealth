@@ -464,8 +464,7 @@ export default function ExperimentDetail() {
               <Button 
                 onClick={handleLogData}
                 disabled={addLogMutation.isPending}
-                variant="outline" 
-                className="w-full" 
+                className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground font-semibold" 
                 data-testid="button-log-data"
               >
                 {addLogMutation.isPending ? (
@@ -552,23 +551,6 @@ export default function ExperimentDetail() {
           </Card>
         )}
 
-        {isActive && (
-        <Button 
-          onClick={handleFinishExperiment}
-          disabled={completeExperimentMutation.isPending}
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-          data-testid="button-finish-experiment"
-        >
-          {completeExperimentMutation.isPending ? (
-            <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Completing...
-            </>
-          ) : (
-            "Finish Experiment"
-          )}
-        </Button>
-        )}
 
       </div>
     </div>

@@ -55,10 +55,11 @@ export interface IStorage {
   createActiveExperiment(userId: string, experiment: InsertActiveExperiment): Promise<ActiveExperiment>;
   getActiveExperiments(userId: string): Promise<ActiveExperiment[]>;
   getActiveExperiment(userId: string, experimentId: string): Promise<ActiveExperiment | undefined>;
+  getAnyExperimentByTemplate(userId: string, experimentId: string): Promise<ActiveExperiment | undefined>;
   getActiveExperimentById(userId: string, id: string): Promise<ActiveExperiment | undefined>;
   updateActiveExperiment(userId: string, experimentId: string, updates: Partial<InsertActiveExperiment>): Promise<ActiveExperiment>;
   updateActiveExperimentById(userId: string, id: string, updates: Partial<InsertActiveExperiment>): Promise<ActiveExperiment>;
-  addExperimentLog(userId: string, experimentId: string, log: { date: string; temp: number | null; pulse: number | null; notes: string }): Promise<ActiveExperiment>;
+  addExperimentLog(userId: string, experimentId: string, log: { date: string; temp: number | null; pulse: number | null; notes: string }, duration?: number): Promise<ActiveExperiment>;
   deleteActiveExperiment(userId: string, experimentId: string): Promise<void>;
   
   // Message operations
@@ -312,6 +313,24 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getActiveExperiment(userId: string, experimentId: string): Promise<ActiveExperiment | undefined> {
+    // Returns only ACTIVE (not completed) experiments for this template
+    // This allows users to restart experiments after completing them
+    const [experiment] = await db
+      .select()
+      .from(activeExperiments)
+      .where(
+        and(
+          eq(activeExperiments.userId, userId),
+          eq(activeExperiments.experimentId, experimentId),
+          eq(activeExperiments.completed, false)
+        )
+      );
+    return experiment;
+  }
+
+  async getAnyExperimentByTemplate(userId: string, experimentId: string): Promise<ActiveExperiment | undefined> {
+    // Returns any experiment for this template (including completed)
+    // Used for viewing completed experiment data
     const [experiment] = await db
       .select()
       .from(activeExperiments)
@@ -320,7 +339,9 @@ export class DatabaseStorage implements IStorage {
           eq(activeExperiments.userId, userId),
           eq(activeExperiments.experimentId, experimentId)
         )
-      );
+      )
+      .orderBy(desc(activeExperiments.startDate))
+      .limit(1);
     return experiment;
   }
 
@@ -387,7 +408,8 @@ export class DatabaseStorage implements IStorage {
   async addExperimentLog(
     userId: string,
     experimentId: string,
-    log: { date: string; temp: number | null; pulse: number | null; notes: string }
+    log: { date: string; temp: number | null; pulse: number | null; notes: string },
+    duration?: number
   ): Promise<ActiveExperiment> {
     const experiment = await this.getActiveExperiment(userId, experimentId);
     if (!experiment) {
@@ -397,19 +419,29 @@ export class DatabaseStorage implements IStorage {
     const existingLogs = experiment.logs ? JSON.parse(experiment.logs) : [];
     const updatedLogs = [...existingLogs, log];
     
-    const uniqueDates = new Set(updatedLogs.map((l: any) => l.date.split('T')[0]));
-    const completedDays = uniqueDates.size;
-
+    // Calculate day number based on startDate (not log count)
+    const startDate = new Date(experiment.startDate);
+    const today = new Date();
+    const daysSinceStart = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    const currentDayNumber = Math.max(1, daysSinceStart + 1);
+    
+    // Check if experiment should be auto-completed (day exceeds duration)
+    const shouldComplete = duration && currentDayNumber > duration;
+    
     const [updated] = await db
       .update(activeExperiments)
       .set({
         logs: JSON.stringify(updatedLogs),
-        currentDay: completedDays,
+        currentDay: currentDayNumber,
+        ...(shouldComplete && {
+          completed: true,
+          completedAt: new Date().toISOString(),
+        }),
       })
       .where(
         and(
           eq(activeExperiments.userId, userId),
-          eq(activeExperiments.experimentId, experimentId)
+          eq(activeExperiments.id, experiment.id)
         )
       )
       .returning();

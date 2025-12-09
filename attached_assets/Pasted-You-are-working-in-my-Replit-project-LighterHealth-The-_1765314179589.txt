@@ -1,0 +1,158 @@
+You are working in my Replit project **“LighterHealth”**.
+
+The **Experiments** feature has several problems right now:
+
+* On an experiment (e.g. Raw Carrot Salad), after logging one day and tapping **Finish Experiment**, the app treats the entire experiment as completed.
+* After that, there is **no way to Start Experiment again** for that template.
+* The daily screen shows a **Finish Experiment** button that users can accidentally hit instead of just logging today.
+* The app does not clearly show **which day of the experiment the user is on**.
+* The **Dashboard → Recent Experiments** section does *not* show an overview of the latest log / metabolic insight for the experiment being tracked.
+
+I need you to fix the entire experiments UX and data flow as follows.
+
+---
+
+## 1) Remove “Finish Experiment” from the daily screen
+
+On the **experiment detail page** (the page that shows:
+
+* “Log Today’s Data”
+* “Your Metabolic Insight”
+* “Suggested Habits”
+* and currently a **Finish Experiment** button),
+
+do this:
+
+1. **Remove the Finish Experiment button completely** from this page.
+2. Leave a single, clearly styled CTA button in a bright accent color labeled:
+
+   * **“Log today’s data”**
+3. That button should:
+
+   * Save today’s log / notes / vitals for this experiment (use whatever handler is already used for logging).
+   * **NOT** mark the experiment as completed.
+   * **NOT** delete or archive the experiment.
+4. Do not add any new “Finish” or “End” button on this screen.
+
+The daily page should now only let users **log today’s data** and see their **insight + suggested habits**, nothing that ends the experiment.
+
+---
+
+## 2) Fix experiment lifecycle + Start Experiment
+
+I want a clean experiment lifecycle and the ability to restart experiments.
+
+1. Check how experiment runs are modeled in the database (e.g. `experiments`, `experiment_runs`, `experiment_logs`):
+
+   * Each user run for a template should have:
+
+     * `id`
+     * `user_id`
+     * `template_id` (e.g. raw carrot salad)
+     * `start_date`
+     * `duration_days` (e.g. 7, 14, 30)
+     * `status` (ACTIVE / COMPLETED)
+2. **Start Experiment button:**
+
+   * On the experiment intro card/page for a template, show **“Start Experiment”** whenever the user does **not** currently have an ACTIVE run for that template.
+   * When tapped:
+
+     * Create a new run with `status = ACTIVE`, `start_date = today`, `duration_days = template duration`.
+     * Take the user into the experiment detail page where they can log today’s data.
+3. If there is an ACTIVE run:
+
+   * Show **Day tracking** (see next section) and **Log today’s data**.
+   * Do **NOT** show Start Experiment for that template until the current run is completed.
+4. When a run is really finished:
+
+   * Mark it `COMPLETED` but **do not block** starting the same template again.
+   * The logic that hides “Start Experiment” must only check for ACTIVE runs, not completed history.
+
+Right now the Raw Carrot Salad experiment gets treated as permanently done after hitting Finish once. Fix that so:
+
+* After a run is completed, the template can still be started again later as a **new run**.
+
+---
+
+## 3) Track and display “Day X of Y”
+
+Users need to see which day of the experiment they’re on.
+
+1. For each ACTIVE experiment run, compute:
+
+   * `dayNumber = floor((today - start_date) in days) + 1`
+   * Clamp to [1, `duration_days`].
+2. On the **experiment detail page**, display a label near the top like:
+
+   * **“Day X of Y”**, e.g. “Day 3 of 30”.
+3. Also use this same calculation for any existing day pill shown in the UI (for example the “Day 0/30” badge you added on the Dashboard card). That value should come from real data, not be hard-coded.
+
+Completion rule (for now):
+
+* When `dayNumber > duration_days`, mark the run as COMPLETED and move it out of Active. Do **not** complete it earlier just because someone logged once.
+
+---
+
+## 4) Show experiment overview on Dashboard → Recent Experiments
+
+On the **Dashboard** card that says **“Recent Experiments”**:
+
+1. For the most recent ACTIVE experiment(s) for the user, show:
+
+   * Experiment name (e.g. “Morning vs Afternoon Temp/Pulse” or “Raw Carrot Salad”).
+   * A day badge like **“Day X/Y”** using the same logic as above.
+   * A short **overview snippet** from the latest log for that experiment run:
+
+     * Use the latest `experiment_log` for that run.
+     * Prefer the “metabolic insight” text field if present.
+     * If insight is empty, fall back to the user’s notes.
+     * Truncate to a short preview (e.g. 1–2 lines with ellipsis).
+2. Update the Dashboard experiment card so it pulls this info from the API instead of static placeholders.
+3. If no logs exist yet for an active experiment, show a friendly placeholder like:
+
+   * “No entries yet — log today to see your insights here.”
+
+The goal: when I log today’s data for Raw Carrot Salad and go back to the Dashboard, under **Recent Experiments** I should see that experiment with **Day X/Y** and a short snippet of my latest insight/notes.
+
+---
+
+## 5) Testing you must do
+
+In Preview, with a fresh test user:
+
+1. Start **Raw Carrot Salad** experiment:
+
+   * ✔ See a **Start Experiment** button if none is active.
+   * ✔ After starting, go to detail page, see **Day 1 of N** and **Log today’s data** button, no Finish button.
+2. Log today’s data:
+
+   * ✔ Run stays ACTIVE.
+   * ✔ Experiment appears under **Recent Experiments** on Dashboard with:
+
+     * Correct name
+     * Day 1/N
+     * Snippet from the latest log/insight.
+3. Log again on a later “day” (simulate date change if needed):
+
+   * ✔ Day count increases (Day 2 of N, etc.).
+   * ✔ Dashboard snippet updates to the newest log.
+4. Let the run complete (reach duration or simulate past the end date):
+
+   * ✔ Run becomes COMPLETED / no longer listed as Active.
+   * ✔ The experiment template once again shows a **Start Experiment** button and can be started as a **new run**.
+
+---
+
+## 6) Final report
+
+When you’re done, summarize:
+
+* Frontend files changed (experiment pages, dashboard).
+* Backend / API / DB changes for:
+
+  * experiment runs
+  * logs
+  * day calculation
+  * dashboard experiment summary.
+* How “Day X of Y” is computed.
+* Exactly what appears under **Recent Experiments** after logging data.
