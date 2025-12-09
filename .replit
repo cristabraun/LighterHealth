@@ -106,3 +106,5 @@ integrations = ["javascript_log_in_with_replit:1.0.0", "github:1.0.0", "javascri
 
 [userenv.shared]
 ADMIN_EMAILS = "crista.ann.braun@gmail.com"
+RESEND_FROM_EMAIL = "support@getlighterapp.com"
+ADMIN_NOTIFICATION_EMAIL = "support@getlighterapp.com"
