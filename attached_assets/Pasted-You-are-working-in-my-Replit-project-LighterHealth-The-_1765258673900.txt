@@ -1,0 +1,161 @@
+You are working in my Replit project “LighterHealth”. The Experiments feature is currently broken.
+
+Current bugs I see in the live app:
+
+When I start an experiment, log today’s notes, and tap the Finish experiment button, the app navigates to a screen that says “Experiment doesn’t exist” / “Experiment not found.”
+
+After one day, the experiment is treated as if it is fully ended instead of remaining in Active Experiments.
+
+When I try to View Summary for that experiment, I get “Experiment not found.”
+
+The intended behavior is:
+
+When I start an experiment, it should appear under Active Experiments and stay there for the full experiment duration (e.g. 7/14 days) until I explicitly end it.
+
+Finishing today should:
+
+Save today’s notes/logs for that experiment
+
+Keep the experiment in the Active list (do NOT delete it or mark it completed after day 1)
+
+View Summary should always show the details and logs for that experiment as long as it exists in the database.
+
+1) Reproduce and debug the current behavior
+
+In the running app (Preview):
+
+Go to Experiments.
+
+Start any experiment.
+
+Add today’s notes.
+
+Click Finish experiment (or whatever button is wired for “finish today”).
+
+Observe the “Experiment doesn’t exist / not found” error and the experiment not appearing correctly in Active Experiments.
+
+Use this to trace:
+
+Which API endpoint is being called when I click Finish experiment
+
+Which route is used for View Summary
+
+How experiments are being stored and retrieved in the database.
+
+2) Fix experiment lifecycle & IDs
+
+I want a clean, consistent experiment lifecycle and ID handling.
+
+Check the database schema for experiments and experiment logs (tables like experiments, experiment_logs, etc.):
+
+Make sure each experiment has a stable unique ID used across:
+
+creation
+
+daily logging
+
+active list
+
+summary view
+
+Make sure finishing a day does NOT delete the experiment or mark it as fully completed.
+
+Fix any places where:
+
+The wrong experiment ID is being passed in the URL or request body, or
+
+The backend queries use conditions that cause “experiment not found” for valid experiments (e.g. filtering by wrong user_id, wrong date, or incorrectly using an “ended” flag).
+
+Ensure the experiment status logic supports something like:
+
+PLANNED → before start
+
+ACTIVE → after start until explicitly ended or duration reached
+
+COMPLETED → only when the user ends it or when the duration is actually over
+
+Important:
+
+The Finish experiment / Save today button should record today’s log and keep the experiment ACTIVE, not mark it completed after one day.
+
+Only the true “End experiment” / completion action should move it to completed/archived and out of the Active list.
+
+3) Fix the “Finish experiment” action
+
+For the button the user clicks after today’s notes:
+
+Make sure it calls an endpoint whose behavior is:
+
+Validate the experiment exists and belongs to the current user.
+
+Create or update today’s log/entry.
+
+Do not delete the experiment record.
+
+Do not mark it completed (unless explicitly designed as an “End experiment” button).
+
+After a successful save, route back to:
+
+Either the Active Experiments tab with this experiment still listed,
+
+Or a confirmation screen that still allows navigation back to Active Experiments.
+
+4) Fix Active Experiments and View Summary
+
+Check the query that powers the Active Experiments tab:
+
+It should list experiments that are:
+
+Belonging to the current user
+
+Not completed/archived
+
+Within their configured duration (if duration-based logic exists)
+
+Fix the View Summary route and component:
+
+It should load the experiment by its ID for the current user.
+
+If logs exist, show them.
+
+It should not say “Experiment not found” unless the record truly doesn’t exist or doesn’t belong to the user.
+
+5) Testing requirements
+
+After fixes, verify in Preview with a fresh test user:
+
+Start a new experiment.
+
+Add today’s notes and click Finish / Save for today.
+
+✔ No “experiment doesn’t exist” error
+
+✔ The experiment appears in Active Experiments
+
+Navigate away and back to Experiments:
+
+✔ It still shows under Active Experiments
+
+Click View Summary for that experiment:
+
+✔ Summary loads correctly (no “Experiment not found”)
+
+✔ Today’s log appears in the history
+
+Optionally, simulate multiple days (or adjust the date in a test) and confirm:
+
+Daily logging works repeatedly
+
+The experiment only moves out of Active when explicitly ended / completed according to the intended rules.
+
+6) Final report
+
+When you’re done, summarize in the chat:
+
+The files and endpoints you changed (frontend + backend).
+
+What was causing “experiment doesn’t exist / not found.”
+
+How the new lifecycle works (from start → daily logs → active list → summary → completion).
+
+The exact manual test steps you ran and their outcomes.
