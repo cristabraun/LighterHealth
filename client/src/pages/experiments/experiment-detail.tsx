@@ -264,6 +264,7 @@ export default function ExperimentDetail() {
   const displayDay = currentExperiment ? Math.min(calculateDayFromStart(), duration) : 1;
   const progress = (displayDay / duration) * 100;
   const isActive = currentExperiment && !currentExperiment.completed;
+  const completedDays = logs.length;
 
   return (
     <div className="min-h-screen pb-20 bg-background">
