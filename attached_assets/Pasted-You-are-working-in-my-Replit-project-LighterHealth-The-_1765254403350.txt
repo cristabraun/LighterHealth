@@ -1,0 +1,108 @@
+You are working in my Replit project “LighterHealth”. The goal is to fix the PWA / home-screen icon.
+
+Current problem:
+When I “Add to Home Screen” on my phone, the icon is just a plain white square with no branding. It should show my three-star Lighter™ icon and the app name should show as “Lighter™” (or “Lighter” as the short name).
+
+Please do ALL of the following:
+
+Find and use the branded icon asset
+
+Locate the existing three-star Lighter™ icon in the repo (for example: lighter_app_icon_coral_gradient.png or similar).
+
+If needed, generate/export the correct sizes and place them in public/ (or public/icons/):
+
+192x192 PNG
+
+512x512 PNG
+
+32x32 favicon
+
+180x180 PNG for iOS apple-touch-icon
+
+Fix / create public/manifest.json
+
+Ensure there is a manifest.json under public/.
+
+Set:
+
+"name": "Lighter™"
+
+"short_name": "Lighter"
+
+"display": "standalone"
+
+"start_url": "/"
+
+"background_color" and "theme_color" to the dark warm brown / amber tone used in the app.
+
+Make sure the "icons" array correctly points to the real icon files you created, e.g.:
+
+"icons": [
+  { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png" },
+  { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png" }
+]
+
+
+Confirm the manifest is served from the root and has the correct Content-Type: application/manifest+json.
+
+Wire the manifest and icons into the main HTML layout
+
+In the main HTML/layout file (e.g. client/index.html or the root HTML template the app actually uses):
+
+Add:
+
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180x180.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Lighter™" />
+<meta name="application-name" content="Lighter™" />
+
+
+Make sure any old favicon links or conflicting tags are cleaned up so only the new icons are used.
+
+Handle iOS specifically
+
+Confirm that iOS will use the apple-touch-icon file from public/icons/.
+
+Make sure the icon file used for iOS is not just a white square (no white background override, correct transparency and colors from the three-star icon).
+
+Verify and test
+
+Run the app and open it from the deployed domain (https://getlighterapp.com, not just the Replit preview).
+
+Use browser dev tools / Application tab to confirm:
+
+The manifest is detected and valid.
+
+The icons listed in the manifest load without 404s.
+
+Then simulate the flow:
+
+On Android (or Chrome’s PWA install): install to home screen and confirm the home-screen icon shows the branded three-star Lighter™ icon with the correct name.
+
+On iOS Safari: “Add to Home Screen” and confirm:
+
+Icon shows the three-star Lighter™ icon
+
+Title shows as “Lighter” / “Lighter™” as configured.
+
+Cache / icon refresh
+
+If necessary, bump icon filenames (e.g. add -v2 in the file names and manifest) to avoid cached old icons.
+
+Ensure no outdated icons or manifests are still referenced anywhere in the code.
+
+Summary
+
+When you’re done, summarize:
+
+Which files you changed (manifest, HTML/layout, icon paths).
+
+Exactly which icon files and sizes you created/used.
+
+On which platforms you tested “Add to Home Screen” and what the icon and name look like now.
+
+The end result should be:
+
+When I add the app to my home screen on a phone, I see the branded Lighter™ three-star icon, not a white box, and the app name appears as Lighter™ (or “Lighter”) under the icon.
