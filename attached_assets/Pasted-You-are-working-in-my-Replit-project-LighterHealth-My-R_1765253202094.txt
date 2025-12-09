@@ -1,0 +1,194 @@
+You are working in my Replit project “LighterHealth”. My Resend configuration is already set up with these environment variables:
+
+RESEND_API_KEY (secret)
+
+RESEND_FROM_EMAIL (support@getlighterapp.com
+)
+
+ADMIN_NOTIFICATION_EMAIL (support@getlighterapp.com
+)
+
+ADMIN_EMAILS (my admin inbox list)
+
+I need you to do THREE things and verify they all work in the running app (Preview):
+
+1) Fix and complete the password reset flow
+
+Current problem:
+When I use “Forgot password,” I can submit my email, but no reset email arrives, and I can’t actually change my password.
+
+Tasks:
+
+Find the backend routes and frontend pages related to password reset (for example reset-password-request, reset-password, or similar API endpoints).
+
+Implement a complete token-based reset flow:
+
+When a user submits their email:
+
+If the email exists, generate a secure, single-use reset token with an expiry (e.g. 1 hour).
+
+Store the token + expiry in the database for that user.
+
+Send a real email via Resend:
+
+From: RESEND_FROM_EMAIL
+
+To: the user’s email
+
+Subject: something like “Reset your Lighter password”
+
+Body: include a clickable reset link to the app’s reset page with the token in the URL (for example /reset-password?token=...).
+
+Do NOT reveal whether an email exists in the system in the UI message (for security), but still behave correctly server-side.
+
+On the reset page:
+
+Read the token from the URL.
+
+Validate the token and expiry server-side.
+
+Let the user enter a new password.
+
+Hash and save the new password.
+
+Invalidate the token after use.
+
+Add clear user messages (success / invalid link / expired link) and log detailed errors on the server if anything fails, especially Resend email sending.
+
+Test in Preview:
+
+Create a test user.
+
+Use “Forgot password”.
+
+Confirm a real email arrives, the link opens the reset page, and you can log in with the new password afterwards.
+
+2) Email notifications for messages and new signups
+a) Support / contact messages
+
+I want an email whenever someone sends me a message in the app.
+
+Find the route/component that handles user messages (e.g. contact/support/messages form).
+
+When a message is submitted:
+
+Send a real email via Resend:
+
+From: RESEND_FROM_EMAIL
+
+To: ADMIN_NOTIFICATION_EMAIL (and/or all addresses in ADMIN_EMAILS if that variable is used).
+
+Subject: clearly identify it as a Lighter support/message.
+
+Body: include user name, user email, and the full message.
+
+Keep any existing DB storage, but make sure the email is sent as well.
+
+Show the user a clear success/failure message and log failures on the server.
+
+b) New user signup notifications
+
+I also want an email every time a new user successfully registers.
+
+In the registration/sign-up backend logic:
+
+After the user is created successfully in the database:
+
+Send an email via Resend:
+
+From: RESEND_FROM_EMAIL
+
+To: ADMIN_NOTIFICATION_EMAIL (and/or ADMIN_EMAILS).
+
+Subject: something like “New Lighter user signup”.
+
+Body: include at least the email address and created-at time.
+
+Do not block signup completion if the admin email fails; just log the error.
+
+Test in Preview:
+
+Submit a support/message form → confirm the email hits the admin inbox.
+
+Register a new test user → confirm signup notification email arrives.
+
+3) Fix returning user login and session behavior
+
+Current problem:
+Existing users are getting errors when they come back and try to log in again. “Stay logged in” / return login is not reliable.
+
+Tasks:
+
+Audit the full auth flow:
+
+Registration
+
+Login
+
+Session/token creation and storage (cookies, localStorage, etc.)
+
+Any middleware that checks authentication on protected routes.
+
+Make sure:
+
+The same secret(s) are used consistently to sign and verify tokens.
+
+Tokens/sessions have an appropriate lifetime (around 30 days as promised in the UI).
+
+A previously registered user can:
+
+Log in,
+
+Close the tab or browser,
+
+Come back and either still be logged in OR log in again with the same email/password without errors.
+
+Fix any bugs that cause:
+
+4xx/5xx errors on login for valid credentials,
+
+Token verification to fail for returning users,
+
+Infinite redirects or stuck login screens.
+
+Improve error handling:
+
+User-facing message for invalid email/password.
+
+Different message for internal/server error.
+
+Log technical error details on the server (not in the UI).
+
+Test in Preview with a clean browser session/incognito:
+
+Register a new user.
+
+Log out.
+
+Log back in with the same credentials → should work.
+
+Close the tab / reopen the app:
+
+If a long-lived session is implemented, confirm the user is still authenticated.
+
+Try wrong password → see proper error, not a crash.
+
+Final requirements
+
+Do NOT hard-code the Resend API key; always use RESEND_API_KEY, RESEND_FROM_EMAIL, and ADMIN_NOTIFICATION_EMAIL / ADMIN_EMAILS.
+
+Do NOT change any branding or layout; only fix backend wiring and necessary UI messages.
+
+When you’re done, write a summary in the chat:
+
+Files changed
+
+What you implemented for:
+
+password reset
+
+support/admin emails
+
+login/session fixes
+
+Exactly how you tested each flow in Preview and the results.

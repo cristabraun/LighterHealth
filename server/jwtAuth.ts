@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 // NOTE: Vercel serverless ESM requires .js extensions for local imports
 import { storage, toSafeUser } from "./storage.js";
+import { sendPasswordResetEmail, sendNewUserNotification } from "./email.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || "lighter-app-secret-key";
 const JWT_EXPIRES_IN = "30d"; // 30-day session
@@ -120,6 +121,19 @@ export async function setupAuth(app: Express) {
           passwordHash: password,
         });
         console.log("[Register] User created successfully");
+        
+        // Send admin notification email (don't block registration if email fails)
+        sendNewUserNotification(email, firstName, lastName)
+          .then(result => {
+            if (result.success) {
+              console.log("[Register] Admin notification email sent");
+            } else {
+              console.error("[Register] Failed to send admin notification:", result.error);
+            }
+          })
+          .catch(err => {
+            console.error("[Register] Error sending admin notification:", err);
+          });
       } catch (dbError: any) {
         console.error("[Register] Database error creating user:", dbError?.message || dbError);
         console.error("[Register] Full error:", JSON.stringify(dbError, Object.getOwnPropertyNames(dbError)));
@@ -227,8 +241,15 @@ export async function setupAuth(app: Express) {
       // Log the reset URL for development testing
       console.log("[PasswordReset] Reset URL for", email.substring(0, 3) + "***:", resetUrl);
       
-      // TODO: Send email when SMTP is configured
-      // For now, we just log the URL
+      // Send password reset email via Resend
+      const emailResult = await sendPasswordResetEmail(user.email!, resetUrl, user.firstName);
+      
+      if (!emailResult.success) {
+        console.error("[PasswordReset] Failed to send email:", emailResult.error);
+        // Still return success to prevent email enumeration, but log the error
+      } else {
+        console.log("[PasswordReset] Reset email sent successfully");
+      }
       
       res.json({ message: "If an account exists for this email, we've sent a reset link." });
     } catch (error) {

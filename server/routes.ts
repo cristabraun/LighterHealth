@@ -10,6 +10,7 @@ import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema
 import { fromZodError } from "zod-validation-error";
 import OpenAI from "openai";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient.js";
+import { sendAdminMessageNotification } from "./email.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve public folder for PWA assets (manifest, service worker, icons, etc.)
@@ -312,8 +313,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/messages', isAuthenticated, checkBetaAccess, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      const userEmail = req.user.claims.email;
+      const userName = [req.user.claims.firstName, req.user.claims.lastName].filter(Boolean).join(' ') || userEmail || 'Unknown User';
+      
       const validatedData = insertMessageSchema.parse(req.body);
       const message = await storage.createMessage(userId, validatedData);
+      
+      // Send admin notification email (don't block message submission if email fails)
+      sendAdminMessageNotification(userName, userEmail, validatedData.content, validatedData.subject)
+        .then(result => {
+          if (result.success) {
+            console.log("[Messages] Admin notification email sent for message:", message.id);
+          } else {
+            console.error("[Messages] Failed to send admin notification:", result.error);
+          }
+        })
+        .catch(err => {
+          console.error("[Messages] Error sending admin notification:", err);
+        });
+      
       res.json(message);
     } catch (error: any) {
       if (error.name === 'ZodError') {
