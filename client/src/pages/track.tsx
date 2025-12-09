@@ -441,7 +441,7 @@ export default function Track() {
                     <span className="text-sm text-muted-foreground min-w-fit">°{temperatureUnit}</span>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Take immediately upon waking, before getting out of bed {temperatureUnit === "F" ? "(94-102°F)" : "(34-39°C)"}
+                    Take immediately upon waking, before getting out of bed
                   </p>
                 </div>
 
