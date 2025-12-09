@@ -105,3 +105,12 @@ Preferred communication style: Simple, everyday language.
 - Fixed useAuth hook to return null on 401 instead of throwing error (prevents spurious logouts)
 - Fixed cookie sameSite setting from 'none' to 'lax' for better custom domain compatibility
 - Added refetchOnWindowFocus to useAuth for automatic session revalidation when user returns to app
+
+### Experiment Lifecycle Improvements (December 2025)
+- **Removed "Finish Experiment" button** - experiments now auto-complete when day >= duration
+- **Fixed restart logic**: `getActiveExperiment()` now filters `completed=false`, allowing users to restart completed experiments
+- **Day calculation now uses UTC**: Both server and client parse startDate using `Date.UTC()` to avoid timezone offset issues
+- **Server-side duration lookup**: `EXPERIMENT_DURATIONS` map in routes.ts contains all 22 experiment template durations
+- **Hardened experiment creation**: Server overrides client-provided lifecycle fields (currentDay=1, completed=false, completedAt=null, logs='[]')
+- **Dashboard improvements**: Recent Experiments section now shows day badge calculated from startDate and displays latest log snippet
+- **Experiment cards are clickable**: Dashboard experiment cards link directly to experiment detail page

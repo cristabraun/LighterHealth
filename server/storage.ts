@@ -59,7 +59,7 @@ export interface IStorage {
   getActiveExperimentById(userId: string, id: string): Promise<ActiveExperiment | undefined>;
   updateActiveExperiment(userId: string, experimentId: string, updates: Partial<InsertActiveExperiment>): Promise<ActiveExperiment>;
   updateActiveExperimentById(userId: string, id: string, updates: Partial<InsertActiveExperiment>): Promise<ActiveExperiment>;
-  addExperimentLog(userId: string, experimentId: string, log: { date: string; temp: number | null; pulse: number | null; notes: string }, duration?: number): Promise<ActiveExperiment>;
+  addExperimentLog(userId: string, experimentId: string, log: { date: string; temp: number | null; pulse: number | null; notes: string }, duration: number): Promise<ActiveExperiment>;
   deleteActiveExperiment(userId: string, experimentId: string): Promise<void>;
   
   // Message operations
@@ -409,24 +409,32 @@ export class DatabaseStorage implements IStorage {
     userId: string,
     experimentId: string,
     log: { date: string; temp: number | null; pulse: number | null; notes: string },
-    duration?: number
+    duration: number
   ): Promise<ActiveExperiment> {
     const experiment = await this.getActiveExperiment(userId, experimentId);
     if (!experiment) {
       throw new Error("Experiment not found");
     }
 
+    // If experiment is already completed, don't allow adding more logs
+    if (experiment.completed) {
+      throw new Error("Cannot add logs to a completed experiment");
+    }
+
     const existingLogs = experiment.logs ? JSON.parse(experiment.logs) : [];
     const updatedLogs = [...existingLogs, log];
     
-    // Calculate day number based on startDate (not log count)
-    const startDate = new Date(experiment.startDate);
-    const today = new Date();
-    const daysSinceStart = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    // Calculate day number based on startDate using UTC to avoid timezone issues
+    // Parse startDate as UTC midnight
+    const [year, month, day] = experiment.startDate.split('-').map(Number);
+    const startDateUTC = Date.UTC(year, month - 1, day);
+    const todayUTC = Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate());
+    const daysSinceStart = Math.floor((todayUTC - startDateUTC) / (1000 * 60 * 60 * 24));
     const currentDayNumber = Math.max(1, daysSinceStart + 1);
     
-    // Check if experiment should be auto-completed (day exceeds duration)
-    const shouldComplete = duration && currentDayNumber > duration;
+    // Check if experiment should be auto-completed (day equals or exceeds duration)
+    // >= ensures completion happens on the final day, not the day after
+    const shouldComplete = currentDayNumber >= duration;
     
     const [updated] = await db
       .update(activeExperiments)

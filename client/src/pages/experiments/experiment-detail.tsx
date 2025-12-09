@@ -251,11 +251,19 @@ export default function ExperimentDetail() {
     );
   }
 
-  const completedDays = currentExperiment?.currentDay || 0;
+  // Calculate day based on startDate using UTC to avoid timezone issues
   const duration = experimentTemplate.duration;
-  const progress = (completedDays / duration) * 100;
+  const calculateDayFromStart = () => {
+    if (!currentExperiment?.startDate) return 1;
+    const [year, month, day] = currentExperiment.startDate.split('-').map(Number);
+    const startDateUTC = Date.UTC(year, month - 1, day);
+    const todayUTC = Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate());
+    const daysSinceStart = Math.floor((todayUTC - startDateUTC) / (1000 * 60 * 60 * 24));
+    return Math.max(1, daysSinceStart + 1);
+  };
+  const displayDay = currentExperiment ? Math.min(calculateDayFromStart(), duration) : 1;
+  const progress = (displayDay / duration) * 100;
   const isActive = currentExperiment && !currentExperiment.completed;
-  const displayDay = completedDays + 1;
 
   return (
     <div className="min-h-screen pb-20 bg-background">

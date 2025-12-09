@@ -12,6 +12,33 @@ import OpenAI from "openai";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient.js";
 import { sendAdminMessageNotification } from "./email.js";
 
+// Server-side experiment duration lookup (mirrors frontend EXPERIMENTS data)
+// All experiments from client/src/data/experiments.ts
+const EXPERIMENT_DURATIONS: Record<string, number> = {
+  "temp-before-after-meals": 30,
+  "raw-carrot-salad": 30,
+  "low-pufa-week": 30,
+  "morning-vs-afternoon-temp": 30,
+  "oj-before-coffee": 30,
+  "carbs-protein-pairing": 30,
+  "warm-vs-cold-foods": 3,
+  "dairy-support-test": 3,
+  "liver-weekly": 21,
+  "shellfish-weekly": 21,
+  "gelatin-before-bed": 30,
+  "warm-bath-before-bed": 30,
+  "afternoon-sunlight": 30,
+  "honey-salt-nighttime": 30,
+  "nasal-walking": 30,
+  "no-workout-reset": 3,
+  "calcium-boost-pms": 30,
+  "magnesium-night": 30,
+  "coffee-with-sugar": 30,
+  "no-raw-greens": 3,
+  "red-light-therapy": 30,
+  "meal-timing-test": 30,
+};
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve public folder for PWA assets (manifest, service worker, icons, etc.)
   app.use(express.static(path.resolve(import.meta.dirname, "..", "public")));
@@ -184,7 +211,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const validatedData = insertActiveExperimentSchema.parse(req.body);
-      const experiment = await storage.createActiveExperiment(userId, validatedData);
+      
+      // Server-side override of lifecycle fields - don't trust client input
+      // This prevents manipulation of experiment state by clients
+      const sanitizedData = {
+        ...validatedData,
+        currentDay: 1, // Always start at day 1
+        completed: false, // Always start as incomplete
+        completedAt: null, // No completion timestamp
+        logs: '[]', // Empty logs array
+      };
+      
+      const experiment = await storage.createActiveExperiment(userId, sanitizedData);
       res.json(experiment);
     } catch (error: any) {
       if (error.name === 'ZodError') {
@@ -248,12 +286,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Date is required" });
       }
 
+      // Use server-side duration lookup (don't trust client-provided duration)
+      const serverDuration = EXPERIMENT_DURATIONS[experimentId] || 30;
+
       const experiment = await storage.addExperimentLog(userId, experimentId, {
         date,
         temp: temp !== undefined ? parseFloat(temp) : null,
         pulse: pulse !== undefined ? parseInt(pulse, 10) : null,
         notes: notes || "",
-      });
+      }, serverDuration);
 
       res.json(experiment);
     } catch (error: any) {

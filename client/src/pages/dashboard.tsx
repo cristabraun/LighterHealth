@@ -755,6 +755,31 @@ export default function Dashboard() {
     .filter((exp) => !exp.completed && foundationalIds.includes(exp.experimentId))
     .slice(0, 5);
 
+  // Helper function to calculate day from startDate using UTC to avoid timezone issues
+  const calculateDayFromStart = (startDate: string, duration: number) => {
+    const [year, month, day] = startDate.split('-').map(Number);
+    const startDateUTC = Date.UTC(year, month - 1, day);
+    const todayUTC = Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate());
+    const daysSinceStart = Math.floor((todayUTC - startDateUTC) / (1000 * 60 * 60 * 24));
+    return Math.min(Math.max(1, daysSinceStart + 1), duration);
+  };
+
+  // Helper function to get the latest log snippet from an experiment
+  const getLatestLogSnippet = (logsJson: string | null) => {
+    if (!logsJson) return null;
+    try {
+      const logs = JSON.parse(logsJson);
+      if (logs.length === 0) return null;
+      const latestLog = logs[logs.length - 1];
+      if (latestLog.notes && latestLog.notes.trim()) {
+        return latestLog.notes.trim().substring(0, 60) + (latestLog.notes.length > 60 ? "..." : "");
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
   const isFirstTimeUser = !user?.onboardingCompleted;
 
   return (
@@ -952,28 +977,37 @@ export default function Dashboard() {
                   {activeFoundational.map((active) => {
                     const experiment = EXPERIMENTS.find((e) => e.id === active.experimentId);
                     if (!experiment) return null;
-                    const progress = (active.currentDay / experiment.duration) * 100;
-                    const daysLeft = experiment.duration - active.currentDay;
+                    const currentDay = calculateDayFromStart(active.startDate, experiment.duration);
+                    const progress = (currentDay / experiment.duration) * 100;
+                    const daysLeft = Math.max(0, experiment.duration - currentDay);
+                    const latestSnippet = getLatestLogSnippet(active.logs);
 
                     return (
-                      <div
-                        key={active.id}
-                        className="p-3 rounded-lg bg-white/60 dark:bg-card/40 space-y-2"
-                        data-testid={`exp-card-desktop-${active.id}`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <p className="font-medium text-sm" data-testid={`exp-title-desktop-${active.id}`}>
-                            {experiment.title}
-                          </p>
-                          <Badge variant="secondary" className="text-xs bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300" data-testid={`exp-badge-desktop-${active.id}`}>
-                            Day {active.currentDay}/{experiment.duration}
-                          </Badge>
+                      <Link key={active.id} href={`/experiments/${active.experimentId}`}>
+                        <div
+                          className="p-3 rounded-lg bg-white/60 dark:bg-card/40 space-y-2 hover-elevate cursor-pointer"
+                          data-testid={`exp-card-desktop-${active.id}`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="font-medium text-sm" data-testid={`exp-title-desktop-${active.id}`}>
+                              {experiment.title}
+                            </p>
+                            <Badge variant="secondary" className="text-xs bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300 shrink-0" data-testid={`exp-badge-desktop-${active.id}`}>
+                              Day {currentDay}/{experiment.duration}
+                            </Badge>
+                          </div>
+                          <Progress value={progress} className="h-2" data-testid={`exp-progress-desktop-${active.id}`} />
+                          {latestSnippet ? (
+                            <p className="text-xs text-muted-foreground italic truncate" data-testid={`exp-snippet-desktop-${active.id}`}>
+                              "{latestSnippet}"
+                            </p>
+                          ) : (
+                            <p className="text-xs text-muted-foreground" data-testid={`exp-days-left-desktop-${active.id}`}>
+                              {daysLeft} days remaining
+                            </p>
+                          )}
                         </div>
-                        <Progress value={progress} className="h-2" data-testid={`exp-progress-desktop-${active.id}`} />
-                        <p className="text-xs text-muted-foreground" data-testid={`exp-days-left-desktop-${active.id}`}>
-                          {daysLeft} days remaining
-                        </p>
-                      </div>
+                      </Link>
                     );
                   })}
                 </div>
