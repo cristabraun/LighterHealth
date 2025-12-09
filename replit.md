@@ -100,3 +100,5 @@ Preferred communication style: Simple, everyday language.
 ### Recent Bug Fixes (December 2025)
 - Fixed Dashboard loading experiments from localStorage instead of API
 - Fixed storage upsert missing stress/mood/moodNotes/checklistCompleted fields on update
+- Fixed Experiments summary page - was loading from localStorage instead of database API
+- Fixed App.tsx route order - /experiments/summary must come before /experiments/:id to prevent :id from matching "summary"
