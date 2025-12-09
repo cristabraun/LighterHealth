@@ -320,7 +320,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const message = await storage.createMessage(userId, validatedData);
       
       // Send admin notification email (don't block message submission if email fails)
-      sendAdminMessageNotification(userName, userEmail, validatedData.content, validatedData.subject)
+      sendAdminMessageNotification(userName, userEmail, validatedData.message, validatedData.subject)
         .then(result => {
           if (result.success) {
             console.log("[Messages] Admin notification email sent for message:", message.id);
