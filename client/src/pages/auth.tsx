@@ -40,6 +40,7 @@ export default function Auth() {
       return res.json();
     },
     onSuccess: () => {
+      sessionStorage.setItem('justLoggedIn', 'true');
       queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
       setLocation('/');
     },
@@ -58,6 +59,7 @@ export default function Auth() {
       return res.json();
     },
     onSuccess: () => {
+      sessionStorage.setItem('justLoggedIn', 'true');
       queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
       setLocation('/');
     },

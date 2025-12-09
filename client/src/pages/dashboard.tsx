@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Card } from "@/components/ui/card";
@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "@/hooks/useTheme";
+import { OnboardingWelcomeModal } from "@/components/OnboardingWelcomeModal";
 import {
   Thermometer,
   Heart,
@@ -667,6 +668,27 @@ export default function Dashboard() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [welcomeExpanded, setWelcomeExpanded] = useState(true);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+
+  // Check if we should show welcome modal on login
+  useEffect(() => {
+    const justLoggedIn = sessionStorage.getItem('justLoggedIn');
+    const hideWelcomeModal = localStorage.getItem('hideWelcomeModal');
+    
+    if (justLoggedIn === 'true' && hideWelcomeModal !== 'true') {
+      setShowWelcomeModal(true);
+    }
+    // Clear the login flag so modal doesn't show on page refresh
+    sessionStorage.removeItem('justLoggedIn');
+  }, []);
+
+  const handleCloseWelcomeModal = () => {
+    setShowWelcomeModal(false);
+  };
+
+  const handleDontShowAgain = () => {
+    localStorage.setItem('hideWelcomeModal', 'true');
+  };
 
   // Fetch active experiments from API
   const { data: activeExperiments = [] } = useQuery<ActiveExperiment[]>({
@@ -784,6 +806,13 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen pb-24 bg-gradient-to-b from-background via-background to-primary/5">
+      {/* Welcome Modal - shows only on login */}
+      <OnboardingWelcomeModal
+        isOpen={showWelcomeModal}
+        onClose={handleCloseWelcomeModal}
+        onDontShowAgain={handleDontShowAgain}
+      />
+
       {/* Universal Layout - works on mobile and desktop */}
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Theme Toggle - Top Right */}
