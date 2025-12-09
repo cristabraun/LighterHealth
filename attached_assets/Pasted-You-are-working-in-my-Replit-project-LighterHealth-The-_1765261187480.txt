@@ -1,0 +1,157 @@
+You are working in my Replit project “LighterHealth”.
+
+The login / session behavior is still wrong, especially on mobile.
+
+🔴 What I’m seeing
+
+On my phone (mobile browser):
+
+I go to getlighterapp.com
+
+I log in – this part works.
+
+I leave the page or close the tab.
+
+When I come back and try to log in again, I hit a 404 error from the home page, and I get logged out again.
+
+This breaks two requirements:
+
+There must never be a 404 when logging in or coming back.
+
+Users are not supposed to be logged out for 30 days.
+
+I need you to find the exact cause and fix it.
+
+1) Reproduce the bug properly
+
+In the running app (Preview + deployed domain):
+
+Use getlighterapp.com, not just the raw replit.dev URL.
+
+Log in with a test user.
+
+Close the tab / navigate away.
+
+Come back and either:
+
+refresh the page, or
+
+try to log in again.
+
+Watch for:
+
+Any 404s in the Network tab,
+
+Any redirects that dump the user back to /auth or some error page,
+
+Any cookies that disappear.
+
+Do this once in desktop dev tools with mobile emulation and once via the deployed domain.
+
+2) Fix the 404 during login / return
+
+Find where the 404 is coming from:
+
+Check the React Router routes in client/src/App.tsx:
+
+Make sure /, /auth, /dashboard, and any protected routes are configured correctly.
+
+Make sure there is a proper catch-all route that serves the SPA bundle instead of a backend 404 for client-side routes.
+
+Check the backend/server routing:
+
+The main app.get("*") (or equivalent) should return the React index for unknown paths, not a 404 page during normal app navigation.
+
+Ensure the login redirect target (e.g. /dashboard) is a valid route in the client.
+
+Fix any issues where:
+
+/auth or /dashboard is not defined correctly,
+
+/ is redirecting to a missing path after login,
+
+/api/... routes are returning 404 during session checks.
+
+After the fix, there should be no 404 when:
+
+A logged-out user logs in,
+
+A logged-in user refreshes or comes back to the app within the session window.
+
+3) Fix the 30-day session behavior
+
+I want real 30-day sessions, not “log me out when I close the tab.”
+
+Check the auth/session implementation:
+
+Look at the login route that issues the JWT/cookie:
+
+Confirm the cookie options (maxAge, expires, httpOnly, secure, sameSite) are set for a ~30-day lifetime.
+
+maxAge should be ~30 days in milliseconds (e.g. 30 * 24 * 60 * 60 * 1000).
+
+Confirm the same secret and cookie name are used consistently for:
+
+login
+
+refresh / “me” checks
+
+server-side auth middleware
+
+Make sure there is no logic that:
+
+Clears cookies on simple navigation,
+
+Treats a 404 as a reason to invalidate the session,
+
+Behaves differently on mobile vs desktop due to SameSite or Secure flags.
+
+If the promise is “stay logged in 30 days,” the behavior should be:
+
+On a valid session, hitting / or /auth should redirect me to the Dashboard without requiring a new login.
+
+Only after the real expiration or explicit logout should I need to log in again.
+
+4) Test scenarios you MUST verify
+
+After fixing, test with a fresh test user:
+
+Desktop browser:
+
+Log in → land on dashboard.
+
+Refresh page → still logged in.
+
+Close tab → reopen getlighterapp.com → still logged in (or at worst, a silent token refresh without user interaction).
+
+Mobile (or mobile emulator):
+
+Same as above.
+
+Confirm there is no 404 at any step.
+
+Explicit logout:
+
+Tap logout → should clear session.
+
+Visiting /dashboard after logout should redirect to /auth cleanly.
+
+Log any errors to the server console, but only show clean, user-friendly messages in the UI.
+
+5) Final report
+
+When you’re done, summarize:
+
+Which files you changed (frontend + backend).
+
+What was causing the 404 and forced logout.
+
+The final session rules (cookie lifetime, redirect logic).
+
+The exact test steps you ran on getlighterapp.com and the results.
+
+The end result should be:
+
+No 404s on login or return.
+
+Users stay logged in for ~30 days unless they explicitly log out.

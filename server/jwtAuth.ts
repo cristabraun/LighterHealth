@@ -39,7 +39,9 @@ function setAuthCookie(res: Response, token: string) {
   res.cookie('auth_token', token, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'none' : 'lax',
+    // Use 'lax' for same-site requests - works better with custom domains
+    // 'none' requires cross-site context which isn't needed when frontend/backend share domain
+    sameSite: 'lax',
     maxAge: COOKIE_MAX_AGE, // 30-day sliding session
     path: '/',
   });
@@ -62,7 +64,7 @@ function clearAuthCookie(res: Response) {
   res.clearCookie('auth_token', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    sameSite: 'lax',
     path: '/',
   });
 }
