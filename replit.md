@@ -102,3 +102,6 @@ Preferred communication style: Simple, everyday language.
 - Fixed storage upsert missing stress/mood/moodNotes/checklistCompleted fields on update
 - Fixed Experiments summary page - was loading from localStorage instead of database API
 - Fixed App.tsx route order - /experiments/summary must come before /experiments/:id to prevent :id from matching "summary"
+- Fixed useAuth hook to return null on 401 instead of throwing error (prevents spurious logouts)
+- Fixed cookie sameSite setting from 'none' to 'lax' for better custom domain compatibility
+- Added refetchOnWindowFocus to useAuth for automatic session revalidation when user returns to app
