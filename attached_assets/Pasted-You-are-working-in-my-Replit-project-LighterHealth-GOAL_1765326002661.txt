@@ -1,0 +1,97 @@
+You are working in my Replit project: LighterHealth.
+
+GOAL:
+Force the app to use this exact icon everywhere:
+public/attached_assets/lighter_app_icon_coral_gradient.png
+
+This is the ONLY icon that should ever appear for:
+- Browser tab (favicon)
+- iPhone home screen
+- Android home screen
+- App switcher
+- PWA install preview
+
+--------------------------------
+STEP 1 — UPDATE MANIFEST (PWA ICON)
+--------------------------------
+
+Open:
+public/manifest.json
+
+Replace the entire "icons" array with ONLY this:
+
+"icons": [
+  {
+    "src": "/attached_assets/lighter_app_icon_coral_gradient.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable"
+  }
+]
+
+Remove:
+- Any reference to Replit icons
+- Any favicon.ico
+- Any other PNG icons
+
+--------------------------------
+STEP 2 — UPDATE FAVICON + APPLE ICON
+--------------------------------
+
+Open:
+public/index.html
+
+Inside <head>, ensure ONLY these icon tags exist:
+
+<link rel="icon" type="image/png" href="/attached_assets/lighter_app_icon_coral_gradient.png" />
+<link rel="apple-touch-icon" href="/attached_assets/lighter_app_icon_coral_gradient.png" />
+
+Delete:
+- Any other <link rel="icon"> entries
+- Any Replit icon references
+- Any favicon.ico
+
+--------------------------------
+STEP 3 — CACHE BUST (CRITICAL OR IT WILL LOOK BROKEN)
+--------------------------------
+
+Rename the file:
+
+lighter_app_icon_coral_gradient.png
+→ lighter_app_icon_v2.png
+
+Then update BOTH:
+manifest.json  
+index.html  
+
+So they reference:
+
+/attached_assets/lighter_app_icon_v2.png
+
+--------------------------------
+STEP 4 — HARD RESET INSTRUCTIONS
+--------------------------------
+
+After this runs, YOU (Crista) must:
+
+1. Hard refresh browser:
+   Mac: Cmd + Shift + R  
+   Windows: Ctrl + Shift + R
+
+2. If already installed on phone:
+   - Delete the Lighter app icon
+   - Re-add it from the browser
+
+--------------------------------
+FINAL CONFIRMATION REQUIRED
+--------------------------------
+
+Confirm that the four-pointed coral star appears in:
+
+✅ Browser tab  
+✅ iPhone home screen  
+✅ Android home screen  
+✅ App switcher  
+✅ Install preview  
+
+And that the Replit icon is completely gone.
