@@ -1,25 +1,75 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Volume2 } from "lucide-react";
+import { Volume2, AlertCircle } from "lucide-react";
 import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_1764477961046.wav?url";
 
 export default function Learn() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [aiInput, setAiInput] = useState("");
   const [aiResponse, setAiResponse] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiRemaining, setAiRemaining] = useState<number | null>(null);
+  const [aiLimitReached, setAiLimitReached] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAiLimit = async () => {
+      try {
+        const res = await fetch("/api/ai/limit", { credentials: "include" });
+        if (res.ok) {
+          const data = await res.json();
+          setAiRemaining(data.remaining);
+          setAiLimitReached(data.remaining === 0);
+        }
+      } catch (e) {
+        console.error("Failed to fetch AI limit:", e);
+      }
+    };
+    fetchAiLimit();
+  }, []);
 
   const handleAICoachAsk = async () => {
-    if (!aiInput.trim()) return;
+    if (!aiInput.trim() || aiLimitReached || aiLoading) return;
 
-    const res = await fetch("/api/ask", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: aiInput }),
-    });
+    setAiLoading(true);
+    setAiError(null);
 
-    const data = await res.json();
-    setAiResponse(data.reply);
+    try {
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ question: aiInput }),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 403) {
+        setAiLimitReached(true);
+        setAiRemaining(0);
+        setAiError(data.message);
+        return;
+      }
+
+      if (!res.ok) {
+        setAiError(data.message || "Failed to get response");
+        return;
+      }
+
+      setAiResponse(data.reply);
+      if (typeof data.remaining === "number") {
+        setAiRemaining(data.remaining);
+        if (data.remaining === 0) {
+          setAiLimitReached(true);
+        }
+      }
+      setAiInput("");
+    } catch (e) {
+      setAiError("Network error. Please try again.");
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   return (
@@ -1214,39 +1264,65 @@ export default function Learn() {
 
         {/* --- ASK THE LIGHTER AI COACH --- */}
         <div className="mt-10 p-6 rounded-xl bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-700" data-testid="card-ai-coach">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-            Ask the Lighter AI Coach
-          </h2>
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              Ask the Lighter AI Coach
+            </h2>
+            {aiRemaining !== null && (
+              <span className="text-sm text-gray-500 dark:text-gray-400" data-testid="text-ai-remaining">
+                {aiRemaining} / 5 questions left today
+              </span>
+            )}
+          </div>
 
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
             Get instant guidance on metabolic healing, stress, digestion, warmth, food, and daily habits.
             Ask anything — your Lighter Coach is here to help.
           </p>
 
-          <div className="space-y-3">
-            <textarea
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500"
-              rows={3}
-              placeholder="Ask a question…"
-              value={aiInput}
-              onChange={(e) => setAiInput(e.target.value)}
-              data-testid="textarea-ai-coach"
-            />
-
-            <Button
-              onClick={handleAICoachAsk}
-              className="w-full text-sm bg-violet-200 text-violet-800 hover:bg-violet-300"
-              data-testid="button-ask-coach"
-            >
-              Ask the Coach
-            </Button>
-
-            {aiResponse && (
-              <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-gray-800 dark:text-gray-200 whitespace-pre-line" data-testid="ai-coach-response">
-                {aiResponse}
+          {aiLimitReached ? (
+            <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg" data-testid="ai-limit-reached">
+              <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
+                <AlertCircle className="w-5 h-5" />
+                <p className="text-sm font-medium">
+                  You've reached your 5-question daily AI limit. Your questions reset tomorrow.
+                </p>
               </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <textarea
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                rows={3}
+                placeholder="Ask a question…"
+                value={aiInput}
+                onChange={(e) => setAiInput(e.target.value)}
+                disabled={aiLoading}
+                data-testid="textarea-ai-coach"
+              />
+
+              <Button
+                onClick={handleAICoachAsk}
+                className="w-full text-sm bg-violet-200 text-violet-800 hover:bg-violet-300 disabled:opacity-50"
+                disabled={aiLoading || !aiInput.trim()}
+                data-testid="button-ask-coach"
+              >
+                {aiLoading ? "Thinking..." : "Ask the Coach"}
+              </Button>
+            </div>
+          )}
+
+          {aiError && !aiLimitReached && (
+            <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg text-sm text-red-700 dark:text-red-400" data-testid="ai-error">
+              {aiError}
+            </div>
+          )}
+
+          {aiResponse && (
+            <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-gray-800 dark:text-gray-200 whitespace-pre-line" data-testid="ai-coach-response">
+              {aiResponse}
+            </div>
+          )}
         </div>
 
         {/* bottom spacing */}
