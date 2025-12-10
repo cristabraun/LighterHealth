@@ -301,7 +301,7 @@ export default function StartHere() {
               </Button>
             </Link>
             
-            <a href="https://calendly.com/cristabaldwincoaching/20min" target="_blank" rel="noopener noreferrer">
+            <a href="https://calendly.com/chatwithcrista/30min" target="_blank" rel="noopener noreferrer">
               <Button className="w-full gap-2 bg-gradient-to-r from-primary to-chart-2 text-primary-foreground" data-testid="button-book-call">
                 <Calendar className="w-4 h-4" />
                 Book a Free 20-Minute Strategy Call
