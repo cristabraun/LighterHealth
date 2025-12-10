@@ -1,0 +1,207 @@
+You are working in my Replit project **LighterHealth**.
+
+I need you to **update ONLY the file:**
+
+client/src/pages/start-here.tsx
+
+DO NOT modify any other pages, components, or styling outside this file.
+
+Replace the entire page content with the following finalized Start Here copy and format it cleanly using the existing dark Lighter™ theme, readable spacing, proper headings, and mobile-friendly layout.
+
+Page Title:
+"Welcome to Lighter™ — Start Here"
+
+PAGE CONTENT:
+
+---
+
+## Welcome to Lighter™ — Start Here
+
+### What Lighter Is All About
+
+Lighter helps you heal your metabolism so you can have **more energy, less stress, better sleep, balanced hormones, and a body that feels good again.**
+
+But this is about **so much more than weight loss.**
+When your metabolism is healthy, *every area of your life improves.* You have real energy. Your mood stabilizes. You feel grounded and present. You can show up as your best self—for yourself and for the people you love.
+
+Lighter is about **reducing stress, slowing down, and making life more enjoyable again.**
+When you stop forcing your body and start supporting it, everything shifts. You gain patience, clarity, and joy. Life stops feeling like a constant struggle.
+
+The key difference:
+Most diets stress your body out—**fasting, restricting, overtraining.**
+We do the opposite. **We give your body what it needs to create energy efficiently so it can actually thrive.**
+
+**Remember:**
+We get healthy so we can lose weight.
+We don’t lose weight so we can get healthy.
+
+---
+
+## What We Track & Why
+
+### 🌡️ Temperature & Pulse
+
+These two numbers tell you how well your metabolism is working.
+
+**Temperature**
+
+• **Morning:** Moving toward **97.8–98.6°F**
+(Below **97.5°F** = sluggish metabolism)
+• **Daytime:** Should rise into the **high 98s**
+
+**Pulse**
+
+• Ideal range: **75–90 bpm**
+• Not racing. Not sluggish.
+
+**What improves both:**
+Easily digestible carbs, quality protein, and **lower stress.**
+
+---
+
+### 📊 Daily Tracking
+
+Log these daily to see patterns:
+
+• Stress levels
+• Sleep quality
+• Digestion
+• Energy
+• Food intake
+
+You’ll start clearly seeing:
+
+• What makes you feel better
+• What drains you
+• How stress impacts your body in real time
+
+---
+
+## What to Eat
+
+No “good” or “bad” foods—just foods that **support** or **stress** your metabolism.
+
+### ✅ Foods to Enjoy More
+
+**Easy proteins**
+
+• Dairy (milk, cheese, yogurt, cottage cheese)
+• Eggs
+• Shellfish (oysters, shrimp)
+• White fish
+• Gelatin / collagen
+• Beef liver (1–2x/week)
+
+**Metabolism-supporting carbs**
+
+• Orange juice
+• Ripe fruit (oranges, pineapple, mango, berries)
+• Honey
+• White rice
+• Potatoes
+• Sourdough bread
+
+**Stable fats**
+
+• Butter
+• Coconut oil
+• Cream
+• Ghee
+
+**Nutrient-dense extras**
+
+• Raw carrot salad (carrot + vinegar + salt)
+• Coffee with sugar and milk
+• Dark chocolate (low PUFA)
+• Bone broth
+
+---
+
+### ⚠️ What to Limit (not eliminate)
+
+• Seed oils (canola, soybean, sunflower)
+• Nuts and seeds (high in PUFAs)
+• Fatty pork and chicken (high in PUFAs)
+• Raw leafy greens in excess
+• Fasting or very low-carb diets
+
+➡️ Add a link or button to the **Learn** tab here.
+
+---
+
+## Start With These 3 Experiments
+
+Experiments are what make Lighter different. Start with these three:
+
+### 1. Daily Carrot Salad
+
+Raw carrot + vinegar + salt.
+Supports estrogen detox, reduces endotoxins, and improves digestion.
+
+### 2. Eliminate PUFAs
+
+Remove seed oils and high-PUFA foods.
+This is one of the **most powerful metabolism healers.**
+
+### 3. Track Temperature After Meals
+
+Take your temp **30–60 minutes after eating.**
+If it rises → that food supports your metabolism.
+If it drops → that food may be stressing your system.
+
+---
+
+## Your First Steps
+
+### 1. Log Your Food Daily
+
+• Focus on **adding pro-metabolic foods first**
+• Don’t obsess over calories yet
+• Make notes on how foods make you feel
+
+### 2. Track Your Vitals Consistently
+
+• Temperature (morning + afternoon)
+• Pulse
+• Digestion
+• Stress
+• Energy
+• Sleep
+
+### 3. Start Experimenting
+
+• Pick **1–2 experiments at a time**
+• Log what you notice
+• Stay curious
+• **You’re your own best biohacker**
+
+---
+
+## Need Help?
+
+• Message me directly in the app
+• Add a visible button to **Book a Free 20-Minute Strategy Call**
+• Link the **Learn** tab for deeper education
+
+---
+
+### You’ve Got This
+
+Stress less.
+Sleep better.
+Love life more.
+
+And finally feel **good** in your body again.
+
+---
+
+ROUTING CONFIRMATION REQUIRED:
+
+Confirm that the route **/start-here** correctly loads this page and no longer returns a 404 when clicking the “Start Here →” button from the onboarding modal.
+
+After updating, preview the page and confirm:
+
+1. Proper spacing
+2. Mobile responsiveness
+3. No overflow issues
+4. Links to Learn + Strategy Call work correctly.
