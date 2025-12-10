@@ -508,13 +508,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // AI Coach route
-  app.post('/api/ask', async (req: any, res) => {
+  // AI limit status endpoint
+  app.get('/api/ai/limit', isAuthenticated, async (req: any, res) => {
     try {
+      const userId = req.user.claims.sub;
+      const status = await storage.getAiLimitStatus(userId);
+      res.json(status);
+    } catch (error) {
+      console.error("Error getting AI limit status:", error);
+      res.status(500).json({ message: "Failed to get AI limit status" });
+    }
+  });
+
+  // AI Coach route
+  app.post('/api/ask', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
       const { question } = req.body;
       
       if (!question || typeof question !== 'string') {
         return res.status(400).json({ message: "Question is required" });
+      }
+
+      // Check and enforce daily AI limit (5 questions per day)
+      const limitCheck = await storage.checkAndIncrementAiLimit(userId);
+      if (!limitCheck.allowed) {
+        return res.status(403).json({ 
+          message: "You've reached your 5-question daily AI limit. Your questions reset tomorrow.",
+          remaining: 0
+        });
       }
 
       const apiKey = process.env.OPENAI_API_KEY;
@@ -526,7 +548,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const client = new OpenAI({ apiKey });
 
       const message = await client.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-4",
         messages: [
           {
             role: "system",
@@ -592,7 +614,7 @@ RESPONSE GUIDELINES:
       });
 
       const reply = message.choices[0]?.message?.content || "I couldn't generate a response. Please try again.";
-      res.json({ reply });
+      res.json({ reply, remaining: limitCheck.remaining });
     } catch (error) {
       console.error("Error calling OpenAI API:", error);
       res.status(500).json({ message: "Failed to get AI Coach response" });
@@ -617,7 +639,7 @@ RESPONSE GUIDELINES:
         .join('\n');
 
       const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-4",
         max_tokens: 150,
         messages: [
           {

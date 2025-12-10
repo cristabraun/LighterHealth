@@ -73,6 +73,10 @@ export interface IStorage {
   getFoodLogs(userId: string, date?: string): Promise<FoodLog[]>;
   deleteFoodLog(userId: string, foodLogId: string): Promise<void>;
   
+  // AI limit operations
+  checkAndIncrementAiLimit(userId: string): Promise<{ allowed: boolean; remaining: number }>;
+  getAiLimitStatus(userId: string): Promise<{ count: number; remaining: number; limit: number }>;
+  
   // Stripe operations
   updateUserStripeInfo(userId: string, stripeInfo: {
     stripeCustomerId?: string;
@@ -532,6 +536,57 @@ export class DatabaseStorage implements IStorage {
           eq(foodLogs.id, foodLogId)
         )
       );
+  }
+
+  // AI limit operations
+  async checkAndIncrementAiLimit(userId: string): Promise<{ allowed: boolean; remaining: number }> {
+    const DAILY_LIMIT = 5;
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    
+    const user = await this.getUser(userId);
+    if (!user) {
+      return { allowed: false, remaining: 0 };
+    }
+    
+    // Reset count if it's a new day
+    let currentCount = user.dailyAiCount || 0;
+    if (user.lastAiReset !== today) {
+      currentCount = 0;
+    }
+    
+    // Check if under limit
+    if (currentCount >= DAILY_LIMIT) {
+      return { allowed: false, remaining: 0 };
+    }
+    
+    // Increment and update
+    const newCount = currentCount + 1;
+    await db.update(users)
+      .set({ 
+        dailyAiCount: newCount,
+        lastAiReset: today
+      })
+      .where(eq(users.id, userId));
+    
+    return { allowed: true, remaining: DAILY_LIMIT - newCount };
+  }
+
+  async getAiLimitStatus(userId: string): Promise<{ count: number; remaining: number; limit: number }> {
+    const DAILY_LIMIT = 5;
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    
+    const user = await this.getUser(userId);
+    if (!user) {
+      return { count: 0, remaining: DAILY_LIMIT, limit: DAILY_LIMIT };
+    }
+    
+    // Reset count if it's a new day
+    let currentCount = user.dailyAiCount || 0;
+    if (user.lastAiReset !== today) {
+      currentCount = 0;
+    }
+    
+    return { count: currentCount, remaining: DAILY_LIMIT - currentCount, limit: DAILY_LIMIT };
   }
 
   // Stripe operations

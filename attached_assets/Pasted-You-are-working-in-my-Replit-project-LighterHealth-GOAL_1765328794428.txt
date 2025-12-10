@@ -1,0 +1,87 @@
+You are working in my Replit project: LighterHealth.
+
+GOAL:
+1. Limit the AI Coach to 5 questions per user per day (server-side enforced)
+2. Force the AI Coach to use OpenAI GPT-4.0 instead of 5.1 to reduce cost
+
+--------------------------------------------------
+STEP 1 — DATABASE (DAILY LIMIT TRACKING)
+--------------------------------------------------
+
+Update the users table to include:
+
+- daily_ai_count INTEGER DEFAULT 0
+- last_ai_reset DATE
+
+If the table already exists, add these via migration.
+
+--------------------------------------------------
+STEP 2 — DAILY RESET + LIMIT CHECK (SERVER)
+--------------------------------------------------
+
+Locate the API route that sends messages to OpenAI (AI Coach handler).
+
+Before calling OpenAI, add this logic:
+
+1. Get today’s date in YYYY-MM-DD format
+2. If last_ai_reset is NULL or not equal to today:
+   - Set daily_ai_count = 0
+   - Set last_ai_reset = today
+3. If daily_ai_count >= 5:
+   - Return HTTP 403 with this exact message:
+
+"You’ve reached your 5-question daily AI limit. Your questions reset tomorrow."
+
+4. If under limit:
+   - Allow the OpenAI request
+   - Increment daily_ai_count by 1
+
+This must be atomic and server-side.
+
+--------------------------------------------------
+STEP 3 — FORCE GPT-4.0 MODEL (NOT 5.1)
+--------------------------------------------------
+
+In the OpenAI request configuration, explicitly set:
+
+model: "gpt-4"
+
+DO NOT allow:
+- gpt-5
+- gpt-5.1
+- gpt-4.1
+
+Only allow:
+✅ "gpt-4"
+
+--------------------------------------------------
+STEP 4 — FRONTEND LOCKOUT UI
+--------------------------------------------------
+
+On the Ask AI Coach frontend:
+
+- If API returns 403:
+  - Display the limit message clearly
+  - Disable the input field for the rest of the day
+  - Do NOT allow retries
+
+--------------------------------------------------
+STEP 5 — OPTIONAL UI POLISH (RECOMMENDED)
+--------------------------------------------------
+
+Expose remaining daily AI questions as:
+
+"AI questions remaining today: X / 5"
+
+--------------------------------------------------
+FINAL CONFIRMATION REQUIRED
+--------------------------------------------------
+
+Confirm all of the following:
+
+✅ Users can only ask 5 questions per calendar day  
+✅ Limit automatically resets daily  
+✅ Limit is enforced server-side  
+✅ GPT-4 is used for all AI responses  
+✅ GPT-5 / 5.1 is never used  
+✅ OpenAI API is never called after the limit is reached  

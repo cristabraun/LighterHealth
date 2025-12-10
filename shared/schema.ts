@@ -39,6 +39,8 @@ export const users = pgTable("users", {
   stripeSubscriptionId: varchar("stripe_subscription_id"),
   subscriptionStatus: varchar("subscription_status"), // 'active', 'trialing', 'canceled', 'past_due'
   trialEndsAt: timestamp("trial_ends_at"),
+  dailyAiCount: integer("daily_ai_count").notNull().default(0),
+  lastAiReset: text("last_ai_reset"), // YYYY-MM-DD format
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
