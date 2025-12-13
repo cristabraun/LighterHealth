@@ -1,0 +1,62 @@
+You are working in my Replit project: LighterHealth.
+
+TASK:
+Create a very minimal Account page for the free beta (NO Stripe wiring right now).
+Users must be able to:
+1) Sign out
+2) Cancel beta access (i.e., delete/close their account + remove their data)
+3) See an “Upgrade” option (placeholder for future paid plan)
+
+IMPORTANT:
+- Do NOT integrate Stripe yet.
+- Cancellation is the priority: users must have a clear way to cancel/close their account inside the app.
+
+FRONTEND:
+A) Create a new page: client/src/pages/account.tsx (or settings.tsx)
+- Title: “Account”
+- Show the logged-in user email (if available)
+- Buttons:
+  1) “Sign out”
+  2) “Close my account” (danger style)
+  3) “Upgrade” (disabled or routes to an /upgrade page that says “Coming soon”)
+
+B) Add “Account” to the app navigation (bottom nav or menu) so it’s always accessible.
+
+C) UX requirements:
+- When user taps “Close my account”, show a confirmation modal:
+  - “This will permanently delete your account and data. Type DELETE to confirm.”
+- Disable the button while processing
+- Show success message and then log them out + redirect to landing/auth.
+
+BACKEND:
+Implement/confirm endpoints:
+1) POST /api/auth/logout
+   - Clears session cookie and returns 200
+
+2) DELETE /api/account
+   - Requires authenticated user
+   - Deletes the user account AND all user-owned data from the database
+   - Must be safe and transactional (best effort):
+     - delete dependent rows first (logs, experiments, onboarding answers, etc.)
+     - then delete user row
+   - Return { ok: true }
+
+DATA INTEGRITY:
+- Search the codebase/db schema to identify all tables tied to a user_id.
+- Ensure deletion removes everything tied to that user so no orphaned rows remain.
+- If any FK constraints exist, handle cascade or explicit deletes properly.
+
+TESTING / ACCEPTANCE:
+- Create a test user, generate some logs/data, then use “Close my account”
+- Confirm:
+  - user is logged out
+  - user cannot log in again
+  - their rows are removed from DB (no leftover user_id data)
+- Confirm Sign out works.
+- Confirm Account page works on mobile + desktop.
+- Ensure no raw error messages appear.
+
+DELIVERABLE:
+- List files changed/added
+- Explain what tables/data were deleted
+- Confirm the flow works end-to-end

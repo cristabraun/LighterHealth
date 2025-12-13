@@ -36,6 +36,7 @@ import ResetPasswordRequest from "@/pages/reset-password-request";
 import ResetPassword from "@/pages/reset-password";
 import Upgrade from "@/pages/upgrade";
 import StartHere from "@/pages/start-here";
+import Account from "@/pages/account";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -123,6 +124,7 @@ function Router() {
         <Route path="/essentials" component={Essentials} />
         <Route path="/landing" component={Landing} />
         <Route path="/start-here" component={StartHere} />
+        <Route path="/account" component={Account} />
         <Route path="/admin/messages" component={AdminMessages} />
         <Route component={NotFound} />
       </Switch>
