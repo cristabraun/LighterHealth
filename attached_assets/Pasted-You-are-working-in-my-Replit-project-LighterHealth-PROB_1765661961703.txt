@@ -1,0 +1,75 @@
+You are working in my Replit project: LighterHealth.
+
+PROBLEM:
+Some users report the app crashing in certain browsers (likely Safari / iOS / mobile). We must ensure:
+- The app does NOT crash in any browser
+- Users never see raw error messages, blank screens, or white screens
+- All errors are gracefully handled with safe fallbacks
+
+GOAL:
+Harden the app against browser-specific crashes and unhandled runtime errors so the experience is stable across all major browsers.
+
+BROWSERS TO PRIORITIZE:
+- Safari (desktop + iOS)
+- Chrome
+- Firefox
+- Mobile browsers (iOS WebView, Android Chrome)
+
+DO THIS STEP-BY-STEP:
+
+A) Identify common crash sources
+Search the codebase for:
+- window / document usage outside useEffect
+- localStorage / sessionStorage access without guards
+- undefined or optional values accessed without checks
+- JSON.parse without try/catch
+- assumptions that APIs always return data
+- fetch responses used without checking response.ok
+- useEffect dependency loops
+- server-only code accidentally running on the client
+
+B) Add global safety nets (CRITICAL)
+1) Add a top-level React Error Boundary that:
+   - Catches render/runtime crashes
+   - Shows a calm, branded fallback message (not a stack trace)
+   - Allows the app to recover or reload safely
+
+2) Add a global window error handler:
+   - window.onerror
+   - window.onunhandledrejection
+   - Log errors clearly (browser + route + message)
+   - Prevent crashes from propagating to the UI
+
+C) Harden API + async behavior
+- Wrap all async calls in try/catch
+- Ensure all fetch calls:
+  - Check response.ok
+  - Handle network failures
+  - Return user-safe messages
+- Ensure loading states exist so UI never renders undefined data
+
+D) Browser-specific fixes
+- Add guards for Safari quirks (especially cookies, storage, and strict mode)
+- Ensure no code assumes cookies or localStorage are always available
+- Confirm app does not crash if:
+  - Cookies are blocked
+  - Session expires
+  - API is temporarily unavailable
+
+E) Verify stability
+- Test onboarding, login, dashboard load, and navigation
+- Test hard refresh on deep routes
+- Test incognito/private browsing
+- Test mobile viewport
+
+CONSTRAINTS:
+- Do NOT redesign UI
+- Do NOT expose technical error messages to users
+- Keep user-facing messages calm and friendly
+- Log technical detail internally only
+
+DELIVERABLE:
+- List all crash sources found
+- List exactly what safeguards were added
+- Confirm no raw error messages appear in any browser
+- Confirm app fails gracefully instead of crashing

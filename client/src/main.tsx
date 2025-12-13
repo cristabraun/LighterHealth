@@ -1,6 +1,17 @@
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import "./index.css";
+
+// Global error handlers to prevent crashes from propagating
+window.onerror = (message, source, lineno, colno, error) => {
+  console.error("[GlobalError]", { message, source, lineno, colno, error: error?.message });
+  return false; // Let default handlers also run
+};
+
+window.onunhandledrejection = (event) => {
+  console.error("[UnhandledPromise]", event.reason?.message || event.reason);
+};
 
 // Service Worker: Only register in production, unregister in development
 if ('serviceWorker' in navigator) {
@@ -22,4 +33,8 @@ if ('serviceWorker' in navigator) {
   }
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>
+);
