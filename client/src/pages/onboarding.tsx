@@ -38,17 +38,25 @@ export default function Onboarding() {
 
   const completeOnboarding = useMutation({
     mutationFn: async () => {
+      console.log("[Onboarding] Submitting:", { name: name.trim(), symptomsCount: symptoms.length });
       const res = await apiRequest("POST", "/api/user/onboarding", {
         name: name.trim(),
         symptoms: symptoms,
       });
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error("[Onboarding] Server error:", res.status, errorData);
+        throw new Error(errorData.message || `Server error: ${res.status}`);
+      }
       return await res.json();
     },
     onSuccess: async () => {
+      console.log("[Onboarding] Success, refreshing user data");
       await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
       await queryClient.refetchQueries({ queryKey: ["/api/auth/user"] });
     },
     onError: (error: any) => {
+      console.error("[Onboarding] Error:", error);
       toast({
         title: "Error",
         description: error.message || "Failed to complete onboarding",
@@ -253,20 +261,22 @@ export default function Onboarding() {
           <div className="pt-6 space-y-3">
             <Button 
               onClick={handleComplete}
-              className="w-full h-12 sm:h-14 text-base sm:text-lg font-medium bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-400 hover:to-amber-500 text-white border-0 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-all duration-300"
+              disabled={completeOnboarding.isPending}
+              className="w-full h-12 sm:h-14 text-base sm:text-lg font-medium bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-400 hover:to-amber-500 text-white border-0 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
               size="lg"
               data-testid="button-complete-onboarding"
             >
-              Complete Setup
-              <ChevronRight className="ml-2 h-5 w-5" />
+              {completeOnboarding.isPending ? "Saving..." : "Complete Setup"}
+              {!completeOnboarding.isPending && <ChevronRight className="ml-2 h-5 w-5" />}
             </Button>
             <Button 
               onClick={handleComplete}
+              disabled={completeOnboarding.isPending}
               variant="ghost"
-              className="w-full text-white/60 hover:text-white hover:bg-white/5"
+              className="w-full text-white/60 hover:text-white hover:bg-white/5 disabled:opacity-50"
               data-testid="button-skip-assessment"
             >
-              Skip for now
+              {completeOnboarding.isPending ? "Saving..." : "Skip for now"}
             </Button>
           </div>
         </div>

@@ -1,0 +1,52 @@
+You are working in my Replit project: LighterHealth.
+
+Problem:
+Users report they cannot get past the sign-up stage, specifically the step after entering their email and moving into the “Metabolic Assessment” (the questionnaire about what they’re struggling with). Something is blocking progress (button doesn’t work, route doesn’t advance, request fails, page reloads, or they get stuck).
+
+GOAL:
+1) Reproduce the issue locally.
+2) Identify the exact failure point (frontend state, routing, validation, API request, server error, DB write, cookie/session).
+3) Fix it so every new user can complete sign-up and the metabolic assessment successfully on both desktop and mobile.
+4) Add minimal logging so if it happens again we can immediately see where it fails.
+
+DO THIS STEP-BY-STEP:
+A) Locate the full flow:
+- Find the sign-up/register component and the metabolic assessment page/component.
+- Identify the exact routes involved (e.g., /auth, /register, /assessment, /onboarding, etc).
+- Identify what “continue” does: client-side route change OR API call + route change.
+
+B) Add targeted debug logs (temporary but clear):
+- In the client: log when the user submits email, when validation passes, and when navigation to the assessment occurs.
+- In the server: log when the register endpoint is hit, the response status, and any validation or DB errors.
+- If there is a “create user” + “create assessment” step, log both.
+
+C) Reproduce:
+- Create a new test account.
+- Watch the browser console + server logs.
+- Confirm if the request is sent, what response comes back, and whether routing changes.
+
+D) Fix based on what you find (common culprits to check):
+- Frontend validation blocking submission (e.g., disabled button, missing required field, incorrect schema)
+- Route mismatch (link points to wrong path)
+- API endpoint mismatch or failing request
+- CORS / cookie / session issues that prevent authenticated next step
+- DB insert failing (missing required columns, schema mismatch, unique constraint)
+- Unhandled promise / silent catch preventing UI update
+- Mobile-specific layout overlay preventing click
+
+E) Confirm fix:
+- Test full signup + assessment completion on:
+  1) Desktop
+  2) Mobile preview
+- Confirm the assessment answers save to the database tied to the user account.
+- Remove noisy logs, but keep 1–2 essential error logs (server-side) for future debugging.
+
+CONSTRAINTS:
+- Do NOT redesign UI.
+- Do NOT change unrelated pages.
+- Keep changes minimal and focused on this flow.
+- If you change any route, update all links consistently.
+
+DELIVERABLE:
+- Tell me exactly what was broken, why, and what files you changed.
+- Provide before/after behavior confirmation.
