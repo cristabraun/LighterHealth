@@ -135,7 +135,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.delete('/api/account', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
-      await storage.deleteUser(userId);
+      const deleted = await storage.deleteUser(userId);
+      if (!deleted) {
+        return res.status(404).json({ message: "Account not found" });
+      }
       res.clearCookie('auth_token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',

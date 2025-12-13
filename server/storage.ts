@@ -38,7 +38,7 @@ export interface IStorage {
   updateUserOnboarding(userId: string, name: string, symptoms: string[]): Promise<User>;
   extendBetaPeriod(userId: string, days: number): Promise<User | undefined>;
   getAllBetaUsers(): Promise<User[]>;
-  deleteUser(userId: string): Promise<void>;
+  deleteUser(userId: string): Promise<boolean>;
   // Password reset operations
   setPasswordResetToken(userId: string, hashedToken: string, expiresAt: Date): Promise<void>;
   getUserByResetToken(hashedToken: string): Promise<User | undefined>;
@@ -170,8 +170,9 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(users.createdAt));
   }
 
-  async deleteUser(userId: string): Promise<void> {
-    await db.delete(users).where(eq(users.id, userId));
+  async deleteUser(userId: string): Promise<boolean> {
+    const result = await db.delete(users).where(eq(users.id, userId)).returning();
+    return result.length > 0;
   }
 
   // Password reset operations
