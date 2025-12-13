@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, BookOpen, ClipboardList, Beaker, Pill, User } from "lucide-react";
+import { Home, BookOpen, ClipboardList, Beaker, Pill } from "lucide-react";
 
 export function BottomNav() {
   const [location] = useLocation();
@@ -9,7 +9,7 @@ export function BottomNav() {
     { path: "/track", icon: ClipboardList, label: "Track" },
     { path: "/experiments", icon: Beaker, label: "Experiments" },
     { path: "/learn", icon: BookOpen, label: "Learn" },
-    { path: "/account", icon: User, label: "Account" },
+    { path: "/essentials", icon: Pill, label: "Essentials" },
   ];
 
   return (
