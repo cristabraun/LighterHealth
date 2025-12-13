@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { LogOut, Trash2, Sparkles, User, Mail, AlertTriangle } from "lucide-react";
+import { LogOut, Trash2, Sparkles, User, Mail, AlertTriangle, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useMutation } from "@tanstack/react-query";
@@ -69,16 +69,35 @@ export default function Account() {
 
   const displayName = user?.firstName || user?.email?.split("@")[0] || "User";
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      setLocation("/dashboard");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <div className="max-w-md mx-auto px-4 py-6 space-y-6">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-foreground" data-testid="text-account-title">
-            Account
-          </h1>
-          <p className="text-muted-foreground mt-1" data-testid="text-account-subtitle">
-            Manage your account settings
-          </p>
+        {/* Header with Back Button */}
+        <div className="flex items-center gap-3 mb-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleBack}
+            data-testid="button-back"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="flex-1">
+            <h1 className="text-xl font-bold text-foreground" data-testid="text-account-title">
+              Account
+            </h1>
+            <p className="text-sm text-muted-foreground" data-testid="text-account-subtitle">
+              Manage your account settings
+            </p>
+          </div>
         </div>
 
         <Card data-testid="card-profile">
