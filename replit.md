@@ -25,7 +25,7 @@ Preferred communication style: Simple, everyday language.
 
 #### Page Structure
 - **Core Pages**: Landing page, Onboarding flow, Home dashboard, Learn (educational content), Track (daily logging), Experiments, My Metabolism (comprehensive dashboard), Messages, Admin/Messages.
-- **Navigation**: Mobile-first bottom tab bar with 5 primary sections: Home, Learn, Track, Experiments, My Metabolism.
+- **Navigation**: Mobile-first bottom tab bar with 5 primary sections: Home, Track, Experiments, Learn, Account.
 
 ### External Dependencies
 
@@ -114,3 +114,11 @@ Preferred communication style: Simple, everyday language.
 - **Hardened experiment creation**: Server overrides client-provided lifecycle fields (currentDay=1, completed=false, completedAt=null, logs='[]')
 - **Dashboard improvements**: Recent Experiments section now shows day badge calculated from startDate and displays latest log snippet
 - **Experiment cards are clickable**: Dashboard experiment cards link directly to experiment detail page
+
+### Account Page (December 2025)
+- **New Account page** at /account accessible from bottom navigation
+- **Profile display**: Shows user name initial, display name, and email
+- **Sign out**: Calls GET /api/logout, clears auth cookie, redirects to landing
+- **Delete account**: DELETE /api/account with confirmation dialog (type "DELETE" to confirm)
+- **Cascade deletion**: Database schema has onDelete:'cascade' on all userId foreign keys - deleting user automatically removes all related dailyLogs, activeExperiments, messages, foodLogs
+- **Upgrade button**: Links to /upgrade page for premium subscription
