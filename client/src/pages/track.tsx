@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { safeSessionStorage } from "@/lib/safeStorage";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -151,14 +152,14 @@ export default function Track() {
       setMoodNotes("");
 
       const tempNum = variables.temperature;
-      if (tempNum >= 98 && !sessionStorage.getItem("confetti_shown_today")) {
+      if (tempNum >= 98 && !safeSessionStorage.getItem("confetti_shown_today")) {
         confetti({
           particleCount: 150,
           spread: 90,
           origin: { y: 0.6 },
           colors: ['#FF6B35', '#FF8C42', '#FFA552']
         });
-        sessionStorage.setItem("confetti_shown_today", "true");
+        safeSessionStorage.setItem("confetti_shown_today", "true");
         
         toast({
           title: "You're glowing!",

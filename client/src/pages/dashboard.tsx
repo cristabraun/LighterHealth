@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "@/hooks/useTheme";
+import { safeLocalStorage, safeSessionStorage } from "@/lib/safeStorage";
 import { OnboardingWelcomeModal } from "@/components/OnboardingWelcomeModal";
 import {
   Thermometer,
@@ -672,14 +673,14 @@ export default function Dashboard() {
 
   // Check if we should show welcome modal on login
   useEffect(() => {
-    const justLoggedIn = sessionStorage.getItem('justLoggedIn');
-    const hideWelcomeModal = localStorage.getItem('hideWelcomeModal');
+    const justLoggedIn = safeSessionStorage.getItem('justLoggedIn');
+    const hideWelcomeModal = safeLocalStorage.getItem('hideWelcomeModal');
     
     if (justLoggedIn === 'true' && hideWelcomeModal !== 'true') {
       setShowWelcomeModal(true);
     }
     // Clear the login flag so modal doesn't show on page refresh
-    sessionStorage.removeItem('justLoggedIn');
+    safeSessionStorage.removeItem('justLoggedIn');
   }, []);
 
   const handleCloseWelcomeModal = () => {
@@ -687,7 +688,7 @@ export default function Dashboard() {
   };
 
   const handleDontShowAgain = () => {
-    localStorage.setItem('hideWelcomeModal', 'true');
+    safeLocalStorage.setItem('hideWelcomeModal', 'true');
   };
 
   // Fetch active experiments from API

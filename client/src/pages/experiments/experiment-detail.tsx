@@ -14,6 +14,7 @@ import type { ActiveExperiment, ExperimentTemplate, ExperimentLogEntry } from "@
 import { EXPERIMENTS } from "@/data/experiments";
 import { generateAIInsight } from "@/lib/ai";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { safeJsonParse } from "@/lib/safeStorage";
 
 export interface LogEntry {
   date: string;
@@ -93,7 +94,7 @@ export default function ExperimentDetail() {
     },
   });
 
-  const logs: LogEntry[] = currentExperiment?.logs ? JSON.parse(currentExperiment.logs) : [];
+  const logs: LogEntry[] = currentExperiment?.logs ? safeJsonParse<LogEntry[]>(currentExperiment.logs, []) : [];
 
   const startExperimentMutation = useMutation({
     mutationFn: async () => {

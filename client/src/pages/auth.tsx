@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
+import { safeSessionStorage } from '@/lib/safeStorage';
 import { ArrowLeft, Sparkles, Eye, EyeOff, ChevronRight } from 'lucide-react';
 
 export default function Auth() {
@@ -40,7 +41,7 @@ export default function Auth() {
       return res.json();
     },
     onSuccess: () => {
-      sessionStorage.setItem('justLoggedIn', 'true');
+      safeSessionStorage.setItem('justLoggedIn', 'true');
       queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
       setLocation('/');
     },
@@ -59,7 +60,7 @@ export default function Auth() {
       return res.json();
     },
     onSuccess: () => {
-      sessionStorage.setItem('justLoggedIn', 'true');
+      safeSessionStorage.setItem('justLoggedIn', 'true');
       queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
       setLocation('/');
     },

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Award, Loader2 } from "lucide-react";
 import type { ActiveExperiment, ExperimentTemplate } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
+import { safeJsonParse } from "@/lib/safeStorage";
 
 interface LogEntry {
   date: string;
@@ -32,7 +33,7 @@ export default function ExperimentSummary() {
 
   // Parse logs from the experiment
   const logs: LogEntry[] = completedExperiment?.logs ? 
-    (typeof completedExperiment.logs === 'string' ? JSON.parse(completedExperiment.logs) : completedExperiment.logs) : 
+    (typeof completedExperiment.logs === 'string' ? safeJsonParse<LogEntry[]>(completedExperiment.logs, []) : completedExperiment.logs) : 
     [];
 
   if (isLoading) {
