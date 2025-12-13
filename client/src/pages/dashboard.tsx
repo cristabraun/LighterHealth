@@ -32,6 +32,7 @@ import {
   Frown,
   Target,
   Brain,
+  User,
 } from "lucide-react";
 import type { DailyLog, ActiveExperiment } from "@shared/schema";
 import { EXPERIMENTS } from "@/data/experiments";
@@ -1157,6 +1158,22 @@ export default function Dashboard() {
                 </p>
               </div>
             </Card>
+
+            {/* Account Card - Bottom of page */}
+            <Link href="/account" data-testid="link-account-dashboard">
+              <Card className="p-4 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-account-dashboard">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+                    <User className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-medium text-foreground text-sm">Account Settings</h3>
+                    <p className="text-xs text-muted-foreground">Profile, sign out, & preferences</p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </Card>
+            </Link>
           </div>
         </div>
       </div>

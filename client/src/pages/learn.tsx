@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Volume2, AlertCircle, Pill, ChevronRight, User } from "lucide-react";
+import { Volume2, AlertCircle, Pill, ChevronRight } from "lucide-react";
 import startHereAudio from "@assets/Pro Metabolic Tracking and Healing Intro_1764477961046.wav?url";
 
 export default function Learn() {
@@ -80,36 +80,20 @@ export default function Learn() {
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-8">
 
         {/* --- QUICK ACCESS SECTION --- */}
-        <div className="grid grid-cols-2 gap-3">
-          <Link href="/essentials" data-testid="link-essentials-learn">
-            <Card className="p-4 frosted-glass-warm rounded-xl hover-elevate active-elevate-2 cursor-pointer">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Pill className="h-5 w-5 text-primary" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Essentials</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Pro-metabolic tools</p>
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        <Link href="/essentials" data-testid="link-essentials-learn">
+          <Card className="p-4 frosted-glass-warm rounded-xl hover-elevate active-elevate-2 cursor-pointer">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Pill className="h-5 w-5 text-primary" />
               </div>
-            </Card>
-          </Link>
-          <Link href="/account" data-testid="link-account-learn">
-            <Card className="p-4 frosted-glass-warm rounded-xl hover-elevate active-elevate-2 cursor-pointer">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <User className="h-5 w-5 text-primary" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Account</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Settings & profile</p>
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Essentials</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Pro-metabolic tools & supplements</p>
               </div>
-            </Card>
-          </Link>
-        </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            </div>
+          </Card>
+        </Link>
 
         {/* --- START HERE SECTION --- */}
         <Card className="p-5 md:p-6 frosted-glass-warm rounded-xl">
