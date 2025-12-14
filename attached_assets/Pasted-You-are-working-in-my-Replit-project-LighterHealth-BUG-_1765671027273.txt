@@ -1,0 +1,47 @@
+You are working in my Replit project: LighterHealth.
+
+BUG 1 (CRITICAL): New users see “Crista” on the Track page immediately after signing up.
+- This is wrong: it’s showing my name (Crista) for someone else.
+- This likely means we have a hardcoded fallback name, a cached/global user object, or we’re fetching the wrong user profile.
+- The Track page must never display the wrong user identity.
+
+BUG 2: I did NOT receive an admin notification email when they signed up.
+- We have RESEND_API_KEY in Secrets.
+- We have configs: ADMIN_EMAILS=crista.ann.braun@gmail.com, ADMIN_NOTIFICATION_EMAIL=support@getlighterapp.com, RESEND_FROM_EMAIL=support@getlighterapp.com
+- Signup notifications must fire on every successful NEW signup.
+
+GOALS:
+1) Fix Track page so the displayed name is always the authenticated user’s name/email OR a generic greeting if missing (never “Crista”).
+2) Ensure admin signup notifications are reliably sent on successful user registration.
+
+DO THIS STEP-BY-STEP:
+
+A) Reproduce
+- Create a brand-new test user account.
+- After signup/login, go to Track page and observe the header/name.
+- Check server logs for email send attempt.
+
+B) Fix BUG 1 (Track page identity leakage)
+1) Find where “Crista” is coming from:
+   - Search the codebase for “Crista” and “Krista” strings.
+   - Check Track page (client/src/pages/track.tsx) and any shared header component.
+   - Check any default profile object like { name: "Crista" } used as fallback.
+2) Verify how current user data is loaded:
+   - Identify the API call (likely GET /api/auth/me or similar).
+   - Confirm it returns the correct user based on the session cookie.
+   - Ensure user state is not global/static and is reset on logout.
+3) Check client caching:
+   - Look for localStorage/sessionStorage keys like “user”, “profile”, “currentUser”.
+   - Ensure on login we overwrite them and on logout we clear them.
+   - If using React Query, ensure queries are keyed per-user and invalidated on auth change.
+4) Update the Track page greeting behavior:
+   - Only show a name if it belongs to the authenticated user.
+   - If name is missing, show “Hi there” or “Track” (generic).
+   - Never fall back to “Crista”.
+
+C) Fix BUG 2 (Signup notification email)
+1) Locate the registration endpoint (e.g., POST /api/auth/register).
+2) Confirm that after a successful NEW user creation, we call the Resend email send function.
+3) Make sure:
+   - It sends to ADMIN_EMAILS (crista.ann.braun@gmail.com).
+   - FROM uses RESEND_FROM_EMAIL

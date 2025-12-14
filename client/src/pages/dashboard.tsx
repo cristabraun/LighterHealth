@@ -851,7 +851,7 @@ export default function Dashboard() {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2" data-testid="heading-welcome-desktop">
                     <h1 className="text-4xl font-bold">
-                      Hey {user?.name || "Crista"}!
+                      Hey {user?.name || user?.firstName || "there"}!
                     </h1>
                     <Sparkles className="w-7 h-7 text-primary" />
                   </div>

@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { safeSessionStorage } from "@/lib/safeStorage";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,7 @@ export default function Track() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { theme, toggleTheme } = useTheme();
+  const { user } = useAuth();
   const [temperature, setTemperature] = useState("");
   const [temperatureUnit, setTemperatureUnit] = useState<"F" | "C">("F");
   const [pulse, setPulse] = useState("");
@@ -354,7 +356,7 @@ export default function Track() {
             <div className="space-y-2 flex-1">
               <div className="flex items-center gap-2">
                 <h1 className="text-4xl font-bold">
-                  Hi Crista!
+                  Hi {user?.name || user?.firstName || "there"}!
                 </h1>
                 <Sparkles className="w-7 h-7 text-primary" />
               </div>
