@@ -5,6 +5,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'support@getlighterapp.com';
 const ADMIN_NOTIFICATION_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'support@getlighterapp.com';
 
+// Log email config on module load (safe: no secrets exposed)
+console.log('[Email Config] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
+console.log('[Email Config] FROM_EMAIL:', FROM_EMAIL);
+console.log('[Email Config] ADMIN_EMAILS:', process.env.ADMIN_EMAILS || '(not set)');
+console.log('[Email Config] ADMIN_NOTIFICATION_EMAIL:', ADMIN_NOTIFICATION_EMAIL);
+
 function getAdminEmails(): string[] {
   const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim()).filter(e => e) || [];
   if (!adminEmails.includes(ADMIN_NOTIFICATION_EMAIL)) {
@@ -154,9 +160,17 @@ export async function sendNewUserNotification(
   const adminEmails = getAdminEmails();
   const fullName = [firstName, lastName].filter(Boolean).join(' ') || 'New User';
   const createdAt = new Date().toISOString();
+  const requestId = `signup_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+  
+  console.log(`[ADMIN SIGNUP EMAIL] ${requestId} | attempting | user=${userEmail.substring(0, 3)}*** | to=${adminEmails.join(',')} | from=${FROM_EMAIL} | timestamp=${createdAt}`);
+  
+  // Verify API key is present
+  if (!process.env.RESEND_API_KEY) {
+    console.error(`[ADMIN SIGNUP EMAIL] ${requestId} | failed | reason=RESEND_API_KEY not configured`);
+    return { success: false, error: 'RESEND_API_KEY not configured' };
+  }
   
   try {
-    console.log('[Email] Sending new user notification for:', userEmail.substring(0, 3) + '***');
     
     const { data, error } = await resend.emails.send({
       from: `Lighter™ <${FROM_EMAIL}>`,
@@ -195,14 +209,14 @@ export async function sendNewUserNotification(
     });
 
     if (error) {
-      console.error('[Email] Resend API error for new user notification:', error);
+      console.error(`[ADMIN SIGNUP EMAIL] ${requestId} | failed | resendError=${JSON.stringify(error)}`);
       return { success: false, error: error.message };
     }
 
-    console.log('[Email] New user notification sent successfully, ID:', data?.id);
+    console.log(`[ADMIN SIGNUP EMAIL] ${requestId} | sent | resendId=${data?.id}`);
     return { success: true };
   } catch (err: any) {
-    console.error('[Email] Failed to send new user notification:', err?.message || err);
+    console.error(`[ADMIN SIGNUP EMAIL] ${requestId} | failed | exception=${err?.message || err}`);
     return { success: false, error: err?.message || 'Unknown error' };
   }
 }

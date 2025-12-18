@@ -1,0 +1,66 @@
+You are working in my Replit project: LighterHealth.
+
+PROBLEM:
+I’m not receiving the admin notification emails when new users sign up for Lighter. I need you to verify that signup notification emailing is correctly wired end-to-end and tell me exactly where I can view proof that it was attempted/sent (logs, provider dashboard, etc.).
+
+GOALS:
+1) Confirm whether the code attempts to send an admin “new signup” email on successful registration.
+2) Confirm the correct environment variables are being used in production (published app), not just locally.
+3) Add clear, minimal logging so we can trace each signup notification attempt.
+4) Fix any issues so I reliably receive the admin signup emails.
+5) Tell me exactly where to check:
+   - Replit logs
+   - Resend dashboard logs
+   - Any other relevant place
+
+STEP-BY-STEP:
+
+A) Find the code path
+- Locate the user registration endpoint (e.g., POST /api/auth/register).
+- Identify where admin notification emails are triggered.
+- Identify the email helper/service file (likely server/email.ts or similar).
+- Confirm the recipient uses ADMIN_EMAILS (or equivalent).
+- Confirm FROM uses RESEND_FROM_EMAIL.
+- Confirm it only fires after a successful NEW user creation (not on duplicates).
+
+B) Verify environment variables in the correct runtime
+- Identify whether email sending occurs in the server runtime used by the published app (Autoscale).
+- Verify the published app has access to:
+  - RESEND_API_KEY (secret)
+  - ADMIN_EMAILS (config)
+  - RESEND_FROM_EMAIL (config)
+  - ADMIN_NOTIFICATION_EMAIL if used
+- Print the *presence* (true/false) of these vars in server logs (do NOT print secret values).
+
+C) Add minimal observability (must be safe)
+Add server logs around signup notification:
+- On successful signup: “ADMIN SIGNUP EMAIL: attempting -> <admin email(s)>”
+- On success: “ADMIN SIGNUP EMAIL: sent -> resendId=<id>”
+- On failure: “ADMIN SIGNUP EMAIL: failed -> <error message>”
+Also log request id + user email + timestamp.
+
+D) Reproduce and confirm
+- Create a test user signup.
+- Check server logs for the “attempting/sent/failed” messages.
+- If sent, provide the resend message id.
+
+E) If emails are not arriving, fix likely causes
+- Wrong recipient variable being used (ADMIN_NOTIFICATION_EMAIL vs ADMIN_EMAILS)
+- Using a “from” address not verified in Resend
+- Code path not called in production
+- Errors swallowed in try/catch
+- Sending disabled by environment flag
+- Domain DNS not verified in Resend (SPF/DKIM)
+- Provider returns success but emails land in spam/promotions
+
+F) Tell me exactly where I can check it
+In your final message, include:
+1) The exact endpoint/file/line where admin signup email is triggered
+2) The exact variables it uses for to/from
+3) Where I can see logs in Replit (which tab: Logs vs Console, and what to search for)
+4) Where I can see the message in Resend (Messages/Logs) and what identifier to search (resendId)
+
+CONSTRAINTS:
+- Do not redesign the app
+- Do not expose RESEND_API_KEY
+- Keep changes minimal and focused
