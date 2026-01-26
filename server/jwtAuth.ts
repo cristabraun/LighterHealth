@@ -34,21 +34,39 @@ function verifyToken(token: string): JWTPayload | null {
   }
 }
 
-function setAuthCookie(res: Response, token: string) {
+function setAuthCookie(res: Response, token: string, req?: Request) {
   const isProduction = process.env.NODE_ENV === 'production';
-  res.cookie('auth_token', token, {
+  // Also detect HTTPS via headers when behind a proxy
+  const isSecure = isProduction || req?.protocol === 'https' || req?.get('x-forwarded-proto') === 'https';
+  
+  const cookieOptions = {
     httpOnly: true,
-    secure: isProduction,
+    secure: isSecure,
     // Use 'lax' for same-site requests - works better with custom domains
     // 'none' requires cross-site context which isn't needed when frontend/backend share domain
-    sameSite: 'lax',
+    sameSite: 'lax' as const,
     maxAge: COOKIE_MAX_AGE, // 30-day sliding session
     path: '/',
-  });
+  };
+  
+  // Debug logging for cookie settings (safe: no token content exposed)
+  if (req) {
+    console.log('[Auth Cookie] Setting cookie:', {
+      host: req.get('host'),
+      origin: req.get('origin'),
+      protocol: req.protocol,
+      xForwardedProto: req.get('x-forwarded-proto'),
+      isSecure,
+      isProduction,
+      cookieOptions: { ...cookieOptions, token: '[REDACTED]' }
+    });
+  }
+  
+  res.cookie('auth_token', token, cookieOptions);
 }
 
 // Refresh the session token (for sliding session behavior)
-function refreshSession(res: Response, payload: JWTPayload) {
+function refreshSession(res: Response, payload: JWTPayload, req?: Request) {
   const newPayload: Omit<JWTPayload, 'iat' | 'exp'> = {
     sub: payload.sub,
     email: payload.email,
@@ -57,7 +75,7 @@ function refreshSession(res: Response, payload: JWTPayload) {
   if (payload.lastName) newPayload.lastName = payload.lastName;
   
   const newToken = generateToken(newPayload);
-  setAuthCookie(res, newToken);
+  setAuthCookie(res, newToken, req);
 }
 
 function clearAuthCookie(res: Response) {
@@ -150,7 +168,7 @@ export async function setupAuth(app: Express) {
       if (lastName) tokenPayload.lastName = lastName;
       const token = generateToken(tokenPayload);
 
-      setAuthCookie(res, token);
+      setAuthCookie(res, token, req);
 
       res.json(toSafeUser(newUser));
     } catch (error: any) {
@@ -186,7 +204,8 @@ export async function setupAuth(app: Express) {
       if (user.lastName) loginPayload.lastName = user.lastName;
       const token = generateToken(loginPayload);
 
-      setAuthCookie(res, token);
+      setAuthCookie(res, token, req);
+      console.log('[Login] Success for user:', email.substring(0, 3) + '***');
 
       res.json(toSafeUser(user));
     } catch (error) {
@@ -300,7 +319,7 @@ export async function setupAuth(app: Express) {
       if (user.firstName) loginPayload.firstName = user.firstName;
       if (user.lastName) loginPayload.lastName = user.lastName;
       const authToken = generateToken(loginPayload);
-      setAuthCookie(res, authToken);
+      setAuthCookie(res, authToken, req);
 
       console.log("[PasswordReset] Password reset successful for user:", user.id);
       res.json({ message: "Password has been reset successfully. You are now logged in." });
@@ -326,7 +345,7 @@ export const isAuthenticated: RequestHandler = async (req: any, res: Response, n
 
   // Sliding session: refresh the token on each valid request
   // This extends the session by another 30 days on every use
-  refreshSession(res, payload);
+  refreshSession(res, payload, req);
 
   (req as any).user = { claims: payload };
   next();

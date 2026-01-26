@@ -1,0 +1,77 @@
+You are working in my Replit project “LighterHealth”.
+
+BUG: Authentication works in Replit Preview / internal dev URL, but fails on the custom domain [https://getlighterapp.com](https://getlighterapp.com) (and/or the published URL). Symptoms: login appears to do nothing or user cannot proceed past onboarding.
+
+Goal:
+Make login + session + onboarding work consistently on:
+
+* [https://lighter-health--cristaannbraun.replit.app](https://lighter-health--cristaannbraun.replit.app)
+* [https://getlighterapp.com](https://getlighterapp.com)
+* Replit preview (replit.dev)
+
+Do this in order:
+
+1. Reproduce + capture evidence
+
+* On getlighterapp.com, attempt login and observe network requests:
+
+  * POST /api/auth/login (or /api/auth/register)
+  * GET /api/me (or user bootstrap endpoint)
+* Add temporary console logs in the client to print:
+
+  * current window.location.origin
+  * the computed API base URL used by queryClient/fetch
+  * login response status
+  * whether /api/me succeeds or fails after login
+* Add temporary server logs for auth routes to print:
+
+  * request Origin header
+  * Set-Cookie header values (redact token content)
+  * which hostname the request is coming through
+
+2. Fix API base URL resolution (very likely)
+
+* Find where the frontend defines the API base URL (client/src/lib/queryClient.ts or similar).
+* Ensure that on getlighterapp.com it calls the correct API host:
+
+  * If API is served from the same domain, use relative URLs (e.g. "/api/...")
+  * Do NOT hardcode a replit.app or replit.dev host in production.
+* Confirm all auth + user fetches use the same base.
+
+3. Fix cookie/session settings for production
+
+* In server auth (likely server/jwtAuth.ts), review cookie settings:
+
+  * Ensure Secure is true when running on https
+  * Use SameSite="Lax" as default (works for same-site navigation)
+  * Do NOT set cookie Domain unless necessary; if set, ensure it matches getlighterapp.com correctly
+  * Ensure Path="/"
+* Ensure the server sets cookies for BOTH domains correctly.
+
+4. Fix CORS/credentials if cross-origin happens
+
+* If the frontend calls an API on a different origin, then:
+
+  * Client fetch must use credentials: "include"
+  * Server CORS must allow credentials and explicitly allow origins:
+    ["[https://getlighterapp.com](https://getlighterapp.com)", "[https://lighter-health--cristaannbraun.replit.app](https://lighter-health--cristaannbraun.replit.app)", "https://*.replit.dev"]
+  * Ensure Access-Control-Allow-Origin is NOT "*" when credentials are true.
+
+5. Ensure onboarding routing doesn’t mask auth failures
+
+* In client/src/App.tsx route guards:
+
+  * If authenticated is loading, show loading, don’t redirect.
+  * If /api/me fails after login, show an error state and a “Retry” button.
+  * Only route to onboarding when user is authenticated AND user.onboardingComplete is false.
+
+Acceptance tests (must pass on BOTH getlighterapp.com and replit.app):
+A) Returning user: login -> dashboard, refresh stays logged in.
+B) New user: register -> onboarding -> complete -> dashboard, refresh stays out of onboarding.
+C) No silent failures: if /api/me fails, user sees a clear error and retry.
+
+Output:
+
+* Exact files changed
+* Root cause summary (API base URL vs cookie vs CORS)
+* Confirmation tests passed on both domains.
