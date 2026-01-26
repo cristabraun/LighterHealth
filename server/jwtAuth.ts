@@ -78,10 +78,13 @@ function refreshSession(res: Response, payload: JWTPayload, req?: Request) {
   setAuthCookie(res, newToken, req);
 }
 
-function clearAuthCookie(res: Response) {
+function clearAuthCookie(res: Response, req?: Request) {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const isSecure = isProduction || req?.protocol === 'https' || req?.get('x-forwarded-proto') === 'https';
+  
   res.clearCookie('auth_token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isSecure,
     sameSite: 'lax',
     path: '/',
   });
@@ -215,7 +218,7 @@ export async function setupAuth(app: Express) {
   });
 
   app.get("/api/logout", (req: Request, res: Response) => {
-    clearAuthCookie(res);
+    clearAuthCookie(res, req);
     res.json({ success: true });
   });
 
@@ -339,7 +342,7 @@ export const isAuthenticated: RequestHandler = async (req: any, res: Response, n
 
   const payload = verifyToken(token);
   if (!payload) {
-    clearAuthCookie(res);
+    clearAuthCookie(res, req);
     return res.status(401).json({ message: "Unauthorized" });
   }
 
