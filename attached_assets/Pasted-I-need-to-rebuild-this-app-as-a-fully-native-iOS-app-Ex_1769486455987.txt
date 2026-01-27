@@ -1,0 +1,47 @@
+I need to rebuild this app as a fully native iOS app (Expo/React Native) and I need a clean “Backend API spec” for my existing Replit app.
+
+Please do ALL of the following:
+
+1) Identify what backend framework this project uses
+   - Is it Next.js API routes, Express/Fastify, Hono, Remix, etc.?
+   - Where is the backend code located (exact folders/files)?
+
+2) Confirm the database layer
+   - Confirm we are using Replit’s Neon Postgres integration
+   - Show exactly where the Postgres connection is configured (file path + code snippet)
+   - List all relevant environment variables used for DB connection (names only, do not reveal secrets)
+
+3) Produce an “API Base URL” for production and dev
+   - What is the deployed API base URL on production (Vercel)?
+   - What is the local/dev base URL?
+   - If the API is served from the same domain as the web app (e.g., https://getlighterapp.com/api), confirm that.
+
+4) List every API endpoint the app currently exposes (REST)
+   For each endpoint, output:
+   - METHOD + PATH (example: POST /api/auth/login)
+   - Purpose
+   - Required auth? (yes/no, and how)
+   - Request JSON body schema (example payload)
+   - Response JSON schema (example payload)
+   - Possible errors (status codes)
+
+5) Authentication details
+   - What auth system is used (cookies, JWT, Supabase auth, NextAuth, Clerk, custom)?
+   - Where is auth implemented (file paths)?
+   - How does the client store session (cookie, Authorization header, etc.)?
+
+6) Database schema (Postgres)
+   - List all tables and columns with types
+   - Primary keys + foreign keys
+   - Any RLS / access rules (if applicable)
+   - Provide 2–3 example rows per key table (fake data)
+
+7) If this project does NOT currently have a backend API (only a frontend),
+   say so clearly and then propose the minimal backend API we need to support:
+   - users/auth
+   - daily entries (temp, pulse, mood, sleep, digestion, notes, timestamp)
+   - experiments + experiment logs
+   Provide the recommended endpoints and Postgres schema.
+
+Output the final result as a single document titled:
+“Lighter Backend API Spec (for Vibecode / React Native)”
