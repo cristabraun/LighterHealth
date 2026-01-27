@@ -87,7 +87,7 @@ export async function apiRequest(
 
 ---
 
-### AUTHENTICATION (6 endpoints)
+### AUTHENTICATION (7 endpoints)
 
 #### `POST /api/auth/register`
 **Auth**: None  
@@ -152,6 +152,86 @@ export async function apiRequest(
 ```
 
 **Status Codes**: `200` success, `400` missing fields, `401` invalid credentials, `500` server error
+
+---
+
+#### `POST /api/auth/token` (Mobile-Friendly)
+**Auth**: None  
+**Headers**: `Content-Type: application/json`
+
+**Purpose**: Returns JWT token directly in response body (no cookies). Designed for mobile apps using `Authorization: Bearer <token>` header.
+
+**Request Body**:
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+**Response (200)**:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "user_1706123456789_abc123def",
+    "email": "user@example.com",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "name": null,
+    "onboardingCompleted": false,
+    "metabolicSymptoms": null,
+    "isBetaUser": true,
+    "betaStartDate": "2026-01-27T00:00:00.000Z",
+    "betaExpiresAt": "2026-02-26T00:00:00.000Z",
+    "subscriptionStatus": null,
+    "stripeCustomerId": null,
+    "stripeSubscriptionId": null,
+    "trialEndsAt": null,
+    "dailyAiCount": 0,
+    "lastAiReset": null,
+    "profileImageUrl": null,
+    "createdAt": "2026-01-27T00:00:00.000Z",
+    "updatedAt": "2026-01-27T00:00:00.000Z"
+  }
+}
+```
+
+**Response (400)**:
+```json
+{"message": "Email and password are required"}
+```
+
+**Response (401)**:
+```json
+{"message": "Invalid email or password"}
+```
+
+**Status Codes**: `200` success, `400` missing fields, `401` invalid credentials, `500` server error
+
+**Token Details**:
+- Algorithm: HS256
+- Expiry: 30 days
+- Payload includes: `sub` (user ID), `email`, `firstName`, `lastName`, `iat`, `exp`
+
+**Usage in React Native**:
+```typescript
+// 1. Get token
+const response = await fetch('https://getlighterapp.com/api/auth/token', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email, password })
+});
+const { token, user } = await response.json();
+
+// 2. Store securely
+await SecureStore.setItemAsync('auth_token', token);
+
+// 3. Use for authenticated requests
+const res = await fetch('https://getlighterapp.com/api/logs', {
+  headers: { 'Authorization': `Bearer ${token}` }
+});
+```
 
 ---
 
