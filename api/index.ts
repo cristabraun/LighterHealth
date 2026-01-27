@@ -52,6 +52,48 @@ async function initializeRoutes() {
   
   await setupAuth(app);
   
+  // Mobile-friendly token endpoint - returns JWT directly without cookies
+  // NOTE: Duplicated here from jwtAuth.ts to ensure Vercel deployment picks it up
+  app.post('/api/auth/token', async (req: any, res) => {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+      }
+
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const isValidPassword = await storage.verifyPassword(user.id, password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      // Generate JWT token using the same logic as login
+      const jwt = await import('jsonwebtoken');
+      const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || "lighter-app-secret-key";
+      const token = jwt.default.sign(
+        {
+          sub: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        },
+        JWT_SECRET,
+        { expiresIn: '30d' }
+      );
+
+      console.log('[Token] Success for user:', email.substring(0, 3) + '***');
+      res.json({ token, user: toSafeUser(user) });
+    } catch (error) {
+      console.error("Error generating token:", error);
+      res.status(500).json({ message: "Failed to generate token" });
+    }
+  });
+
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
