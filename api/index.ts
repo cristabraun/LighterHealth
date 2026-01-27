@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 // NOTE: Vercel serverless ESM requires .js extensions for local imports
 // Fix for ERR_MODULE_NOT_FOUND: Cannot find module 'server/storage'
+// API Version: 2026-01-27-v2 - Added POST /api/auth/token endpoint
 import { storage, toSafeUser } from "../server/storage.js";
 import { setupAuth, isAuthenticated } from "../server/jwtAuth.js";
 import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "../shared/schema.js";
