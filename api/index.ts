@@ -3,13 +3,39 @@ import cookieParser from "cookie-parser";
 import path from "path";
 // NOTE: Vercel serverless ESM requires .js extensions for local imports
 // Fix for ERR_MODULE_NOT_FOUND: Cannot find module 'server/storage'
-// API Version: 2026-01-27-v2 - Added POST /api/auth/token endpoint
+// API Version: 2026-01-27-v3 - Force rebuild with test endpoint
 import { storage, toSafeUser } from "../server/storage.js";
 import { setupAuth, isAuthenticated } from "../server/jwtAuth.js";
 import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "../shared/schema.js";
 import { fromZodError } from "zod-validation-error";
 import OpenAI from "openai";
 import { getUncachableStripeClient, getStripePublishableKey } from "../server/stripeClient.js";
+
+// Experiment durations map for auto-completion logic
+const EXPERIMENT_DURATIONS: Record<string, number> = {
+  "temp-before-after-meals": 30,
+  "raw-carrot-salad": 30,
+  "low-pufa-week": 30,
+  "morning-vs-afternoon-temp": 30,
+  "oj-before-coffee": 30,
+  "carbs-protein-pairing": 30,
+  "warm-vs-cold-foods": 3,
+  "dairy-support-test": 3,
+  "liver-weekly": 21,
+  "shellfish-weekly": 21,
+  "gelatin-before-bed": 30,
+  "warm-bath-before-bed": 30,
+  "afternoon-sunlight": 30,
+  "honey-salt-nighttime": 30,
+  "nasal-walking": 30,
+  "no-workout-reset": 3,
+  "calcium-boost-pms": 30,
+  "magnesium-night": 30,
+  "coffee-with-sugar": 30,
+  "no-raw-greens": 3,
+  "red-light-therapy": 30,
+  "meal-timing-test": 30,
+};
 
 const app = express();
 
@@ -52,6 +78,11 @@ async function initializeRoutes() {
   
   await setupAuth(app);
   
+  // Deployment verification endpoint - check if latest code is deployed
+  app.get('/api/deploy-check', (req, res) => {
+    res.json({ version: 'v3-2026-01-27', hasTokenEndpoint: true, timestamp: new Date().toISOString() });
+  });
+
   // Mobile-friendly token endpoint - returns JWT directly without cookies
   // NOTE: Duplicated here from jwtAuth.ts to ensure Vercel deployment picks it up
   app.post('/api/auth/token', async (req: any, res) => {
@@ -349,12 +380,13 @@ async function initializeRoutes() {
         return res.status(400).json({ message: "Date is required" });
       }
 
+      const serverDuration = EXPERIMENT_DURATIONS[experimentId] || 30;
       const experiment = await storage.addExperimentLog(userId, experimentId, {
         date,
         temp: temp !== undefined ? parseFloat(temp) : null,
         pulse: pulse !== undefined ? parseInt(pulse, 10) : null,
         notes: notes || "",
-      });
+      }, serverDuration);
 
       res.json(experiment);
     } catch (error: any) {
