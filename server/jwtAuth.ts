@@ -217,6 +217,42 @@ export async function setupAuth(app: Express) {
     }
   });
 
+  // Mobile-friendly token endpoint - returns JWT directly without cookies
+  app.post('/api/auth/token', async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+      }
+
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const isValidPassword = await storage.verifyPassword(user.id, password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const tokenPayload: Omit<JWTPayload, 'iat' | 'exp'> = {
+        sub: user.id,
+        email: user.email!,
+      };
+      if (user.firstName) tokenPayload.firstName = user.firstName;
+      if (user.lastName) tokenPayload.lastName = user.lastName;
+      const token = generateToken(tokenPayload);
+
+      // Return token directly for mobile apps - NO cookies
+      console.log('[Token] Success for user:', email.substring(0, 3) + '***');
+      res.json({ token, user: toSafeUser(user) });
+    } catch (error) {
+      console.error("Error generating token:", error);
+      res.status(500).json({ message: "Failed to generate token" });
+    }
+  });
+
   app.get("/api/logout", (req: Request, res: Response) => {
     clearAuthCookie(res, req);
     res.json({ success: true });
