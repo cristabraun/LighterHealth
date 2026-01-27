@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 // NOTE: Vercel serverless ESM requires .js extensions for local imports
 // Fix for ERR_MODULE_NOT_FOUND: Cannot find module 'server/storage'
-// API Version: 2026-01-27-v3 - Force rebuild with test endpoint
+// API Version: 2026-01-27-v4 - Token endpoint BEFORE setupAuth to bypass cache
 import { storage, toSafeUser } from "../server/storage.js";
 import { setupAuth, isAuthenticated } from "../server/jwtAuth.js";
 import { insertDailyLogSchema, insertActiveExperimentSchema, insertMessageSchema, insertFoodLogSchema } from "../shared/schema.js";
@@ -76,15 +76,14 @@ let isInitialized = false;
 async function initializeRoutes() {
   if (isInitialized) return;
   
-  await setupAuth(app);
-  
+  // CRITICAL: Register these endpoints BEFORE setupAuth to bypass Vercel caching
   // Deployment verification endpoint - check if latest code is deployed
   app.get('/api/deploy-check', (req, res) => {
-    res.json({ version: 'v3-2026-01-27', hasTokenEndpoint: true, timestamp: new Date().toISOString() });
+    res.json({ version: 'v4-2026-01-27', hasTokenEndpoint: true, timestamp: new Date().toISOString() });
   });
 
   // Mobile-friendly token endpoint - returns JWT directly without cookies
-  // NOTE: Duplicated here from jwtAuth.ts to ensure Vercel deployment picks it up
+  // This is for React Native mobile apps that use Bearer token auth instead of cookies
   app.post('/api/auth/token', async (req: any, res) => {
     try {
       const { email, password } = req.body;
@@ -117,13 +116,15 @@ async function initializeRoutes() {
         { expiresIn: '30d' }
       );
 
-      console.log('[Token] Success for user:', email.substring(0, 3) + '***');
+      console.log('[Token-v4] Success for user:', email.substring(0, 3) + '***');
       res.json({ token, user: toSafeUser(user) });
     } catch (error) {
       console.error("Error generating token:", error);
       res.status(500).json({ message: "Failed to generate token" });
     }
   });
+
+  await setupAuth(app);
 
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
