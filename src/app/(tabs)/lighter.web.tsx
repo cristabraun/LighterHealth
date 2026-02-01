@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, Pressable, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Platform, SafeAreaView, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { Flame, WifiOff, RefreshCw, MessageCircle, ExternalLink } from 'lucide-react-native';
@@ -192,10 +191,12 @@ export default function LighterScreenWeb() {
     return <ErrorScreen />;
   }
 
+  const TopWrapper = Platform.OS === 'web' ? View : SafeAreaView;
+
   return (
     <View style={{ flex: 1, backgroundColor: isDark ? '#0a0a0a' : '#fafafa' }}>
       {/* Open in browser button */}
-      <SafeAreaView edges={['top']}>
+      <TopWrapper>
         <View
           style={{
             flexDirection: 'row',
@@ -227,7 +228,7 @@ export default function LighterScreenWeb() {
             </Text>
           </Pressable>
         </View>
-      </SafeAreaView>
+      </TopWrapper>
 
       {/* Iframe for web */}
       <iframe

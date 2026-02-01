@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Pressable, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, Pressable, RefreshControl, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import {
@@ -45,6 +45,10 @@ export default function DashboardScreen() {
   const recentLogs = logsQuery.data?.slice(0, 5) ?? [];
 
   const isRefreshing = logsQuery.isRefetching || experimentsQuery.isRefetching;
+  const isInitialLoading =
+    (logsQuery.isLoading || experimentsQuery.isLoading) &&
+    !logsQuery.data &&
+    !experimentsQuery.data;
 
   const onRefresh = () => {
     logsQuery.refetch();
@@ -119,10 +123,19 @@ export default function DashboardScreen() {
     </View>
   );
 
+  if (isInitialLoading) {
+    return (
+      <View className="flex-1 items-center justify-center" style={{ backgroundColor: theme.background.primary }}>
+        <ActivityIndicator size="large" color={theme.colors.primary} accessibilityLabel="Loading" />
+      </View>
+    );
+  }
+
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background.primary }}>
       <SafeAreaView edges={['top']} className="flex-1">
         <ScrollView
+          accessible={true}
           className="flex-1"
           contentContainerStyle={{ paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
@@ -142,7 +155,7 @@ export default function DashboardScreen() {
             <Text className="text-base" style={{ color: theme.text.secondary }}>
               Welcome back,
             </Text>
-            <Text className="text-2xl font-bold" style={{ color: theme.text.primary }}>
+            <Text className="text-2xl font-bold" style={{ color: theme.text.primary }} accessibilityRole="header">
               {user?.name || user?.firstName || 'there'}
             </Text>
           </Animated.View>
@@ -152,7 +165,7 @@ export default function DashboardScreen() {
             entering={FadeInDown.delay(150).springify()}
             className="px-6 pt-4"
           >
-            <Pressable onPress={openLogEntry}>
+            <Pressable onPress={openLogEntry} accessibilityRole="button" accessibilityLabel={todayLog ? "Update today's log" : "Log today's metrics"}>
               {({ pressed }) => (
                 <View
                   className="rounded-2xl p-5 flex-row items-center justify-between"
@@ -165,7 +178,7 @@ export default function DashboardScreen() {
                 >
                   <View className="flex-row items-center">
                     <View className="w-12 h-12 bg-white/20 rounded-full items-center justify-center mr-4">
-                      <Plus size={24} color="white" strokeWidth={2.5} />
+                      <Plus size={24} color="white" strokeWidth={2.5} accessible={false} accessibilityRole="image" />
                     </View>
                     <View>
                       <Text className="text-white text-lg font-bold">
@@ -176,7 +189,7 @@ export default function DashboardScreen() {
                       </Text>
                     </View>
                   </View>
-                  <ChevronRight size={24} color="white" />
+                  <ChevronRight size={24} color="white" accessible={false} accessibilityRole="image" />
                 </View>
               )}
             </Pressable>
@@ -188,19 +201,19 @@ export default function DashboardScreen() {
               entering={FadeInDown.delay(200).springify()}
               className="px-6 pt-6"
             >
-              <Text className="text-lg font-semibold mb-3" style={{ color: theme.text.primary }}>
+              <Text className="text-lg font-semibold mb-3" style={{ color: theme.text.primary }} accessibilityRole="header">
                 Today's Metrics
               </Text>
               <View className="flex-row gap-3 mb-3">
                 <StatCard
-                  icon={<Thermometer size={16} color={theme.category.temperature} />}
+                  icon={<Thermometer size={16} color={theme.category.temperature} accessible={false} accessibilityRole="image" />}
                   label="Temperature"
                   value={todayLog.temperature}
                   unit="°F"
                   color={theme.category.temperature}
                 />
                 <StatCard
-                  icon={<Heart size={16} color={theme.category.pulse} />}
+                  icon={<Heart size={16} color={theme.category.pulse} accessible={false} accessibilityRole="image" />}
                   label="Pulse"
                   value={todayLog.pulse}
                   unit="bpm"
@@ -209,14 +222,14 @@ export default function DashboardScreen() {
               </View>
               <View className="flex-row gap-3">
                 <StatCard
-                  icon={<Battery size={16} color={theme.category.energy} />}
+                  icon={<Battery size={16} color={theme.category.energy} accessible={false} accessibilityRole="image" />}
                   label="Energy"
                   value={todayLog.energy}
                   unit="/10"
                   color={theme.category.energy}
                 />
                 <StatCard
-                  icon={<Moon size={16} color={theme.category.sleep} />}
+                  icon={<Moon size={16} color={theme.category.sleep} accessible={false} accessibilityRole="image" />}
                   label="Sleep"
                   value={todayLog.sleep}
                   unit="/10"
@@ -233,10 +246,10 @@ export default function DashboardScreen() {
               className="px-6 pt-6"
             >
               <View className="flex-row items-center justify-between mb-3">
-                <Text className="text-lg font-semibold" style={{ color: theme.text.primary }}>
+                <Text className="text-lg font-semibold" style={{ color: theme.text.primary }} accessibilityRole="header">
                   Active Experiments
                 </Text>
-                <Pressable onPress={openExperiments}>
+                <Pressable onPress={openExperiments} accessibilityRole="button" accessibilityLabel="See all experiments">
                   <Text className="text-sm font-medium" style={{ color: theme.accent.primary }}>
                     See All
                   </Text>
@@ -249,6 +262,8 @@ export default function DashboardScreen() {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     router.push(`/experiment/${exp.experimentId}`);
                   }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Open experiment ${exp.experimentId.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}`}
                   className="rounded-2xl p-4 mb-3 flex-row items-center"
                   style={{
                     backgroundColor: theme.background.card,
@@ -260,7 +275,7 @@ export default function DashboardScreen() {
                     className="w-10 h-10 rounded-xl items-center justify-center mr-3"
                     style={{ backgroundColor: `${theme.category.sleep}20` }}
                   >
-                    <FlaskConical size={20} color={theme.category.sleep} />
+                    <FlaskConical size={20} color={theme.category.sleep} accessible={false} accessibilityRole="image" />
                   </View>
                   <View className="flex-1">
                     <Text className="font-semibold" style={{ color: theme.text.primary }}>
@@ -270,7 +285,7 @@ export default function DashboardScreen() {
                       Day {exp.currentDay}
                     </Text>
                   </View>
-                  <ChevronRight size={20} color={theme.text.disabled} />
+                  <ChevronRight size={20} color={theme.text.disabled} accessible={false} accessibilityRole="image" />
                 </Pressable>
               ))}
             </Animated.View>
@@ -281,12 +296,14 @@ export default function DashboardScreen() {
             entering={FadeInDown.delay(300).springify()}
             className="px-6 pt-6"
           >
-            <Text className="text-lg font-semibold mb-3" style={{ color: theme.text.primary }}>
+            <Text className="text-lg font-semibold mb-3" style={{ color: theme.text.primary }} accessibilityRole="header">
               Quick Access
             </Text>
             <View className="flex-row gap-3">
               <Pressable
                 onPress={openFoodLogs}
+                accessibilityRole="button"
+                accessibilityLabel="Open food logs"
                 className="flex-1 rounded-2xl p-4 items-center"
                 style={{
                   backgroundColor: theme.background.card,
@@ -298,7 +315,7 @@ export default function DashboardScreen() {
                   className="w-10 h-10 rounded-xl items-center justify-center mb-2"
                   style={{ backgroundColor: `${theme.status.warning}20` }}
                 >
-                  <Utensils size={20} color={theme.status.warning} />
+                  <Utensils size={20} color={theme.status.warning} accessible={false} accessibilityRole="image" />
                 </View>
                 <Text className="font-medium text-sm" style={{ color: theme.text.primary }}>
                   Food Logs
@@ -306,6 +323,8 @@ export default function DashboardScreen() {
               </Pressable>
               <Pressable
                 onPress={openMessages}
+                accessibilityRole="button"
+                accessibilityLabel="Open messages"
                 className="flex-1 rounded-2xl p-4 items-center"
                 style={{
                   backgroundColor: theme.background.card,
@@ -317,7 +336,7 @@ export default function DashboardScreen() {
                   className="w-10 h-10 rounded-xl items-center justify-center mb-2"
                   style={{ backgroundColor: `${theme.status.info}20` }}
                 >
-                  <MessageSquare size={20} color={theme.status.info} />
+                  <MessageSquare size={20} color={theme.status.info} accessible={false} accessibilityRole="image" />
                 </View>
                 <Text className="font-medium text-sm" style={{ color: theme.text.primary }}>
                   Messages
@@ -333,10 +352,10 @@ export default function DashboardScreen() {
               className="px-6 pt-6"
             >
               <View className="flex-row items-center justify-between mb-3">
-                <Text className="text-lg font-semibold" style={{ color: theme.text.primary }}>
+                <Text className="text-lg font-semibold" style={{ color: theme.text.primary }} accessibilityRole="header">
                   Recent Logs
                 </Text>
-                <Pressable onPress={openLogs}>
+                <Pressable onPress={openLogs} accessibilityRole="button" accessibilityLabel="See all logs">
                   <Text className="text-sm font-medium" style={{ color: theme.accent.primary }}>
                     See All
                   </Text>

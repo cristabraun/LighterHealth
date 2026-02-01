@@ -18,6 +18,7 @@ import * as Haptics from 'expo-haptics';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useColorScheme } from '@/lib/useColorScheme';
+import { theme } from '@/lib/theme';
 import { getAllFoodLogs, createFoodLog, deleteFoodLog } from '@/api/foodLogs';
 import type { FoodLog, MealType, CreateFoodLogRequest } from '@/api/types';
 import { ApiClientError } from '@/api/client';
@@ -27,7 +28,7 @@ function getTodayDate() {
 }
 
 const MEAL_TYPES: { value: MealType; label: string; color: string }[] = [
-  { value: 'breakfast', label: 'Breakfast', color: '#f59e0b' },
+  { value: 'breakfast', label: 'Breakfast', color: theme.colors.primary },
   { value: 'lunch', label: 'Lunch', color: '#22c55e' },
   { value: 'dinner', label: 'Dinner', color: '#3b82f6' },
   { value: 'snack', label: 'Snack', color: '#8b5cf6' },
@@ -118,6 +119,9 @@ export default function FoodLogsScreen() {
   };
 
   const foodLogs = foodLogsQuery.data ?? [];
+  const isInitialLoading = foodLogsQuery.isLoading && foodLogs.length === 0;
+  const skeletonColor =
+    (theme.text as { quaternary?: string }).quaternary ?? theme.text.tertiary;
 
   // Group by date
   const groupedLogs = foodLogs.reduce<Record<string, FoodLog[]>>((acc, log) => {
@@ -138,11 +142,13 @@ export default function FoodLogsScreen() {
           <View className="flex-row items-center">
             <Pressable
               onPress={goBack}
+              accessibilityRole="button"
+              accessibilityLabel="Go back"
               className="w-10 h-10 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-900 mr-3"
             >
-              <ArrowLeft size={20} color={isDark ? '#f5f5f5' : '#171717'} />
+              <ArrowLeft size={20} color={isDark ? '#f5f5f5' : '#171717'} accessible={false} accessibilityRole="image" />
             </Pressable>
-            <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold">
+            <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold" accessibilityRole="header">
               Food Logs
             </Text>
           </View>
@@ -151,21 +157,33 @@ export default function FoodLogsScreen() {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               setShowAddModal(true);
             }}
+            accessibilityRole="button"
+            accessibilityLabel="Add food log"
             className="w-10 h-10 bg-orange-500 rounded-full items-center justify-center"
           >
-            <Plus size={20} color="white" strokeWidth={2.5} />
+            <Plus size={20} color="white" strokeWidth={2.5} accessible={false} accessibilityRole="image" />
           </Pressable>
         </View>
 
-        {foodLogsQuery.isLoading ? (
+        {isInitialLoading ? (
+          <View className="flex-1 px-6">
+            {[0, 1, 2, 3].map((item) => (
+              <View
+                key={item}
+                className="rounded-2xl mb-3"
+                style={{ height: 88, backgroundColor: skeletonColor }}
+              />
+            ))}
+          </View>
+        ) : foodLogsQuery.isLoading ? (
           <View className="flex-1 items-center justify-center">
-            <ActivityIndicator size="large" color="#f97316" />
+            <ActivityIndicator size="large" color={theme.colors.primary} accessibilityLabel="Loading" />
           </View>
         ) : foodLogs.length === 0 ? (
           <View className="flex-1 items-center justify-center px-6">
             <Animated.View entering={FadeInDown.springify()} className="items-center">
               <View className="bg-neutral-200 dark:bg-neutral-800 rounded-full p-6 mb-4">
-                <Utensils size={40} color={isDark ? '#525252' : '#a3a3a3'} />
+                <Utensils size={40} color={isDark ? '#525252' : '#a3a3a3'} accessible={false} accessibilityRole="image" />
               </View>
               <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-semibold mb-2">
                 No food logs yet
@@ -175,6 +193,8 @@ export default function FoodLogsScreen() {
               </Text>
               <Pressable
                 onPress={() => setShowAddModal(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Add food log"
                 className="bg-orange-500 rounded-xl px-6 py-3"
               >
                 <Text className="text-white font-semibold">Log Your First Meal</Text>
@@ -182,18 +202,19 @@ export default function FoodLogsScreen() {
             </Animated.View>
           </View>
         ) : (
-          <ScrollView
+        <ScrollView
+          accessible={true}
             className="flex-1"
             contentContainerStyle={{ paddingBottom: 40 }}
             showsVerticalScrollIndicator={false}
             refreshControl={
-              <RefreshControl
-                refreshing={foodLogsQuery.isRefetching}
-                onRefresh={() => foodLogsQuery.refetch()}
-                tintColor="#f97316"
-              />
-            }
-          >
+                <RefreshControl
+                  refreshing={foodLogsQuery.isRefetching}
+                  onRefresh={() => foodLogsQuery.refetch()}
+                  tintColor={theme.colors.primary}
+                />
+              }
+            >
             {Object.entries(groupedLogs)
               .sort(([a], [b]) => b.localeCompare(a))
               .map(([date, logs], dateIndex) => (
@@ -220,7 +241,7 @@ export default function FoodLogsScreen() {
                           className="w-10 h-10 rounded-lg items-center justify-center mr-3"
                           style={{ backgroundColor: `${mealInfo.color}20` }}
                         >
-                          <Utensils size={18} color={mealInfo.color} />
+                          <Utensils size={18} color={mealInfo.color} accessible={false} accessibilityRole="image" />
                         </View>
                         <View className="flex-1">
                           <View className="flex-row items-center mb-1">
@@ -247,10 +268,12 @@ export default function FoodLogsScreen() {
                         </View>
                         <Pressable
                           onPress={() => handleDelete(log.id)}
+                          accessibilityRole="button"
+                          accessibilityLabel="Delete log"
                           className="p-2"
                           hitSlop={8}
                         >
-                          <Trash2 size={18} color="#ef4444" />
+                          <Trash2 size={18} color="#ef4444" accessible={false} accessibilityRole="image" />
                         </Pressable>
                       </View>
                     );
@@ -268,6 +291,8 @@ export default function FoodLogsScreen() {
               setShowAddModal(false);
               resetForm();
             }}
+            accessibilityRole="button"
+            accessibilityLabel="Close add food log"
           >
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -280,7 +305,7 @@ export default function FoodLogsScreen() {
                   <View className="p-6">
                     {/* Header */}
                     <View className="flex-row items-center justify-between mb-6">
-                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold">
+                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold" accessibilityRole="header">
                         Add Food Log
                       </Text>
                       <Pressable
@@ -288,9 +313,11 @@ export default function FoodLogsScreen() {
                           setShowAddModal(false);
                           resetForm();
                         }}
+                        accessibilityRole="button"
+                        accessibilityLabel="Close add food log"
                         className="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-full items-center justify-center"
                       >
-                        <X size={18} color={isDark ? '#f5f5f5' : '#171717'} />
+                        <X size={18} color={isDark ? '#f5f5f5' : '#171717'} accessible={false} accessibilityRole="image" />
                       </Pressable>
                     </View>
 
@@ -315,6 +342,8 @@ export default function FoodLogsScreen() {
                             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                             setSelectedMeal(meal.value);
                           }}
+                          accessibilityRole="button"
+                          accessibilityLabel={meal.label}
                           className={`flex-1 py-2 rounded-lg items-center border ${
                             selectedMeal === meal.value
                               ? 'border-transparent'
@@ -384,15 +413,15 @@ export default function FoodLogsScreen() {
                     </View>
 
                     {/* Submit */}
-                    <Pressable onPress={handleAdd} disabled={createMutation.isPending}>
+                    <Pressable onPress={handleAdd} disabled={createMutation.isPending} accessibilityRole="button" accessibilityLabel="Add food log">
                       {({ pressed }) => (
                         <LinearGradient
                           colors={
                             createMutation.isPending
                               ? ['#9ca3af', '#6b7280']
                               : pressed
-                              ? ['#ea580c', '#c2410c']
-                              : ['#f97316', '#ea580c']
+                              ? [theme.colors.primary, theme.colors.primary]
+                              : [theme.colors.primary, theme.colors.primary]
                           }
                           start={{ x: 0, y: 0 }}
                           end={{ x: 1, y: 1 }}
@@ -403,7 +432,7 @@ export default function FoodLogsScreen() {
                           }}
                         >
                           {createMutation.isPending ? (
-                            <ActivityIndicator color="white" />
+                            <ActivityIndicator color="white" accessibilityLabel="Loading" />
                           ) : (
                             <Text className="text-white text-base font-bold text-center">
                               Add Food Log

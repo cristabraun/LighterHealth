@@ -27,6 +27,7 @@ import * as Haptics from 'expo-haptics';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useColorScheme } from '@/lib/useColorScheme';
+import { theme } from '@/lib/theme';
 import {
   getExperimentByTemplate,
   addExperimentLog,
@@ -81,22 +82,78 @@ const EXPERIMENT_TEMPLATES: Record<
     instructions:
       'Get at least 15 minutes of direct sunlight exposure in the afternoon (ideally 2-5 PM). No sunglasses. Can be walking, sitting outside, etc.',
   },
+  'warm-bath-before-bed': {
+    title: 'Warm Bath Before Bed',
+    description: 'Warm bath 1-2 hours before sleep',
+    duration: 30,
+    category: 'Sleep',
+    instructions:
+      'Take a warm (not hot) bath 1-2 hours before bed for 15-20 minutes. Track sleep quality, temperature, and pulse the next morning.',
+  },
+  'honey-salt-nighttime': {
+    title: 'Honey & Salt Nighttime',
+    description: 'Honey + salt mixture to prevent nighttime cortisol',
+    duration: 30,
+    category: 'Sleep',
+    instructions:
+      'Mix 1 teaspoon of honey with a small pinch of salt before bed. If you wake at night, repeat the mixture. Track night wakings and morning energy.',
+  },
+  'liver-weekly': {
+    title: 'Liver Weekly',
+    description: 'Eating liver once a week for vitamin A & minerals',
+    duration: 21,
+    category: 'Nutrition',
+    instructions:
+      'Eat 3-4 oz of cooked liver once per week. Note digestion, energy, and temperature changes the following day.',
+  },
+  'shellfish-weekly': {
+    title: 'Shellfish Weekly',
+    description: 'Oysters or shrimp weekly for zinc & copper',
+    duration: 21,
+    category: 'Nutrition',
+    instructions:
+      'Have a shellfish serving once per week (e.g., 6 oysters or 4-6 oz shrimp). Track energy, temperature, and any digestion changes.',
+  },
+  'no-raw-greens': {
+    title: 'No Raw Greens',
+    description: 'Eliminating raw greens to test thyroid response',
+    duration: 3,
+    category: 'Digestion',
+    instructions:
+      'Avoid raw leafy greens for 3 days. If you eat greens, cook them thoroughly. Track digestion, temperature, and pulse.',
+  },
+  'dairy-support-test': {
+    title: 'Dairy Support Test',
+    description: 'Testing milk & cheese as metabolic support',
+    duration: 3,
+    category: 'Nutrition',
+    instructions:
+      'Include milk and/or cheese with meals for 3 days. Note digestion, energy, and sleep changes.',
+  },
+  'warm-vs-cold-foods': {
+    title: 'Warm vs Cold Foods',
+    description: 'Compare warm vs cold foods impact on digestion',
+    duration: 3,
+    category: 'Digestion',
+    instructions:
+      'Days 1-2: prioritize warm, cooked foods and drinks. Day 3: include at least one cold meal or drink and compare digestion.',
+  },
 };
 
 const getCategoryColor = (category: string) => {
   switch (category) {
     case 'Digestion':
-      return '#22c55e';
+      return theme.category.digestion;
     case 'Energy':
-      return '#f59e0b';
+      return theme.status.warning;
     case 'Sleep':
-      return '#8b5cf6';
+      return theme.category.sleep;
     case 'Mood':
-      return '#ec4899';
+      return theme.category.mood;
     case 'Nutrition':
-      return '#3b82f6';
+      return theme.status.info;
     default:
-      return '#6b7280';
+      return theme.text.tertiary;
   }
 };
 
@@ -224,7 +281,7 @@ export default function ExperimentDetailScreen() {
   if (experimentQuery.isLoading) {
     return (
       <View className="flex-1 bg-neutral-50 dark:bg-neutral-950 items-center justify-center">
-        <ActivityIndicator size="large" color="#f97316" />
+        <ActivityIndicator size="large" color={theme.colors.primary} accessibilityLabel="Loading" />
       </View>
     );
   }
@@ -236,7 +293,7 @@ export default function ExperimentDetailScreen() {
           <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-semibold mb-2">
             Experiment not found
           </Text>
-          <Pressable onPress={goBack} className="mt-4">
+          <Pressable onPress={goBack} className="mt-4" accessibilityRole="button" accessibilityLabel="Go back">
             <Text className="text-orange-500 font-semibold">Go Back</Text>
           </Pressable>
         </SafeAreaView>
@@ -251,12 +308,14 @@ export default function ExperimentDetailScreen() {
         <View className="px-4 pt-2 pb-4 flex-row items-center">
           <Pressable
             onPress={goBack}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
             className="w-10 h-10 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-900 mr-3"
           >
-            <ArrowLeft size={20} color={isDark ? '#f5f5f5' : '#171717'} />
+            <ArrowLeft size={20} color={isDark ? '#f5f5f5' : '#171717'} accessible={false} accessibilityRole="image" />
           </Pressable>
           <View className="flex-1">
-            <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold">
+            <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold" accessibilityRole="header">
               {template.title}
             </Text>
             <View className="flex-row items-center mt-1">
@@ -270,7 +329,7 @@ export default function ExperimentDetailScreen() {
               </View>
               {experiment.completed ? (
                 <View className="flex-row items-center">
-                  <Check size={14} color="#22c55e" />
+                  <Check size={14} color="#22c55e" accessible={false} accessibilityRole="image" />
                   <Text className="text-green-600 dark:text-green-400 text-xs ml-1">
                     Completed
                   </Text>
@@ -285,6 +344,7 @@ export default function ExperimentDetailScreen() {
         </View>
 
         <ScrollView
+          accessible={true}
           className="flex-1"
           contentContainerStyle={{ paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
@@ -293,7 +353,7 @@ export default function ExperimentDetailScreen() {
           <Animated.View entering={FadeInDown.delay(100).springify()} className="px-6 mb-6">
             <View className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-neutral-200 dark:border-neutral-800">
               <View className="flex-row items-center justify-between mb-3">
-                <Text className="text-neutral-700 dark:text-neutral-300 font-medium">
+                <Text className="text-neutral-700 dark:text-neutral-300 font-medium" accessibilityRole="header">
                   Progress
                 </Text>
                 <Text className="text-neutral-500 dark:text-neutral-400 text-sm">
@@ -312,7 +372,7 @@ export default function ExperimentDetailScreen() {
           {/* Instructions */}
           {template.instructions && (
             <Animated.View entering={FadeInDown.delay(150).springify()} className="px-6 mb-6">
-              <Text className="text-neutral-500 dark:text-neutral-400 text-sm font-medium uppercase tracking-wider mb-2">
+              <Text className="text-neutral-500 dark:text-neutral-400 text-sm font-medium uppercase tracking-wider mb-2" accessibilityRole="header">
                 Instructions
               </Text>
               <View className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-neutral-200 dark:border-neutral-800">
@@ -331,10 +391,16 @@ export default function ExperimentDetailScreen() {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                   setShowLogModal(true);
                 }}
+                accessibilityRole="button"
+                accessibilityLabel="Log today's entry"
               >
                 {({ pressed }) => (
                   <LinearGradient
-                    colors={pressed ? ['#ea580c', '#c2410c'] : ['#f97316', '#ea580c']}
+                    colors={
+                      pressed
+                        ? [theme.colors.primary, theme.colors.primary]
+                        : [theme.colors.primary, theme.colors.primary]
+                    }
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                     style={{
@@ -344,7 +410,7 @@ export default function ExperimentDetailScreen() {
                     }}
                   >
                     <View className="flex-row items-center justify-center">
-                      <Plus size={20} color="white" strokeWidth={2.5} />
+                      <Plus size={20} color="white" strokeWidth={2.5} accessible={false} accessibilityRole="image" />
                       <Text className="text-white text-base font-bold ml-2">
                         Log Today's Entry
                       </Text>
@@ -358,13 +424,13 @@ export default function ExperimentDetailScreen() {
           {/* AI Insight */}
           {logs.length > 0 && (
             <Animated.View entering={FadeInDown.delay(250).springify()} className="px-6 mb-6">
-              <Text className="text-neutral-500 dark:text-neutral-400 text-sm font-medium uppercase tracking-wider mb-2">
+              <Text className="text-neutral-500 dark:text-neutral-400 text-sm font-medium uppercase tracking-wider mb-2" accessibilityRole="header">
                 AI Insight
               </Text>
               {insight ? (
                 <View className="bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-4 border border-purple-200 dark:border-purple-800">
                   <View className="flex-row items-center mb-2">
-                    <Sparkles size={16} color="#a855f7" />
+                    <Sparkles size={16} color="#a855f7" accessible={false} accessibilityRole="image" />
                     <Text className="text-purple-600 dark:text-purple-400 font-medium ml-2">
                       Analysis
                     </Text>
@@ -377,13 +443,15 @@ export default function ExperimentDetailScreen() {
                 <Pressable
                   onPress={handleGetInsight}
                   disabled={insightMutation.isPending}
+                  accessibilityRole="button"
+                  accessibilityLabel="Get AI analysis"
                   className="bg-white dark:bg-neutral-900 rounded-2xl p-4 border border-neutral-200 dark:border-neutral-800 flex-row items-center justify-center"
                 >
                   {insightMutation.isPending ? (
-                    <ActivityIndicator size="small" color="#a855f7" />
+                    <ActivityIndicator size="small" color="#a855f7" accessibilityLabel="Loading" />
                   ) : (
                     <>
-                      <Sparkles size={18} color="#a855f7" />
+                      <Sparkles size={18} color="#a855f7" accessible={false} accessibilityRole="image" />
                       <Text className="text-purple-600 dark:text-purple-400 font-medium ml-2">
                         Get AI Analysis
                       </Text>
@@ -396,12 +464,12 @@ export default function ExperimentDetailScreen() {
 
           {/* Logs */}
           <Animated.View entering={FadeInDown.delay(300).springify()} className="px-6">
-            <Text className="text-neutral-500 dark:text-neutral-400 text-sm font-medium uppercase tracking-wider mb-2">
+            <Text className="text-neutral-500 dark:text-neutral-400 text-sm font-medium uppercase tracking-wider mb-2" accessibilityRole="header">
               Log Entries ({logs.length})
             </Text>
             {logs.length === 0 ? (
               <View className="bg-white dark:bg-neutral-900 rounded-2xl p-6 border border-neutral-200 dark:border-neutral-800 items-center">
-                <Calendar size={32} color={isDark ? '#525252' : '#a3a3a3'} />
+                <Calendar size={32} color={isDark ? '#525252' : '#a3a3a3'} accessible={false} accessibilityRole="image" />
                 <Text className="text-neutral-500 dark:text-neutral-400 mt-2 text-center">
                   No entries yet. Add your first log!
                 </Text>
@@ -426,13 +494,13 @@ export default function ExperimentDetailScreen() {
                     </Text>
                     <View className="flex-row gap-4">
                       <View className="flex-row items-center">
-                        <Thermometer size={14} color="#ef4444" />
+                        <Thermometer size={14} color="#ef4444" accessible={false} accessibilityRole="image" />
                         <Text className="text-neutral-700 dark:text-neutral-300 text-sm ml-1">
                           {log.temp}°F
                         </Text>
                       </View>
                       <View className="flex-row items-center">
-                        <Heart size={14} color="#ec4899" />
+                        <Heart size={14} color="#ec4899" accessible={false} accessibilityRole="image" />
                         <Text className="text-neutral-700 dark:text-neutral-300 text-sm ml-1">
                           {log.pulse} bpm
                         </Text>
@@ -454,13 +522,15 @@ export default function ExperimentDetailScreen() {
               <Pressable
                 onPress={() => completeMutation.mutate()}
                 disabled={completeMutation.isPending}
+                accessibilityRole="button"
+                accessibilityLabel="Mark experiment as complete"
                 className="bg-green-500 rounded-xl py-4"
               >
                 {completeMutation.isPending ? (
-                  <ActivityIndicator color="white" />
+                  <ActivityIndicator color="white" accessibilityLabel="Loading" />
                 ) : (
                   <View className="flex-row items-center justify-center">
-                    <Check size={20} color="white" />
+                    <Check size={20} color="white" accessible={false} accessibilityRole="image" />
                     <Text className="text-white font-bold ml-2">Mark as Complete</Text>
                   </View>
                 )}
@@ -477,6 +547,8 @@ export default function ExperimentDetailScreen() {
               setShowLogModal(false);
               resetForm();
             }}
+            accessibilityRole="button"
+            accessibilityLabel="Close log entry"
           >
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
               <Pressable
@@ -487,7 +559,7 @@ export default function ExperimentDetailScreen() {
                   <View className="p-6">
                     {/* Header */}
                     <View className="flex-row items-center justify-between mb-6">
-                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold">
+                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold" accessibilityRole="header">
                         Log Entry
                       </Text>
                       <Pressable
@@ -495,9 +567,11 @@ export default function ExperimentDetailScreen() {
                           setShowLogModal(false);
                           resetForm();
                         }}
+                        accessibilityRole="button"
+                        accessibilityLabel="Close log entry"
                         className="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-full items-center justify-center"
                       >
-                        <X size={18} color={isDark ? '#f5f5f5' : '#171717'} />
+                        <X size={18} color={isDark ? '#f5f5f5' : '#171717'} accessible={false} accessibilityRole="image" />
                       </Pressable>
                     </View>
 
@@ -514,7 +588,7 @@ export default function ExperimentDetailScreen() {
                     <View className="flex-row gap-4 mb-4">
                       <View className="flex-1">
                         <View className="flex-row items-center mb-2">
-                          <Thermometer size={14} color="#ef4444" />
+                          <Thermometer size={14} color="#ef4444" accessible={false} accessibilityRole="image" />
                           <Text className="text-neutral-700 dark:text-neutral-300 text-sm font-medium ml-2">
                             Temp (°F)
                           </Text>
@@ -532,7 +606,7 @@ export default function ExperimentDetailScreen() {
                       </View>
                       <View className="flex-1">
                         <View className="flex-row items-center mb-2">
-                          <Heart size={14} color="#ec4899" />
+                          <Heart size={14} color="#ec4899" accessible={false} accessibilityRole="image" />
                           <Text className="text-neutral-700 dark:text-neutral-300 text-sm font-medium ml-2">
                             Pulse (bpm)
                           </Text>
@@ -565,15 +639,15 @@ export default function ExperimentDetailScreen() {
                     </View>
 
                     {/* Submit */}
-                    <Pressable onPress={handleAddLog} disabled={addLogMutation.isPending}>
+                    <Pressable onPress={handleAddLog} disabled={addLogMutation.isPending} accessibilityRole="button" accessibilityLabel="Save entry">
                       {({ pressed }) => (
                         <LinearGradient
                           colors={
                             addLogMutation.isPending
                               ? ['#9ca3af', '#6b7280']
                               : pressed
-                              ? ['#ea580c', '#c2410c']
-                              : ['#f97316', '#ea580c']
+                              ? [theme.colors.primary, theme.colors.primary]
+                              : [theme.colors.primary, theme.colors.primary]
                           }
                           start={{ x: 0, y: 0 }}
                           end={{ x: 1, y: 1 }}
@@ -584,7 +658,7 @@ export default function ExperimentDetailScreen() {
                           }}
                         >
                           {addLogMutation.isPending ? (
-                            <ActivityIndicator color="white" />
+                            <ActivityIndicator color="white" accessibilityLabel="Loading" />
                           ) : (
                             <Text className="text-white text-base font-bold text-center">
                               Save Entry

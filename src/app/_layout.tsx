@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Text } from 'react-native';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useAuthStore, useIsAuthenticated, useIsInitialized, useOnboardingCompleted, setupUnauthorizedHandler } from '@/stores/authStore';
 import { theme } from '@/lib/theme';
 
@@ -130,7 +131,9 @@ export default function RootLayout() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <KeyboardProvider>
           <StatusBar style="light" />
-          <RootLayoutNav />
+          <ErrorBoundary fallback={<Text>Something went wrong.</Text>}>
+            <RootLayoutNav />
+          </ErrorBoundary>
         </KeyboardProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>

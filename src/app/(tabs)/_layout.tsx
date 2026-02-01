@@ -91,9 +91,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* Hide these from tabs but keep them accessible */}
-      <Tabs.Screen name="lighter" options={{ href: null }} />
-      <Tabs.Screen name="lighter.web" options={{ href: null }} />
     </Tabs>
   );
 }

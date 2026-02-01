@@ -18,6 +18,7 @@ import * as Haptics from 'expo-haptics';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useColorScheme } from '@/lib/useColorScheme';
+import { theme } from '@/lib/theme';
 import { getAllMessages, createMessage } from '@/api/messages';
 import type { Message, CreateMessageRequest } from '@/api/types';
 import { ApiClientError } from '@/api/client';
@@ -95,11 +96,13 @@ export default function MessagesScreen() {
           <View className="flex-row items-center">
             <Pressable
               onPress={goBack}
+              accessibilityRole="button"
+              accessibilityLabel="Go back"
               className="w-10 h-10 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-900 mr-3"
             >
-              <ArrowLeft size={20} color={isDark ? '#f5f5f5' : '#171717'} />
+              <ArrowLeft size={20} color={isDark ? '#f5f5f5' : '#171717'} accessible={false} accessibilityRole="image" />
             </Pressable>
-            <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold">
+            <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold" accessibilityRole="header">
               Messages
             </Text>
           </View>
@@ -108,21 +111,26 @@ export default function MessagesScreen() {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               setShowComposeModal(true);
             }}
+            accessibilityRole="button"
+            accessibilityLabel="Compose message"
             className="w-10 h-10 bg-orange-500 rounded-full items-center justify-center"
           >
-            <Plus size={20} color="white" strokeWidth={2.5} />
+            <Plus size={20} color="white" strokeWidth={2.5} accessible={false} accessibilityRole="image" />
           </Pressable>
         </View>
 
         {messagesQuery.isLoading ? (
           <View className="flex-1 items-center justify-center">
-            <ActivityIndicator size="large" color="#f97316" />
+            <ActivityIndicator size="large" color={theme.colors.primary} accessibilityLabel="Loading" />
+            <Text style={{ textAlign: 'center', opacity: 0.6, marginTop: 8 }}>
+              Loading messages…
+            </Text>
           </View>
         ) : messages.length === 0 ? (
           <View className="flex-1 items-center justify-center px-6">
             <Animated.View entering={FadeInDown.springify()} className="items-center">
               <View className="bg-neutral-200 dark:bg-neutral-800 rounded-full p-6 mb-4">
-                <MessageSquare size={40} color={isDark ? '#525252' : '#a3a3a3'} />
+                <MessageSquare size={40} color={isDark ? '#525252' : '#a3a3a3'} accessible={false} accessibilityRole="image" />
               </View>
               <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-semibold mb-2">
                 No messages yet
@@ -132,6 +140,8 @@ export default function MessagesScreen() {
               </Text>
               <Pressable
                 onPress={() => setShowComposeModal(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Compose message"
                 className="bg-orange-500 rounded-xl px-6 py-3"
               >
                 <Text className="text-white font-semibold">Send a Message</Text>
@@ -140,17 +150,18 @@ export default function MessagesScreen() {
           </View>
         ) : (
           <ScrollView
+            accessible={true}
             className="flex-1"
             contentContainerStyle={{ paddingBottom: 40 }}
             showsVerticalScrollIndicator={false}
             refreshControl={
-              <RefreshControl
-                refreshing={messagesQuery.isRefetching}
-                onRefresh={() => messagesQuery.refetch()}
-                tintColor="#f97316"
-              />
-            }
-          >
+                <RefreshControl
+                  refreshing={messagesQuery.isRefetching}
+                  onRefresh={() => messagesQuery.refetch()}
+                  tintColor={theme.colors.primary}
+                />
+              }
+            >
             <View className="px-6">
               {messages.map((msg, index) => (
                 <Animated.View
@@ -162,6 +173,8 @@ export default function MessagesScreen() {
                       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                       setSelectedMessage(msg);
                     }}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Open message ${msg.subject}`}
                     className="bg-white dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800 mb-3"
                   >
                     <View className="flex-row items-start justify-between mb-2">
@@ -180,14 +193,14 @@ export default function MessagesScreen() {
                       </View>
                       {msg.status === 'responded' ? (
                         <View className="flex-row items-center bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
-                          <CheckCircle size={12} color="#22c55e" />
+                          <CheckCircle size={12} color="#22c55e" accessible={false} accessibilityRole="image" />
                           <Text className="text-green-600 dark:text-green-400 text-xs ml-1 font-medium">
                             Replied
                           </Text>
                         </View>
                       ) : (
                         <View className="flex-row items-center bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded-full">
-                          <Clock size={12} color="#f59e0b" />
+                          <Clock size={12} color={theme.colors.primary} accessible={false} accessibilityRole="image" />
                           <Text className="text-amber-600 dark:text-amber-400 text-xs ml-1 font-medium">
                             Pending
                           </Text>
@@ -228,6 +241,8 @@ export default function MessagesScreen() {
               setShowComposeModal(false);
               resetForm();
             }}
+            accessibilityRole="button"
+            accessibilityLabel="Close compose message"
           >
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -240,7 +255,7 @@ export default function MessagesScreen() {
                   <View className="p-6">
                     {/* Header */}
                     <View className="flex-row items-center justify-between mb-6">
-                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold">
+                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold" accessibilityRole="header">
                         New Message
                       </Text>
                       <Pressable
@@ -248,9 +263,11 @@ export default function MessagesScreen() {
                           setShowComposeModal(false);
                           resetForm();
                         }}
+                        accessibilityRole="button"
+                        accessibilityLabel="Close compose message"
                         className="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-full items-center justify-center"
                       >
-                        <X size={18} color={isDark ? '#f5f5f5' : '#171717'} />
+                        <X size={18} color={isDark ? '#f5f5f5' : '#171717'} accessible={false} accessibilityRole="image" />
                       </Pressable>
                     </View>
 
@@ -294,15 +311,15 @@ export default function MessagesScreen() {
                     </View>
 
                     {/* Submit */}
-                    <Pressable onPress={handleSend} disabled={createMutation.isPending}>
+                    <Pressable onPress={handleSend} disabled={createMutation.isPending} accessibilityRole="button" accessibilityLabel="Send message">
                       {({ pressed }) => (
                         <LinearGradient
                           colors={
                             createMutation.isPending
                               ? ['#9ca3af', '#6b7280']
                               : pressed
-                              ? ['#ea580c', '#c2410c']
-                              : ['#f97316', '#ea580c']
+                              ? [theme.colors.primary, theme.colors.primary]
+                              : [theme.colors.primary, theme.colors.primary]
                           }
                           start={{ x: 0, y: 0 }}
                           end={{ x: 1, y: 1 }}
@@ -313,7 +330,7 @@ export default function MessagesScreen() {
                           }}
                         >
                           {createMutation.isPending ? (
-                            <ActivityIndicator color="white" />
+                            <ActivityIndicator color="white" accessibilityLabel="Loading" />
                           ) : (
                             <Text className="text-white text-base font-bold text-center">
                               Send Message
@@ -334,17 +351,19 @@ export default function MessagesScreen() {
           <Pressable
             className="absolute inset-0 bg-black/50 justify-end"
             onPress={() => setSelectedMessage(null)}
+            accessibilityRole="button"
+            accessibilityLabel="Close message"
           >
             <Pressable
               className="bg-white dark:bg-neutral-900 rounded-t-3xl max-h-[80%]"
               onPress={(e) => e.stopPropagation()}
             >
               <SafeAreaView edges={['bottom']}>
-                <ScrollView className="p-6">
+                <ScrollView className="p-6" accessible={true}>
                   {/* Header */}
                   <View className="flex-row items-center justify-between mb-4">
                     <View className="flex-1 mr-3">
-                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold">
+                      <Text className="text-neutral-900 dark:text-neutral-100 text-xl font-bold" accessibilityRole="header">
                         {selectedMessage.subject}
                       </Text>
                       <Text className="text-neutral-400 dark:text-neutral-500 text-sm mt-1">
@@ -359,15 +378,17 @@ export default function MessagesScreen() {
                     </View>
                     <Pressable
                       onPress={() => setSelectedMessage(null)}
+                      accessibilityRole="button"
+                      accessibilityLabel="Close message"
                       className="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-full items-center justify-center"
                     >
-                      <X size={18} color={isDark ? '#f5f5f5' : '#171717'} />
+                      <X size={18} color={isDark ? '#f5f5f5' : '#171717'} accessible={false} accessibilityRole="image" />
                     </Pressable>
                   </View>
 
                   {/* Your Message */}
                   <View className="mb-4">
-                    <Text className="text-neutral-500 dark:text-neutral-400 text-xs font-medium uppercase tracking-wider mb-2">
+                    <Text className="text-neutral-500 dark:text-neutral-400 text-xs font-medium uppercase tracking-wider mb-2" accessibilityRole="header">
                       Your Message
                     </Text>
                     <View className="bg-neutral-100 dark:bg-neutral-800 rounded-xl p-4">
@@ -380,7 +401,7 @@ export default function MessagesScreen() {
                   {/* Response */}
                   {selectedMessage.response ? (
                     <View>
-                      <Text className="text-neutral-500 dark:text-neutral-400 text-xs font-medium uppercase tracking-wider mb-2">
+                      <Text className="text-neutral-500 dark:text-neutral-400 text-xs font-medium uppercase tracking-wider mb-2" accessibilityRole="header">
                         Response
                       </Text>
                       <View className="bg-orange-50 dark:bg-orange-900/20 rounded-xl p-4 border border-orange-200 dark:border-orange-800">
@@ -400,7 +421,7 @@ export default function MessagesScreen() {
                     </View>
                   ) : (
                     <View className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 border border-amber-200 dark:border-amber-800 flex-row items-center">
-                      <Clock size={18} color="#f59e0b" />
+                      <Clock size={18} color={theme.colors.primary} accessible={false} accessibilityRole="image" />
                       <Text className="text-amber-700 dark:text-amber-400 ml-3">
                         Waiting for response...
                       </Text>

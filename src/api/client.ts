@@ -84,7 +84,19 @@ export async function apiRequest<T>(
     });
   } catch (networkError) {
     console.log('[API] Network error:', networkError);
-    throw new Error('Unable to connect to server. Please check your internet connection.');
+    const err = networkError as { message?: string; code?: string };
+    let message = 'Unable to connect to server. Please check your internet connection.';
+
+    if (
+      err?.message?.toLowerCase().includes('timeout') ||
+      err?.code === 'ECONNABORTED'
+    ) {
+      message = 'Request timed out. Please try again.';
+    } else if (err?.message?.includes('Network request failed')) {
+      message = 'Network error. Check your internet connection.';
+    }
+
+    throw new Error(message);
   }
 
   console.log(`[API] Response status: ${response.status}`);
@@ -109,11 +121,15 @@ export async function apiRequest<T>(
     }
 
     const errorData = data as ApiError | null;
-    throw new ApiClientError(
-      response.status,
-      errorData?.message ?? `Request failed with status ${response.status}`,
-      errorData
-    );
+    let message = errorData?.message ?? `Request failed with status ${response.status}`;
+
+    if (response.status >= 400 && response.status <= 499) {
+      message = `Client error: ${errorData?.message ?? 'Request failed.'}`;
+    } else if (response.status >= 500 && response.status <= 599) {
+      message = 'Server error. Please try again later.';
+    }
+
+    throw new ApiClientError(response.status, message, errorData);
   }
 
   return data as T;

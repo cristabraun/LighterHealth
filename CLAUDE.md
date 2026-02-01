@@ -34,7 +34,7 @@
 
 
 <forbidden_files>
-  Do not edit: patches/, babel.config.js, metro.config.js, app.json, tsconfig.json, nativewind-env.d.ts
+  Do not edit: patches/, babel.config.js, metro.config.js, tsconfig.json, nativewind-env.d.ts
 </forbidden_files>
 
 <routing>

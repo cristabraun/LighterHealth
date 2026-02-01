@@ -12,22 +12,17 @@ import {
   User,
   Trash2,
 } from 'lucide-react-native';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import * as Application from 'expo-application';
-import * as WebBrowser from 'expo-web-browser';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore, useUser } from '@/stores/authStore';
 import { deleteAccount } from '@/api/auth';
 import { theme } from '@/lib/theme';
 
-const PRIVACY_URL = 'https://getlighterapp.com/privacy';
-const TERMS_URL = 'https://getlighterapp.com/terms';
 const SUPPORT_EMAIL = 'support@getlighterapp.com';
 
 export default function SettingsScreen() {
-  const router = useRouter();
-
   const user = useUser();
   const logout = useAuthStore((s) => s.logout);
 
@@ -61,16 +56,12 @@ export default function SettingsScreen() {
 
   const openPrivacy = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    await WebBrowser.openBrowserAsync(PRIVACY_URL, {
-      presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
-    });
+    router.push('/privacy-terms');
   };
 
   const openTerms = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    await WebBrowser.openBrowserAsync(TERMS_URL, {
-      presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
-    });
+    router.push('/privacy-terms');
   };
 
   const SettingsRow = ({
@@ -92,6 +83,8 @@ export default function SettingsScreen() {
   }) => (
     <Pressable
       onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={title}
       className="rounded-2xl p-4 flex-row items-center justify-between active:opacity-80"
       style={{
         backgroundColor: theme.background.card,
@@ -118,9 +111,9 @@ export default function SettingsScreen() {
         </View>
       </View>
       {showExternal ? (
-        <ExternalLink size={18} color={theme.text.disabled} />
+        <ExternalLink size={18} color={theme.text.disabled} accessible={false} accessibilityRole="image" />
       ) : (
-        <ChevronRight size={20} color={theme.text.disabled} />
+        <ChevronRight size={20} color={theme.text.disabled} accessible={false} accessibilityRole="image" />
       )}
     </Pressable>
   );
@@ -129,6 +122,7 @@ export default function SettingsScreen() {
     <View className="flex-1" style={{ backgroundColor: theme.background.primary }}>
       <SafeAreaView edges={['top']} className="flex-1">
         <ScrollView
+          accessible={true}
           className="flex-1"
           contentContainerStyle={{ paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
@@ -138,7 +132,7 @@ export default function SettingsScreen() {
             entering={FadeInDown.delay(100).springify()}
             className="px-6 pt-4 pb-6"
           >
-            <Text className="text-2xl font-bold" style={{ color: theme.text.primary }}>
+            <Text className="text-2xl font-bold" style={{ color: theme.text.primary }} accessibilityRole="header">
               Settings
             </Text>
           </Animated.View>
@@ -151,6 +145,7 @@ export default function SettingsScreen() {
             <Text
               className="text-sm font-medium uppercase tracking-wider mb-3 ml-1"
               style={{ color: theme.text.secondary }}
+              accessibilityRole="header"
             >
               Account
             </Text>
@@ -166,7 +161,7 @@ export default function SettingsScreen() {
                 className="w-14 h-14 rounded-full items-center justify-center mr-4"
                 style={{ backgroundColor: `${theme.accent.primary}15` }}
               >
-                <User size={28} color={theme.accent.primary} />
+                <User size={28} color={theme.accent.primary} accessible={false} accessibilityRole="image" />
               </View>
               <View className="flex-1">
                 <Text className="text-lg font-semibold" style={{ color: theme.text.primary }}>
@@ -197,12 +192,13 @@ export default function SettingsScreen() {
             <Text
               className="text-sm font-medium uppercase tracking-wider mb-3 ml-1"
               style={{ color: theme.text.secondary }}
+              accessibilityRole="header"
             >
               Support
             </Text>
             <View className="gap-3">
               <SettingsRow
-                icon={<Mail size={22} color={theme.status.info} />}
+                icon={<Mail size={22} color={theme.status.info} accessible={false} accessibilityRole="image" />}
                 iconBgColor={theme.status.infoBg}
                 title="Contact Support"
                 subtitle={SUPPORT_EMAIL}
@@ -220,19 +216,20 @@ export default function SettingsScreen() {
             <Text
               className="text-sm font-medium uppercase tracking-wider mb-3 ml-1"
               style={{ color: theme.text.secondary }}
+              accessibilityRole="header"
             >
               Legal
             </Text>
             <View className="gap-3">
               <SettingsRow
-                icon={<Shield size={22} color={theme.status.success} />}
+                icon={<Shield size={22} color={theme.status.success} accessible={false} accessibilityRole="image" />}
                 iconBgColor={theme.status.successBg}
                 title="Privacy Policy"
                 onPress={openPrivacy}
                 showExternal
               />
               <SettingsRow
-                icon={<FileText size={22} color={theme.category.sleep} />}
+                icon={<FileText size={22} color={theme.category.sleep} accessible={false} accessibilityRole="image" />}
                 iconBgColor={`${theme.category.sleep}15`}
                 title="Terms of Service"
                 onPress={openTerms}
@@ -249,18 +246,19 @@ export default function SettingsScreen() {
             <Text
               className="text-sm font-medium uppercase tracking-wider mb-3 ml-1"
               style={{ color: theme.text.secondary }}
+              accessibilityRole="header"
             >
               Account Actions
             </Text>
             <View className="gap-3">
               <SettingsRow
-                icon={<LogOut size={22} color={theme.accent.primary} />}
+                icon={<LogOut size={22} color={theme.accent.primary} accessible={false} accessibilityRole="image" />}
                 iconBgColor={theme.accent.muted}
                 title="Sign Out"
                 onPress={handleLogout}
               />
               <SettingsRow
-                icon={<Trash2 size={22} color={theme.status.error} />}
+                icon={<Trash2 size={22} color={theme.status.error} accessible={false} accessibilityRole="image" />}
                 iconBgColor={theme.status.errorBg}
                 title="Delete Account"
                 subtitle="Permanently delete your account and data"
@@ -292,6 +290,8 @@ export default function SettingsScreen() {
             className="absolute inset-0 items-center justify-center"
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
             onPress={() => setShowDeleteModal(false)}
+            accessibilityRole="button"
+            accessibilityLabel="Close dialog"
           >
             <Pressable
               className="rounded-3xl p-6 mx-6 w-full max-w-sm"
@@ -303,7 +303,7 @@ export default function SettingsScreen() {
                   className="w-16 h-16 rounded-2xl items-center justify-center mb-3"
                   style={{ backgroundColor: theme.status.errorBg }}
                 >
-                  <Trash2 size={32} color={theme.status.error} />
+                  <Trash2 size={32} color={theme.status.error} accessible={false} accessibilityRole="image" />
                 </View>
                 <Text className="text-xl font-bold text-center" style={{ color: theme.text.primary }}>
                   Delete Account?
@@ -316,6 +316,8 @@ export default function SettingsScreen() {
               <View className="flex-row gap-3">
                 <Pressable
                   onPress={() => setShowDeleteModal(false)}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancel delete account"
                   className="flex-1 rounded-xl py-3"
                   style={{ backgroundColor: theme.background.elevated }}
                 >
@@ -326,11 +328,13 @@ export default function SettingsScreen() {
                 <Pressable
                   onPress={() => deleteMutation.mutate()}
                   disabled={deleteMutation.isPending}
+                  accessibilityRole="button"
+                  accessibilityLabel="Delete account"
                   className="flex-1 rounded-xl py-3"
                   style={{ backgroundColor: theme.status.error }}
                 >
                   {deleteMutation.isPending ? (
-                    <ActivityIndicator color="white" />
+                    <ActivityIndicator color="white" accessibilityLabel="Loading" />
                   ) : (
                     <Text className="text-white font-semibold text-center">Delete</Text>
                   )}
