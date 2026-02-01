@@ -2,6 +2,11 @@
 // A cohesive dark premium theme for the Lighter app
 
 export const theme = {
+  // Aliases for common tokens
+  colors: {
+    primary: '#F5A623',
+  },
+
   // Core backgrounds
   background: {
     primary: '#0D0D0D',    // Main app background

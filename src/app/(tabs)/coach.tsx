@@ -18,6 +18,8 @@ import { getAiLimit, askQuestion } from '@/api/ai';
 import { theme } from '@/lib/theme';
 import type { AskQuestionResponse } from '@/api/types';
 
+const DAILY_LIMIT = 25;
+
 interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
@@ -62,29 +64,34 @@ export default function CoachScreen() {
     },
   });
 
-  const handleSend = () => {
-    if (!input.trim() || askMutation.isPending) return;
+  const handleAskQuestion = (question: string) => {
+    const trimmed = question.trim();
+    if (!trimmed || askMutation.isPending) return;
 
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
-      content: input.trim(),
+      content: trimmed,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
-    askMutation.mutate(input.trim());
+    askMutation.mutate(trimmed);
 
     setTimeout(() => {
       scrollViewRef.current?.scrollToEnd({ animated: true });
     }, 100);
   };
 
-  const remaining = limitQuery.data?.remaining ?? 5;
-  const limit = limitQuery.data?.limit ?? 5;
+  const handleSend = () => {
+    handleAskQuestion(input);
+  };
+
+  const remaining = limitQuery.data?.remaining ?? DAILY_LIMIT;
+  const limit = limitQuery.data?.limit ?? DAILY_LIMIT;
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background.primary }}>
@@ -107,8 +114,15 @@ export default function CoachScreen() {
               className="rounded-xl px-3 py-2"
               style={{ backgroundColor: theme.accent.muted }}
             >
-              <Text className="text-sm font-semibold" style={{ color: theme.accent.primary }}>
-                {remaining}/{limit} left
+              {limitQuery.isLoading ? (
+                <ActivityIndicator size="small" color={theme.accent.primary} />
+              ) : (
+                <Text className="text-sm font-semibold" style={{ color: theme.accent.primary }}>
+                  {remaining}/{limit} left
+                </Text>
+              )}
+              <Text className="text-xs mt-0.5" style={{ color: theme.text.secondary }}>
+                {limit} questions/day
               </Text>
             </View>
           </View>
@@ -162,6 +176,7 @@ export default function CoachScreen() {
                         key={index}
                         onPress={() => {
                           setInput(suggestion);
+                          handleAskQuestion(suggestion);
                           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                         }}
                         className="rounded-xl p-3"

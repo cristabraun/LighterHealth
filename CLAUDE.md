@@ -21,8 +21,7 @@
 </typescript>
 
 <environment>
-  You are in Vibecode. The system manages git and the dev server (port 8081).
-  DO NOT: manage git, touch the dev server, or check its state.
+  Codex is allowed to run git add, git commit, git push, and git status.
   The user views the app through Vibecode App.
   The user cannot see the code or interact with the terminal. Do not tell the user to do anything with the code or terminal.
   You can see logs in the expo.log file.
