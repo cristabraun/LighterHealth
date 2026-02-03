@@ -125,6 +125,8 @@ function Router() {
         <Route path="/landing" component={Landing} />
         <Route path="/start-here" component={StartHere} />
         <Route path="/account" component={Account} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/terms" component={Terms} />
         <Route path="/admin/messages" component={AdminMessages} />
         <Route component={NotFound} />
       </Switch>
