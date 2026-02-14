@@ -7,18 +7,24 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "owner": "cristabraun",
+    "extra": {
+      "eas": {
+        "projectId": "f7b50c57-dba4-4ad2-91ba-e189fc4f66b0"
+      }
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#0D0D0D"
     },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.getlighter.app",
-      "buildNumber": "1",
+      "supportsTablet": false,
+      "bundleIdentifier": "com.lighterhealth.app",
+      "buildNumber": "2",
       "infoPlist": {
-        "NSCameraUsageDescription": "This app does not use the camera",
-        "NSPhotoLibraryUsageDescription": "This app does not use the photo library"
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIDeviceFamily": [1]
       }
     },
     "android": {
@@ -30,7 +36,7 @@
       },
       "edgeToEdgeEnabled": true
     },
-    "plugins": ["expo-router"],
+    "plugins": ["expo-router", "expo-web-browser"],
     "experiments": {
       "typedRoutes": true
     }
