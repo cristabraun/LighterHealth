@@ -1,8 +1,12 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  presets: [require("nativewind/preset")],
   darkMode: ["class"],
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
+  corePlugins: {
+    space: false,
+  },
   theme: {
     extend: {
       borderRadius: {
