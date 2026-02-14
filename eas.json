@@ -18,6 +18,11 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "6758923316",
+        "appleId": "crisann2702@hotmail.com"
+      }
+    }
   }
 }
