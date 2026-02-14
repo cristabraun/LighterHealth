@@ -16,6 +16,8 @@
       "ios": { "distribution": "store" },
       "android": { "distribution": "store" }
     }
+  },
+  "submit": {
+    "production": {}
   }
 }
-
