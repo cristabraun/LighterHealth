@@ -5,7 +5,7 @@
     "scheme": "lighter",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./icon.png",
     "userInterfaceStyle": "automatic",
     "owner": "cristabraun",
     "extra": {
@@ -21,7 +21,6 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.lighterhealth.app",
-      "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "UIDeviceFamily": [1]
@@ -36,7 +35,10 @@
       },
       "edgeToEdgeEnabled": true
     },
-    "plugins": ["expo-router", "expo-web-browser"],
+    "plugins": [
+      "expo-router",
+      "expo-web-browser"
+    ],
     "experiments": {
       "typedRoutes": true
     }
