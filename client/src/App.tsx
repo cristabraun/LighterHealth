@@ -43,6 +43,18 @@ function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
   const [location, setLocation] = useLocation();
 
+  const publicRoutes = (
+    <Switch>
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/auth" component={Auth} />
+      <Route path="/auth/reset-request" component={ResetPasswordRequest} />
+      <Route path="/auth/reset-password" component={ResetPassword} />
+      <Route path="/upgrade" component={Upgrade} />
+      <Route component={Landing} />
+    </Switch>
+  );
+
   // Check if beta has expired
   const isBetaExpired = () => {
     if (!user) return false;
@@ -74,17 +86,11 @@ function Router() {
 
   // Show landing page if not authenticated
   if (!isAuthenticated) {
-    return (
-      <Switch>
-        <Route path="/privacy" component={Privacy} />
-        <Route path="/terms" component={Terms} />
-        <Route path="/auth" component={Auth} />
-        <Route path="/auth/reset-request" component={ResetPasswordRequest} />
-        <Route path="/auth/reset-password" component={ResetPassword} />
-        <Route path="/upgrade" component={Upgrade} />
-        <Route component={Landing} />
-      </Switch>
-    );
+    return publicRoutes;
+  }
+
+  if (location === '/privacy' || location === '/terms') {
+    return publicRoutes;
   }
 
   // Show upgrade page if beta expired
