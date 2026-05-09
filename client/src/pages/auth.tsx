@@ -175,12 +175,12 @@ export default function Auth() {
           <div className="relative z-10">
             <div className="mb-6">
               <h2 className="text-2xl font-light tracking-tight text-white mb-2">
-                {mode === 'login' ? 'Welcome back' : 'Create your free beta account'}
+                {mode === 'login' ? 'Welcome back' : 'Create your Lighter account'}
               </h2>
               <p className="text-white/60 text-base">
                 {mode === 'login'
                   ? 'Sign in to continue your metabolic healing journey'
-                  : 'Get free access for 30 days - no credit card required'}
+                  : 'Start your free trial. Then $4.99/month. Cancel anytime.'}
               </p>
             </div>
             {mode === 'login' ? (
@@ -323,7 +323,7 @@ export default function Auth() {
                   className="group relative w-full inline-flex items-center justify-center gap-3 rounded-2xl bg-white px-8 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                   data-testid="button-register"
                 >
-                  <span>{registerMutation.isPending ? 'Creating account...' : 'Join the Free Beta'}</span>
+                  <span>{registerMutation.isPending ? 'Creating account...' : 'Start your free trial'}</span>
                   <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   <div className="absolute inset-0 rounded-2xl bg-white opacity-0 blur-xl group-hover:opacity-25 transition-opacity" />
                 </button>

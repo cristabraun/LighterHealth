@@ -13,8 +13,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { Send, Sparkles, User, AlertCircle } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
+import { router } from 'expo-router';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getAiLimit, askQuestion } from '@/api/ai';
+import { SUBSCRIPTION_PRICE, useSubscription } from '@/lib/subscription';
 import { theme } from '@/lib/theme';
 import type { AskQuestionResponse } from '@/api/types';
 
@@ -29,6 +31,7 @@ interface ChatMessage {
 
 export default function CoachScreen() {
   const scrollViewRef = useRef<ScrollView>(null);
+  const subscription = useSubscription();
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
@@ -92,6 +95,42 @@ export default function CoachScreen() {
 
   const remaining = limitQuery.data?.remaining ?? DAILY_LIMIT;
   const limit = limitQuery.data?.limit ?? DAILY_LIMIT;
+
+  if (subscription.isLoading) {
+    return (
+      <View className="flex-1 items-center justify-center" style={{ backgroundColor: theme.background.primary }}>
+        <ActivityIndicator size="large" color={theme.accent.primary} />
+        <Text className="mt-3" style={{ color: theme.text.secondary }}>Checking subscription...</Text>
+      </View>
+    );
+  }
+
+  if (!subscription.isPremium) {
+    return (
+      <View className="flex-1" style={{ backgroundColor: theme.background.primary }}>
+        <SafeAreaView edges={['top']} className="flex-1 items-center justify-center px-6">
+          <View className="items-center">
+            <View className="rounded-full p-6 mb-5" style={{ backgroundColor: theme.accent.muted }}>
+              <Sparkles size={42} color={theme.accent.primary} />
+            </View>
+            <Text className="text-2xl font-bold text-center mb-2" style={{ color: theme.text.primary }}>
+              AI Coach is included with Lighter Premium
+            </Text>
+            <Text className="text-center mb-6" style={{ color: theme.text.secondary }}>
+              Start your free trial. Then {SUBSCRIPTION_PRICE}. Cancel anytime.
+            </Text>
+            <Pressable
+              onPress={() => router.push('/paywall?feature=AI%20Coach')}
+              className="rounded-2xl px-6 py-4"
+              style={{ backgroundColor: theme.accent.primary }}
+            >
+              <Text className="text-white font-bold">Start Free Trial</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background.primary }}>

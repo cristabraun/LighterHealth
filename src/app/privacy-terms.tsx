@@ -10,6 +10,7 @@ import { useColorScheme } from '@/lib/useColorScheme';
 
 const PRIVACY_URL = 'https://getlighterapp.com/privacy';
 const TERMS_URL = 'https://getlighterapp.com/terms';
+const EULA_URL = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
 
 export default function PrivacyTermsScreen() {
   const router = useRouter();
@@ -31,6 +32,13 @@ export default function PrivacyTermsScreen() {
   const openTerms = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     await WebBrowser.openBrowserAsync(TERMS_URL, {
+      presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
+    });
+  };
+
+  const openEula = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await WebBrowser.openBrowserAsync(EULA_URL, {
       presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
     });
   };
@@ -101,7 +109,7 @@ export default function PrivacyTermsScreen() {
             className="px-6 pt-6 pb-4"
           >
             <Text className="text-neutral-500 dark:text-neutral-400 text-base leading-6">
-              Review our privacy policy and terms of service to understand how we protect your data and the terms of using Lighter.
+              Review our privacy policy, terms of service, and subscription terms. Lighter Premium Monthly is an auto-renewable monthly subscription: start your free trial, then $4.99/month. You can manage or cancel it in Apple subscription settings.
             </Text>
           </Animated.View>
 
@@ -124,6 +132,14 @@ export default function PrivacyTermsScreen() {
               title="Terms of Service"
               description="Read the terms and conditions for using the Lighter app."
               onPress={openTerms}
+            />
+
+            <LinkCard
+              icon={<FileText size={24} color="#f59e0b" />}
+              iconBgColor={isDark ? 'rgba(245, 158, 11, 0.15)' : '#fef3c7'}
+              title="Apple Standard EULA"
+              description="Review Apple's standard licensed application end user license agreement."
+              onPress={openEula}
             />
           </Animated.View>
 

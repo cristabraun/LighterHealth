@@ -69,12 +69,12 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onStartTrial }) => {
               className="group relative inline-flex items-center gap-3 rounded-2xl bg-white px-12 py-4 text-base font-semibold text-black hover:bg-white/90 transition-all duration-300 shadow-2xl shadow-white/20"
               data-testid="button-final-trial"
             >
-              <span>Join the Free 30-Day Beta</span>
+              <span>Start your free trial</span>
               <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <p className="text-xs text-white/50 mt-2">Normally $19/month after launch</p>
+            <p className="text-xs text-white/50 mt-2">Then $4.99/month. Cancel anytime.</p>
           </div>
-          <p className="text-sm text-white/50">No credit card required. Free for 30 days.</p>
+          <p className="text-sm text-white/50">Then $4.99/month. Cancel anytime.</p>
         </div>
       </div>
     </section>

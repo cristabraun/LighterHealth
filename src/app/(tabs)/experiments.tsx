@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAllExperiments, createExperiment } from '@/api/experiments';
+import { SUBSCRIPTION_PRICE, useSubscription } from '@/lib/subscription';
 import { theme } from '@/lib/theme';
 import type { ExperimentTemplateId } from '@/api/types';
 
@@ -124,6 +125,7 @@ const getCategoryColor = (category: string) => {
 export default function ExperimentsScreen() {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const subscription = useSubscription();
 
   const [showStartModal, setShowStartModal] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<typeof EXPERIMENT_TEMPLATES[0] | null>(null);
@@ -167,6 +169,42 @@ export default function ExperimentsScreen() {
     setSelectedTemplate(template);
     setShowStartModal(true);
   };
+
+  if (subscription.isLoading) {
+    return (
+      <View className="flex-1 items-center justify-center" style={{ backgroundColor: theme.background.primary }}>
+        <ActivityIndicator size="large" color={theme.accent.primary} />
+        <Text className="mt-3" style={{ color: theme.text.secondary }}>Checking subscription...</Text>
+      </View>
+    );
+  }
+
+  if (!subscription.isPremium) {
+    return (
+      <View className="flex-1" style={{ backgroundColor: theme.background.primary }}>
+        <SafeAreaView edges={['top']} className="flex-1 items-center justify-center px-6">
+          <View className="items-center">
+            <View className="rounded-full p-6 mb-5" style={{ backgroundColor: theme.accent.muted }}>
+              <FlaskConical size={42} color={theme.accent.primary} />
+            </View>
+            <Text className="text-2xl font-bold text-center mb-2" style={{ color: theme.text.primary }}>
+              Experiments are included with Lighter Premium
+            </Text>
+            <Text className="text-center mb-6" style={{ color: theme.text.secondary }}>
+              Start your free trial. Then {SUBSCRIPTION_PRICE}. Cancel anytime.
+            </Text>
+            <Pressable
+              onPress={() => router.push('/paywall?feature=Experiments')}
+              className="rounded-2xl px-6 py-4"
+              style={{ backgroundColor: theme.accent.primary }}
+            >
+              <Text className="text-white font-bold">Start Free Trial</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background.primary }}>

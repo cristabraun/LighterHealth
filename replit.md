@@ -1,7 +1,7 @@
 # Lighter™ - Pro-Metabolic Health Tracking App
 
 ### Overview
-Lighter™ is a React-based health tracking application aimed at helping women improve their metabolism. It focuses on tracking key metabolic indicators (energy, temperature, pulse), running personalized experiments (e.g., 7-Day Carrot Salad Protocol), and visualizing progress. The app is designed to help users identify what makes them feel "lighter" emotionally, energetically, and physically, emphasizing metabolic healing over weight loss. It features a warm, encouraging design inspired by wellness apps like Calm and Headspace. The current iteration operates as a FREE 30-DAY BETA.
+Lighter™ is a React-based health tracking application aimed at helping women improve their metabolism. It focuses on tracking key metabolic indicators (energy, temperature, pulse), running personalized experiments (e.g., 7-Day Carrot Salad Protocol), and visualizing progress. The app is designed to help users identify what makes them feel "lighter" emotionally, energetically, and physically, emphasizing metabolic healing over weight loss. It features a warm, encouraging design inspired by wellness apps like Calm and Headspace. The current iteration uses Lighter Premium Monthly: a free trial, then $4.99/month, managed through Apple In-App Purchase. 
 
 ### User Preferences
 Preferred communication style: Simple, everyday language.

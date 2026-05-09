@@ -11,6 +11,8 @@ import {
   ExternalLink,
   User,
   Trash2,
+  CreditCard,
+  RefreshCcw,
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
@@ -18,6 +20,14 @@ import * as Application from 'expo-application';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore, useUser } from '@/stores/authStore';
 import { deleteAccount } from '@/api/auth';
+import {
+  APPLE_EULA_URL,
+  PRIVACY_URL,
+  SUBSCRIPTION_PRICE,
+  SUBSCRIPTION_TITLE,
+  TERMS_URL,
+  useSubscription,
+} from '@/lib/subscription';
 import { theme } from '@/lib/theme';
 
 const SUPPORT_EMAIL = 'support@getlighterapp.com';
@@ -25,6 +35,7 @@ const SUPPORT_EMAIL = 'support@getlighterapp.com';
 export default function SettingsScreen() {
   const user = useUser();
   const logout = useAuthStore((s) => s.logout);
+  const subscription = useSubscription();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -56,12 +67,27 @@ export default function SettingsScreen() {
 
   const openPrivacy = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    router.push('/privacy-terms');
+    await Linking.openURL(PRIVACY_URL);
   };
 
   const openTerms = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    router.push('/privacy-terms');
+    await Linking.openURL(TERMS_URL);
+  };
+
+  const openEula = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await Linking.openURL(APPLE_EULA_URL);
+  };
+
+  const openManageSubscription = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await Linking.openURL('https://apps.apple.com/account/subscriptions');
+  };
+
+  const restorePurchases = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await subscription.restoreMutation.mutateAsync();
   };
 
   const SettingsRow = ({
@@ -170,17 +196,65 @@ export default function SettingsScreen() {
                 <Text className="text-sm" style={{ color: theme.text.secondary }}>
                   {user?.email}
                 </Text>
-                {user?.isBetaUser && (
-                  <View
-                    className="mt-1 self-start px-2 py-0.5 rounded-full"
-                    style={{ backgroundColor: `${theme.category.sleep}20` }}
-                  >
-                    <Text className="text-xs font-medium" style={{ color: theme.category.sleep }}>
-                      Beta User
-                    </Text>
-                  </View>
-                )}
               </View>
+            </View>
+          </Animated.View>
+
+          {/* Subscription Section */}
+          <Animated.View
+            entering={FadeInDown.delay(175).springify()}
+            className="px-6 mb-6"
+          >
+            <Text
+              className="text-sm font-medium uppercase tracking-wider mb-3 ml-1"
+              style={{ color: theme.text.secondary }}
+              accessibilityRole="header"
+            >
+              Subscription
+            </Text>
+            <View
+              className="rounded-2xl p-4 mb-3"
+              style={{
+                backgroundColor: theme.background.card,
+                borderWidth: 1,
+                borderColor: theme.border.primary,
+              }}
+            >
+              <Text className="text-base font-semibold mb-1" style={{ color: theme.text.primary }}>
+                {SUBSCRIPTION_TITLE}
+              </Text>
+              <Text className="text-sm mb-2" style={{ color: theme.text.secondary }}>
+                Monthly subscription - {SUBSCRIPTION_PRICE}
+              </Text>
+              <Text className="text-sm" style={{ color: theme.text.secondary }}>
+                Status: {subscription.isPremium ? 'Active' : 'Not active'}
+              </Text>
+            </View>
+            <View className="gap-3">
+              {!subscription.isPremium && (
+                <SettingsRow
+                  icon={<CreditCard size={22} color={theme.accent.primary} accessible={false} accessibilityRole="image" />}
+                  iconBgColor={theme.accent.muted}
+                  title="Start Free Trial"
+                  subtitle={`${SUBSCRIPTION_PRICE}. Cancel anytime.`}
+                  onPress={() => router.push('/paywall')}
+                />
+              )}
+              <SettingsRow
+                icon={<RefreshCcw size={22} color={theme.status.info} accessible={false} accessibilityRole="image" />}
+                iconBgColor={theme.status.infoBg}
+                title="Restore Purchases"
+                subtitle={subscription.restoreMutation.isPending ? 'Restoring...' : 'Recover an existing Apple purchase'}
+                onPress={restorePurchases}
+              />
+              <SettingsRow
+                icon={<CreditCard size={22} color={theme.category.sleep} accessible={false} accessibilityRole="image" />}
+                iconBgColor={`${theme.category.sleep}15`}
+                title="Manage Subscription"
+                subtitle="Open Apple subscription settings"
+                onPress={openManageSubscription}
+                showExternal
+              />
             </View>
           </Animated.View>
 
@@ -233,6 +307,13 @@ export default function SettingsScreen() {
                 iconBgColor={`${theme.category.sleep}15`}
                 title="Terms of Service"
                 onPress={openTerms}
+                showExternal
+              />
+              <SettingsRow
+                icon={<FileText size={22} color={theme.accent.primary} accessible={false} accessibilityRole="image" />}
+                iconBgColor={theme.accent.muted}
+                title="Apple Standard EULA"
+                onPress={openEula}
                 showExternal
               />
             </View>

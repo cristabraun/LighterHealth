@@ -84,10 +84,10 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
 
                 <div className="mb-6">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-4xl text-white font-light tracking-tighter">FREE</span>
-                    <span className="text-sm text-neutral-400">for 30 days</span>
+                    <span className="text-4xl text-white font-light tracking-tighter">$4.99</span>
+                    <span className="text-sm text-neutral-400">/month after trial</span>
                   </div>
-                  <p className="text-xs text-amber-400 mt-1">Beta access - no card required</p>
+                  <p className="text-xs text-amber-400 mt-1">Then $4.99/month. Cancel anytime.</p>
                 </div>
 
                 <ul className="space-y-3 text-sm text-neutral-200 mb-8">
@@ -122,7 +122,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ onStartTrial }) => {
                   className="w-full inline-flex gap-2 hover:from-amber-600 hover:to-orange-600 transition-all duration-200 text-sm font-semibold text-black bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl py-3 px-6 shadow-lg items-center justify-center"
                   data-testid="button-pricing-trial"
                 >
-                  Join the Free Beta
+                  Start your free trial
                 </button>
               </div>
             </div>

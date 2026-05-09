@@ -13,7 +13,7 @@ export default function Terms() {
         </Link>
         
         <h1 className="text-4xl font-light tracking-tight mb-8" data-testid="text-terms-title">Terms of Service</h1>
-        <p className="text-white/60 mb-8">Last Updated: February 2025</p>
+        <p className="text-white/60 mb-8">Last Updated: February 2026</p>
         
         <div className="space-y-8 text-white/80 leading-relaxed">
           <section>
@@ -33,7 +33,8 @@ export default function Terms() {
 
           <section>
             <h2 className="text-xl font-medium text-white mb-4">4. Subscriptions &amp; Payments</h2>
-            <p>If subscriptions are offered, they are processed through RevenueCat. All billing, refunds, and subscription management must be done through the App Store or RevenueCat.</p>
+            <p>Lighter™ offers Lighter Premium Monthly, an auto-renewable monthly subscription purchased through Apple In-App Purchase. Start your free trial, then pay $4.99/month. Payment is charged to your Apple ID at confirmation of purchase. The subscription renews automatically unless canceled at least 24 hours before the end of the current period, and you can manage or cancel it from your Apple ID subscription settings.</p>
+            <p className="mt-3">Use of Lighter™ is also governed by Apple’s standard End User License Agreement: <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" className="text-amber-400 hover:text-amber-300 transition-colors">Apple Standard EULA</a>.</p>
           </section>
 
           <section>
@@ -54,7 +55,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-xl font-medium text-white mb-4">7. Third-Party Services</h2>
-            <p>Lighter™ uses OpenAI (AI responses), RevenueCat (subscriptions), and Vibecode (app infrastructure). We are not responsible for downtime or issues caused by third-party platforms.</p>
+            <p>Lighter™ uses OpenAI for AI responses, Vibecode/Expo for app infrastructure, Apple for in-app purchases, and RevenueCat to manage subscription status. We are not responsible for downtime or issues caused by third-party platforms.</p>
           </section>
 
           <section>

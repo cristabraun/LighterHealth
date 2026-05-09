@@ -116,6 +116,7 @@ function RootLayoutNav() {
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         <Stack.Screen name="support" options={{ headerShown: false, presentation: 'card' }} />
         <Stack.Screen name="privacy-terms" options={{ headerShown: false, presentation: 'card' }} />
+        <Stack.Screen name="paywall" options={{ headerShown: false, presentation: 'modal' }} />
         <Stack.Screen name="food-logs" options={{ headerShown: false, presentation: 'card' }} />
         <Stack.Screen name="messages" options={{ headerShown: false, presentation: 'card' }} />
         <Stack.Screen name="log-entry" options={{ headerShown: false, presentation: 'modal' }} />

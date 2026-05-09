@@ -21,8 +21,8 @@ export default function Landing() {
     window.location.href = '/auth?mode=register';
   };
 
-  const handleStartBeta = () => {
-    // Route directly to signup page for free beta
+  const handleStartTrial = () => {
+    // Route directly to signup page before the in-app subscription trial starts.
     window.location.href = '/auth?mode=register';
   };
 
@@ -32,14 +32,14 @@ export default function Landing() {
       <Navigation onLogin={handleLogin} onGetStarted={handleGetStarted} />
       
       <main>
-        <Hero onStartTrial={handleStartBeta} />
+        <Hero onStartTrial={handleStartTrial} />
         <Features />
-        <DashboardPreview onStartTrial={handleStartBeta} />
+        <DashboardPreview onStartTrial={handleStartTrial} />
         <DetailedFeatures />
         <Testimonials />
-        <Comparison onStartTrial={handleStartBeta} />
+        <Comparison onStartTrial={handleStartTrial} />
         <VideoPreview />
-        <FinalCTA onStartTrial={handleStartBeta} />
+        <FinalCTA onStartTrial={handleStartTrial} />
       </main>
 
       <Footer />
